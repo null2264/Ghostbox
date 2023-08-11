@@ -304,6 +304,7 @@ const expandTimelineSuccess = (
   partial,
   isLoadingRecent,
   skipLoading: !isLoadingMore,
+  isLoadingMore,
 });
 
 const expandTimelineFail = (timeline: string, error: AxiosError, isLoadingMore: boolean) => ({

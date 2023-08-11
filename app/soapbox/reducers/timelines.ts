@@ -96,34 +96,44 @@ const expandNormalizedTimeline = (
   prev: string | undefined,
   isPartial: boolean,
   isLoadingRecent: boolean,
+  isLoadingMore: boolean,
 ) => {
-  const newIds = getStatusIds(statuses);
+  let newIds = getStatusIds(statuses);
+  const unseens = ImmutableOrderedSet<any>();
 
-  return state.update(timelineId, TimelineRecord(), timeline => timeline.withMutations(timeline => {
-    timeline.set('isLoading', false);
-    timeline.set('loadingFailed', false);
-    timeline.set('isPartial', isPartial);
-    timeline.set('next', next);
-    timeline.set('prev', prev);
+  return state.withMutations((s: any) => {
+    s.update(timelineId, TimelineRecord(), (timeline: any) => timeline.withMutations((timeline: any) => {
+      timeline.set('isLoading', false);
+      timeline.set('loadingFailed', false);
+      timeline.set('isPartial', isPartial);
 
-    if (!next && !isLoadingRecent) timeline.set('hasMore', false);
+      if (!next && !isLoadingRecent) timeline.set('hasMore', false);
 
-    // Pinned timelines can be replaced entirely
-    if (timelineId.endsWith(':pinned')) {
-      timeline.set('items', newIds);
-      return;
-    }
+      // Pinned timelines can be replaced entirely
+      if (timelineId.endsWith(':pinned')) {
+        timeline.set('items', newIds);
+        return;
+      }
 
-    if (!newIds.isEmpty()) {
-      timeline.update('items', oldIds => {
-        if (newIds.first() > oldIds.first()!) {
-          return mergeStatusIds(oldIds, newIds);
-        } else {
-          return mergeStatusIds(newIds, oldIds);
+      if (!newIds.isEmpty()) {
+        // we need to sort between queue and actual list to avoid
+        // messing with user position in the timeline by inserting inseen statuses
+        let unseens = ImmutableOrderedSet<any>();
+        if (!isLoadingMore && timeline.items.count() > 0) {
+          unseens = newIds.subtract(timeline.items);
         }
-      });
-    }
-  }));
+        newIds = newIds.subtract(unseens);
+        timeline.update('items', (oldIds: any) => {
+          if (newIds.first() > oldIds.first()!) {
+            return mergeStatusIds(oldIds, newIds);
+          } else {
+            return mergeStatusIds(newIds, oldIds);
+          }
+        });
+      }
+    }));
+    unseens.forEach((statusId: any) => updateTimelineQueue(s, timelineId, statusId));
+  });
 };
 
 const updateTimeline = (state: State, timelineId: string, statusId: string) => {
@@ -341,6 +351,7 @@ export default function timelines(state: State = initialState, action: AnyAction
         action.prev,
         action.partial,
         action.isLoadingRecent,
+        action.isLoadingMore,
       );
     case TIMELINE_UPDATE:
       return updateTimeline(state, action.timeline, action.statusId);
