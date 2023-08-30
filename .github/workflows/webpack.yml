@@ -25,7 +25,7 @@ jobs:
       run: |
         # -- Build one time for release
         export NODE_ENV=production
-        yarn
+        yarn install --ignore-scripts
         yarn build
         zip -r static.zip static
 
