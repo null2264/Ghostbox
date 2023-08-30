@@ -24,9 +24,8 @@ jobs:
     - name: Build
       run: |
         # -- Build one time for release
-        export NODE_ENV=production
         yarn install --ignore-scripts
-        yarn build
+        env NODE_ENV=production yarn build
         zip -r static.zip static
 
     - name: Upload build folder as artifact
