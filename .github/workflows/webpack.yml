@@ -1,0 +1,59 @@
+name: NodeJS with Webpack
+
+on:
+  push:
+    branches: 
+      - develop
+      - feat/**
+      - fix/**
+    tags:
+      - 1.x
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Build
+      run: |
+        # -- Build one time for release
+        export NODE_ENV=production
+        yarn
+        yarn build
+        mv static dist
+        zip -r static.zip dist
+        # -- Build one time for showcase
+        export NODE_ENV=development
+        export FE_SUBDIRECTORY=Mangane
+        yarn build
+
+    - name: Upload build folder as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: static
+        path: static.zip
+        if-no-files-found: error
+        retention-days: 3
+
+    - uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/') && github.repository == 'null2264/fedi.aap.frontend'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        files: ./static.zip
+
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: static/Mangane
