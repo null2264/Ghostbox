@@ -638,7 +638,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
   const meEmojiName = meEmojiReact?.get('name') as keyof typeof reactMessages | undefined;
 
   const reactMessages = {
-    '👍': messages.reactionLike,
+    '⭐️': messages.reactionLike,
     '❤️': messages.reactionHeart,
     '😆': messages.reactionLaughing,
     '😮': messages.reactionOpenMouth,
@@ -745,7 +745,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
           <StatusReactionWrapper statusId={status.id}>
             <StatusActionButton
               title={meEmojiTitle}
-              icon={require('@tabler/icons/heart.svg')}
+              icon={require('@tabler/icons/star.svg')}
               filled
               color='accent'
               active={Boolean(meEmojiName)}
@@ -758,7 +758,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
         ) : (
           <StatusActionButton
             title={intl.formatMessage(messages.favourite)}
-            icon={features.dislikes ? require('@tabler/icons/thumb-up.svg') : require('@tabler/icons/heart.svg')}
+            icon={features.dislikes ? require('@tabler/icons/thumb-up.svg') : require('@tabler/icons/star.svg')}
             color='accent'
             filled
             onClick={handleFavouriteClick}

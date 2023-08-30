@@ -52,7 +52,7 @@ const NotificationFilterBar = () => {
       name: 'mention',
     });
     items.push({
-      text: <Icon src={require('@tabler/icons/heart.svg')} />,
+      text: <Icon src={require('@tabler/icons/star.svg')} />,
       title: intl.formatMessage(messages.favourites),
       action: onClick('favourite'),
       name: 'favourite',
