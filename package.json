@@ -1,19 +1,19 @@
 {
-  "name": "soapbox",
-  "displayName": "Soapbox",
-  "version": "3.2.0",
-  "description": "Soapbox frontend for the Fediverse.",
-  "homepage": "https://soapbox.pub/",
+  "name": "fedi.aap.frontend",
+  "version": "1.0.0",
+  "displayName": "fedi.aap.frontend",
+  "description": "Frontend for https://fedi.aap.my.id",
+  "homepage": "https://fedi.aap.my.id",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/soapbox-pub/soapbox"
+    "url": "https://github.com/null2264/fedi.aap.frontend"
   },
   "keywords": [
     "fediverse",
     "pleroma"
   ],
   "bugs": {
-    "url": "https://gitlab.com/soapbox-pub/soapbox/-/issues"
+    "url": "https://github.com/null2264/fedi.aap.frontend/issues"
   },
   "scripts": {
     "start": "npx webpack-dev-server",
