@@ -12,18 +12,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [14.x]
     
     steps:
     - uses: actions/checkout@v3
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js v20
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 20
 
     - name: Build
       run: |
@@ -31,12 +27,7 @@ jobs:
         export NODE_ENV=production
         yarn
         yarn build
-        mv static dist
-        zip -r static.zip dist
-        # -- Build one time for showcase
-        export NODE_ENV=development
-        export FE_SUBDIRECTORY=Mangane
-        yarn build
+        zip -r static.zip static
 
     - name: Upload build folder as artifact
       uses: actions/upload-artifact@v3
@@ -46,14 +37,10 @@ jobs:
         if-no-files-found: error
         retention-days: 3
 
-    - uses: softprops/action-gh-release@v1
+    - name: Upload build to a release
+      uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/') && github.repository == 'null2264/fedi.aap.frontend'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         files: ./static.zip
-
-    - name: Deploy 🚀
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        folder: static/Mangane
