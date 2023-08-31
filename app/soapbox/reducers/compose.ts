@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { isNativeEmoji } from 'soapbox/features/emoji';
 import { Account } from 'soapbox/schemas';
 import { tagHistory } from 'soapbox/settings';
-import { PLEROMA, AKKOMA } from 'soapbox/utils/features';
+import { PLEROMA } from 'soapbox/utils/features';
 import { hasIntegerMediaIds } from 'soapbox/utils/status';
 
 import {
@@ -450,8 +450,7 @@ export default function compose(state = initialState, action: ComposeAction | Me
         map.set('quote', action.status.getIn(['quote', 'id']) as string);
         map.set('group_id', action.status.getIn(['group', 'id']) as string);
 
-        const software = action.v?.software;
-        if ((software === PLEROMA || software === AKKOMA) && action.withRedraft && hasIntegerMediaIds(action.status.toJS() as any)) {
+        if (action.v?.software === PLEROMA && action.withRedraft && hasIntegerMediaIds(action.status.toJS() as any)) {
           map.set('media_attachments', ImmutableList());
         } else {
           map.set('media_attachments', action.status.media_attachments);
