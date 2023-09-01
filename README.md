@@ -44,4 +44,6 @@ Ghostbox make use of code from other opensource and free software under various 
 
 - Ghostbox is a fork of [Soapbox](https://soapbox.pub) a frontend for Rebased, Pleroma and Mastodon, licensed under AGPL v3 or later.
 
+- `assets/sounds/chat.mp3` and `assets/sounds/chat.oga` are from notificationsounds.com licensed under CC BY 4.0.
+
 - [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) licensed by Tailwindlab under the simple permissive MIT License.
