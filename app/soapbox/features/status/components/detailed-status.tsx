@@ -1,5 +1,6 @@
+import clsx from 'clsx';
 import React, { useEffect, useRef, useState } from 'react';
-import { FormattedDate, FormattedMessage, useIntl } from 'react-intl';
+import { FormattedDate, FormattedMessage, defineMessages, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import Account from 'soapbox/components/account';
@@ -9,13 +10,18 @@ import StatusReplyMentions from 'soapbox/components/status-reply-mentions';
 import SensitiveContentOverlay from 'soapbox/components/statuses/sensitive-content-overlay';
 import StatusInfo from 'soapbox/components/statuses/status-info';
 import TranslateButton from 'soapbox/components/translate-button';
-import { HStack, Icon, Stack, Text } from 'soapbox/components/ui';
+import { Button, HStack, Icon, Stack, Text } from 'soapbox/components/ui';
 import QuotedStatus from 'soapbox/features/status/containers/quoted-status-container';
 import { getActualStatus } from 'soapbox/utils/status';
 
 import StatusInteractionBar from './status-interaction-bar';
 
 import type { Group, Status as StatusEntity } from 'soapbox/types/entities';
+
+const messages = defineMessages({
+  show: { id: 'moderation_overlay.show', defaultMessage: 'Show Content' },
+  hide: { id: 'moderation_overlay.hide', defaultMessage: 'Hide content' },
+});
 
 interface IDetailedStatus {
   status: StatusEntity
@@ -35,15 +41,18 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
   const intl = useIntl();
 
   const node = useRef<HTMLDivElement>(null);
-  const overlay = useRef<HTMLDivElement>(null);
 
-  const [minHeight, setMinHeight] = useState(208);
+  const [isExpanded, setExpanded] = useState<boolean>(false);  // for CW
 
-  useEffect(() => {
-    if (overlay.current) {
-      setMinHeight(overlay.current.getBoundingClientRect().height);
-    }
-  }, [overlay.current]);
+  const handleShowContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
+    event.stopPropagation();
+    setExpanded(true);
+  };
+
+  const handleHideContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
+    event.stopPropagation();
+    setExpanded(false);
+  };
 
   const handleOpenCompareHistoryModal = () => {
     onOpenCompareHistoryModal(status);
@@ -85,6 +94,11 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
   };
 
   const actualStatus = getActualStatus(status);
+
+  useEffect(() => {
+    setExpanded(actualStatus ? !actualStatus.hidden : true);
+  }, []);
+
   if (!actualStatus) return null;
   const { account } = actualStatus;
   if (!account || typeof account !== 'object') return null;
@@ -114,6 +128,16 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
     statusTypeIcon = <Icon className='h-4 w-4 text-gray-700 dark:text-gray-600' src={require('@tabler/icons/lock.svg')} />;
   }
 
+  const overlayElement: JSX.Element | null = (isUnderReview || isSensitive) ? (
+    <SensitiveContentOverlay
+      status={status}
+      visible={showMedia}
+      onToggleVisibility={onToggleMediaVisibility}
+    />
+  ) : null;
+
+  const hasMediaAndNoCW = (quote || actualStatus.card || actualStatus.media_attachments.size > 0) && !actualStatus.spoiler_text;
+
   return (
     <div className='border-box'>
       <div ref={node} className='detailed-actualStatus' tabIndex={-1}>
@@ -131,41 +155,74 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
 
         <StatusReplyMentions status={actualStatus} />
 
-        <Stack
-          className='relative z-0'
-          style={{ minHeight: isUnderReview || isSensitive ? Math.max(minHeight, 208) + 12 : undefined }}
-        >
-          {(isUnderReview || isSensitive) && (
-            <SensitiveContentOverlay
-              status={status}
-              visible={showMedia}
-              onToggleVisibility={onToggleMediaVisibility}
-              ref={overlay}
-            />
+        {((isUnderReview || isSensitive) && actualStatus.spoiler_text) && (
+          <div className='pb-4'>
+            <Text className='line-clamp-6' theme='white' size='md' weight='medium'>
+              <span dangerouslySetInnerHTML={{ __html: actualStatus.spoilerHtml }} />
+            </Text>
+          </div>
+        )}
+
+        <div className='relative'>
+
+          {(!hasMediaAndNoCW && !isExpanded && (isUnderReview || isSensitive)) && (
+            <div className='absolute flex h-full w-full items-center justify-center'>
+              <Button
+                type='button'
+                theme='primary'
+                size='sm'
+                icon={require('@tabler/icons/eye.svg')}
+                onClick={handleShowContent}
+              >
+                {intl.formatMessage(messages.show)}
+              </Button>
+            </div>
           )}
 
-          <Stack space={4}>
-            <StatusContent
-              status={actualStatus}
-              textSize='lg'
-              translatable
-            />
+          <Stack
+            className={clsx('relative z-0', {
+              'max-h-24 overflow-hidden blur-sm select-none pointer-events-none': !hasMediaAndNoCW && !isExpanded,
+            })}
+          >
 
-            <TranslateButton status={actualStatus} />
+            <Stack space={4}>
+              <StatusContent
+                status={actualStatus}
+                textSize='lg'
+                translatable
+              />
 
-            {(withMedia && (quote || actualStatus.card || actualStatus.media_attachments.size > 0)) && (
-              <Stack space={4}>
-                <StatusMedia
-                  status={actualStatus}
-                  showMedia={showMedia}
-                  onToggleVisibility={onToggleMediaVisibility}
-                />
+              <TranslateButton status={actualStatus} />
 
-                {quote}
-              </Stack>
+              {(withMedia && (quote || actualStatus.card || actualStatus.media_attachments.size > 0)) && (
+                <Stack space={4}>
+                  <StatusMedia
+                    status={actualStatus}
+                    showMedia={showMedia}
+                    sensitiveOverlay={overlayElement}
+                    onToggleVisibility={onToggleMediaVisibility}
+                  />
+
+                  {quote}
+                </Stack>
+              )}
+            </Stack>
+
+            {(!hasMediaAndNoCW && isExpanded && (isUnderReview || isSensitive)) && (
+              <div className='flex w-full justify-center pt-2'>
+                <Button
+                  type='button'
+                  theme='primary'
+                  size='sm'
+                  icon={require('@tabler/icons/eye-off.svg')}
+                  onClick={handleHideContent}
+                >
+                  {intl.formatMessage(messages.hide)}
+                </Button>
+              </div>
             )}
           </Stack>
-        </Stack>
+        </div>
 
         <HStack justifyContent='between' alignItems='center' className='py-3' wrap>
           <StatusInteractionBar status={actualStatus} />

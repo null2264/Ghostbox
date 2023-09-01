@@ -286,6 +286,7 @@ export interface IMediaGallery {
   displayMedia?: string
   compact?: boolean
   className?: string
+  sensitiveOverlay?: JSX.Element | null
 }
 
 const MediaGallery: React.FC<IMediaGallery> = (props) => {
@@ -297,6 +298,7 @@ const MediaGallery: React.FC<IMediaGallery> = (props) => {
     cacheWidth,
     compact,
     height,
+    sensitiveOverlay = null,
   } = props;
   const [width, setWidth] = useState<number>(defaultWidth);
 
@@ -567,6 +569,7 @@ const MediaGallery: React.FC<IMediaGallery> = (props) => {
       style={sizeData.style}
       ref={node}
     >
+      {sensitiveOverlay}
       {children}
     </div>
   );

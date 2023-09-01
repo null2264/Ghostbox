@@ -38,6 +38,7 @@ interface IAudio {
   volume?: number
   muted?: boolean
   deployPictureInPicture?: (type: string, opts: Record<string, any>) => void
+  sensitiveOverlay?: JSX.Element | null
 }
 
 const Audio: React.FC<IAudio> = (props) => {
@@ -53,6 +54,7 @@ const Audio: React.FC<IAudio> = (props) => {
     autoPlay,
     editable,
     deployPictureInPicture = false,
+    sensitiveOverlay = null,
   } = props;
 
   const intl = useIntl();
@@ -451,6 +453,8 @@ const Audio: React.FC<IAudio> = (props) => {
       onKeyDown={handleKeyDown}
       onClick={e => e.stopPropagation()}
     >
+      {sensitiveOverlay}
+
       <audio
         src={src}
         ref={audio}

@@ -114,6 +114,7 @@ interface IVideo {
   link?: React.ReactNode
   aspectRatio?: number
   displayMedia?: string
+  sensitiveOverlay?: JSX.Element | null
 }
 
 const Video: React.FC<IVideo> = ({
@@ -130,6 +131,7 @@ const Video: React.FC<IVideo> = ({
   aspectRatio = 16 / 9,
   link,
   blurhash,
+  sensitiveOverlay = null,
 }) => {
   const intl = useIntl();
 
@@ -475,6 +477,8 @@ const Video: React.FC<IVideo> = ({
       onKeyDown={handleKeyDown}
       tabIndex={0}
     >
+      {sensitiveOverlay}
+
       {!fullscreen && (
         <Blurhash hash={blurhash} className='media-gallery__preview' />
       )}

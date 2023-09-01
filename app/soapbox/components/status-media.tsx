@@ -23,6 +23,7 @@ interface IStatusMedia {
   onClick?: () => void
   /** Whether or not the media is concealed behind a NSFW banner. */
   showMedia?: boolean
+  sensitiveOverlay?: JSX.Element | null
   /** Callback when visibility is toggled (eg clicked through NSFW). */
   onToggleVisibility?: () => void
 }
@@ -33,6 +34,7 @@ const StatusMedia: React.FC<IStatusMedia> = ({
   muted = false,
   onClick,
   showMedia = true,
+  sensitiveOverlay = null,
   onToggleVisibility = () => { },
 }) => {
   const dispatch = useAppDispatch();
@@ -105,16 +107,19 @@ const StatusMedia: React.FC<IStatusMedia> = ({
         media = (
           <Bundle fetchComponent={Video} loading={renderLoadingVideoPlayer}>
             {(Component: typeof VideoType) => (
-              <Component
-                preview={video.preview_url}
-                blurhash={video.blurhash}
-                src={video.url}
-                alt={video.description}
-                aspectRatio={Number(video.meta.getIn(['original', 'aspect']))}
-                height={285}
-                visible={showMedia}
-                inline
-              />
+              <>
+                {sensitiveOverlay}
+                <Component
+                  preview={video.preview_url}
+                  blurhash={video.blurhash}
+                  src={video.url}
+                  alt={video.description}
+                  aspectRatio={Number(video.meta.getIn(['original', 'aspect']))}
+                  height={285}
+                  visible={showMedia}
+                  inline
+                />
+              </>
             )}
           </Bundle>
         );
@@ -125,16 +130,19 @@ const StatusMedia: React.FC<IStatusMedia> = ({
       media = (
         <Bundle fetchComponent={Audio} loading={renderLoadingAudioPlayer}>
           {(Component: any) => (
-            <Component
-              src={attachment.url}
-              alt={attachment.description}
-              poster={attachment.preview_url !== attachment.url ? attachment.preview_url : status.getIn(['account', 'avatar_static'])}
-              backgroundColor={attachment.meta.getIn(['colors', 'background'])}
-              foregroundColor={attachment.meta.getIn(['colors', 'foreground'])}
-              accentColor={attachment.meta.getIn(['colors', 'accent'])}
-              duration={attachment.meta.getIn(['original', 'duration'], 0)}
-              height={263}
-            />
+            <>
+              {sensitiveOverlay}
+              <Component
+                src={attachment.url}
+                alt={attachment.description}
+                poster={attachment.preview_url !== attachment.url ? attachment.preview_url : status.getIn(['account', 'avatar_static'])}
+                backgroundColor={attachment.meta.getIn(['colors', 'background'])}
+                foregroundColor={attachment.meta.getIn(['colors', 'foreground'])}
+                accentColor={attachment.meta.getIn(['colors', 'accent'])}
+                duration={attachment.meta.getIn(['original', 'duration'], 0)}
+                height={263}
+              />
+            </>
           )}
         </Bundle>
       );
@@ -144,6 +152,7 @@ const StatusMedia: React.FC<IStatusMedia> = ({
           {(Component: any) => (
             <Component
               media={status.media_attachments}
+              sensitiveOverlay={sensitiveOverlay}
               sensitive={status.sensitive}
               height={285}
               onOpenMedia={openMedia}

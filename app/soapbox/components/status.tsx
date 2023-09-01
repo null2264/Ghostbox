@@ -22,7 +22,7 @@ import StatusReplyMentions from './status-reply-mentions';
 import SensitiveContentOverlay from './statuses/sensitive-content-overlay';
 import StatusInfo from './statuses/status-info';
 import Tombstone from './tombstone';
-import { Card, Icon, Stack, Text } from './ui';
+import { Button, Card, Icon, Stack, Text } from './ui';
 
 import type {
   Account as AccountEntity,
@@ -34,6 +34,8 @@ export type ScrollPosition = { height: number, top: number };
 
 const messages = defineMessages({
   reblogged_by: { id: 'status.reblogged_by', defaultMessage: '{name} reposted' },
+  show: { id: 'moderation_overlay.show', defaultMessage: 'Show Content' },
+  hide: { id: 'moderation_overlay.hide', defaultMessage: 'Hide content' },
 });
 
 export interface IStatus {
@@ -82,15 +84,15 @@ const Status: React.FC<IStatus> = (props) => {
   const displayMedia = settings.get('displayMedia') as string;
   const didShowCard = useRef(false);
   const node = useRef<HTMLDivElement>(null);
-  const overlay = useRef<HTMLDivElement>(null);
 
   const [showMedia, setShowMedia] = useState<boolean>(defaultMediaVisibility(status, displayMedia));
-  const [minHeight, setMinHeight] = useState(208);
 
   const actualStatus = getActualStatus(status);
   const isReblog = status.reblog && typeof status.reblog === 'object';
   const statusUrl = `/@${actualStatus.account.acct}/posts/${actualStatus.id}`;
   const group = actualStatus.group;
+
+  const [isExpanded, setExpanded] = useState<boolean>(!actualStatus.sensitive);  // for CW
 
   const filtered = (status.filtered.size || actualStatus.filtered.size) > 0;
 
@@ -103,11 +105,15 @@ const Status: React.FC<IStatus> = (props) => {
     setShowMedia(defaultMediaVisibility(status, displayMedia));
   }, [status.id]);
 
-  useEffect(() => {
-    if (overlay.current) {
-      setMinHeight(overlay.current.getBoundingClientRect().height);
-    }
-  }, [overlay.current]);
+  const handleShowContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
+    event.stopPropagation();
+    setExpanded(true);
+  };
+
+  const handleHideContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
+    event.stopPropagation();
+    setExpanded(false);
+  };
 
   const handleToggleMediaVisibility = (): void => {
     setShowMedia(!showMedia);
@@ -400,6 +406,16 @@ const Status: React.FC<IStatus> = (props) => {
     );
   }
 
+  const overlayElement: JSX.Element | null = (isUnderReview || isSensitive) ? (
+    <SensitiveContentOverlay
+      status={status}
+      visible={showMedia}
+      onToggleVisibility={handleToggleMediaVisibility}
+    />
+  ) : null;
+
+  const hasMediaAndNoCW = (quote || actualStatus.card || actualStatus.media_attachments.size > 0) && !actualStatus.spoiler_text;
+
   return (
     <HotKeys handlers={handlers} data-testid='status'>
       <div
@@ -440,46 +456,79 @@ const Status: React.FC<IStatus> = (props) => {
           <div className='status__content-wrapper'>
             <StatusReplyMentions status={actualStatus} hoverable={hoverable} />
 
-            <Stack
-              className='relative z-0'
-              style={{ minHeight: isUnderReview || isSensitive ? Math.max(minHeight, 208) + 12 : undefined }}
-            >
-              {(isUnderReview || isSensitive) && (
-                <SensitiveContentOverlay
-                  status={status}
-                  visible={showMedia}
-                  onToggleVisibility={handleToggleMediaVisibility}
-                  ref={overlay}
-                />
+            {((isUnderReview || isSensitive) && actualStatus.spoiler_text) && (
+              <div className='pb-4'>
+                <Text className='line-clamp-6' theme='white' size='md' weight='medium'>
+                  <span dangerouslySetInnerHTML={{ __html: actualStatus.spoilerHtml }} />
+                </Text>
+              </div>
+            )}
+
+            <div className='relative'>
+
+              {(!hasMediaAndNoCW && !isExpanded && (isUnderReview || isSensitive)) && (
+                <div className='absolute flex h-full w-full items-center justify-center'>
+                  <Button
+                    type='button'
+                    theme='primary'
+                    size='sm'
+                    icon={require('@tabler/icons/eye.svg')}
+                    onClick={handleShowContent}
+                  >
+                    {intl.formatMessage(messages.show)}
+                  </Button>
+                </div>
               )}
 
-              {actualStatus.event ? <EventPreview className='shadow-xl' status={actualStatus} /> : (
-                <Stack space={4}>
-                  <StatusContent
-                    status={actualStatus}
-                    onClick={handleClick}
-                    collapsable
-                    translatable
-                  />
+              <Stack
+                className={clsx('relative z-0', {
+                  'max-h-24 overflow-hidden blur-sm select-none pointer-events-none': !hasMediaAndNoCW && !isExpanded,
+                })}
+              >
 
-                  <TranslateButton status={actualStatus} />
+                {actualStatus.event ? <EventPreview className='shadow-xl' status={actualStatus} /> : (
+                  <Stack space={4}>
+                    <StatusContent
+                      status={actualStatus}
+                      onClick={handleClick}
+                      collapsable
+                      translatable
+                    />
 
-                  {(quote || actualStatus.card || actualStatus.media_attachments.size > 0) && (
-                    <Stack space={4}>
-                      <StatusMedia
-                        status={actualStatus}
-                        muted={muted}
-                        onClick={handleClick}
-                        showMedia={showMedia}
-                        onToggleVisibility={handleToggleMediaVisibility}
-                      />
+                    <TranslateButton status={actualStatus} />
 
-                      {quote}
-                    </Stack>
-                  )}
-                </Stack>
-              )}
-            </Stack>
+                    {(hasMediaAndNoCW) && (
+                      <Stack space={4}>
+                        <StatusMedia
+                          status={actualStatus}
+                          muted={muted}
+                          onClick={handleClick}
+                          showMedia={showMedia}
+                          sensitiveOverlay={overlayElement}
+                          onToggleVisibility={handleToggleMediaVisibility}
+                        />
+
+                        {quote}
+                      </Stack>
+                    )}
+                  </Stack>
+                )}
+
+                {(!hasMediaAndNoCW && isExpanded && (isUnderReview || isSensitive)) && (
+                  <div className='flex w-full justify-center pt-2'>
+                    <Button
+                      type='button'
+                      theme='primary'
+                      size='sm'
+                      icon={require('@tabler/icons/eye-off.svg')}
+                      onClick={handleHideContent}
+                    >
+                      {intl.formatMessage(messages.hide)}
+                    </Button>
+                  </div>
+                )}
+              </Stack>
+            </div>
 
             {(!hideActionBar && !isUnderReview) && (
               <div className='pt-4'>
