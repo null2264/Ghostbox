@@ -38,7 +38,7 @@ jobs:
 
     - name: Upload build to a release
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/') && github.repository == 'null2264/fedi.aap.frontend'
+      if: startsWith(github.ref, 'refs/tags/') && github.repository == 'null2264/ghostbox'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:

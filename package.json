@@ -1,19 +1,19 @@
 {
-  "name": "fedi.aap.frontend",
+  "name": "ghostbox",
   "version": "1.0.0",
-  "displayName": "fedi.aap.frontend",
-  "description": "Frontend for https://fedi.aap.my.id",
+  "displayName": "Ghostbox",
+  "description": "An alternative frontend for Akkoma",
   "homepage": "https://fedi.aap.my.id",
   "repository": {
     "type": "git",
-    "url": "https://github.com/null2264/fedi.aap.frontend"
+    "url": "https://github.com/null2264/ghostbox"
   },
   "keywords": [
     "fediverse",
     "pleroma"
   ],
   "bugs": {
-    "url": "https://github.com/null2264/fedi.aap.frontend/issues"
+    "url": "https://github.com/null2264/ghostbox/issues"
   },
   "scripts": {
     "start": "npx webpack-dev-server",
