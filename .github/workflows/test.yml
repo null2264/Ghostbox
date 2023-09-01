@@ -22,6 +22,12 @@ jobs:
     - name: Install dependencies
       run: yarn install --ignore-scripts
 
+    - name: Test lint SASS
+      run: yarn lint:sass
+
+    - name: Test with jest
+      run: yarn test:coverage --runInBand
+
     - name: Upload build folder as artifact
       uses: actions/upload-artifact@v3
       with:
@@ -29,9 +35,3 @@ jobs:
         path: junit.xml
         if-no-files-found: error
         retention-days: 3
-
-    - name: Test lint SASS
-      run: yarn lint:sass
-
-    - name: Test with jest
-      run: yarn test:coverage --runInBand
