@@ -1,4 +1,4 @@
-name: NodeJS with Webpack
+name: Build
 
 on:
   push:
@@ -7,16 +7,16 @@ on:
       - feat/**
       - fix/**
     tags:
-      - v1.x
+      - v1.*
     
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v3
 
-    - name: Use Node.js v20
+    - name: Use NodeJS v20
       uses: actions/setup-node@v3
       with:
         node-version: 20
