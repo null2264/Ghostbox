@@ -1,17 +1,21 @@
 # Changelog
-All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## v1.0.0 - Divergence (**Not yet released**)
+- UI: fixed options in setting page not shown properly
+- UI: [improved sensitive content and CW UI/UX](/CHANGELOG.UI.md)
+- UI: moved settings and dashboard into "More" menu
+- UI: rearrange sidebar
 
-## [Unreleased]
+---
+
+## [3.2.1]
 
 ### Added
 - Hashtags: let users follow hashtags (Mastodon, Akkoma).
 - Posts: Support posts filtering on recent Mastodon versions
 - Reactions: Support custom emoji reactions
-- Compatbility: Support Mastodon v2 timeline filters.
-- Compatbility: Preliminary support for Ditto backend.
+- Compatibility: Support Mastodon v2 timeline filters.
+- Compatibility: Preliminary support for Ditto backend.
 - Compatibility: Support Firefish.
 - Posts: Support dislikes on Friendica.
 - UI: added a character counter to some textareas.
