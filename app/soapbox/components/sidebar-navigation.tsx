@@ -140,6 +140,25 @@ const SidebarNavigation = () => {
           text={<FormattedMessage id='tabs_bar.search' defaultMessage='Search' />}
         />
 
+        {/* TODO: Merge these two to a single page */}
+        {features.publicTimeline && (
+          <>
+            <SidebarNavigationLink
+              to='/timeline/local'
+              icon={features.federating ? require('@tabler/icons/affiliate.svg') : require('@tabler/icons/world.svg')}
+              text={features.federating ? <FormattedMessage id='tabs_bar.local' defaultMessage='Local' /> : <FormattedMessage id='tabs_bar.all' defaultMessage='All' />}
+            />
+
+            {features.federating && (
+              <SidebarNavigationLink
+                to='/timeline/fediverse'
+                icon={require('@tabler/icons/topology-star-ring-3.svg')}
+                text={<FormattedMessage id='tabs_bar.fediverse' defaultMessage='Fediverse' />}
+              />
+            )}
+          </>
+        )}
+
         {account && (
           <>
             <SidebarNavigationLink
@@ -164,24 +183,6 @@ const SidebarNavigation = () => {
               icon={require('@tabler/icons/user.svg')}
               text={<FormattedMessage id='tabs_bar.profile' defaultMessage='Profile' />}
             />
-          </>
-        )}
-
-        {features.publicTimeline && (
-          <>
-            <SidebarNavigationLink
-              to='/timeline/local'
-              icon={features.federating ? require('@tabler/icons/affiliate.svg') : require('@tabler/icons/world.svg')}
-              text={features.federating ? <FormattedMessage id='tabs_bar.local' defaultMessage='Local' /> : <FormattedMessage id='tabs_bar.all' defaultMessage='All' />}
-            />
-
-            {features.federating && (
-              <SidebarNavigationLink
-                to='/timeline/fediverse'
-                icon={require('@tabler/icons/topology-star-ring-3.svg')}
-                text={<FormattedMessage id='tabs_bar.fediverse' defaultMessage='Fediverse' />}
-              />
-            )}
           </>
         )}
 
