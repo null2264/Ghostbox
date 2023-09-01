@@ -15,6 +15,8 @@ const messages = defineMessages({
   lists: { id: 'column.lists', defaultMessage: 'Lists' },
   events: { id: 'column.events', defaultMessage: 'Events' },
   developers: { id: 'navigation.developers', defaultMessage: 'Developers' },
+  settings: { id: 'tabs_bar.settings', defaultMessage: 'Settings' },
+  dashboard: { id: 'tabs_bar.dashboard', defaultMessage: 'Dashboard' },
 });
 
 /** Desktop sidebar with links to different views in the app. */
@@ -75,6 +77,20 @@ const SidebarNavigation = () => {
           text: intl.formatMessage(messages.developers),
         });
       }
+
+      if (account.staff) {
+        menu.push({
+          to: '/soapbox/admin',
+          icon: require('@tabler/icons/dashboard.svg'),
+          text: intl.formatMessage(messages.dashboard),
+        });
+      }
+
+      menu.push({
+        to: '/settings',
+        icon: require('@tabler/icons/settings.svg'),
+        text: intl.formatMessage(messages.settings),
+      });
     }
 
     return menu;
@@ -148,21 +164,6 @@ const SidebarNavigation = () => {
               icon={require('@tabler/icons/user.svg')}
               text={<FormattedMessage id='tabs_bar.profile' defaultMessage='Profile' />}
             />
-
-            <SidebarNavigationLink
-              to='/settings'
-              icon={require('@tabler/icons/settings.svg')}
-              text={<FormattedMessage id='tabs_bar.settings' defaultMessage='Settings' />}
-            />
-
-            {account.staff && (
-              <SidebarNavigationLink
-                to='/soapbox/admin'
-                icon={require('@tabler/icons/dashboard.svg')}
-                count={dashboardCount}
-                text={<FormattedMessage id='tabs_bar.dashboard' defaultMessage='Dashboard' />}
-              />
-            )}
           </>
         )}
 
@@ -188,6 +189,7 @@ const SidebarNavigation = () => {
           <DropdownMenu items={menu} placement='top'>
             <SidebarNavigationLink
               icon={require('@tabler/icons/dots-circle-horizontal.svg')}
+              count={account?.staff ? dashboardCount : undefined}
               text={<FormattedMessage id='tabs_bar.more' defaultMessage='More' />}
             />
           </DropdownMenu>
