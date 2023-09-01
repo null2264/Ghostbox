@@ -167,7 +167,7 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
         <div className='relative'>
 
           {(!hasMediaAndNoCW && !isExpanded && (isUnderReview || isSensitive)) && (
-            <div className='absolute flex h-full w-full items-center justify-center'>
+            <div className='absolute z-[1] flex h-full w-full items-center justify-center'>
               <Button
                 type='button'
                 theme='primary'
