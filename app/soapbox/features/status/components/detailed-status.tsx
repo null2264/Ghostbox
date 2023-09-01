@@ -135,7 +135,7 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
     <SensitiveContentOverlay
       status={status}
       visible={showMedia}
-      onToggleVisibility={handleToggleMediaVisibility}
+      onToggleVisibility={onToggleMediaVisibility}
     />
   ) : null;
 
