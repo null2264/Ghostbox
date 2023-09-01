@@ -1,6 +1,6 @@
-# `fedi.aap.frontend`
+# Ghostbox
 
-`fedi.aap.frontend` is an unnamed alternative frontend for Akkoma. Developed specifically for [fedi.aap](https://fedi.aap.my.id) Akkoma instance.
+Ghostbox is an alternative frontend for Akkoma. Developed specifically for [fedi.aap](https://fedi.aap.my.id) Akkoma instance.
 
 ## Troubleshoot
 
@@ -27,21 +27,21 @@ header Content-Security-Policy "upgrade-insecure-requests;script-src 'self';conn
 
 ## License & Credits
 
-`fedi.aap.frontend` is free software: you can redistribute it and/or modify
+Ghostbox is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-`fedi.aap.frontend` is distributed in the hope that it will be useful,
+Ghostbox is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
-along with `fedi.aap.frontend`.  If not, see <https://www.gnu.org/licenses/>.
+along with Ghostbox.  If not, see <https://www.gnu.org/licenses/>.
 
-`fedi.aap.frontend` make use of code from other opensource and free software under various licenses:
+Ghostbox make use of code from other opensource and free software under various licenses:
 
-- `fedi.aap.frontend` is a fork of [Soapbox](https://soapbox.pub) a frontend for Rebased, Pleroma and Mastodon, licensed under AGPL v3 or later.
+- Ghostbox is a fork of [Soapbox](https://soapbox.pub) a frontend for Rebased, Pleroma and Mastodon, licensed under AGPL v3 or later.
 
 - [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) licensed by Tailwindlab under the simple permissive MIT License.
