@@ -158,7 +158,7 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
 
         {((isUnderReview || isSensitive) && actualStatus.spoiler_text) && (
           <div className='pb-4'>
-            <Text className='line-clamp-6' theme='white' size='md' weight='medium'>
+            <Text className='line-clamp-6' theme='white' size='lg' weight='medium'>
               <span dangerouslySetInnerHTML={{ __html: actualStatus.spoilerHtml }} />
             </Text>
           </div>
