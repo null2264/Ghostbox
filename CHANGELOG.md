@@ -5,6 +5,9 @@
 - UI: [improved sensitive content and CW UI/UX](/CHANGELOG.UI.md)
 - UI: moved settings and dashboard into "More" menu
 - UI: rearrange sidebar
+- UI: changed favorite icon to star
+- UI: add CSS support for headings (H1, H2, H3)
+- UI: moved timeline (local and fediverse) right below search
 
 ---
 
