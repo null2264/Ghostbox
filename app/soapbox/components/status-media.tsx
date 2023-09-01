@@ -107,19 +107,17 @@ const StatusMedia: React.FC<IStatusMedia> = ({
         media = (
           <Bundle fetchComponent={Video} loading={renderLoadingVideoPlayer}>
             {(Component: typeof VideoType) => (
-              <>
-                {sensitiveOverlay}
-                <Component
-                  preview={video.preview_url}
-                  blurhash={video.blurhash}
-                  src={video.url}
-                  alt={video.description}
-                  aspectRatio={Number(video.meta.getIn(['original', 'aspect']))}
-                  height={285}
-                  visible={showMedia}
-                  inline
-                />
-              </>
+              <Component
+                preview={video.preview_url}
+                blurhash={video.blurhash}
+                src={video.url}
+                alt={video.description}
+                aspectRatio={Number(video.meta.getIn(['original', 'aspect']))}
+                height={285}
+                visible={showMedia}
+                sensitiveOverlay={sensitiveOverlay}
+                inline
+              />
             )}
           </Bundle>
         );
@@ -130,19 +128,17 @@ const StatusMedia: React.FC<IStatusMedia> = ({
       media = (
         <Bundle fetchComponent={Audio} loading={renderLoadingAudioPlayer}>
           {(Component: any) => (
-            <>
-              {sensitiveOverlay}
-              <Component
-                src={attachment.url}
-                alt={attachment.description}
-                poster={attachment.preview_url !== attachment.url ? attachment.preview_url : status.getIn(['account', 'avatar_static'])}
-                backgroundColor={attachment.meta.getIn(['colors', 'background'])}
-                foregroundColor={attachment.meta.getIn(['colors', 'foreground'])}
-                accentColor={attachment.meta.getIn(['colors', 'accent'])}
-                duration={attachment.meta.getIn(['original', 'duration'], 0)}
-                height={263}
-              />
-            </>
+            <Component
+              src={attachment.url}
+              alt={attachment.description}
+              poster={attachment.preview_url !== attachment.url ? attachment.preview_url : status.getIn(['account', 'avatar_static'])}
+              backgroundColor={attachment.meta.getIn(['colors', 'background'])}
+              foregroundColor={attachment.meta.getIn(['colors', 'foreground'])}
+              accentColor={attachment.meta.getIn(['colors', 'accent'])}
+              duration={attachment.meta.getIn(['original', 'duration'], 0)}
+              height={263}
+              sensitiveOverlay={sensitiveOverlay}
+            />
           )}
         </Bundle>
       );

@@ -406,15 +406,16 @@ const Status: React.FC<IStatus> = (props) => {
     );
   }
 
-  const overlayElement: JSX.Element | null = (isUnderReview || isSensitive) ? (
+  const hasMedia = (quote || actualStatus.card || actualStatus.media_attachments.size > 0);
+  const hasMediaAndNoCW = hasMedia && !actualStatus.spoiler_text;
+
+  const overlayElement: JSX.Element | null = ((isUnderReview || isSensitive) && hasMediaAndNoCW) ? (
     <SensitiveContentOverlay
       status={status}
       visible={showMedia}
       onToggleVisibility={handleToggleMediaVisibility}
     />
   ) : null;
-
-  const hasMediaAndNoCW = (quote || actualStatus.card || actualStatus.media_attachments.size > 0) && !actualStatus.spoiler_text;
 
   return (
     <HotKeys handlers={handlers} data-testid='status'>
@@ -497,7 +498,7 @@ const Status: React.FC<IStatus> = (props) => {
 
                     <TranslateButton status={actualStatus} />
 
-                    {(hasMediaAndNoCW) && (
+                    {(hasMedia) && (
                       <Stack space={4}>
                         <StatusMedia
                           status={actualStatus}
