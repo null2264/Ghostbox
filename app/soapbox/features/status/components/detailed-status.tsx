@@ -199,7 +199,7 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
                 <Stack space={4}>
                   <StatusMedia
                     status={actualStatus}
-                    showMedia={showMedia}
+                    showMedia={actualStatus.spoiler_text ? true : showMedia}
                     sensitiveOverlay={overlayElement}
                     onToggleVisibility={onToggleMediaVisibility}
                   />

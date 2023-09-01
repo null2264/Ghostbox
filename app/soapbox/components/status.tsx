@@ -504,7 +504,7 @@ const Status: React.FC<IStatus> = (props) => {
                           status={actualStatus}
                           muted={muted}
                           onClick={handleClick}
-                          showMedia={showMedia}
+                          showMedia={actualStatus.spoiler_text ? true : showMedia}
                           sensitiveOverlay={overlayElement}
                           onToggleVisibility={handleToggleMediaVisibility}
                         />
