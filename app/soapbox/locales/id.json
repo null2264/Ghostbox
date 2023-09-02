@@ -1066,6 +1066,7 @@
   "status.reply": "Balas",
   "status.replyAll": "Balas ke semua",
   "status.report": "Laporkan @{name}",
+  "status.hidden": "Media disembunyikan",
   "status.sensitive_warning": "Konten sensitif",
   "status.sensitive_warning.subtitle": "This content may not be suitable for all audiences.",
   "status.share": "Share",

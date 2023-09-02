@@ -1501,6 +1501,7 @@
   "status.reply": "Reply",
   "status.replyAll": "Reply to thread",
   "status.report": "Report @{name}",
+  "status.hidden": "Media hidden",
   "status.sensitive_warning": "Sensitive content",
   "status.sensitive_warning.subtitle": "This content may not be suitable for all audiences.",
   "status.share": "Share",

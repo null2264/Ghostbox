@@ -1125,6 +1125,7 @@
   "status.reply": "返信",
   "status.replyAll": "全員に返信",
   "status.report": "@{name}さんを通報",
+  "status.hidden": "Media hidden",
   "status.sensitive_warning": "閲覧注意",
   "status.sensitive_warning.subtitle": "This content may not be suitable for all audiences.",
   "status.share": "共有",

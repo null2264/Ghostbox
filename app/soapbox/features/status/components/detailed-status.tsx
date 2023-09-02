@@ -131,7 +131,7 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
   const hasMedia = (quote || actualStatus.card || actualStatus.media_attachments.size > 0);
   const hasMediaAndNoCW = hasMedia && !actualStatus.spoiler_text;
 
-  const overlayElement: JSX.Element | null = ((isUnderReview || isSensitive) && hasMediaAndNoCW) ? (
+  const overlayElement: JSX.Element | null = hasMediaAndNoCW ? (
     <SensitiveContentOverlay
       status={status}
       visible={showMedia}

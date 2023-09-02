@@ -18,6 +18,7 @@ const messages = defineMessages({
   deleteHeading: { id: 'confirmations.delete.heading', defaultMessage: 'Delete post' },
   deleteMessage: { id: 'confirmations.delete.message', defaultMessage: 'Are you sure you want to delete this post?' },
   hide: { id: 'moderation_overlay.hide', defaultMessage: 'Hide content' },
+  hiddenTitle: { id: 'status.hidden', defaultMessage: 'Media hidden' },
   sensitiveTitle: { id: 'status.sensitive_warning', defaultMessage: 'Sensitive content' },
   underReviewTitle: { id: 'moderation_overlay.title', defaultMessage: 'Content Under Review' },
   underReviewSubtitle: { id: 'moderation_overlay.subtitle', defaultMessage: 'This Post has been sent to Moderation for review and is only visible to you. If you believe this is an error please contact Support.' },
@@ -110,13 +111,21 @@ const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveConte
         <div className='flex max-h-screen items-center justify-center'>
           <div className='mx-auto w-3/4 space-y-4 text-center' ref={ref}>
             <div className='space-y-1'>
-              <Text theme='white' weight='semibold'>
-                {intl.formatMessage(isUnderReview ? messages.underReviewTitle : messages.sensitiveTitle)}
-              </Text>
+              {(status.hidden || isUnderReview) ? (
+                <>
+                  <Text theme='white' weight='semibold'>
+                    {intl.formatMessage(isUnderReview ? messages.underReviewTitle : messages.sensitiveTitle)}
+                  </Text>
 
-              <Text theme='white' size='sm' weight='medium'>
-                {intl.formatMessage(isUnderReview ? messages.underReviewSubtitle : messages.sensitiveSubtitle)}
-              </Text>
+                  <Text theme='white' size='sm' weight='medium'>
+                    {intl.formatMessage(isUnderReview ? messages.underReviewSubtitle : messages.sensitiveSubtitle)}
+                  </Text>
+                </>
+              ) : (
+                <Text theme='white' weight='semibold'>
+                  {intl.formatMessage(messages.hiddenTitle)}
+                </Text>
+              )}
 
               {status.spoiler_text && (
                 <div className='py-4 italic'>
@@ -155,6 +164,7 @@ const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveConte
                 size='sm'
                 icon={require('@tabler/icons/eye.svg')}
                 onClick={toggleVisibility}
+                className='min-w-max'
               >
                 {intl.formatMessage(messages.show)}
               </Button>

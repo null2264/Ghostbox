@@ -101,7 +101,7 @@ const QuotedStatus: React.FC<IQuotedStatus> = ({ status, onCancel, compose }) =>
   const hasMedia = (status.media_attachments.size > 0);
   const hasMediaAndNoCW = hasMedia && !status.spoiler_text;
 
-  const overlayElement: JSX.Element | null = ((status.hidden) && hasMediaAndNoCW) ? (
+  const overlayElement: JSX.Element | null = hasMediaAndNoCW ? (
     <SensitiveContentOverlay
       status={status}
       visible={showMedia}
