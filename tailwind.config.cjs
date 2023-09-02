@@ -67,6 +67,7 @@ module.exports = {
         'sonar-scale-1': 'sonar-scale-1 3s 1.5s linear infinite',
         'enter': 'enter 200ms ease-out',
         'leave': 'leave 150ms ease-in forwards',
+        'spinner': '1.2s cubic-bezier(0.32, 0.65, 0.71, 0.4) 0s infinite normal none running spin',
       },
       keyframes: {
         'sonar-scale-4': {
