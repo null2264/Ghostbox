@@ -23,8 +23,7 @@ const messages = defineMessages({
   follow: { id: 'account.follow', defaultMessage: 'Follow' },
   mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
   remote_follow: { id: 'account.remote_follow', defaultMessage: 'Remote follow' },
-  requested: { id: 'account.requested', defaultMessage: 'Awaiting approval. Click to cancel follow request' },
-  requested_small: { id: 'account.requested_small', defaultMessage: 'Awaiting approval' },
+  requested: { id: 'account.requested', defaultMessage: 'Awaiting approval' },
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
   unfollow: { id: 'account.unfollow', defaultMessage: 'Unfollow' },
   unmute: { id: 'account.unmute', defaultMessage: 'Unmute @{name}' },
@@ -213,7 +212,7 @@ const ActionButton: React.FC<IActionButton> = ({ account, actionType, small }) =
         <Button
           size='sm'
           theme='tertiary'
-          text={small ? intl.formatMessage(messages.requested_small) : intl.formatMessage(messages.requested)}
+          text={intl.formatMessage(messages.requested)}
           onClick={handleFollow}
         />
       );
