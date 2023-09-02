@@ -6,7 +6,7 @@ import { generateAccent, generateNeutral } from 'soapbox/utils/theme';
 import type { TailwindColorPalette } from 'soapbox/types/colors';
 
 type SoapboxConfig = ImmutableMap<string, any>;
-type SoapboxColors = ImmutableMap<string, any>;
+type SoapboxColors = ImmutableMap<string | number, any>;
 
 /** Check if the value is a valid hex color */
 const isHex = (value: any): boolean => /^#([0-9A-F]{3}){1,2}$/i.test(value);
