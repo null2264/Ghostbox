@@ -10,7 +10,7 @@ import {
   fromJS,
 } from 'immutable';
 
-import { parseVersion, PLEROMA } from 'soapbox/utils/features';
+import { parseVersion, PLEROMA, AKKOMA } from 'soapbox/utils/features';
 import { mergeDefined } from 'soapbox/utils/normalizers';
 import { isNumber } from 'soapbox/utils/numbers';
 
@@ -96,7 +96,7 @@ const pleromaToMastodonConfig = (instance: ImmutableMap<string, any>) => {
 };
 
 // Get the software's default attachment limit
-const getAttachmentLimit = (software: string | null) => software === PLEROMA ? Infinity : 4;
+const getAttachmentLimit = (software: string | null) => (software === PLEROMA || software === AKKOMA) ? Infinity : 4;
 
 // Normalize version
 const normalizeVersion = (instance: ImmutableMap<string, any>) => {
@@ -108,17 +108,6 @@ const normalizeVersion = (instance: ImmutableMap<string, any>) => {
       return version;
     }
   });
-};
-
-/** Rename Akkoma to Pleroma+akkoma */
-const fixAkkoma = (instance: ImmutableMap<string, any>) => {
-  const version: string = instance.get('version', '');
-
-  if (version.includes('Akkoma')) {
-    return instance.set('version', '2.7.2 (compatible; Pleroma 2.4.50+akkoma)');
-  } else {
-    return instance;
-  }
 };
 
 /** Set Takahē version to a Pleroma-like string */
@@ -155,7 +144,6 @@ export const normalizeInstance = (instance: Record<string, any>) => {
       // Normalize version
       normalizeVersion(instance);
       fixTakahe(instance);
-      fixAkkoma(instance);
 
       // Merge defaults
       instance.mergeDeepWith(mergeDefined, InstanceRecord());

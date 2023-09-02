@@ -2,7 +2,7 @@ import { importEntities } from 'soapbox/entity-store/actions';
 import { Entities } from 'soapbox/entity-store/entities';
 import { selectAccount } from 'soapbox/selectors';
 import { isLoggedIn } from 'soapbox/utils/auth';
-import { getFeatures, parseVersion, PLEROMA } from 'soapbox/utils/features';
+import { getFeatures, parseVersion, PLEROMA, AKKOMA } from 'soapbox/utils/features';
 
 import api, { getLinks } from '../api';
 
@@ -298,7 +298,7 @@ const muteAccount = (id: string, notifications?: boolean, duration = 0) =>
       const instance = state.instance;
       const v = parseVersion(instance.version);
 
-      if (v.software === PLEROMA) {
+      if (v.software === PLEROMA || v.software === AKKOMA) {
         params.expires_in = duration;
       } else {
         params.duration = duration;

@@ -1,5 +1,5 @@
 
-import { PLEROMA, parseVersion } from './features';
+import { PLEROMA, AKKOMA, parseVersion } from './features';
 
 import type { RootState } from 'soapbox/store';
 import type { Instance } from 'soapbox/types/entities';
@@ -13,6 +13,7 @@ const getInstanceScopes = (instance: Instance) => {
 
   switch (v.software) {
     case PLEROMA:
+    case AKKOMA:
       return 'read write follow push admin';
     default:
       return 'read write follow push';
