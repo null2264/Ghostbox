@@ -10,6 +10,8 @@ import { MediaGallery, Video, Audio } from 'soapbox/features/ui/util/async-compo
 import { useAppDispatch, useSettings } from 'soapbox/hooks';
 import { addAutoPlay } from 'soapbox/utils/media';
 
+import SensitiveContentOverlay from './statuses/sensitive-content-overlay';
+
 import type { List as ImmutableList } from 'immutable';
 import type VideoType from 'soapbox/features/video';
 import type { Status, Attachment } from 'soapbox/types/entities';
@@ -23,7 +25,7 @@ interface IStatusMedia {
   onClick?: () => void
   /** Whether or not the media is concealed behind a NSFW banner. */
   showMedia?: boolean
-  sensitiveOverlay?: JSX.Element | null
+  showSensitiveOverlay?: boolean
   /** Callback when visibility is toggled (eg clicked through NSFW). */
   onToggleVisibility?: () => void
 }
@@ -34,7 +36,7 @@ const StatusMedia: React.FC<IStatusMedia> = ({
   muted = false,
   onClick,
   showMedia = true,
-  sensitiveOverlay = null,
+  showSensitiveOverlay = true,
   onToggleVisibility = () => { },
 }) => {
   const dispatch = useAppDispatch();
@@ -71,6 +73,15 @@ const StatusMedia: React.FC<IStatusMedia> = ({
   };
 
   if (size > 0 && firstAttachment) {
+    const sensitiveOverlay: JSX.Element | null = showSensitiveOverlay ? (
+      <SensitiveContentOverlay
+        status={status}
+        visible={showMedia}
+        onToggleVisibility={onToggleVisibility}
+        hideHideButton={firstAttachment.type === 'video'}
+      />
+    ) : null;
+
     if (muted) {
       media = (
         <AttachmentThumbs
@@ -116,6 +127,7 @@ const StatusMedia: React.FC<IStatusMedia> = ({
                 height={285}
                 visible={showMedia}
                 sensitiveOverlay={sensitiveOverlay}
+                onToggleVisibility={onToggleVisibility}
                 inline
               />
             )}

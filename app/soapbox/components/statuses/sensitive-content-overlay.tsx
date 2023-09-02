@@ -31,10 +31,11 @@ interface ISensitiveContentOverlay {
   status: StatusEntity
   onToggleVisibility?(): void
   visible?: boolean
+  hideHideButton?: boolean
 }
 
 const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveContentOverlay>((props, ref) => {
-  const { onToggleVisibility, status } = props;
+  const { onToggleVisibility, status, hideHideButton = false } = props;
 
   const { account } = useOwnAccount();
   const dispatch = useAppDispatch();
@@ -95,11 +96,11 @@ const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveConte
       className={clsx('absolute z-40', {
         'cursor-default backdrop-blur-lg rounded-lg w-full h-full border-0 flex justify-center': !visible,
         'bg-gray-800/75 inset-0': !visible,
-        'bottom-1 right-1': visible,
+        'top-1 right-1': visible,
       })}
       data-testid='sensitive-overlay'
     >
-      {visible ? (
+      {visible ? !hideHideButton && (
         <Button
           text={intl.formatMessage(messages.hide)}
           icon={require('@tabler/icons/eye-off.svg')}

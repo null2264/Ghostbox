@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 import { defineMessages, useIntl } from 'react-intl';
 
 import Blurhash from 'soapbox/components/blurhash';
-import Icon from 'soapbox/components/icon';
+import Icon from 'soapbox/components/ui/icon/icon';
 import { isPanoramic, isPortrait, minimumAspectRatio, maximumAspectRatio } from 'soapbox/utils/media-aspect-ratio';
 
 import { isFullscreen, requestFullscreen, exitFullscreen } from '../ui/util/fullscreen';
@@ -115,6 +115,7 @@ interface IVideo {
   aspectRatio?: number
   displayMedia?: string
   sensitiveOverlay?: JSX.Element | null
+  onToggleVisibility?: () => void
 }
 
 const Video: React.FC<IVideo> = ({
@@ -132,6 +133,7 @@ const Video: React.FC<IVideo> = ({
   link,
   blurhash,
   sensitiveOverlay = null,
+  onToggleVisibility = () => { },
 }) => {
   const intl = useIntl();
 
@@ -562,6 +564,18 @@ const Video: React.FC<IVideo> = ({
           </div>
 
           <div className='video-player__buttons right'>
+            { !fullscreen && (
+              <button
+                type='button'
+                title={intl.formatMessage(messages.hide)}
+                aria-label={intl.formatMessage(messages.hide)}
+                className='player-button'
+                onClick={onToggleVisibility}
+              >
+                <Icon src={require('@tabler/icons/eye-off.svg')} />
+              </button>
+            )}
+
             <button
               type='button'
               title={intl.formatMessage(fullscreen ? messages.exit_fullscreen : messages.fullscreen)}

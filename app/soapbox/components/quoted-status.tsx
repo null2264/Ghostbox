@@ -13,7 +13,6 @@ import EventPreview from './event-preview';
 import OutlineBox from './outline-box';
 import StatusContent from './status-content';
 import StatusReplyMentions from './status-reply-mentions';
-import SensitiveContentOverlay from './statuses/sensitive-content-overlay';
 
 import type { Account as AccountEntity, Status as StatusEntity } from 'soapbox/types/entities';
 
@@ -100,14 +99,6 @@ const QuotedStatus: React.FC<IQuotedStatus> = ({ status, onCancel, compose }) =>
   /* --- Start of Ghostbox --- */
   const hasMedia = (status.media_attachments.size > 0);
   const hasMediaAndNoCW = hasMedia && !status.spoiler_text;
-
-  const overlayElement: JSX.Element | null = hasMediaAndNoCW ? (
-    <SensitiveContentOverlay
-      status={status}
-      visible={showMedia}
-      onToggleVisibility={handleToggleMediaVisibility}
-    />
-  ) : null;
   /* --- End of Ghostbox --- */
 
   return (
@@ -178,7 +169,7 @@ const QuotedStatus: React.FC<IQuotedStatus> = ({ status, onCancel, compose }) =>
                     status={status}
                     muted={compose}
                     showMedia={status.spoiler_text ? true : showMedia}
-                    sensitiveOverlay={overlayElement}
+                    showSensitiveOverlay={hasMediaAndNoCW}
                     onToggleVisibility={handleToggleMediaVisibility}
                   />
                 )}

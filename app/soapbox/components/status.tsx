@@ -19,7 +19,6 @@ import StatusActionBar from './status-action-bar';
 import StatusContent from './status-content';
 import StatusMedia from './status-media';
 import StatusReplyMentions from './status-reply-mentions';
-import SensitiveContentOverlay from './statuses/sensitive-content-overlay';
 import StatusInfo from './statuses/status-info';
 import Tombstone from './tombstone';
 import { Button, Card, Icon, Stack, Text } from './ui';
@@ -409,14 +408,6 @@ const Status: React.FC<IStatus> = (props) => {
   const hasMedia = (quote || actualStatus.card || actualStatus.media_attachments.size > 0);
   const hasMediaAndNoCW = hasMedia && !actualStatus.spoiler_text;
 
-  const overlayElement: JSX.Element | null = hasMediaAndNoCW ? (
-    <SensitiveContentOverlay
-      status={status}
-      visible={showMedia}
-      onToggleVisibility={handleToggleMediaVisibility}
-    />
-  ) : null;
-
   // TODO: This is ridiculous, merge 'status', 'quoted-status', and 'detailed-status' common codes
   return (
     <HotKeys handlers={handlers} data-testid='status'>
@@ -506,7 +497,7 @@ const Status: React.FC<IStatus> = (props) => {
                           muted={muted}
                           onClick={handleClick}
                           showMedia={actualStatus.spoiler_text ? true : showMedia}
-                          sensitiveOverlay={overlayElement}
+                          showSensitiveOverlay={hasMediaAndNoCW}
                           onToggleVisibility={handleToggleMediaVisibility}
                         />
 

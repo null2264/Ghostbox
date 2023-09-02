@@ -7,7 +7,6 @@ import Account from 'soapbox/components/account';
 import StatusContent from 'soapbox/components/status-content';
 import StatusMedia from 'soapbox/components/status-media';
 import StatusReplyMentions from 'soapbox/components/status-reply-mentions';
-import SensitiveContentOverlay from 'soapbox/components/statuses/sensitive-content-overlay';
 import StatusInfo from 'soapbox/components/statuses/status-info';
 import TranslateButton from 'soapbox/components/translate-button';
 import { Button, HStack, Icon, Stack, Text } from 'soapbox/components/ui';
@@ -131,14 +130,6 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
   const hasMedia = (quote || actualStatus.card || actualStatus.media_attachments.size > 0);
   const hasMediaAndNoCW = hasMedia && !actualStatus.spoiler_text;
 
-  const overlayElement: JSX.Element | null = hasMediaAndNoCW ? (
-    <SensitiveContentOverlay
-      status={status}
-      visible={showMedia}
-      onToggleVisibility={onToggleMediaVisibility}
-    />
-  ) : null;
-
   return (
     <div className='border-box'>
       <div ref={node} className='detailed-actualStatus' tabIndex={-1}>
@@ -200,7 +191,7 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
                   <StatusMedia
                     status={actualStatus}
                     showMedia={actualStatus.spoiler_text ? true : showMedia}
-                    sensitiveOverlay={overlayElement}
+                    showSensitiveOverlay={hasMediaAndNoCW}
                     onToggleVisibility={onToggleMediaVisibility}
                   />
 
