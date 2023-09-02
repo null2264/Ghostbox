@@ -12,6 +12,7 @@
 - I18n: remove unused locales
 - UI: rename Soapbox to Ghostbox
 - UI: changed spinner's look
+- UI: add hide video button
 
 ---
 
