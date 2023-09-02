@@ -1,10 +1,10 @@
 import clsx from 'clsx';
-import React, { MouseEventHandler, useEffect, useRef, useState } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
 import StatusMedia from 'soapbox/components/status-media';
-import { Stack } from 'soapbox/components/ui';
+import { Button, Stack, Text } from 'soapbox/components/ui';
 import AccountContainer from 'soapbox/containers/account-container';
 import { useSettings } from 'soapbox/hooks';
 import { defaultMediaVisibility } from 'soapbox/utils/status';
@@ -19,6 +19,8 @@ import type { Account as AccountEntity, Status as StatusEntity } from 'soapbox/t
 
 const messages = defineMessages({
   cancel: { id: 'reply_indicator.cancel', defaultMessage: 'Cancel' },
+  show: { id: 'moderation_overlay.show', defaultMessage: 'Show Content' },
+  hide: { id: 'moderation_overlay.hide', defaultMessage: 'Hide content' },
 });
 
 interface IQuotedStatus {
@@ -38,16 +40,20 @@ const QuotedStatus: React.FC<IQuotedStatus> = ({ status, onCancel, compose }) =>
   const settings = useSettings();
   const displayMedia = settings.get('displayMedia');
 
-  const overlay = useRef<HTMLDivElement>(null);
-
   const [showMedia, setShowMedia] = useState<boolean>(defaultMediaVisibility(status, displayMedia));
-  const [minHeight, setMinHeight] = useState(208);
+  /* --- Start of Ghostbox --- */
+  const [isExpanded, setExpanded] = useState<boolean>(false);  // for CW
 
-  useEffect(() => {
-    if (overlay.current) {
-      setMinHeight(overlay.current.getBoundingClientRect().height);
-    }
-  }, [overlay.current]);
+  const handleShowContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
+    event.stopPropagation();
+    setExpanded(true);
+  };
+
+  const handleHideContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
+    event.stopPropagation();
+    setExpanded(false);
+  };
+  /* --- End of Ghostbox --- */
 
   const handleExpandClick: MouseEventHandler<HTMLDivElement> = (e) => {
     if (!status) return;
@@ -91,6 +97,19 @@ const QuotedStatus: React.FC<IQuotedStatus> = ({ status, onCancel, compose }) =>
     };
   }
 
+  /* --- Start of Ghostbox --- */
+  const hasMedia = (status.media_attachments.size > 0);
+  const hasMediaAndNoCW = hasMedia && !status.spoiler_text;
+
+  const overlayElement: JSX.Element | null = ((status.hidden) && hasMediaAndNoCW) ? (
+    <SensitiveContentOverlay
+      status={status}
+      visible={showMedia}
+      onToggleVisibility={handleToggleMediaVisibility}
+    />
+  ) : null;
+  /* --- End of Ghostbox --- */
+
   return (
     <OutlineBox
       data-testid='quoted-status'
@@ -113,37 +132,76 @@ const QuotedStatus: React.FC<IQuotedStatus> = ({ status, onCancel, compose }) =>
 
         <StatusReplyMentions status={status} hoverable={false} />
 
-        {status.event ? <EventPreview status={status} hideAction /> : (
-          <Stack
-            className='relative z-0'
-            style={{ minHeight: status.hidden ? Math.max(minHeight, 208) + 12 : undefined }}
-          >
-            {(status.hidden) && (
-              <SensitiveContentOverlay
-                status={status}
-                visible={showMedia}
-                onToggleVisibility={handleToggleMediaVisibility}
-                ref={overlay}
-              />
-            )}
-
-            <Stack space={4}>
-              <StatusContent
-                status={status}
-                collapsable
-              />
-
-              {status.media_attachments.size > 0 && (
-                <StatusMedia
-                  status={status}
-                  muted={compose}
-                  showMedia={showMedia}
-                  onToggleVisibility={handleToggleMediaVisibility}
-                />
-              )}
-            </Stack>
-          </Stack>
+        {/* --- Start of Ghostbox --- */}
+        {((status.hidden) && status.spoiler_text) && (
+          <div className='pb-4'>
+            <Text className='line-clamp-6' theme='white' weight='medium'>
+              <span dangerouslySetInnerHTML={{ __html: status.spoilerHtml }} />
+            </Text>
+          </div>
         )}
+
+        {status.event ? <EventPreview status={status} hideAction /> : (
+          <div className='relative'>
+
+            {(!hasMediaAndNoCW && !isExpanded && (status.hidden)) && (
+              <div className='absolute z-[1] flex h-full w-full items-center justify-center'>
+                <Button
+                  type='button'
+                  theme='primary'
+                  size='sm'
+                  icon={require('@tabler/icons/eye.svg')}
+                  onClick={handleShowContent}
+                >
+                  {intl.formatMessage(messages.show)}
+                </Button>
+              </div>
+            )}
+            {/* --- End of Ghostbox --- */}
+
+
+            <Stack
+              className={clsx('relative z-0', {
+                'max-h-24 overflow-hidden blur-sm select-none pointer-events-none': !hasMediaAndNoCW && !isExpanded,
+              })}
+            >
+
+              <Stack space={4}>
+                <StatusContent
+                  status={status}
+                  collapsable
+                />
+
+                {/* --- Start of Ghostbox --- */}
+                {hasMedia && (
+                  <StatusMedia
+                    status={status}
+                    muted={compose}
+                    showMedia={status.spoiler_text ? true : showMedia}
+                    sensitiveOverlay={overlayElement}
+                    onToggleVisibility={handleToggleMediaVisibility}
+                  />
+                )}
+              </Stack>
+            </Stack>
+
+            {/* --- Start of Ghostbox --- */}
+            {(!hasMediaAndNoCW && isExpanded && (status.hidden)) && (
+              <div className='flex w-full justify-center pt-2'>
+                <Button
+                  type='button'
+                  theme='primary'
+                  size='sm'
+                  icon={require('@tabler/icons/eye-off.svg')}
+                  onClick={handleHideContent}
+                >
+                  {intl.formatMessage(messages.hide)}
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+        {/* --- End of Ghostbox --- */}
       </Stack>
     </OutlineBox>
   );

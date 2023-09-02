@@ -417,6 +417,7 @@ const Status: React.FC<IStatus> = (props) => {
     />
   ) : null;
 
+  // TODO: This is ridiculous, merge 'status', 'quoted-status', and 'detailed-status' common codes
   return (
     <HotKeys handlers={handlers} data-testid='status'>
       <div
