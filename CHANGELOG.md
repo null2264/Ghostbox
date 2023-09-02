@@ -11,6 +11,7 @@
 - UI: shorten follow request notice
 - I18n: remove unused locales
 - UI: rename Soapbox to Ghostbox
+- UI: changed spinner's look
 
 ---
 
