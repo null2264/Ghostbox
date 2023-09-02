@@ -8,6 +8,9 @@
 - UI: changed favorite icon to star
 - UI: add CSS support for headings (H1, H2, H3)
 - UI: moved timeline (local and fediverse) right below search
+- UI: shorten follow request notice
+- I18n: remove unused locales
+- UI: rename Soapbox to Ghostbox
 
 ---
 
