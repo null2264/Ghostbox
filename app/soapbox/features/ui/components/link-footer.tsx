@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { logOut } from 'soapbox/actions/auth';
 import { Text } from 'soapbox/components/ui';
 import emojify from 'soapbox/features/emoji';
-import { useSoapboxConfig, useOwnAccount, useFeatures, useAppDispatch } from 'soapbox/hooks';
+import { useSoapboxConfig, useOwnAccount, useFeatures, useAppDispatch, useBackend } from 'soapbox/hooks';
 import sourceCode from 'soapbox/utils/code';
 
 interface IFooterLink {
@@ -28,6 +28,7 @@ const LinkFooter: React.FC = (): JSX.Element => {
   const { account } = useOwnAccount();
   const features = useFeatures();
   const soapboxConfig = useSoapboxConfig();
+  const backend = useBackend();
 
   const dispatch = useAppDispatch();
 
@@ -73,11 +74,13 @@ const LinkFooter: React.FC = (): JSX.Element => {
         ) : (
           <FormattedMessage
             id='getting_started.open_source_notice'
-            defaultMessage='{code_name} is open source software. You can contribute or report issues at {code_link} (v{code_version}).'
+            defaultMessage='{code_name} is open source software. You can contribute or report issues at {code_link} (v{code_version}). Powered by {backend_name} v{backend_version}.'
             values={{
               code_name: sourceCode.displayName,
               code_link: <Text theme='subtle' tag='span'><a className='underline' href={sourceCode.url} rel='noopener' target='_blank'>{sourceCode.repository}</a></Text>,
               code_version: sourceCode.version,
+              backend_name: backend.software,
+              backend_version: backend.version,
             }}
           />
         )}
