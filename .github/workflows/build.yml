@@ -6,9 +6,9 @@ on:
       - develop
       - feat/**
       - fix/**
-    tags:
-      - v1.*
-    
+  release:
+    types: [ published ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
