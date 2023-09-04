@@ -18,7 +18,7 @@
   "scripts": {
     "start": "npx webpack-dev-server",
     "dev": "${npm_execpath} run start",
-    "build": "cd toaster/ && yarn build && cd ../ && npx webpack",
+    "build": "cd toaster/ && yarn install && yarn build && cd ../ && npx webpack",
     "audit:fix": "npx yarn-audit-fix",
     "manage:translations": "npx ts-node ./scripts/translationRunner.ts",
     "i18n": "rm -rf build tmp && npx cross-env NODE_ENV=production ${npm_execpath} run build && ${npm_execpath} manage:translations en",
