@@ -85,7 +85,6 @@ export interface ToasterProps {
 export interface ToastWrapperProps {
   id: string;
   className?: string;
-  style?: React.CSSProperties;
   onHeightUpdate: (id: string, height: number) => void;
   children?: React.ReactNode;
 }

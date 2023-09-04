@@ -17,3 +17,6 @@ export const prefersReducedMotion = (() => {
     return shouldReduceMotion;
   };
 })();
+
+export const classNames = (...args: (string | undefined | null)[]) =>
+  args.join(' ');
