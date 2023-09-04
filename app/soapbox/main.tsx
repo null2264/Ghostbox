@@ -1,3 +1,9 @@
+/** DO NOT REMOVE; Content-Security-Policy enforcement */
+/* eslint-disable prefer-const,@typescript-eslint/no-unused-vars */
+declare let _akkomaNonce: string;
+declare let __webpack_nonce__: string;
+__webpack_nonce__ = _akkomaNonce;
+
 import './polyfills';
 
 import * as OfflinePluginRuntime from '@lcdp/offline-plugin/runtime';
