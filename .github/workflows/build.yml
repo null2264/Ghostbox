@@ -25,6 +25,7 @@ jobs:
       run: |
         # -- Build one time for release
         yarn install --ignore-scripts
+        yarn patch-package
         env NODE_ENV=production yarn build
         zip -r static.zip static
         # -- For artifact
