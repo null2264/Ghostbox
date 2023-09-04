@@ -2,7 +2,9 @@
 /* eslint-disable prefer-const,@typescript-eslint/no-unused-vars */
 declare let _akkomaNonce: string;
 declare let __webpack_nonce__: string;
-__webpack_nonce__ = _akkomaNonce;
+try {
+  __webpack_nonce__ = _akkomaNonce;
+} catch (e) { /* empty */ }
 
 import './polyfills';
 
