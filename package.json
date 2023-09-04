@@ -18,7 +18,7 @@
   "scripts": {
     "start": "npx webpack-dev-server",
     "dev": "${npm_execpath} run start",
-    "build": "npx webpack",
+    "build": "cd toaster/ && yarn build && cd ../ && npx webpack",
     "audit:fix": "npx yarn-audit-fix",
     "manage:translations": "npx ts-node ./scripts/translationRunner.ts",
     "i18n": "rm -rf build tmp && npx cross-env NODE_ENV=production ${npm_execpath} run build && ${npm_execpath} manage:translations en",
@@ -144,7 +144,7 @@
     "react-datepicker": "^4.8.0",
     "react-dom": "^18.0.0",
     "react-helmet": "^6.1.0",
-    "react-hot-toast": "link:./toaster",
+    "react-hot-toast": "./toaster",
     "react-hotkeys": "^1.1.4",
     "react-immutable-pure-component": "^2.2.2",
     "react-inlinesvg": "^3.0.0",

@@ -9027,9 +9027,10 @@ react-helmet@^6.1.0:
     react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
 
-"react-hot-toast@link:./toaster":
-  version "0.0.0"
-  uid ""
+react-hot-toast@./toaster:
+  version "2.4.1"
+  dependencies:
+    goober "^2.1.10"
 
 react-hotkeys@^1.1.4:
   version "1.1.4"
