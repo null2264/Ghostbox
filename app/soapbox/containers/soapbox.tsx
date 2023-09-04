@@ -3,7 +3,6 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import clsx from 'clsx';
 import React, { useState, useEffect } from 'react';
-import { Toaster } from 'react-hot-toast';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
@@ -23,6 +22,7 @@ import { StatProvider } from 'soapbox/contexts/stat-context';
 import AuthLayout from 'soapbox/features/auth-layout';
 import EmbeddedStatus from 'soapbox/features/embedded-status';
 import PublicLayout from 'soapbox/features/public-layout';
+import { Toaster } from 'soapbox/features/toast';
 import BundleContainer from 'soapbox/features/ui/containers/bundle-container';
 import {
   ModalContainer,
@@ -263,6 +263,12 @@ const SoapboxLoad: React.FC<ISoapboxLoad> = ({ children }) => {
   );
 };
 
+declare global {
+  interface Window {
+    __webpack_nonce__: string
+  }
+}
+
 interface ISoapboxHead {
   children: React.ReactNode
 }
@@ -288,8 +294,8 @@ const SoapboxHead: React.FC<ISoapboxHead> = ({ children }) => {
       <Helmet>
         <html lang={locale} className={clsx('h-full', { dark: darkMode })} />
         <body className={bodyClass} dir={direction} />
-        {themeCss && <style id='theme' type='text/css'>{`:root{${themeCss}}`}</style>}
-        {darkMode && <style type='text/css'>{':root { color-scheme: dark; }'}</style>}
+        {themeCss && <style id='theme' type='text/css' nonce={window.__webpack_nonce__}>{`:root{${themeCss}}`}</style>}
+        {darkMode && <style type='text/css' nonce={window.__webpack_nonce__}>{':root { color-scheme: dark; }'}</style>}
         <meta name='theme-color' content={soapboxConfig.brandColor} />
       </Helmet>
 
