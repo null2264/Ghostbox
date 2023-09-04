@@ -48,4 +48,4 @@ Ghostbox make use of code from other opensource and free software under various 
 
 - [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) licensed by Tailwindlab under the simple permissive MIT License.
 
-- `toaster/` is a fork of [`react-hot-toast`](https://github.com/timolins/react-hot-toast), licensed under MIT.
+- [`react-hot-toast` fork](https://github.com/null2264/react-hot-toast), licensed under MIT.
