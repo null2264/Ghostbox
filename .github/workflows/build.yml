@@ -27,12 +27,15 @@ jobs:
         yarn install --ignore-scripts
         env NODE_ENV=production yarn build
         zip -r static.zip static
+        # -- For artifact
+        mkdir build/
+        cp static/ build/
 
     - name: Upload build folder as artifact
       uses: actions/upload-artifact@v3
       with:
-        name: static
-        path: static/
+        name: build
+        path: build/
         if-no-files-found: error
         retention-days: 3
 
