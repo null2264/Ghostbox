@@ -1,11 +1,14 @@
-/** DO NOT REMOVE; Content-Security-Policy enforcement */
-/* eslint-disable prefer-const,@typescript-eslint/no-unused-vars */
-declare let _akkomaNonce: string;
-declare let __webpack_nonce__: string;
+declare global {
+  interface Window {
+    __webpack_nonce__: string
+    _akkomaNonce: string
+  }
+}
+
 try {
-  __webpack_nonce__ = _akkomaNonce;
+  window.__webpack_nonce__ = window._akkomaNonce;
 } catch (e) {
-  __webpack_nonce__ = '';
+  window.__webpack_nonce__ = '';
 }
 
 import './polyfills';

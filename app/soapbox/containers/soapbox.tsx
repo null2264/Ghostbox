@@ -263,12 +263,6 @@ const SoapboxLoad: React.FC<ISoapboxLoad> = ({ children }) => {
   );
 };
 
-declare global {
-  interface Window {
-    __webpack_nonce__: string
-  }
-}
-
 interface ISoapboxHead {
   children: React.ReactNode
 }
