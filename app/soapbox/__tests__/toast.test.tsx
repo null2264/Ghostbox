@@ -6,7 +6,7 @@ import { IntlProvider } from 'react-intl';
 import { act, screen } from 'soapbox/jest/test-helpers';
 
 function renderApp() {
-  const { Toaster } = require('react-hot-toast');
+  const { Toaster } = require('soapbox/features/toast');
   const toast = require('../toast').default;
 
   return {
