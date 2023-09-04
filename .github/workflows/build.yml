@@ -29,7 +29,7 @@ jobs:
         zip -r static.zip static
         # -- For artifact
         mkdir __build/
-        cp static/ __build/
+        cp -r static/ __build/
 
     - name: Upload build folder as artifact
       uses: actions/upload-artifact@v3
