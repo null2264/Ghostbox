@@ -3,11 +3,10 @@
 declare let _akkomaNonce: string;
 declare let __webpack_nonce__: string;
 try {
-  const test = _akkomaNonce;
+  __webpack_nonce__ = _akkomaNonce;
 } catch (e) {
-  _akkomaNonce = '';
+  __webpack_nonce__ = '';
 }
-__webpack_nonce__ = _akkomaNonce;
 
 import './polyfills';
 
