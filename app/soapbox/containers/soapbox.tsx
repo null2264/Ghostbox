@@ -288,7 +288,6 @@ const SoapboxHead: React.FC<ISoapboxHead> = ({ children }) => {
       <Helmet>
         <html lang={locale} className={clsx('h-full', { dark: darkMode })} />
         <body className={bodyClass} dir={direction} />
-        <style id='_goober' nonce={window.__webpack_nonce__} />
         {themeCss && <style id='theme' type='text/css' nonce={window.__webpack_nonce__}>{`:root{${themeCss}}`}</style>}
         {darkMode && <style type='text/css' nonce={window.__webpack_nonce__}>{':root { color-scheme: dark; }'}</style>}
         <meta name='theme-color' content={soapboxConfig.brandColor} />

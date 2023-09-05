@@ -49,6 +49,8 @@ if (BuildConfig.NODE_ENV === 'production') {
 }
 
 ready(() => {
+  document.querySelector('#_goober')?.setAttribute('nonce', window.__webpack_nonce__);
+
   const container = document.getElementById('soapbox') as HTMLElement;
   const root = createRoot(container);
 
