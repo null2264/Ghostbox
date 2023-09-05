@@ -4,31 +4,6 @@ Ghostbox is an alternative frontend for Akkoma. Developed specifically for [fedi
 
 ## Troubleshoot
 
-### Messy colours / styling configuration
-
-> **Warning**
->
-> This workaround will lower your website's security against XSS attacks, I'm currently working on a proper fix [#8](https://github.com/null2264/Ghostbox/issues/8)
-
-This happened due to Akkoma's stricter CSP changes. To workaround this you can set `style-src` value to `'self' 'unsafe-inline';`
-
-> **Note**
->
-> You need to replace https://example.com with your own domain
-
-- Nginx
-
-```conf
-proxy_hide_header Content-Security-Policy;
-add_header Content-Security-Policy "upgrade-insecure-requests;script-src 'self';connect-src 'self' blob: https://example.com wss://example.com;media-src 'self' https:;img-src 'self' data: blob: https:;default-src 'none';base-uri 'self';frame-ancestors 'none';style-src 'self' 'unsafe-inline';font-src 'self';manifest-src 'self';" always;
-```
-
-- Caddy
-
-```Caddyfile
-header Content-Security-Policy "upgrade-insecure-requests;script-src 'self';connect-src 'self' blob: https://example.com wss://example.com;media-src 'self' https:;img-src 'self' data: blob: https:;default-src 'none';base-uri 'self';frame-ancestors 'none';style-src 'self' 'unsafe-inline';font-src 'self';manifest-src 'self';"
-```
-
 ## License & Credits
 
 Ghostbox is free software: you can redistribute it and/or modify
