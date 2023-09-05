@@ -170,11 +170,6 @@ const SoapboxMount = () => {
     }
   };
 
-  useEffect(() => {
-    const goober = document.querySelector('#_goober');
-    if (goober && !goober.getAttribute('nonce')) goober.setAttribute('nonce', window.__webpack_nonce__);
-  }, []);
-
   return (
     <ErrorBoundary>
       <BrowserRouter basename={BuildConfig.FE_SUBDIRECTORY}>
