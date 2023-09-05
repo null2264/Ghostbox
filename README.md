@@ -10,7 +10,7 @@ Ghostbox is an alternative frontend for Akkoma. Developed specifically for [fedi
 >
 > This workaround will lower your website's security against XSS attacks, I'm currently working on a proper fix [#8](https://github.com/null2264/Ghostbox/issues/8)
 
-This happened due to Akkoma's stricter CSP changes. To fix it you just need to set `style-src` value to `'self' 'unsafe-inline';`
+This happened due to Akkoma's stricter CSP changes. To workaround this you can set `style-src` value to `'self' 'unsafe-inline';`
 
 > **Note**
 >
