@@ -103,3 +103,15 @@ body.underline-links [data-markup] a {
   width: 0 !important;
   height: 0 !important;
 }
+
+[data-markup] h1 {
+  @apply text-3xl font-semibold pb-2;
+}
+
+[data-markup] h2 {
+  @apply text-2xl font-semibold pb-2;
+}
+
+[data-markup] h3 {
+  @apply text-xl font-semibold pb-2;
+}
