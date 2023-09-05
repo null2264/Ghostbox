@@ -50,7 +50,7 @@ if (BuildConfig.NODE_ENV === 'production') {
 
 ready(() => {
   const goober = document.querySelector('#_goober');
-  if (goober instanceof HTMLScriptElement)
+  if (goober instanceof HTMLStyleElement)
     goober.nonce = window.__webpack_nonce__;
 
   const container = document.getElementById('soapbox') as HTMLElement;
