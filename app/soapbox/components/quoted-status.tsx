@@ -135,7 +135,7 @@ const QuotedStatus: React.FC<IQuotedStatus> = ({ status, onCancel, compose }) =>
         {status.event ? <EventPreview status={status} hideAction /> : (
           <div className='relative'>
 
-            {(!hasMediaAndNoCW && !isExpanded && (status.hidden)) && (
+            {(!hasMediaAndNoCW && !isExpanded && status.hidden) && (
               <div className='absolute z-[1] flex h-full w-full items-center justify-center'>
                 <Button
                   type='button'
@@ -153,7 +153,7 @@ const QuotedStatus: React.FC<IQuotedStatus> = ({ status, onCancel, compose }) =>
 
             <Stack
               className={clsx('relative z-0', {
-                'max-h-24 overflow-hidden blur-sm select-none pointer-events-none': !hasMediaAndNoCW && !isExpanded,
+                'max-h-24 overflow-hidden blur-sm select-none pointer-events-none': !hasMediaAndNoCW && !isExpanded && status.hidden,
               })}
             >
 
