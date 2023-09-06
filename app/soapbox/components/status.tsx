@@ -239,6 +239,7 @@ const Status: React.FC<IStatus> = (props) => {
               }}
             />
           }
+          visibility={actualStatus.visibility}
         />
       );
     } else if (isReblog) {
@@ -266,6 +267,7 @@ const Status: React.FC<IStatus> = (props) => {
               }}
             />
           }
+          visibility={actualStatus.visibility}
         />
       );
     } else if (featured) {
@@ -276,6 +278,7 @@ const Status: React.FC<IStatus> = (props) => {
           text={
             <FormattedMessage id='status.pinned' defaultMessage='Pinned post' />
           }
+          visibility={actualStatus.visibility}
         />
       );
     } else if (showGroup && group) {
@@ -300,7 +303,12 @@ const Status: React.FC<IStatus> = (props) => {
               }}
             />
           }
+          visibility={actualStatus.visibility}
         />
+      );
+    } else {
+      return (
+        <StatusInfo visibility={actualStatus.visibility} />
       );
     }
   };
@@ -411,21 +419,23 @@ const Status: React.FC<IStatus> = (props) => {
           })}
           data-id={status.id}
         >
-          {renderStatusInfo()}
+          <div>
+            {renderStatusInfo()}
 
-          <AccountContainer
-            key={actualStatus.account.id}
-            id={actualStatus.account.id}
-            timestamp={actualStatus.created_at}
-            timestampUrl={statusUrl}
-            action={accountAction}
-            hideActions={!accountAction}
-            showEdit={!!actualStatus.edited_at}
-            showProfileHoverCard={hoverable}
-            withLinkToProfile={hoverable}
-            approvalStatus={actualStatus.approval_status}
-            avatarSize={avatarSize}
-          />
+            <AccountContainer
+              key={actualStatus.account.id}
+              id={actualStatus.account.id}
+              timestamp={actualStatus.created_at}
+              timestampUrl={statusUrl}
+              action={accountAction}
+              hideActions={!accountAction}
+              showEdit={!!actualStatus.edited_at}
+              showProfileHoverCard={hoverable}
+              withLinkToProfile={hoverable}
+              approvalStatus={actualStatus.approval_status}
+              avatarSize={avatarSize}
+            />
+          </div>
 
           <div className='status__content-wrapper'>
             <StatusReplyMentions status={actualStatus} hoverable={hoverable} />

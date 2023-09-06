@@ -19,7 +19,7 @@ import { maybeFromJS } from 'soapbox/utils/normalizers';
 import type { Account, Attachment, Card, Emoji, Group, Mention, Poll, EmbeddedEntity } from 'soapbox/types/entities';
 
 export type StatusApprovalStatus = 'pending' | 'approval' | 'rejected';
-export type StatusVisibility = 'public' | 'unlisted' | 'private' | 'direct' | 'self' | 'group';
+export type StatusVisibility = 'public' | 'unlisted' | 'local' | 'private' | 'direct' | 'self' | 'group';
 
 export type EventJoinMode = 'free' | 'restricted' | 'invite';
 export type EventJoinState = 'pending' | 'reject' | 'accept';

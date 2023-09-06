@@ -69,6 +69,10 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
           />
         </div>
       );
+    } else {
+      return (
+        <StatusInfo visibility={actualStatus.visibility} />
+      );
     }
   };
 
@@ -106,9 +110,9 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
   return (
     <div className='border-box'>
       <div ref={node} className='detailed-actualStatus' tabIndex={-1}>
-        {renderStatusInfo()}
-
         <div className='mb-4'>
+          {renderStatusInfo()}
+
           <Account
             key={account.id}
             account={account}
