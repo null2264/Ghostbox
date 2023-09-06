@@ -23,6 +23,7 @@ const {
 const DEFAULTS = {
   DEVSERVER_URL: 'http://localhost:3036',
   PATRON_URL: 'http://localhost:3037',
+  BACKEND_URL: 'http://localhost:4000',
 };
 
 const { FE_SUBDIRECTORY } = require(join(__dirname, '..', 'app', 'soapbox', 'build-config'));
@@ -66,6 +67,14 @@ if (process.env.VAGRANT) {
   watchOptions.poll = 1000;
 }
 
+const backendUrl = (() => {
+  try {
+    return new URL(BACKEND_URL || DEFAULTS.BACKEND_URL);
+  } catch {
+    return new URL(DEFAULTS.BACKEND_URL);
+  }
+})();
+
 const devServerUrl = (() => {
   try {
     return new URL(DEVSERVER_URL || DEFAULTS.DEVSERVER_URL);
@@ -87,6 +96,7 @@ const devServer: DevServerConfiguration = {
   },
   headers: {
     'Access-Control-Allow-Origin': '*',
+    'Content-Security-Policy': `upgrade-insecure-requests;style-src 'self' 'nonce-TEST';font-src 'self';script-src 'self' 'nonce-TEST' ;connect-src 'self' https://${backendUrl.hostname} wss://${backendUrl.hostname} http://${devServerUrl.hostname} ws://localhost:*/ws;media-src 'self' https:;img-src 'self' data: blob: https:;default-src 'none';base-uri 'none';frame-ancestors 'none';manifest-src 'self';`,
   },
   client: {
     overlay: true,
