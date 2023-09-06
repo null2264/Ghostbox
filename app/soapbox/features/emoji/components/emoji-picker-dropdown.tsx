@@ -8,7 +8,7 @@ import { changeSetting } from 'soapbox/actions/settings';
 import { useAppDispatch, useAppSelector, useSettings } from 'soapbox/hooks';
 import { RootState } from 'soapbox/store';
 
-import { buildCustomEmojis } from '../../emoji';
+import { buildCustomEmojiPack, ICustomEmojiPack } from '../../emoji';
 import { EmojiPicker as EmojiPickerAsync } from '../../ui/util/async-components';
 
 import type { Emoji, CustomEmoji, NativeEmoji } from 'soapbox/features/emoji';
@@ -22,7 +22,6 @@ export const messages = defineMessages({
   emoji_search: { id: 'emoji_button.search', defaultMessage: 'Search…' },
   emoji_not_found: { id: 'emoji_button.not_found', defaultMessage: 'No emoji\'s found.' },
   emoji_add_custom: { id: 'emoji_button.add_custom', defaultMessage: 'Add custom emoji' },
-  custom: { id: 'emoji_button.custom', defaultMessage: 'Custom' },
   recent: { id: 'emoji_button.recent', defaultMessage: 'Frequently used' },
   search_results: { id: 'emoji_button.search_results', defaultMessage: 'Search results' },
   people: { id: 'emoji_button.people', defaultMessage: 'People' },
@@ -191,7 +190,6 @@ const EmojiPickerDropdown: React.FC<IEmojiPickerDropdown> = ({
         objects: intl.formatMessage(messages.objects),
         symbols: intl.formatMessage(messages.symbols),
         flags: intl.formatMessage(messages.flags),
-        custom: intl.formatMessage(messages.custom),
       },
       skins: {
         choose: intl.formatMessage(messages.skins_choose),
@@ -230,12 +228,18 @@ const EmojiPickerDropdown: React.FC<IEmojiPickerDropdown> = ({
     document.body.style.overflow = '';
   }, []);
 
+  let emojiPacks: { [name: string]: ICustomEmojiPack } | undefined;
+  if (withCustom) emojiPacks = buildCustomEmojiPack(customEmojis);
+  const packNames = emojiPacks ? Object.keys(emojiPacks) : [];
+  const categories: string[] = ['frequent', ...packNames, 'people', 'nature', 'foods', 'activity', 'places', 'objects', 'symbols', 'flags'];
+
   return (
     visible ? (
       <RenderAfter update={update}>
         {!loading && (
           <EmojiPicker
-            custom={withCustom ? [{ emojis: buildCustomEmojis(customEmojis) }] : undefined}
+            custom={packNames.map((k) => (emojiPacks ?? {})[k])}
+            categories={categories}
             title={title}
             onEmojiSelect={handlePick}
             recent={frequentlyUsedEmojis}

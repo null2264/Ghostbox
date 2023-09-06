@@ -226,3 +226,33 @@ export const buildCustomEmojis = (customEmojis: any) => {
 
   return emojis;
 };
+
+export interface ICustomEmojiPack {
+  id: string
+  name: string
+  emojis: EmojiMart<EmojiMartCustom>[]
+}
+
+export const buildCustomEmojiPack = (customEmojis: any) => {
+  const emojiPacks: { [name: string]: ICustomEmojiPack } = {};
+
+  customEmojis.forEach((emoji: any) => {
+    const packName: string = emoji.get('category').replace('pack:', '') || 'custom';
+    const shortcode        = emoji.get('shortcode');
+    const url              = emoji.get('static_url');
+    const name             = shortcode.replace(':', '');
+
+    let pack = emojiPacks[packName];
+    if (!pack) emojiPacks[packName] = { id: packName, name: packName, emojis: [] };
+    pack = emojiPacks[packName];
+
+    pack.emojis.push({
+      id: name,
+      name,
+      keywords: [name],
+      skins: [{ src: url }],
+    });
+  });
+
+  return emojiPacks;
+};
