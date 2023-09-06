@@ -8,20 +8,17 @@ import { mentionCompose, replyCompose } from 'soapbox/actions/compose';
 import { toggleFavourite, toggleReblog } from 'soapbox/actions/interactions';
 import { openModal } from 'soapbox/actions/modals';
 import { toggleStatusHidden, unfilterStatus } from 'soapbox/actions/statuses';
-import TranslateButton from 'soapbox/components/translate-button';
 import AccountContainer from 'soapbox/containers/account-container';
+import StatusContainer from 'soapbox/containers/neo/status-container';
 import QuotedStatus from 'soapbox/features/status/containers/quoted-status-container';
 import { useAppDispatch, useSettings } from 'soapbox/hooks';
 import { defaultMediaVisibility, textForScreenReader, getActualStatus } from 'soapbox/utils/status';
 
-import EventPreview from './event-preview';
 import StatusActionBar from './status-action-bar';
-import StatusContent from './status-content';
-import StatusMedia from './status-media';
 import StatusReplyMentions from './status-reply-mentions';
 import StatusInfo from './statuses/status-info';
 import Tombstone from './tombstone';
-import { Button, Card, Icon, Stack, Text } from './ui';
+import { Card, Icon, Text } from './ui';
 
 import type {
   Account as AccountEntity,
@@ -91,8 +88,6 @@ const Status: React.FC<IStatus> = (props) => {
   const statusUrl = `/@${actualStatus.account.acct}/posts/${actualStatus.id}`;
   const group = actualStatus.group;
 
-  const [isExpanded, setExpanded] = useState<boolean>(!actualStatus.sensitive);  // for CW
-
   const filtered = (status.filtered.size || actualStatus.filtered.size) > 0;
 
   // Track height changes we know about to compensate scrolling.
@@ -103,16 +98,6 @@ const Status: React.FC<IStatus> = (props) => {
   useEffect(() => {
     setShowMedia(defaultMediaVisibility(status, displayMedia));
   }, [status.id]);
-
-  const handleShowContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
-    event.stopPropagation();
-    setExpanded(true);
-  };
-
-  const handleHideContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
-    event.stopPropagation();
-    setExpanded(false);
-  };
 
   const handleToggleMediaVisibility = (): void => {
     setShowMedia(!showMedia);
@@ -405,10 +390,6 @@ const Status: React.FC<IStatus> = (props) => {
     );
   }
 
-  const hasMedia = (quote || actualStatus.card || actualStatus.media_attachments.size > 0);
-  const hasMediaAndNoCW = hasMedia && !actualStatus.spoiler_text;
-
-  // TODO: This is ridiculous, merge 'status', 'quoted-status', and 'detailed-status' common codes
   return (
     <HotKeys handlers={handlers} data-testid='status'>
       <div
@@ -449,79 +430,20 @@ const Status: React.FC<IStatus> = (props) => {
           <div className='status__content-wrapper'>
             <StatusReplyMentions status={actualStatus} hoverable={hoverable} />
 
-            {((isUnderReview || isSensitive) && actualStatus.spoiler_text) && (
-              <div className='pb-4'>
-                <Text className='line-clamp-6' theme='white' size='md' weight='medium'>
-                  <span dangerouslySetInnerHTML={{ __html: actualStatus.spoilerHtml }} />
-                </Text>
-              </div>
-            )}
-
-            <div className='relative'>
-
-              {(!hasMediaAndNoCW && !isExpanded && (isUnderReview || isSensitive)) && (
-                <div className='absolute z-[1] flex h-full w-full items-center justify-center'>
-                  <Button
-                    type='button'
-                    theme='primary'
-                    size='sm'
-                    icon={require('@tabler/icons/eye.svg')}
-                    onClick={handleShowContent}
-                  >
-                    {intl.formatMessage(messages.show)}
-                  </Button>
-                </div>
-              )}
-
-              <Stack
-                className={clsx('relative z-0', {
-                  'max-h-24 overflow-hidden blur-sm select-none pointer-events-none': !hasMediaAndNoCW && !isExpanded,
-                })}
-              >
-
-                {actualStatus.event ? <EventPreview className='shadow-xl' status={actualStatus} /> : (
-                  <Stack space={4}>
-                    <StatusContent
-                      status={actualStatus}
-                      onClick={handleClick}
-                      collapsable
-                      translatable
-                    />
-
-                    <TranslateButton status={actualStatus} />
-
-                    {(hasMedia) && (
-                      <Stack space={4}>
-                        <StatusMedia
-                          status={actualStatus}
-                          muted={muted}
-                          onClick={handleClick}
-                          showMedia={actualStatus.spoiler_text ? true : showMedia}
-                          showSensitiveOverlay={hasMediaAndNoCW}
-                          onToggleVisibility={handleToggleMediaVisibility}
-                        />
-
-                        {quote}
-                      </Stack>
-                    )}
-                  </Stack>
-                )}
-
-                {(!hasMediaAndNoCW && isExpanded && (isUnderReview || isSensitive)) && (
-                  <div className='flex w-full justify-center pt-2'>
-                    <Button
-                      type='button'
-                      theme='primary'
-                      size='sm'
-                      icon={require('@tabler/icons/eye-off.svg')}
-                      onClick={handleHideContent}
-                    >
-                      {intl.formatMessage(messages.hide)}
-                    </Button>
-                  </div>
-                )}
-              </Stack>
-            </div>
+            <StatusContainer
+              showMedia={showMedia || false}
+              isHidden={isUnderReview || isSensitive}
+              onToggleMediaVisibility={handleToggleMediaVisibility}
+              initialExpandState={!actualStatus.sensitive}
+              quote={quote}
+              hasMedia={!!(quote || actualStatus.card || actualStatus.media_attachments.size > 0)}
+              contentOption={{
+                status: actualStatus,
+                onClick: handleClick,
+                collapsable: true,
+                translatable: true,
+              }}
+            />
 
             {(!hideActionBar && !isUnderReview) && (
               <div className='pt-4'>

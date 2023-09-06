@@ -29,7 +29,7 @@ const ReadMoreButton: React.FC<IReadMoreButton> = ({ onClick }) => (
   </button>
 );
 
-interface IStatusContent {
+export interface IStatusContent {
   status: Status
   onClick?: () => void
   collapsable?: boolean

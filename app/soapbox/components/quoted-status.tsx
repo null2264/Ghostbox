@@ -3,15 +3,13 @@ import React, { MouseEventHandler, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
-import StatusMedia from 'soapbox/components/status-media';
-import { Button, Stack, Text } from 'soapbox/components/ui';
+import { Stack } from 'soapbox/components/ui';
 import AccountContainer from 'soapbox/containers/account-container';
+import StatusContainer from 'soapbox/containers/neo/status-container';
 import { useSettings } from 'soapbox/hooks';
 import { defaultMediaVisibility } from 'soapbox/utils/status';
 
-import EventPreview from './event-preview';
 import OutlineBox from './outline-box';
-import StatusContent from './status-content';
 import StatusReplyMentions from './status-reply-mentions';
 
 import type { Account as AccountEntity, Status as StatusEntity } from 'soapbox/types/entities';
@@ -40,19 +38,6 @@ const QuotedStatus: React.FC<IQuotedStatus> = ({ status, onCancel, compose }) =>
   const displayMedia = settings.get('displayMedia');
 
   const [showMedia, setShowMedia] = useState<boolean>(defaultMediaVisibility(status, displayMedia));
-  /* --- Start of Ghostbox --- */
-  const [isExpanded, setExpanded] = useState<boolean>(false);  // for CW
-
-  const handleShowContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
-    event.stopPropagation();
-    setExpanded(true);
-  };
-
-  const handleHideContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
-    event.stopPropagation();
-    setExpanded(false);
-  };
-  /* --- End of Ghostbox --- */
 
   const handleExpandClick: MouseEventHandler<HTMLDivElement> = (e) => {
     if (!status) return;
@@ -96,11 +81,6 @@ const QuotedStatus: React.FC<IQuotedStatus> = ({ status, onCancel, compose }) =>
     };
   }
 
-  /* --- Start of Ghostbox --- */
-  const hasMedia = (status.media_attachments.size > 0);
-  const hasMediaAndNoCW = hasMedia && !status.spoiler_text;
-  /* --- End of Ghostbox --- */
-
   return (
     <OutlineBox
       data-testid='quoted-status'
@@ -123,76 +103,17 @@ const QuotedStatus: React.FC<IQuotedStatus> = ({ status, onCancel, compose }) =>
 
         <StatusReplyMentions status={status} hoverable={false} />
 
-        {/* --- Start of Ghostbox --- */}
-        {((status.hidden) && status.spoiler_text) && (
-          <div className='pb-4'>
-            <Text className='line-clamp-6' theme='white' weight='medium'>
-              <span dangerouslySetInnerHTML={{ __html: status.spoilerHtml }} />
-            </Text>
-          </div>
-        )}
+        <StatusContainer
+          showMedia={showMedia}
+          isHidden={status.hidden}
+          onToggleMediaVisibility={handleToggleMediaVisibility}
+          hasMedia={status.media_attachments.size > 0}
+          contentOption={{
+            status: status,
+            collapsable: true,
+          }}
+        />
 
-        {status.event ? <EventPreview status={status} hideAction /> : (
-          <div className='relative'>
-
-            {(!hasMediaAndNoCW && !isExpanded && status.hidden) && (
-              <div className='absolute z-[1] flex h-full w-full items-center justify-center'>
-                <Button
-                  type='button'
-                  theme='primary'
-                  size='sm'
-                  icon={require('@tabler/icons/eye.svg')}
-                  onClick={handleShowContent}
-                >
-                  {intl.formatMessage(messages.show)}
-                </Button>
-              </div>
-            )}
-            {/* --- End of Ghostbox --- */}
-
-
-            <Stack
-              className={clsx('relative z-0', {
-                'max-h-24 overflow-hidden blur-sm select-none pointer-events-none': !hasMediaAndNoCW && !isExpanded && status.hidden,
-              })}
-            >
-
-              <Stack space={4}>
-                <StatusContent
-                  status={status}
-                  collapsable
-                />
-
-                {/* --- Start of Ghostbox --- */}
-                {hasMedia && (
-                  <StatusMedia
-                    status={status}
-                    muted={compose}
-                    showMedia={status.spoiler_text ? true : showMedia}
-                    showSensitiveOverlay={hasMediaAndNoCW}
-                    onToggleVisibility={handleToggleMediaVisibility}
-                  />
-                )}
-              </Stack>
-            </Stack>
-
-            {/* --- Start of Ghostbox --- */}
-            {(!hasMediaAndNoCW && isExpanded && (status.hidden)) && (
-              <div className='flex w-full justify-center pt-2'>
-                <Button
-                  type='button'
-                  theme='primary'
-                  size='sm'
-                  icon={require('@tabler/icons/eye-off.svg')}
-                  onClick={handleHideContent}
-                >
-                  {intl.formatMessage(messages.hide)}
-                </Button>
-              </div>
-            )}
-          </div>
-        )}
-        {/* --- End of Ghostbox --- */}
       </Stack>
     </OutlineBox>
   );
