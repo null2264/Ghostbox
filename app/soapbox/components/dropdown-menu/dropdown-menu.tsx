@@ -55,11 +55,14 @@ const DropdownMenu = (props: IDropdownMenu) => {
 
   const isOnMobile = isUserTouching();
 
-  const { x, y, strategy, refs, middlewareData, placement } = useFloating<HTMLButtonElement>({
+  const { refs, middlewareData, placement, floatingStyles } = useFloating<HTMLButtonElement>({
     placement: initialPlacement,
+    transform: false,
     middleware: [
       offset(12),
-      flip(),
+      flip({
+        fallbackPlacements: ['right', 'left', 'bottom'],
+      }),
       shift({
         padding: 8,
       }),
@@ -299,11 +302,7 @@ const DropdownMenu = (props: IDropdownMenu) => {
                 'opacity-0 pointer-events-none': !isOpen,
               })
             }
-            style={{
-              position: strategy,
-              top: y ?? 0,
-              left: x ?? 0,
-            }}
+            style={floatingStyles}
           >
             <ul>
               {items.map((item, idx) => (

@@ -1,4 +1,4 @@
-import { shift, useFloating, Placement, offset, OffsetOptions } from '@floating-ui/react';
+import { shift, useFloating, Placement, offset, OffsetOptions, flip } from '@floating-ui/react';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 
@@ -66,7 +66,15 @@ const EmojiSelector: React.FC<IEmojiSelector> = ({
 
   const { x, y, strategy, refs, update } = useFloating<HTMLElement>({
     placement,
-    middleware: [offset(offsetOptions), shift()],
+    middleware: [
+      offset(offsetOptions),
+      flip({
+        fallbackPlacements: ['right', 'left', 'bottom'],
+      }),
+      shift({
+        crossAxis: true,
+      }),
+    ],
   });
 
   const handleExpand: React.MouseEventHandler = () => {
