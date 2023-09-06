@@ -25,7 +25,7 @@ const StatusInfo = (props: IStatusInfo) => {
       // eslint-disable-next-line jsx-a11y/aria-role
       role='status-info'
       className={clsx('flex', {
-        'mb-3': typeof visibility === 'undefined',
+        'mb-3': (avatarSize && icon && text),
       })}
       onClick={onClick}
     >
