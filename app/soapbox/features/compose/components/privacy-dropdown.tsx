@@ -10,7 +10,7 @@ import { changeComposeVisibility } from 'soapbox/actions/compose';
 import { closeModal, openModal } from 'soapbox/actions/modals';
 import Icon from 'soapbox/components/icon';
 import { IconButton } from 'soapbox/components/ui';
-import { useAppDispatch, useCompose } from 'soapbox/hooks';
+import { useAppDispatch, useCompose, useFeatures } from 'soapbox/hooks';
 import { isUserTouching } from 'soapbox/is-mobile';
 
 import Motion from '../../ui/util/optional-motion';
@@ -18,6 +18,8 @@ import Motion from '../../ui/util/optional-motion';
 const messages = defineMessages({
   public_short: { id: 'privacy.public.short', defaultMessage: 'Public' },
   public_long: { id: 'privacy.public.long', defaultMessage: 'Post to public timelines' },
+  local_short: { id: 'privacy.local.short', defaultMessage: 'Local-only' },
+  local_long: { id: 'privacy.local.long', defaultMessage: 'Status is only visible to people on this instance' },
   unlisted_short: { id: 'privacy.unlisted.short', defaultMessage: 'Unlisted' },
   unlisted_long: { id: 'privacy.unlisted.long', defaultMessage: 'Do not post to public timelines' },
   private_short: { id: 'privacy.private.short', defaultMessage: 'Followers-only' },
@@ -152,6 +154,7 @@ const PrivacyDropdown: React.FC<IPrivacyDropdown> = ({
   const activeElement = useRef<HTMLElement | null>(null);
 
   const compose = useCompose(composeId);
+  const features = useFeatures();
 
   const value = compose.privacy;
   const unavailable = compose.id;
@@ -161,6 +164,7 @@ const PrivacyDropdown: React.FC<IPrivacyDropdown> = ({
 
   const options = [
     { icon: require('@tabler/icons/world.svg'), value: 'public', text: intl.formatMessage(messages.public_short), meta: intl.formatMessage(messages.public_long) },
+    ...(features.localOnlyPrivacy ? [{ icon: require('@tabler/icons/home.svg'), value: 'local', text: intl.formatMessage(messages.local_short), meta: intl.formatMessage(messages.local_long) }] : []),
     { icon: require('@tabler/icons/lock-open.svg'), value: 'unlisted', text: intl.formatMessage(messages.unlisted_short), meta: intl.formatMessage(messages.unlisted_long) },
     { icon: require('@tabler/icons/lock.svg'), value: 'private', text: intl.formatMessage(messages.private_short), meta: intl.formatMessage(messages.private_long) },
     { icon: require('@tabler/icons/mail.svg'), value: 'direct', text: intl.formatMessage(messages.direct_short), meta: intl.formatMessage(messages.direct_long) },

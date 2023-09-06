@@ -621,7 +621,7 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
     return menu;
   };
 
-  const publicStatus = ['public', 'unlisted', 'group'].includes(status.visibility);
+  const publicStatus = ['public', 'unlisted', 'local', 'group'].includes(status.visibility);
 
   const replyCount = status.replies_count;
   const reblogCount = status.reblogs_count;

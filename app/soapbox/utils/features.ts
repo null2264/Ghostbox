@@ -698,6 +698,12 @@ const getInstanceFeatures = (instance: Instance) => {
     ]),
 
     /**
+     * Can set status visibility to local-only
+     * @see {@link https://docs.akkoma.dev/stable/development/API/differences_in_mastoapi_responses/#statuses}
+     */
+    localOnlyPrivacy: v.software === AKKOMA,
+
+    /**
      * Can sign in using username instead of e-mail address.
      */
     logInWithUsername: any([
