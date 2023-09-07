@@ -2,6 +2,8 @@
 
 Ghostbox is an alternative frontend for Akkoma. Developed specifically for [fedi.aap](https://fedi.aap.my.id) Akkoma instance.
 
+This fork is created because I do not want to be associated with the original project's maintainer or their controversial opinions.
+
 ## Troubleshoot
 
 ## License & Credits
