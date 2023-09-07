@@ -94,8 +94,7 @@ const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveConte
   return (
     <div
       className={clsx('absolute z-40', {
-        'cursor-default backdrop-blur-lg rounded-lg w-full h-full border-0 flex justify-center': !visible,
-        'bg-gray-800/75 inset-0': !visible,
+        'w-full h-full': !visible,
         'bottom-1 right-1': visible,
       })}
       data-testid='sensitive-overlay'
@@ -109,8 +108,11 @@ const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveConte
           size='sm'
         />
       ) : (
-        <div className='flex max-h-screen items-center justify-center'>
-          <div className='mx-auto w-3/4 space-y-4 text-center' ref={ref}>
+        <button
+          className='flex h-full w-full items-center justify-center'
+          onClick={toggleVisibility}
+        >
+          <div className='max-w-[15rem] space-y-4 rounded-xl bg-white p-4 text-center text-gray-900 backdrop-blur-lg dark:bg-primary-900 dark:text-gray-100' ref={ref}>
             <div className='space-y-1'>
               {(status.hidden || isUnderReview) ? (
                 <>
@@ -148,7 +150,7 @@ const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveConte
                     >
                       <Button
                         type='button'
-                        theme='outline'
+                        theme='primary'
                         size='sm'
                         icon={require('@tabler/icons/headset.svg')}
                       >
@@ -161,7 +163,7 @@ const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveConte
 
               <Button
                 type='button'
-                theme='outline'
+                theme='primary'
                 size='sm'
                 icon={require('@tabler/icons/eye.svg')}
                 onClick={toggleVisibility}
@@ -178,7 +180,7 @@ const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveConte
               ) : null}
             </HStack>
           </div>
-        </div>
+        </button>
       )}
     </div>
   );
