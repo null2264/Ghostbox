@@ -33,13 +33,15 @@ const PollFooter: React.FC<IPollFooter> = ({ poll, showResults, selected }): JSX
     e.preventDefault();
   };
 
-  const timeRemaining = poll.expired ?
-    intl.formatMessage(messages.closed) :
-    <RelativeTimestamp weight='medium' timestamp={poll.expires_at} futureDate />;
+  let timeRemaining: string | JSX.Element | null = null;
+  if (poll.expires_at !== null)
+    timeRemaining = poll.expired ?
+      intl.formatMessage(messages.closed) :
+      <RelativeTimestamp weight='medium' timestamp={poll.expires_at} futureDate />;
 
   let votesCount = null;
 
-  if (poll.voters_count !== null && poll.voters_count !== undefined) {
+  if (poll.voters_count && !poll.votes_count) {
     votesCount = <FormattedMessage id='poll.total_people' defaultMessage='{count, plural, one {# person} other {# people}}' values={{ count: poll.voters_count }} />;
   } else {
     votesCount = <FormattedMessage id='poll.total_votes' defaultMessage='{count, plural, one {# vote} other {# votes}}' values={{ count: poll.votes_count }} />;
@@ -82,7 +84,7 @@ const PollFooter: React.FC<IPollFooter> = ({ poll, showResults, selected }): JSX
           {votesCount}
         </Text>
 
-        {poll.expires_at && (
+        {timeRemaining !== null && (
           <>
             <Text theme='muted'>&middot;</Text>
             <Text weight='medium' theme='muted' data-testid='poll-expiration'>{timeRemaining}</Text>
