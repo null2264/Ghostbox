@@ -11,8 +11,8 @@ import StatusContent, { IStatusContent } from '../../components/status-content';
 
 const messages = defineMessages({
   cancel: { id: 'reply_indicator.cancel', defaultMessage: 'Cancel' },
-  show: { id: 'moderation_overlay.show', defaultMessage: 'Show Content' },
-  hide: { id: 'moderation_overlay.hide', defaultMessage: 'Hide content' },
+  show: { id: 'moderation_overlay.show_content', defaultMessage: 'Show content' },
+  hide: { id: 'moderation_overlay.hide_content', defaultMessage: 'Hide content' },
 });
 
 interface IStatusContainer {

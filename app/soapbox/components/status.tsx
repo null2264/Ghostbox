@@ -30,8 +30,8 @@ export type ScrollPosition = { height: number, top: number };
 
 const messages = defineMessages({
   reblogged_by: { id: 'status.reblogged_by', defaultMessage: '{name} reposted' },
-  show: { id: 'moderation_overlay.show', defaultMessage: 'Show Content' },
-  hide: { id: 'moderation_overlay.hide', defaultMessage: 'Hide content' },
+  show: { id: 'moderation_overlay.show_content', defaultMessage: 'Show content' },
+  hide: { id: 'moderation_overlay.hide_content', defaultMessage: 'Hide content' },
 });
 
 export interface IStatus {

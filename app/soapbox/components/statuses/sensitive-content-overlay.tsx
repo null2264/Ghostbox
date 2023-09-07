@@ -17,14 +17,14 @@ const messages = defineMessages({
   deleteConfirm: { id: 'confirmations.delete.confirm', defaultMessage: 'Delete' },
   deleteHeading: { id: 'confirmations.delete.heading', defaultMessage: 'Delete post' },
   deleteMessage: { id: 'confirmations.delete.message', defaultMessage: 'Are you sure you want to delete this post?' },
-  hide: { id: 'moderation_overlay.hide', defaultMessage: 'Hide content' },
+  hide: { id: 'moderation_overlay.hide', defaultMessage: 'Hide' },
+  show: { id: 'moderation_overlay.show_content', defaultMessage: 'Show content' },
   hiddenTitle: { id: 'status.hidden', defaultMessage: 'Media hidden' },
   sensitiveTitle: { id: 'status.sensitive_warning', defaultMessage: 'Sensitive content' },
   underReviewTitle: { id: 'moderation_overlay.title', defaultMessage: 'Content Under Review' },
   underReviewSubtitle: { id: 'moderation_overlay.subtitle', defaultMessage: 'This Post has been sent to Moderation for review and is only visible to you. If you believe this is an error please contact Support.' },
   sensitiveSubtitle: { id: 'status.sensitive_warning.subtitle', defaultMessage: 'This content may not be suitable for all audiences.' },
   contact: { id: 'moderation_overlay.contact', defaultMessage: 'Contact' },
-  show: { id: 'moderation_overlay.show', defaultMessage: 'Show Content' },
 });
 
 interface ISensitiveContentOverlay {
