@@ -276,6 +276,8 @@
   "compose_form.message": "Message",
   "compose_form.placeholder": "Apa yang ada di pikiran anda?",
   "compose_form.poll.add_option": "Tambahkan pilihan",
+  "compose_form.poll.expiry": "Poll expiry",
+  "compose_form.poll.expiry_detail": "Should the poll expires",
   "compose_form.poll.duration": "Durasi jajak pendapat",
   "compose_form.poll.multiselect": "Multi-Select",
   "compose_form.poll.multiselect_detail": "Allow users to select multiple answers",

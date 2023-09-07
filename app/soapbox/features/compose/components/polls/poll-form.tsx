@@ -16,7 +16,7 @@ const messages = defineMessages({
   add_option: { id: 'compose_form.poll.add_option', defaultMessage: 'Add an answer' },
   pollDuration: { id: 'compose_form.poll.duration', defaultMessage: 'Duration' },
   pollExpiry: { id: 'compose_form.poll.expiry', defaultMessage: 'Poll expiry' },
-  pollExpiryToggle: { id: 'compose_form.poll.expiry.toggle', defaultMessage: 'Should the poll expires' },
+  pollExpiryDetail: { id: 'compose_form.poll.expiry_detail', defaultMessage: 'Should the poll expires' },
   removePoll: { id: 'compose_form.poll.remove', defaultMessage: 'Remove poll' },
   switchToMultiple: { id: 'compose_form.poll.switch_to_multiple', defaultMessage: 'Change poll to allow multiple answers' },
   switchToSingle: { id: 'compose_form.poll.switch_to_single', defaultMessage: 'Change poll to allow for a single answer' },
@@ -206,7 +206,7 @@ const PollForm: React.FC<IPollForm> = ({ composeId }) => {
               </Text>
 
               <Text theme='muted' size='sm'>
-                {intl.formatMessage(messages.pollExpiryToggle)}
+                {intl.formatMessage(messages.pollExpiryDetail)}
               </Text>
             </Stack>
 

@@ -335,6 +335,8 @@
   "compose_form.message": "Message",
   "compose_form.placeholder": "今なにしてる？",
   "compose_form.poll.add_option": "追加",
+  "compose_form.poll.expiry": "Poll expiry",
+  "compose_form.poll.expiry_detail": "Should the poll expires",
   "compose_form.poll.duration": "投票期間",
   "compose_form.poll.multiselect": "複数選択",
   "compose_form.poll.multiselect_detail": "ユーザーが複数の回答を選択できるようにする",

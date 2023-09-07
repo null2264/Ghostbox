@@ -426,6 +426,8 @@
   "compose_form.message": "Message",
   "compose_form.placeholder": "What's on your mind?",
   "compose_form.poll.add_option": "Add an answer",
+  "compose_form.poll.expiry": "Poll expiry",
+  "compose_form.poll.expiry_detail": "Should the poll expires",
   "compose_form.poll.duration": "Poll duration",
   "compose_form.poll.multiselect": "Multi-Select",
   "compose_form.poll.multiselect_detail": "Allow users to select multiple answers",
