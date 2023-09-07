@@ -104,14 +104,32 @@ body.underline-links [data-markup] a {
   height: 0 !important;
 }
 
-[data-markup] h1 {
-  @apply text-3xl font-semibold pb-2;
+[data-markup][class~='text-lg'] h1 {
+  @apply text-4xl;
 }
 
-[data-markup] h2 {
-  @apply text-2xl font-semibold pb-2;
+[data-markup][class~='text-lg'] h2 {
+  @apply text-3xl;
 }
 
+[data-markup][class~='text-lg'] h3 {
+  @apply text-2xl;
+}
+
+[data-markup][class~='text-base'] h1 {
+  @apply text-3xl;
+}
+
+[data-markup][class~='text-base'] h2 {
+  @apply text-2xl;
+}
+
+[data-markup][class~='text-base'] h3 {
+  @apply text-xl;
+}
+
+[data-markup] h1,
+[data-markup] h2,
 [data-markup] h3 {
-  @apply text-xl font-semibold pb-2;
+  @apply font-semibold pb-2;
 }
