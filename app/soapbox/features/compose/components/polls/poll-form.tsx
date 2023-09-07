@@ -215,7 +215,7 @@ const PollForm: React.FC<IPollForm> = ({ composeId }) => {
         </>
       )}
 
-      {expiresIn && (
+      {expiresIn !== null && (
         <>
           <Divider />
 
