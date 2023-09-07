@@ -96,7 +96,7 @@ export const REBASED = 'soapbox';
 
 /**
  * Spirit, a Akkoma fork
- * @see {@link https://github.com/null2264/akkoma}
+ * @see {@link https://github.com/null2264/spirit}
  */
 export const SPIRIT = 'spirit';
 
