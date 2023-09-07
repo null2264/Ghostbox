@@ -79,7 +79,7 @@ const LinkFooter: React.FC = (): JSX.Element => {
               code_name: sourceCode.displayName,
               code_link: <Text theme='subtle' tag='span'><a className='underline' href={sourceCode.url} rel='noopener' target='_blank'>{sourceCode.repository}</a></Text>,
               code_version: sourceCode.version,
-              backend_name: backend.software,
+              backend_name: backend.software + (backend.build ? `+${backend.build}` : ''),
               backend_version: backend.version,
             }}
           />
