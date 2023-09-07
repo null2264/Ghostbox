@@ -782,7 +782,7 @@ const removePollOption = (composeId: string, index: number) => ({
   index,
 });
 
-const changePollSettings = (composeId: string, expiresIn?: number, isMultiple?: boolean) => ({
+const changePollSettings = (composeId: string, expiresIn?: number | null, isMultiple?: boolean) => ({
   type: COMPOSE_POLL_SETTINGS_CHANGE,
   id: composeId,
   expiresIn,

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
 import { addPollOption, changePollOption, changePollSettings, clearComposeSuggestions, fetchComposeSuggestions, removePoll, removePollOption, selectComposeSuggestion } from 'soapbox/actions/compose';
 import AutosuggestInput from 'soapbox/components/autosuggest-input';
 import { Button, Divider, HStack, Stack, Text, Toggle } from 'soapbox/components/ui';
-import { useAppDispatch, useCompose, useInstance } from 'soapbox/hooks';
+import { useAppDispatch, useCompose, useFeatures, useInstance } from 'soapbox/hooks';
 
 import DurationSelector from './duration-selector';
 
@@ -15,6 +15,8 @@ const messages = defineMessages({
   option_placeholder: { id: 'compose_form.poll.option_placeholder', defaultMessage: 'Answer #{number}' },
   add_option: { id: 'compose_form.poll.add_option', defaultMessage: 'Add an answer' },
   pollDuration: { id: 'compose_form.poll.duration', defaultMessage: 'Duration' },
+  pollExpiry: { id: 'compose_form.poll.expiry', defaultMessage: 'Poll expiry' },
+  pollExpiryToggle: { id: 'compose_form.poll.expiry.toggle', defaultMessage: 'Should the poll expires' },
   removePoll: { id: 'compose_form.poll.remove', defaultMessage: 'Remove poll' },
   switchToMultiple: { id: 'compose_form.poll.switch_to_multiple', defaultMessage: 'Change poll to allow multiple answers' },
   switchToSingle: { id: 'compose_form.poll.switch_to_single', defaultMessage: 'Change poll to allow for a single answer' },
@@ -109,6 +111,7 @@ interface IPollForm {
 }
 
 const PollForm: React.FC<IPollForm> = ({ composeId }) => {
+  const features = useFeatures();
   const dispatch = useAppDispatch();
   const intl = useIntl();
   const { configuration } = useInstance();
@@ -119,6 +122,7 @@ const PollForm: React.FC<IPollForm> = ({ composeId }) => {
   const options = compose.poll?.options;
   const expiresIn = compose.poll?.expires_in;
   const isMultiple = compose.poll?.multiple;
+  const [cachedExpiresIn, setCachedExpiresIn] = useState(expiresIn as number);
 
   const maxOptions = pollLimits.get('max_options') as number;
   const maxOptionChars = pollLimits.get('max_characters_per_option') as number;
@@ -126,9 +130,12 @@ const PollForm: React.FC<IPollForm> = ({ composeId }) => {
   const onRemoveOption = (index: number) => dispatch(removePollOption(composeId, index));
   const onChangeOption = (index: number, title: string) => dispatch(changePollOption(composeId, index, title));
   const handleAddOption = () => dispatch(addPollOption(composeId, ''));
-  const onChangeSettings = (expiresIn: number, isMultiple?: boolean) =>
+  const onChangeSettings = (expiresIn: number | null, isMultiple?: boolean) => {
+    if (typeof expiresIn === 'number') setCachedExpiresIn(expiresIn);
     dispatch(changePollSettings(composeId, expiresIn, isMultiple));
+  };
   const handleSelectDuration = (value: number) => onChangeSettings(value, isMultiple);
+  const handleToggleExpiry = () => onChangeSettings(expiresIn === null ? cachedExpiresIn : null, isMultiple);
   const handleToggleMultiple = () => onChangeSettings(Number(expiresIn), !isMultiple);
   const onRemovePoll = () => dispatch(removePoll(composeId));
 
@@ -187,16 +194,40 @@ const PollForm: React.FC<IPollForm> = ({ composeId }) => {
         </HStack>
       </button>
 
-      <Divider />
+      {/* Expiry */}
+      { features.indefinitePollDuration && (
+        <>
+          <Divider />
 
-      {/* Duration */}
-      <Stack space={2}>
-        <Text weight='medium'>
-          {intl.formatMessage(messages.pollDuration)}
-        </Text>
+          <HStack alignItems='center' justifyContent='between'>
+            <Stack space={2}>
+              <Text weight='medium'>
+                {intl.formatMessage(messages.pollExpiry)}
+              </Text>
 
-        <DurationSelector onDurationChange={handleSelectDuration} />
-      </Stack>
+              <Text theme='muted' size='sm'>
+                {intl.formatMessage(messages.pollExpiryToggle)}
+              </Text>
+            </Stack>
+
+            <Toggle checked={expiresIn !== null} onChange={handleToggleExpiry} />
+          </HStack>
+        </>
+      )}
+
+      {expiresIn && (
+        <>
+          <Divider />
+
+          <Stack space={2}>
+            <Text weight='medium'>
+              {intl.formatMessage(messages.pollDuration)}
+            </Text>
+
+            <DurationSelector onDurationChange={handleSelectDuration} />
+          </Stack>
+        </>
+      )}
 
       {/* Remove Poll */}
       <div className='text-center'>

@@ -94,6 +94,12 @@ export const GLITCH = 'glitch';
 // NOTE: Rebased is named 'soapbox' for legacy reasons.
 export const REBASED = 'soapbox';
 
+/**
+ * Spirit, a Akkoma fork
+ * @see {@link https://github.com/null2264/akkoma}
+ */
+export const SPIRIT = 'spirit';
+
 /** Backend name reserved only for tests. */
 export const UNRELEASED = 'unreleased';
 
@@ -682,6 +688,10 @@ const getInstanceFeatures = (instance: Instance) => {
     importData: any([
       v.software === PLEROMA && gte(v.version, '2.2.0'),
       v.software === AKKOMA,
+    ]),
+
+    indefinitePollDuration: any([
+      v.software === AKKOMA && v.build === SPIRIT,
     ]),
 
     /**

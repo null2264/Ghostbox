@@ -73,7 +73,7 @@ const getResetFileKey = () => Math.floor((Math.random() * 0x10000));
 
 const PollRecord = ImmutableRecord({
   options: ImmutableList(['', '']),
-  expires_in: 24 * 3600,
+  expires_in: 24 * 3600 as number | null,
   multiple: false,
 });
 
@@ -493,7 +493,7 @@ export default function compose(state = initialState, action: ComposeAction | Me
       return updateCompose(state, action.id, compose => compose.update('poll', poll => {
         if (!poll) return null;
         return poll.withMutations((poll) => {
-          if (action.expiresIn) {
+          if (action.expiresIn !== undefined) {
             poll.set('expires_in', action.expiresIn);
           }
           if (typeof action.isMultiple === 'boolean') {
