@@ -26,5 +26,3 @@ Ghostbox make use of code from other opensource and free software under various 
 - `assets/sounds/chat.mp3` and `assets/sounds/chat.oga` are from notificationsounds.com licensed under CC BY 4.0.
 
 - [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) licensed by Tailwindlab under the simple permissive MIT License.
-
-- [`react-hot-toast` fork](https://github.com/null2264/react-hot-toast), licensed under MIT.
