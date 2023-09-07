@@ -1,0 +1,39 @@
+@keyframes mfm-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.mfm {
+  display: inline-block;
+}
+
+._mfm_spin_ {
+  animation: 26s linear 0s infinite normal none running mfm-spin;
+}
+
+._mfm_x2_,
+._mfm_x3_,
+._mfm_x4_ {
+  font-size: var(--mfm-zoom-size);
+}
+
+._mfm_x2_ {
+  --mfm-zoom-size: 200%;
+  .emojione {
+    width: 100px !important;
+    height: 100px !important;
+  }
+}
+
+._mfm_x3_ {
+  --mfm-zoom-size: 400%;
+  .emojione {
+    width: 150px !important;
+    height: 150px !important;
+  }
+}
