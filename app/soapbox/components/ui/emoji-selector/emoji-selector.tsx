@@ -66,6 +66,7 @@ const EmojiSelector: React.FC<IEmojiSelector> = ({
 
   const { x, y, strategy, refs, update } = useFloating<HTMLElement>({
     placement,
+    transform: false,
     middleware: [
       offset(offsetOptions),
       flip({
