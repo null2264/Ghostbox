@@ -27,7 +27,7 @@ import UploadButtonContainer from '../containers/upload-button-container';
 import WarningContainer from '../containers/warning-container';
 import { countableText } from '../util/counter';
 
-import MarkdownButton from './markdown-button';
+import MarkupDropdown from './markup-dropdown';
 import PollButton from './poll-button';
 import PollForm from './polls/poll-form';
 import PrivacyDropdown from './privacy-dropdown';
@@ -122,6 +122,7 @@ const ComposeForm = <ID extends string>({ id, shouldCondense, autoFocus, clickab
       document.querySelector('.privacy-dropdown__dropdown'),
       document.querySelector('em-emoji-picker'),
       document.getElementById('modal-overlay'),
+      document.querySelector('.markup-dropdown__dropdown'),
     ].some(element => element?.contains(e.target as any));
   };
 
@@ -235,7 +236,7 @@ const ComposeForm = <ID extends string>({ id, shouldCondense, autoFocus, clickab
       {features.privacyScopes && !group && !groupId && <PrivacyDropdown composeId={id} />}
       {features.scheduledStatuses && <ScheduleButton composeId={id} />}
       {features.spoilers && <SpoilerButton composeId={id} />}
-      {features.richText && <MarkdownButton composeId={id} />}
+      {features.richText && <MarkupDropdown composeId={id} />}
     </HStack>
   ), [features, id]);
 
