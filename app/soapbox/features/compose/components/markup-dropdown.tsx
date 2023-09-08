@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { supportsPassiveEvents } from 'detect-passive-events';
 import React, { useState, useRef, useEffect } from 'react';
+import { useIntl, defineMessages } from 'react-intl';
 import { spring } from 'react-motion';
 // @ts-ignore
 import Overlay from 'react-overlays/lib/Overlay';
@@ -13,6 +14,13 @@ import { useAppDispatch, useCompose } from 'soapbox/hooks';
 import { isUserTouching } from 'soapbox/is-mobile';
 
 import Motion from '../../ui/util/optional-motion';
+
+const messages = defineMessages({
+  content_type_plaintext: { id: 'preferences.options.content_type_plaintext', defaultMessage: 'Plain text' },
+  content_type_markdown: { id: 'preferences.options.content_type_markdown', defaultMessage: 'Markdown' },
+  content_type_misskey: { id: 'preferences.options.content_type_misskey', defaultMessage: 'MFM' },
+  change_markup: { id: 'markup.change', defaultMessage: 'Change post format' },
+});
 
 const listenerOptions = supportsPassiveEvents ? { passive: true } : false;
 
@@ -116,7 +124,6 @@ const MarkupDropdownMenu: React.FC<IMarkupDropdownMenu> = ({ style, items, place
 
               <div className='markup-dropdown__option__content'>
                 <strong>{item.text}</strong>
-                {item.meta}
               </div>
             </div>
           ))}
@@ -134,7 +141,7 @@ const MarkupDropdown: React.FC<IMarkupDropdown> = ({
   composeId,
 }) => {
   const dispatch = useAppDispatch();
-  //const intl = useIntl();
+  const intl = useIntl();
   const node = useRef<HTMLDivElement>(null);
   const activeElement = useRef<HTMLElement | null>(null);
 
@@ -147,9 +154,9 @@ const MarkupDropdown: React.FC<IMarkupDropdown> = ({
   const [placement, setPlacement] = useState('bottom');
 
   const options = [
-    { icon: require('@tabler/icons/file-text.svg'), value: 'text/plain', text: 'Plaintext', meta: 'Good ol\' plaintext' },
-    { icon: require('@tabler/icons/markdown.svg'), value: 'text/markdown', text: 'Markdown', meta: 'User-friendly markup' },
-    { icon: require('@tabler/icons/square-key.svg'), value: 'text/x.misskeymarkdown', text: 'MFM', meta: 'Misskey-flavoured Markdown' },
+    { icon: require('@tabler/icons/file-text.svg'), value: 'text/plain', text: intl.formatMessage(messages.content_type_plaintext) },
+    { icon: require('@tabler/icons/markdown.svg'), value: 'text/markdown', text: intl.formatMessage(messages.content_type_markdown) },
+    { icon: require('@tabler/icons/square-key.svg'), value: 'text/x.misskeymarkdown', text: intl.formatMessage(messages.content_type_misskey) },
   ];
 
   const onChange = (value: string | null) => value && dispatch(changeComposeContentType(composeId, value));
@@ -233,8 +240,7 @@ const MarkupDropdown: React.FC<IMarkupDropdown> = ({
             'text-primary-500 hover:text-primary-600 dark:text-primary-500 dark:hover:text-primary-400': open,
           })}
           src={valueOption?.icon}
-          // TODO: i18n
-          title='Change markup format'
+          title={intl.formatMessage(messages.change_markup)}
           onClick={handleToggle}
           onMouseDown={handleMouseDown}
           onKeyDown={handleButtonKeyDown}
