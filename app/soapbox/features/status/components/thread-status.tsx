@@ -32,7 +32,7 @@ const ThreadStatus: React.FC<IThreadStatus> = (props): JSX.Element => {
     return (
       <div
         className={clsx('absolute left-5 z-[1] hidden w-0.5 bg-gray-200 rtl:left-auto rtl:right-5 dark:bg-primary-800', {
-          '!block top-[calc(12px+42px)] h-[calc(100%-42px-8px-1rem)]': isConnectedBottom,
+          '!block top-[calc(12px+42px+1.25rem)] h-[calc(100%-42px-8px-1rem)]': isConnectedBottom,
         })}
       />
     );
