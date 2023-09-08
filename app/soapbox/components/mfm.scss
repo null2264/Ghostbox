@@ -20,20 +20,36 @@
 ._mfm_x3_,
 ._mfm_x4_ {
   font-size: var(--mfm-zoom-size);
+
+  ._mfm_x2_,
+  ._mfm_x3_,
+  ._mfm_x4_ {
+    font-size: calc(var(--mfm-zoom-size) / 2 + 50%);
+
+    ._mfm_x2_,
+    ._mfm_x3_,
+    ._mfm_x4_ {
+      font-size: 100%;
+    }
+  }
 }
 
 ._mfm_x2_ {
   --mfm-zoom-size: 200%;
-  .emojione {
-    width: 100px !important;
-    height: 100px !important;
-  }
 }
 
 ._mfm_x3_ {
   --mfm-zoom-size: 400%;
-  .emojione {
-    width: 150px !important;
-    height: 150px !important;
-  }
+}
+
+._mfm_x4_ {
+  --mfm-zoom-size: 600%;
+}
+
+._mfm_blur_ {
+	filter: blur(6px);
+	transition: filter 0.3s;
+	&:hover {
+		filter: blur(0px);
+	}
 }
