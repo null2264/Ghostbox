@@ -59,7 +59,8 @@ const StatusContainer: React.FC<IStatusContainer> = ({
   const hasMediaAndNoCW = hasMedia && !status.spoiler_text;
 
   return (
-    <>
+    // eslint-disable-next-line tailwindcss/no-custom-classname
+    <div className='status-container'>
       {(isHidden && status.spoiler_text) && (
         <div className='pb-4'>
           <Text className='line-clamp-6' size={contentOption.textSize} theme='white' weight='medium'>
@@ -87,7 +88,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
 
           <Stack
             className={clsx('relative z-0', {
-              'max-h-24 overflow-hidden blur-sm select-none pointer-events-none': !hasMediaAndNoCW && !isExpanded && isHidden,
+              'max-h-24 overflow-y-hidden blur-sm select-none pointer-events-none': !hasMediaAndNoCW && !isExpanded && isHidden,
             })}
           >
 
@@ -127,7 +128,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

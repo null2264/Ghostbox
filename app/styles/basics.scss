@@ -24,6 +24,11 @@ noscript {
 
 .emojione {
   @apply h-[1em] -mt-[0.2ex] mb-[0.2ex] inline-block align-middle object-contain;
+  transition: transform 0.25s ease;
+
+  .status-container &.custom:hover {
+    @apply scale-125;
+  }
 }
 
 // Virtuoso empty placeholder fix.
