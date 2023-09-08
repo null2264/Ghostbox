@@ -111,7 +111,7 @@ const SearchResults = () => {
   let hasMore = false;
   let loaded;
   let noResultsMessage;
-  let placeholderComponent = PlaceholderStatus as React.ComponentType;
+  let placeholderComponent = (() => (<PlaceholderStatus showPrivacyIndicator />)) as React.ComponentType;
   let resultsIds: ImmutableOrderedSet<string>;
 
   if (selectedFilter === 'accounts') {

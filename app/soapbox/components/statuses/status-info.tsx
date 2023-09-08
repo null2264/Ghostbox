@@ -9,7 +9,7 @@ interface IStatusInfo {
   avatarSize?: number
   icon?: React.ReactNode
   text?: React.ReactNode
-  visibility?: StatusVisibility
+  visibility?: StatusVisibility | 'placeholder'
 }
 
 const StatusInfo = (props: IStatusInfo) => {
@@ -61,6 +61,9 @@ const StatusInfo = (props: IStatusInfo) => {
       }
       {
         visibility === 'direct' && <Icon aria-hidden src={require('@tabler/icons/mail.svg')} className='h-5 w-5 shrink-0 text-gray-400 dark:text-gray-600' />
+      }
+      {
+        visibility === 'placeholder' && <Icon aria-hidden src={require('@tabler/icons/circle-filled.svg')} className='h-5 w-5 shrink-0 text-primary-50 dark:text-primary-800' />
       }
     </div>
   );

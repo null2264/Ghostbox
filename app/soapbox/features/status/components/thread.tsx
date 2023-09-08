@@ -446,7 +446,7 @@ const Thread = (props: IThread) => {
           ref={scroller}
           hasMore={!!next}
           onLoadMore={handleLoadMore}
-          placeholderComponent={() => <PlaceholderStatus variant='slim' />}
+          placeholderComponent={() => <PlaceholderStatus showPrivacyIndicator variant='slim' />}
           initialTopMostItemIndex={initialTopMostItemIndex}
           useWindowScroll={useWindowScroll}
           itemClassName={itemClassName}

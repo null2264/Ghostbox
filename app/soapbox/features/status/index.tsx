@@ -96,7 +96,7 @@ const StatusDetails: React.FC<IStatusDetails> = (props) => {
   } else if (!status) {
     return (
       <Column>
-        <PlaceholderStatus />
+        <PlaceholderStatus showPrivacyIndicator />
       </Column>
     );
   }

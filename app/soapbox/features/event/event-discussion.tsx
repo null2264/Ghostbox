@@ -163,7 +163,7 @@ const EventDiscussion: React.FC<IEventDiscussion> = (props) => {
     );
   } else if (!status) {
     return (
-      <PlaceholderStatus />
+      <PlaceholderStatus showPrivacyIndicator />
     );
   }
 
@@ -184,7 +184,7 @@ const EventDiscussion: React.FC<IEventDiscussion> = (props) => {
           ref={scroller}
           hasMore={!!next}
           onLoadMore={handleLoadMore}
-          placeholderComponent={() => <PlaceholderStatus variant='slim' />}
+          placeholderComponent={() => <PlaceholderStatus showPrivacyIndicator variant='slim' />}
           initialTopMostItemIndex={0}
           emptyMessage={<FormattedMessage id='event.discussion.empty' defaultMessage='No one has commented this event yet. When someone does, they will appear here.' />}
         >
