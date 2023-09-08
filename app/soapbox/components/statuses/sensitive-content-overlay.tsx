@@ -104,7 +104,7 @@ const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveConte
           text={intl.formatMessage(messages.hide)}
           icon={require('@tabler/icons/eye-off.svg')}
           onClick={toggleVisibility}
-          theme='primary'
+          theme='ghost'
           size='sm'
         />
       ) : (
@@ -116,23 +116,23 @@ const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveConte
             <div className='space-y-1'>
               {(status.hidden || isUnderReview) ? (
                 <>
-                  <Text theme='white' weight='semibold'>
+                  <Text weight='semibold'>
                     {intl.formatMessage(isUnderReview ? messages.underReviewTitle : messages.sensitiveTitle)}
                   </Text>
 
-                  <Text theme='white' size='sm' weight='medium'>
+                  <Text size='sm' weight='medium'>
                     {intl.formatMessage(isUnderReview ? messages.underReviewSubtitle : messages.sensitiveSubtitle)}
                   </Text>
                 </>
               ) : (
-                <Text theme='white' weight='semibold'>
+                <Text weight='semibold'>
                   {intl.formatMessage(messages.hiddenTitle)}
                 </Text>
               )}
 
               {status.spoiler_text && (
                 <div className='py-4 italic'>
-                  <Text className='line-clamp-6' theme='white' size='md' weight='medium'>
+                  <Text className='line-clamp-6' size='md' weight='medium'>
                     &ldquo;<span dangerouslySetInnerHTML={{ __html: status.spoilerHtml }} />&rdquo;
                   </Text>
                 </div>
