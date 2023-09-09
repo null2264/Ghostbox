@@ -47,7 +47,12 @@ const StatusContainer: React.FC<IStatusContainer> = ({
 
   const isHidden = status.hidden;
   const toggleHidden = () => {
-    dispatch(isHidden ? revealStatus(status.id) : hideStatus(status.id));
+    if (isHidden) {
+      dispatch(revealStatus(status.id));
+    } else {
+      dispatch(hideStatus(status.id));
+      if (showMedia) onToggleMediaVisibility();
+    }
   };
 
   const handleToggleContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
