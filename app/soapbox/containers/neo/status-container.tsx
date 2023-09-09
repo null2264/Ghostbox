@@ -103,7 +103,6 @@ const StatusContainer: React.FC<IStatusContainer> = ({
                   status={status}
                   muted={compose}
                   showMedia={showMedia}
-                  showSensitiveOverlay={hasMediaAndNoCW}
                   onToggleVisibility={onToggleMediaVisibility}
                 />
               )}

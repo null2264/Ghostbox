@@ -113,31 +113,21 @@ const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveConte
           onClick={toggleVisibility}
         >
           <div className='max-w-[15rem] space-y-4 rounded-xl bg-white p-4 text-center text-gray-900 backdrop-blur-lg dark:bg-primary-900 dark:text-gray-100' ref={ref}>
-            <div className='space-y-1'>
-              {(status.sensitive || isUnderReview) ? (
-                <>
-                  <Text weight='semibold'>
-                    {intl.formatMessage(isUnderReview ? messages.underReviewTitle : messages.sensitiveTitle)}
-                  </Text>
-
-                  <Text size='sm' weight='medium'>
-                    {intl.formatMessage(isUnderReview ? messages.underReviewSubtitle : messages.sensitiveSubtitle)}
-                  </Text>
-                </>
-              ) : (
+            {(status.sensitive || isUnderReview) ? (
+              <div className='space-y-1'>
                 <Text weight='semibold'>
-                  {intl.formatMessage(messages.hiddenTitle)}
+                  {intl.formatMessage(isUnderReview ? messages.underReviewTitle : messages.sensitiveTitle)}
                 </Text>
-              )}
 
-              {status.spoiler_text && (
-                <div className='py-4 italic'>
-                  <Text className='line-clamp-6' size='md' weight='medium'>
-                    &ldquo;<span dangerouslySetInnerHTML={{ __html: status.spoilerHtml }} />&rdquo;
-                  </Text>
-                </div>
-              )}
-            </div>
+                <Text size='sm' weight='medium'>
+                  {intl.formatMessage(isUnderReview ? messages.underReviewSubtitle : messages.sensitiveSubtitle)}
+                </Text>
+              </div>
+            ) : (
+              <Text weight='semibold'>
+                {intl.formatMessage(messages.hiddenTitle)}
+              </Text>
+            )}
 
             <HStack alignItems='center' justifyContent='center' space={2}>
               {isUnderReview ? (

@@ -36,7 +36,6 @@ const StatusMedia: React.FC<IStatusMedia> = ({
   muted = false,
   onClick,
   showMedia = true,
-  showSensitiveOverlay = true,
   onToggleVisibility = () => { },
 }) => {
   const dispatch = useAppDispatch();
@@ -73,14 +72,14 @@ const StatusMedia: React.FC<IStatusMedia> = ({
   };
 
   if (size > 0 && firstAttachment) {
-    const sensitiveOverlay: JSX.Element | null = showSensitiveOverlay ? (
+    const sensitiveOverlay: JSX.Element | null = (
       <SensitiveContentOverlay
         status={status}
         visible={showMedia}
         onToggleVisibility={onToggleVisibility}
         hideHideButton={firstAttachment.type === 'video' || firstAttachment.type === 'audio'}
       />
-    ) : null;
+    );
 
     if (muted) {
       media = (
