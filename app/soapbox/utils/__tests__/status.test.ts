@@ -15,21 +15,16 @@ describe('hasIntegerMediaIds()', () => {
 
 describe('defaultMediaVisibility()', () => {
   it('returns false with no status', () => {
-    expect(defaultMediaVisibility(undefined, 'default')).toBe(false);
+    expect(defaultMediaVisibility(undefined, false)).toBe(false);
   });
 
   it('hides sensitive media by default', () => {
     const status = buildStatus({ sensitive: true });
-    expect(defaultMediaVisibility(status, 'default')).toBe(false);
+    expect(defaultMediaVisibility(status, false)).toBe(false);
   });
 
-  it('hides media when displayMedia is hide_all', () => {
+  it('show media when showSensitiveMedia is true', () => {
     const status = buildStatus({});
-    expect(defaultMediaVisibility(status, 'hide_all')).toBe(false);
-  });
-
-  it('shows sensitive media when displayMedia is show_all', () => {
-    const status = buildStatus({ sensitive: true });
-    expect(defaultMediaVisibility(status, 'show_all')).toBe(true);
+    expect(defaultMediaVisibility(status, true)).toBe(true);
   });
 });
