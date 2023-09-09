@@ -83,7 +83,7 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
   if (!account || typeof account !== 'object') return null;
 
   const isUnderReview = actualStatus.visibility === 'self';
-  const isSensitive = actualStatus.hidden;
+  const isSensitive = actualStatus.sensitive;
 
   let statusTypeIcon = null;
 
@@ -126,9 +126,8 @@ const DetailedStatus: React.FC<IDetailedStatus> = ({
 
         <StatusContainer
           showMedia={showMedia || false}
-          isHidden={isUnderReview || isSensitive}
+          isSensitive={isUnderReview || isSensitive}
           onToggleMediaVisibility={onToggleMediaVisibility}
-          initialExpandState={actualStatus ? !actualStatus.hidden : true}
           additionalMediaCondition={withMedia}
           quote={quote}
           hasMedia={!!(quote || actualStatus.card || actualStatus.media_attachments.size > 0)}

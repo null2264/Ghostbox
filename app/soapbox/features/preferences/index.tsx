@@ -18,9 +18,6 @@ const languages = {
 
 const messages = defineMessages({
   heading: { id: 'column.preferences', defaultMessage: 'Preferences' },
-  displayPostsDefault: { id: 'preferences.fields.display_media.default', defaultMessage: 'Hide posts marked as sensitive' },
-  displayPostsHideAll: { id: 'preferences.fields.display_media.hide_all', defaultMessage: 'Always hide posts' },
-  displayPostsShowAll: { id: 'preferences.fields.display_media.show_all', defaultMessage: 'Always show posts' },
   privacy_public: { id: 'preferences.options.privacy_public', defaultMessage: 'Public' },
   privacy_local: { id: 'preferences.options.privacy_local', defaultMessage: 'Local-only' },
   privacy_unlisted: { id: 'preferences.options.privacy_unlisted', defaultMessage: 'Unlisted' },
@@ -43,12 +40,6 @@ const Preferences = () => {
   const onToggleChange = (key: string[], checked: boolean) => {
     dispatch(changeSetting(key, checked, { showAlert: true }));
   };
-
-  const displayMediaOptions = React.useMemo(() => ({
-    default: intl.formatMessage(messages.displayPostsDefault),
-    hide_all: intl.formatMessage(messages.displayPostsHideAll),
-    show_all: intl.formatMessage(messages.displayPostsShowAll),
-  }), []);
 
   const defaultPrivacyOptions = React.useMemo(() => ({
     public: intl.formatMessage(messages.privacy_public),
@@ -86,15 +77,6 @@ const Preferences = () => {
             items={languages}
             defaultValue={settings.get('locale') as string | undefined}
             onChange={(event: React.ChangeEvent<HTMLSelectElement>) => onSelectChange(event, ['locale'])}
-          />
-        </ListItem>
-
-        <ListItem label={<FormattedMessage id='preferences.fields.media_display_label' defaultMessage='Sensitive content' />}>
-          <SelectDropdown
-            className='max-w-[200px]'
-            items={displayMediaOptions}
-            defaultValue={settings.get('displayMedia') as string | undefined}
-            onChange={(event: React.ChangeEvent<HTMLSelectElement>) => onSelectChange(event, ['displayMedia'])}
           />
         </ListItem>
 
@@ -149,6 +131,10 @@ const Preferences = () => {
         {features.spoilers && <ListItem label={<FormattedMessage id='preferences.fields.expand_spoilers_label' defaultMessage='Always expand posts marked with content warnings' />}>
           <SettingToggle settings={settings} settingPath={['expandSpoilers']} onChange={onToggleChange} />
         </ListItem>}
+
+        <ListItem label={<FormattedMessage id='preferences.fields.show_sensitive_media_label' defaultMessage='Automatically show sensitive media' />}>
+          <SettingToggle settings={settings} settingPath={['showSensitiveMedia']} onChange={onToggleChange} />
+        </ListItem>
 
         <ListItem label={<FormattedMessage id='preferences.fields.autoload_timelines_label' defaultMessage='Automatically load new posts when scrolled to the top of the page' />}>
           <SettingToggle settings={settings} settingPath={['autoloadTimelines']} onChange={onToggleChange} />

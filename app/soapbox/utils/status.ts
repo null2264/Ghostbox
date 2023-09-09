@@ -6,7 +6,7 @@ import type { Status } from 'soapbox/schemas';
 /** Get the initial visibility of media attachments from user settings. */
 export const defaultMediaVisibility = <T extends { reblog: T | string | null } & Pick<Status, 'visibility' | 'sensitive'>>(
   status: T | undefined | null,
-  displayMedia: string,
+  showSensitiveMedia: boolean,
 ): boolean => {
   if (!status) return false;
   status = getActualStatus(status);
@@ -17,7 +17,7 @@ export const defaultMediaVisibility = <T extends { reblog: T | string | null } &
     return false;
   }
 
-  return (displayMedia !== 'hide_all' && !status.sensitive || displayMedia === 'show_all');
+  return (showSensitiveMedia ? true : !status?.sensitive);
 };
 
 /** Grab the first external link from a status. */
@@ -41,7 +41,7 @@ export const shouldHaveCard = (status: Pick<Status, 'content'>): boolean => {
 /** Whether the media IDs on this status have integer IDs (opposed to FlakeIds). */
 // https://gitlab.com/soapbox-pub/soapbox/-/merge_requests/1087
 export const hasIntegerMediaIds = (status: Pick<Status, 'media_attachments'>): boolean => {
-  return status.media_attachments.some(({ id }) => isIntegerId(id));
+  return status.media_attachments.some(({ id }: { id: any }) => isIntegerId(id));
 };
 
 /** Sanitize status text for use with screen readers. */

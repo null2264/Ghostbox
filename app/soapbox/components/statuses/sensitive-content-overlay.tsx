@@ -45,9 +45,9 @@ const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveConte
 
   const isUnderReview = status.visibility === 'self';
   const isOwnStatus = status.getIn(['account', 'id']) === account?.id;
-  const displayMedia = settings.get('displayMedia') as string;
+  const showSensitiveMedia = settings.get('showSensitiveMedia') as boolean;
 
-  const [visible, setVisible] = useState<boolean>(defaultMediaVisibility(status, displayMedia));
+  const [visible, setVisible] = useState<boolean>(defaultMediaVisibility(status, showSensitiveMedia));
 
   const toggleVisibility = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -114,7 +114,7 @@ const SensitiveContentOverlay = React.forwardRef<HTMLDivElement, ISensitiveConte
         >
           <div className='max-w-[15rem] space-y-4 rounded-xl bg-white p-4 text-center text-gray-900 backdrop-blur-lg dark:bg-primary-900 dark:text-gray-100' ref={ref}>
             <div className='space-y-1'>
-              {(status.hidden || isUnderReview) ? (
+              {(status.sensitive || isUnderReview) ? (
                 <>
                   <Text weight='semibold'>
                     {intl.formatMessage(isUnderReview ? messages.underReviewTitle : messages.sensitiveTitle)}

@@ -1,10 +1,12 @@
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
+import { hideStatus, revealStatus } from 'soapbox/actions/statuses';
 import StatusMedia from 'soapbox/components/status-media';
 import TranslateButton from 'soapbox/components/translate-button';
 import { Button, Stack, Text } from 'soapbox/components/ui';
+import { useAppDispatch } from 'soapbox/hooks';
 
 import EventPreview from '../../components/event-preview';
 import StatusContent, { IStatusContent } from '../../components/status-content';
@@ -20,8 +22,7 @@ interface IStatusContainer {
   contentOption: IStatusContent
   hasMedia: boolean
   showMedia: boolean
-  isHidden: boolean
-  initialExpandState?: boolean
+  isSensitive: boolean
   additionalMediaCondition?: boolean
   quote?: JSX.Element
   /** Whether the status is shown in the post composer. */
@@ -33,8 +34,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
   contentOption,
   hasMedia,
   showMedia,
-  isHidden,
-  initialExpandState = false,
+  isSensitive,
   additionalMediaCondition = true,
   quote,
   compose,
@@ -43,17 +43,16 @@ const StatusContainer: React.FC<IStatusContainer> = ({
   const status = contentOption.status;
   const showTranslateButton = contentOption.translatable;
   const intl = useIntl();
+  const dispatch = useAppDispatch();
 
-  const [isExpanded, setExpanded] = useState<boolean>(initialExpandState);  // for CW
-
-  const handleShowContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
-    event.stopPropagation();
-    setExpanded(true);
+  const isHidden = status.hidden;
+  const toggleHidden = () => {
+    dispatch(isHidden ? revealStatus(status.id) : hideStatus(status.id));
   };
 
-  const handleHideContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
+  const handleToggleContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
     event.stopPropagation();
-    setExpanded(false);
+    toggleHidden();
   };
 
   const hasMediaAndNoCW = hasMedia && !status.spoiler_text;
@@ -61,7 +60,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
   return (
     // eslint-disable-next-line tailwindcss/no-custom-classname
     <div className='status-container'>
-      {(isHidden && status.spoiler_text) && (
+      {(isSensitive && status.spoiler_text) && (
         <div className='pb-4'>
           <Text className='line-clamp-6' size={contentOption.textSize} theme='white' weight='medium'>
             <span dangerouslySetInnerHTML={{ __html: status.spoilerHtml }} />
@@ -72,14 +71,14 @@ const StatusContainer: React.FC<IStatusContainer> = ({
       {status.event ? <EventPreview status={status} hideAction /> : (
         <div className='relative'>
 
-          {(!hasMediaAndNoCW && !isExpanded && isHidden) && (
+          {(!hasMediaAndNoCW && isSensitive && isHidden) && (
             <div className='absolute z-[1] flex h-full w-full items-center justify-center'>
               <Button
                 type='button'
                 theme='primary'
                 size='sm'
                 icon={require('@tabler/icons/eye.svg')}
-                onClick={handleShowContent}
+                onClick={handleToggleContent}
               >
                 {intl.formatMessage(messages.show)}
               </Button>
@@ -88,7 +87,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
 
           <Stack
             className={clsx('relative z-0', {
-              'max-h-24 overflow-x-visible overflow-y-clip blur-sm select-none pointer-events-none': !hasMediaAndNoCW && !isExpanded && isHidden,
+              'max-h-24 overflow-x-visible overflow-y-clip blur-sm select-none pointer-events-none': !hasMediaAndNoCW && isSensitive && isHidden,
             })}
           >
 
@@ -103,8 +102,8 @@ const StatusContainer: React.FC<IStatusContainer> = ({
                 <StatusMedia
                   status={status}
                   muted={compose}
-                  showMedia={status.spoiler_text ? true : showMedia}
-                  showSensitiveOverlay={hasMediaAndNoCW}
+                  showMedia={showMedia}
+                  showSensitiveOverlay={hasMediaAndNoCW && isSensitive}
                   onToggleVisibility={onToggleMediaVisibility}
                 />
               )}
@@ -113,14 +112,14 @@ const StatusContainer: React.FC<IStatusContainer> = ({
             </Stack>
           </Stack>
 
-          {(!hasMediaAndNoCW && isExpanded && isHidden) && (
+          {(!hasMediaAndNoCW && isSensitive && !isHidden) && (
             <div className='flex w-full justify-center pt-2'>
               <Button
                 type='button'
                 theme='primary'
                 size='sm'
                 icon={require('@tabler/icons/eye-off.svg')}
-                onClick={handleHideContent}
+                onClick={handleToggleContent}
               >
                 {intl.formatMessage(messages.hide)}
               </Button>

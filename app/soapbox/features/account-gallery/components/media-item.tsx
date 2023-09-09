@@ -6,6 +6,7 @@ import Icon from 'soapbox/components/icon';
 import StillImage from 'soapbox/components/still-image';
 import { useSettings } from 'soapbox/hooks';
 import { isIOS } from 'soapbox/is-mobile';
+import { defaultMediaVisibility } from 'soapbox/utils/status';
 
 import type { Attachment } from 'soapbox/types/entities';
 
@@ -17,9 +18,9 @@ interface IMediaItem {
 const MediaItem: React.FC<IMediaItem> = ({ attachment, onOpenMedia }) => {
   const settings = useSettings();
   const autoPlayGif = settings.get('autoPlayGif');
-  const displayMedia = settings.get('displayMedia');
+  const showSensitiveMedia = settings.get('showSensitiveMedia');
 
-  const [visible, setVisible] = useState<boolean>(displayMedia !== 'hide_all' && !attachment.status?.sensitive || displayMedia === 'show_all');
+  const [visible, setVisible] = useState<boolean>(defaultMediaVisibility(attachment.status, showSensitiveMedia));
 
   const handleMouseEnter: React.MouseEventHandler<HTMLVideoElement> = e => {
     const video = e.target as HTMLVideoElement;

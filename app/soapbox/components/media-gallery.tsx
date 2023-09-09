@@ -283,7 +283,6 @@ export interface IMediaGallery {
   cacheWidth?: (width: number) => void
   visible?: boolean
   onToggleVisibility?: () => void
-  displayMedia?: string
   compact?: boolean
   className?: string
   sensitiveOverlay?: JSX.Element | null

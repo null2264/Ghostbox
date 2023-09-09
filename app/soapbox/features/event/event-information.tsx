@@ -29,10 +29,10 @@ const EventInformation: React.FC<IEventInformation> = ({ params }) => {
 
   const { tileServer } = useSoapboxConfig();
   const settings = useSettings();
-  const displayMedia = settings.get('displayMedia') as string;
+  const showSensitiveMedia = settings.get('showSensitiveMedia') as boolean;
 
   const [isLoaded, setIsLoaded] = useState<boolean>(!!status);
-  const [showMedia, setShowMedia] = useState<boolean>(defaultMediaVisibility(status, displayMedia));
+  const [showMedia, setShowMedia] = useState<boolean>(defaultMediaVisibility(status, showSensitiveMedia));
 
   useEffect(() => {
     dispatch(fetchStatus(params.statusId)).then(() => {
@@ -41,7 +41,7 @@ const EventInformation: React.FC<IEventInformation> = ({ params }) => {
       setIsLoaded(true);
     });
 
-    setShowMedia(defaultMediaVisibility(status, displayMedia));
+    setShowMedia(defaultMediaVisibility(status, showSensitiveMedia));
   }, [params.statusId]);
 
   const handleToggleMediaVisibility = () => {

@@ -1200,6 +1200,7 @@
   "preferences.fields.preserve_spoilers_label": "Preserve content warning when replying",
   "preferences.fields.privacy_label": "Default post privacy",
   "preferences.fields.reduce_motion_label": "Reduce motion in animations",
+  "preferences.fields.show_sensitive_media_label": "Automatically show sensitive media",
   "preferences.fields.system_font_label": "Use system's default font",
   "preferences.fields.theme": "Theme",
   "preferences.fields.underline_links_label": "Always underline links in posts",

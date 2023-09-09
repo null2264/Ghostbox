@@ -113,7 +113,6 @@ interface IVideo {
   blurhash?: string
   link?: React.ReactNode
   aspectRatio?: number
-  displayMedia?: string
   sensitiveOverlay?: JSX.Element | null
   onToggleVisibility?: () => void
 }

@@ -35,9 +35,9 @@ const QuotedStatus: React.FC<IQuotedStatus> = ({ status, onCancel, compose }) =>
   const history = useHistory();
 
   const settings = useSettings();
-  const displayMedia = settings.get('displayMedia');
+  const showSensitiveMedia = settings.get('showSensitiveMedia');
 
-  const [showMedia, setShowMedia] = useState<boolean>(defaultMediaVisibility(status, displayMedia));
+  const [showMedia, setShowMedia] = useState<boolean>(defaultMediaVisibility(status, showSensitiveMedia));
 
   const handleExpandClick: MouseEventHandler<HTMLDivElement> = (e) => {
     if (!status) return;
@@ -105,7 +105,7 @@ const QuotedStatus: React.FC<IQuotedStatus> = ({ status, onCancel, compose }) =>
 
         <StatusContainer
           showMedia={showMedia}
-          isHidden={status.hidden}
+          isSensitive={status.sensitive}
           onToggleMediaVisibility={handleToggleMediaVisibility}
           hasMedia={status.media_attachments.size > 0}
           contentOption={{

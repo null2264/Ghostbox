@@ -27,8 +27,6 @@ import DetailedStatus from './detailed-status';
 import ThreadLoginCta from './thread-login-cta';
 import ThreadStatus from './thread-status';
 
-type DisplayMedia = 'default' | 'hide_all' | 'show_all';
-
 const getAncestorsIds = createSelector([
   (_: RootState, statusId: string | undefined) => statusId,
   (state: RootState) => state.contexts.inReplyTos,
@@ -100,7 +98,7 @@ const Thread = (props: IThread) => {
   const { account: me } = useOwnAccount();
   const settings = useSettings();
 
-  const displayMedia = settings.get('displayMedia') as DisplayMedia;
+  const showSensitiveMedia = settings.get('showSensitiveMedia') as boolean;
   const isUnderReview = status?.visibility === 'self';
 
   const { ancestorsIds, descendantsIds } = useAppSelector((state) => {
@@ -125,7 +123,7 @@ const Thread = (props: IThread) => {
   let initialTopMostItemIndex = ancestorsIds.size;
   if (!useWindowScroll && initialTopMostItemIndex !== 0) initialTopMostItemIndex = ancestorsIds.size + 1;
 
-  const [showMedia, setShowMedia] = useState<boolean>(status?.visibility === 'self' ? false : defaultMediaVisibility(status, displayMedia));
+  const [showMedia, setShowMedia] = useState<boolean>(status?.visibility === 'self' ? false : defaultMediaVisibility(status, showSensitiveMedia));
 
   const node = useRef<HTMLDivElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
@@ -328,7 +326,7 @@ const Thread = (props: IThread) => {
 
   // Reset media visibility if status changes.
   useEffect(() => {
-    setShowMedia(status?.visibility === 'self' ? false : defaultMediaVisibility(status, displayMedia));
+    setShowMedia(status?.visibility === 'self' ? false : defaultMediaVisibility(status, showSensitiveMedia));
   }, [status.id]);
 
   // Scroll focused status into view when thread updates.

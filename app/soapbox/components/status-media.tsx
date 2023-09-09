@@ -78,7 +78,7 @@ const StatusMedia: React.FC<IStatusMedia> = ({
         status={status}
         visible={showMedia}
         onToggleVisibility={onToggleVisibility}
-        hideHideButton={firstAttachment.type === 'video'}
+        hideHideButton={firstAttachment.type === 'video' || firstAttachment.type === 'audio'}
       />
     ) : null;
 
@@ -150,7 +150,7 @@ const StatusMedia: React.FC<IStatusMedia> = ({
               accentColor={attachment.meta.getIn(['colors', 'accent'])}
               duration={attachment.meta.getIn(['original', 'duration'], 0)}
               height={263}
-              //sensitiveOverlay={sensitiveOverlay}
+              sensitiveOverlay={sensitiveOverlay}
             />
           )}
         </Bundle>

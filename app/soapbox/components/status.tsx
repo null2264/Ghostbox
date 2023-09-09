@@ -77,11 +77,11 @@ const Status: React.FC<IStatus> = (props) => {
   const dispatch = useAppDispatch();
 
   const settings = useSettings();
-  const displayMedia = settings.get('displayMedia') as string;
+  const showSensitiveMedia = settings.get('showSensitiveMedia') as boolean;
   const didShowCard = useRef(false);
   const node = useRef<HTMLDivElement>(null);
 
-  const [showMedia, setShowMedia] = useState<boolean>(defaultMediaVisibility(status, displayMedia));
+  const [showMedia, setShowMedia] = useState<boolean>(defaultMediaVisibility(status, showSensitiveMedia));
 
   const actualStatus = getActualStatus(status);
   const isReblog = status.reblog && typeof status.reblog === 'object';
@@ -96,7 +96,7 @@ const Status: React.FC<IStatus> = (props) => {
   }, []);
 
   useEffect(() => {
-    setShowMedia(defaultMediaVisibility(status, displayMedia));
+    setShowMedia(defaultMediaVisibility(status, showSensitiveMedia));
   }, [status.id]);
 
   const handleToggleMediaVisibility = (): void => {
@@ -385,7 +385,7 @@ const Status: React.FC<IStatus> = (props) => {
   };
 
   const isUnderReview = actualStatus.visibility === 'self';
-  const isSensitive = actualStatus.hidden;
+  const isSensitive = actualStatus.sensitive;
   const isSoftDeleted = status.tombstone?.reason === 'deleted';
 
   if (isSoftDeleted) {
@@ -442,9 +442,8 @@ const Status: React.FC<IStatus> = (props) => {
 
             <StatusContainer
               showMedia={showMedia || false}
-              isHidden={isUnderReview || isSensitive}
+              isSensitive={isUnderReview || isSensitive}
               onToggleMediaVisibility={handleToggleMediaVisibility}
-              initialExpandState={!actualStatus.sensitive}
               quote={quote}
               hasMedia={!!(quote || actualStatus.card || actualStatus.media_attachments.size > 0)}
               contentOption={{
