@@ -270,6 +270,13 @@ Not added/used:
 - sparkle, scrubbed
 - rotate, scrubbed
 - scale, not covered by mfm-parser
+- Search or [Search], not covered by mfm-parser
+- mathBlock, not covered by mfm-parser
+  \[
+    a = 1 + 1
+  \]
+- mathInline, not covered by mfm-parser
+  \(a = 1 + 1\)
 - MFM Properties, maybe use data-* instead?
 */
 
