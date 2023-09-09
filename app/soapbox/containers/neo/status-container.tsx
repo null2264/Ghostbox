@@ -88,7 +88,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
 
           <Stack
             className={clsx('relative z-0', {
-              'max-h-24 -mx-28 px-28 overflow-x-visible overflow-y-hidden blur-sm select-none pointer-events-none': !hasMediaAndNoCW && !isExpanded && isHidden,
+              'max-h-24 overflow-x-visible overflow-y-clip blur-sm select-none pointer-events-none': !hasMediaAndNoCW && !isExpanded && isHidden,
             })}
           >
 
