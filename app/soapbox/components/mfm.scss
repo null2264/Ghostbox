@@ -1,6 +1,6 @@
 .mfm {
   --default-animation-speed: 1s;
-  display: inline-block;
+  @apply inline-block;
 }
 
 @keyframes mfm-rubberBand {
