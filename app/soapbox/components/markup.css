@@ -2,7 +2,7 @@
   @apply whitespace-pre-wrap;
 }
 
-[data-markup] p {
+[data-markup] p:not(:empty) {
   @apply mb-4 whitespace-pre-wrap;
 }
 
