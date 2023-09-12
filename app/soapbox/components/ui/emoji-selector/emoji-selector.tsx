@@ -90,6 +90,10 @@ const EmojiSelector: React.FC<IEmojiSelector> = ({
           onPickEmoji: handlePickEmoji,
         }),
       );
+
+      if (onClose) {
+        onClose();
+      }
     } else {
       setExpanded(true);
     }
