@@ -24,10 +24,13 @@ const EmojiPickerModal: React.FC<IEmojiPickerModal> = ({ onPickEmoji, onClose })
       {({ top }) => (
         <div className='modal-root__modal actions-modal' style={{ top: `${top}%` }}>
           <ul>
+            <li>
+              <EmojiPickerDropdown onPickEmoji={handlePickEmoji} visible setVisible={() => { }} update={() => { }} dynamicWidth emojiSize={{ size: 34, buttonSize: 46 }} />
+            </li>
+
             <li className='dropdown-menu__separator' />
 
             <li>
-              <EmojiPickerDropdown onPickEmoji={handlePickEmoji} visible setVisible={() => { }} update={() => { }} />
               <button type='button' onClick={onClose}>
                 <FormattedMessage id='lightbox.close' defaultMessage='Cancel' />
               </button>
