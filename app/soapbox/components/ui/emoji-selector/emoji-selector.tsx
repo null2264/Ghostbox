@@ -2,9 +2,11 @@ import { shift, useFloating, Placement, offset, OffsetOptions, flip } from '@flo
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 
+import { openModal } from 'soapbox/actions/modals';
 import { Emoji as EmojiComponent, HStack, IconButton } from 'soapbox/components/ui';
 import EmojiPickerDropdown from 'soapbox/features/emoji/components/emoji-picker-dropdown';
-import { useClickOutside, useFeatures, useSoapboxConfig } from 'soapbox/hooks';
+import { useAppDispatch, useClickOutside, useFeatures, useSoapboxConfig } from 'soapbox/hooks';
+import { isUserTouching } from 'soapbox/is-mobile';
 
 import type { Emoji } from 'soapbox/features/emoji';
 
@@ -59,10 +61,13 @@ const EmojiSelector: React.FC<IEmojiSelector> = ({
   offsetOptions,
   all = true,
 }): JSX.Element => {
+  const dispatch = useAppDispatch();
   const soapboxConfig = useSoapboxConfig();
   const { customEmojiReacts } = useFeatures();
 
   const [expanded, setExpanded] = useState(false);
+
+  const isOnMobile = isUserTouching();
 
   const { x, y, strategy, refs, update } = useFloating<HTMLElement>({
     placement,
@@ -79,7 +84,15 @@ const EmojiSelector: React.FC<IEmojiSelector> = ({
   });
 
   const handleExpand: React.MouseEventHandler = () => {
-    setExpanded(true);
+    if (isOnMobile) {
+      dispatch(
+        openModal('EMOJI_PICKER', {
+          onPickEmoji: handlePickEmoji,
+        }),
+      );
+    } else {
+      setExpanded(true);
+    }
   };
 
   const handlePickEmoji = (emoji: Emoji) => {
