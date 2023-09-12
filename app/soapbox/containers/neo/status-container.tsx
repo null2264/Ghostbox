@@ -60,12 +60,13 @@ const StatusContainer: React.FC<IStatusContainer> = ({
     toggleHidden();
   };
 
-  const hasMediaAndNoCW = hasMedia && !status.spoiler_text;
+  const hasCW = status.spoiler_text;
+  const hasMediaAndNoCW = hasMedia && !hasCW;
 
   return (
     // eslint-disable-next-line tailwindcss/no-custom-classname
     <div className='status-container'>
-      {(isSensitive && status.spoiler_text) && (
+      {(isSensitive && hasCW) && (
         <div className='pb-4'>
           <Text className='line-clamp-6' size={contentOption.textSize} theme='white' weight='medium'>
             <span dangerouslySetInnerHTML={{ __html: status.spoilerHtml }} />
@@ -76,7 +77,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
       {status.event ? <EventPreview status={status} hideAction /> : (
         <div className='relative'>
 
-          {(!hasMediaAndNoCW && isSensitive && isHidden) && (
+          {(!hasMediaAndNoCW && isSensitive && isHidden && hasCW) && (
             <div className='absolute z-[1] flex h-full w-full items-center justify-center'>
               <Button
                 type='button'
@@ -92,7 +93,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
 
           <Stack
             className={clsx('relative z-0', {
-              'max-h-24 overflow-x-visible overflow-y-clip blur-sm select-none pointer-events-none': !hasMediaAndNoCW && isSensitive && isHidden,
+              'max-h-24 overflow-x-visible overflow-y-clip blur-sm select-none pointer-events-none': !hasMediaAndNoCW && isSensitive && isHidden && hasCW,
             })}
           >
 
@@ -116,7 +117,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
             </Stack>
           </Stack>
 
-          {(!hasMediaAndNoCW && isSensitive && !isHidden) && (
+          {(!hasMediaAndNoCW && isSensitive && !isHidden && hasCW) && (
             <div className='flex w-full justify-center pt-2'>
               <Button
                 type='button'
