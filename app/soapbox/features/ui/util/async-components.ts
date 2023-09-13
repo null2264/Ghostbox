@@ -641,3 +641,7 @@ export function EditAnnouncementModal() {
 export function FollowedTags() {
   return import(/* webpackChunkName: "features/followed-tags" */'../../followed-tags');
 }
+
+export function EmojiPickerModal() {
+  return import(/* webpackChunkName: "modals/emoji_picker_modal" */'../components/modals/emoji-picker-modal');
+}

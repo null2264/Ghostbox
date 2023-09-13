@@ -231,7 +231,7 @@ const ComposeForm = <ID extends string>({ id, shouldCondense, autoFocus, clickab
   const renderButtons = useCallback(() => (
     <HStack alignItems='center' space={2}>
       {features.media && <UploadButtonContainer composeId={id} />}
-      <EmojiPickerDropdown onPickEmoji={handleEmojiPick} condensed={shouldCondense} />
+      <EmojiPickerDropdown onPickEmoji={handleEmojiPick} />
       {features.polls && <PollButton composeId={id} />}
       {features.privacyScopes && !group && !groupId && <PrivacyDropdown composeId={id} />}
       {features.scheduledStatuses && <ScheduleButton composeId={id} />}

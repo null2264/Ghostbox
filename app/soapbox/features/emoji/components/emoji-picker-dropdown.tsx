@@ -41,6 +41,11 @@ export const messages = defineMessages({
   skins_6: { id: 'emoji_button.skins_6', defaultMessage: 'Dark' },
 });
 
+interface EmojiSize {
+  size: number
+  buttonSize: number
+}
+
 export interface IEmojiPickerDropdown {
   onPickEmoji?: (emoji: Emoji) => void
   condensed?: boolean
@@ -48,6 +53,8 @@ export interface IEmojiPickerDropdown {
   visible: boolean
   setVisible: (value: boolean) => void
   update: (() => any) | null
+  dynamicWidth?: boolean
+  emojiSize?: EmojiSize
 }
 
 const perLine = 8;
@@ -125,7 +132,7 @@ const RenderAfter = ({ children, update }: any) => {
 };
 
 const EmojiPickerDropdown: React.FC<IEmojiPickerDropdown> = ({
-  onPickEmoji, visible, setVisible, update, withCustom = true,
+  onPickEmoji, visible, setVisible, update, withCustom = true, dynamicWidth = false, emojiSize = { size: 22, buttonSize: 34 },
 }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
@@ -245,13 +252,14 @@ const EmojiPickerDropdown: React.FC<IEmojiPickerDropdown> = ({
             recent={frequentlyUsedEmojis}
             perLine={8}
             skin={handleSkinTone}
-            emojiSize={22}
-            emojiButtonSize={34}
+            emojiSize={emojiSize.size}
+            emojiButtonSize={emojiSize.buttonSize}
             set='twitter'
             theme={theme}
             i18n={getI18n()}
             skinTonePosition='search'
             previewPosition='none'
+            dynamicWidth={dynamicWidth}
           />
         )}
       </RenderAfter>
