@@ -4,10 +4,13 @@ import React, { KeyboardEvent, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { defineMessages, useIntl } from 'react-intl';
 
+import { openModal } from 'soapbox/actions/modals';
 import { IconButton } from 'soapbox/components/ui';
-import { useClickOutside } from 'soapbox/hooks';
+import { useAppDispatch, useClickOutside } from 'soapbox/hooks';
+import { isUserTouching } from 'soapbox/is-mobile';
 
 import EmojiPickerDropdown, { IEmojiPickerDropdown } from '../components/emoji-picker-dropdown';
+
 
 export const messages = defineMessages({
   emoji: { id: 'emoji_button.label', defaultMessage: 'Insert emoji' },
@@ -16,9 +19,11 @@ export const messages = defineMessages({
 const EmojiPickerDropdownContainer = (
   props: Pick<IEmojiPickerDropdown, 'onPickEmoji' | 'condensed' | 'withCustom'>,
 ) => {
+  const dispatch = useAppDispatch();
   const intl = useIntl();
   const title = intl.formatMessage(messages.emoji);
 
+  const isOnMobile = isUserTouching();
   const [visible, setVisible] = useState(false);
 
   const { x, y, strategy, refs, update } = useFloating<HTMLButtonElement>({
@@ -26,12 +31,20 @@ const EmojiPickerDropdownContainer = (
   });
 
   useClickOutside(refs, () => {
-    setVisible(false);
+    if (!isOnMobile) setVisible(false);
   });
 
   const handleToggle = (e: MouseEvent | KeyboardEvent) => {
     e.stopPropagation();
-    setVisible(!visible);
+    if (isOnMobile) {
+      dispatch(
+        openModal('EMOJI_PICKER', {
+          onPickEmoji: props.onPickEmoji,
+        }),
+      );
+    } else {
+      setVisible(!visible);
+    }
   };
 
   return (
