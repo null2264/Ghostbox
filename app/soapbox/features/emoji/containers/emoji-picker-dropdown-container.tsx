@@ -1,4 +1,4 @@
-import { useFloating, shift } from '@floating-ui/react';
+import { useFloating, flip, shift } from '@floating-ui/react';
 import clsx from 'clsx';
 import React, { KeyboardEvent, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -27,7 +27,15 @@ const EmojiPickerDropdownContainer = (
   const [visible, setVisible] = useState(false);
 
   const { x, y, strategy, refs, update } = useFloating<HTMLButtonElement>({
-    middleware: [shift()],
+    placement: 'bottom',
+    middleware: [
+      flip({
+        fallbackPlacements: ['top'],
+      }),
+      shift({
+        crossAxis: true,
+      }),
+    ],
   });
 
   useClickOutside(refs, () => {
