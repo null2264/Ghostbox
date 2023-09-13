@@ -75,7 +75,7 @@ const UserPanel: React.FC<IUserPanel> = ({ accountId, action, badges, domain }) 
         </Stack>
 
         <HStack alignItems='center' space={3}>
-          {account.followers_count >= 0 && (
+          {(!account.pleroma?.hide_followers && account.followers_count >= 0) && (
             <Link to={`/@${account.acct}/followers`} title={intl.formatNumber(account.followers_count)}>
               <HStack alignItems='center' space={1}>
                 <Text theme='primary' weight='bold' size='sm'>
@@ -88,7 +88,7 @@ const UserPanel: React.FC<IUserPanel> = ({ accountId, action, badges, domain }) 
             </Link>
           )}
 
-          {account.following_count >= 0 && (
+          {(!account.pleroma?.hide_follows && account.following_count >= 0) && (
             <Link to={`/@${account.acct}/following`} title={intl.formatNumber(account.following_count)}>
               <HStack alignItems='center' space={1}>
                 <Text theme='primary' weight='bold' size='sm'>

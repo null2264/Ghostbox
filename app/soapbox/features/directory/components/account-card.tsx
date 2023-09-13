@@ -73,15 +73,17 @@ const AccountCard: React.FC<IAccountCard> = ({ id }) => {
           </Text>
         </Stack>
 
-        <Stack>
-          <Text theme='primary' size='md' weight='medium'>
-            {shortNumberFormat(account.followers_count)}
-          </Text>
+        { (!account.pleroma?.hide_followers) && (
+          <Stack>
+            <Text theme='primary' size='md' weight='medium'>
+              {shortNumberFormat(account.followers_count)}
+            </Text>
 
-          <Text theme='muted' size='sm'>
-            <FormattedMessage id='account.followers' defaultMessage='Followers' />
-          </Text>
-        </Stack>
+            <Text theme='muted' size='sm'>
+              <FormattedMessage id='account.followers' defaultMessage='Followers' />
+            </Text>
+          </Stack>
+        )}
 
         <Stack>
           <Text theme='primary' size='md' weight='medium'>

@@ -13,7 +13,7 @@ const messages = defineMessages({
 });
 
 interface IProfileStats {
-  account: Pick<Account, 'acct' | 'followers_count' | 'following_count'> | undefined
+  account: Pick<Account, 'acct' | 'followers_count' | 'following_count' | 'pleroma'> | undefined
   onClickHandler?: React.MouseEventHandler
 }
 
@@ -27,27 +27,31 @@ const ProfileStats: React.FC<IProfileStats> = ({ account, onClickHandler }) => {
 
   return (
     <HStack alignItems='center' space={3}>
-      <NavLink to={`/@${account.acct}/followers`} onClick={onClickHandler} title={intl.formatNumber(account.followers_count)} className='hover:underline'>
-        <HStack alignItems='center' space={1}>
-          <Text theme='primary' weight='bold' size='sm'>
-            {shortNumberFormat(account.followers_count)}
-          </Text>
-          <Text weight='bold' size='sm'>
-            {intl.formatMessage(messages.followers)}
-          </Text>
-        </HStack>
-      </NavLink>
+      {!account.pleroma?.hide_followers && (
+        <NavLink to={`/@${account.acct}/followers`} onClick={onClickHandler} title={intl.formatNumber(account.followers_count)} className='hover:underline'>
+          <HStack alignItems='center' space={1}>
+            <Text theme='primary' weight='bold' size='sm'>
+              {shortNumberFormat(account.followers_count)}
+            </Text>
+            <Text weight='bold' size='sm'>
+              {intl.formatMessage(messages.followers)}
+            </Text>
+          </HStack>
+        </NavLink>
+      )}
 
-      <NavLink to={`/@${account.acct}/following`} onClick={onClickHandler} title={intl.formatNumber(account.following_count)} className='hover:underline'>
-        <HStack alignItems='center' space={1}>
-          <Text theme='primary' weight='bold' size='sm'>
-            {shortNumberFormat(account.following_count)}
-          </Text>
-          <Text weight='bold' size='sm'>
-            {intl.formatMessage(messages.follows)}
-          </Text>
-        </HStack>
-      </NavLink>
+      {!account.pleroma?.hide_follows && (
+        <NavLink to={`/@${account.acct}/following`} onClick={onClickHandler} title={intl.formatNumber(account.following_count)} className='hover:underline'>
+          <HStack alignItems='center' space={1}>
+            <Text theme='primary' weight='bold' size='sm'>
+              {shortNumberFormat(account.following_count)}
+            </Text>
+            <Text weight='bold' size='sm'>
+              {intl.formatMessage(messages.follows)}
+            </Text>
+          </HStack>
+        </NavLink>
+      )}
     </HStack>
   );
 };
