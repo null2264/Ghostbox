@@ -78,7 +78,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
         <div className='relative'>
 
           {(!hasMediaAndNoCW && isSensitive && isHidden && hasCW) && (
-            <div className='absolute z-[1] flex h-full w-full items-center justify-center'>
+            <button className='absolute z-[1] flex h-full w-full items-center justify-center' onClick={handleToggleContent}>
               <Button
                 type='button'
                 theme='primary'
@@ -88,7 +88,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
               >
                 {intl.formatMessage(messages.show)}
               </Button>
-            </div>
+            </button>
           )}
 
           <Stack
@@ -118,7 +118,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
           </Stack>
 
           {(!hasMediaAndNoCW && isSensitive && !isHidden && hasCW) && (
-            <div className='flex w-full justify-center pt-2'>
+            <button className='mt-2 flex w-full justify-center' onClick={handleToggleContent}>
               <Button
                 type='button'
                 theme='primary'
@@ -128,7 +128,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
               >
                 {intl.formatMessage(messages.hide)}
               </Button>
-            </div>
+            </button>
           )}
         </div>
       )}
