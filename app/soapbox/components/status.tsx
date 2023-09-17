@@ -34,6 +34,11 @@ const messages = defineMessages({
   hide: { id: 'moderation_overlay.hide_content', defaultMessage: 'Hide content' },
 });
 
+interface INotificationInfo {
+  icon: React.ReactNode
+  text: React.ReactNode
+}
+
 export interface IStatus {
   id?: string
   avatarSize?: number
@@ -51,6 +56,7 @@ export interface IStatus {
   variant?: 'default' | 'rounded' | 'slim'
   showGroup?: boolean
   accountAction?: React.ReactElement
+  notification?: INotificationInfo
 }
 
 const Status: React.FC<IStatus> = (props) => {
@@ -70,6 +76,7 @@ const Status: React.FC<IStatus> = (props) => {
     hideActionBar,
     variant = 'rounded',
     showGroup = true,
+    notification,
   } = props;
 
   const intl = useIntl();
@@ -201,7 +208,16 @@ const Status: React.FC<IStatus> = (props) => {
   };
 
   const renderStatusInfo = () => {
-    if (isReblog && showGroup && group) {
+    if (typeof notification !== 'undefined') {
+      return (
+        <StatusInfo
+          avatarSize={avatarSize}
+          icon={notification.icon}
+          text={notification.text}
+          visibility={actualStatus.visibility}
+        />
+      );
+    } else if (isReblog && showGroup && group) {
       return (
         <StatusInfo
           avatarSize={avatarSize}

@@ -8,10 +8,9 @@ import { reblog, favourite, unreblog, unfavourite } from 'soapbox/actions/intera
 import { openModal } from 'soapbox/actions/modals';
 import { getSettings } from 'soapbox/actions/settings';
 import { hideStatus, revealStatus } from 'soapbox/actions/statuses';
-import Icon from 'soapbox/components/icon';
-import { HStack, Text, Emoji } from 'soapbox/components/ui';
+import Status from 'soapbox/components/status';
+import { HStack, Text, Emoji, Icon } from 'soapbox/components/ui';
 import AccountContainer from 'soapbox/containers/account-container';
-import StatusContainer from 'soapbox/containers/status-container';
 import { useAppDispatch, useAppSelector, useInstance } from 'soapbox/hooks';
 import { makeGetNotification } from 'soapbox/selectors';
 import { NotificationType, validType } from 'soapbox/utils/notification';
@@ -287,6 +286,7 @@ const Notification: React.FC<INotificaton> = (props) => {
       return (
         <Icon
           src={icons[type]}
+          size={16}
           className='flex-none text-primary-600 dark:text-primary-400'
         />
       );
@@ -339,14 +339,14 @@ const Notification: React.FC<INotificaton> = (props) => {
       case 'pleroma:participation_accepted':
       case 'pleroma:participation_request':
         return status && typeof status === 'object' ? (
-          <StatusContainer
-            id={status.id}
+          <Status
+            status={status}
             hidden={hidden}
             onMoveDown={handleMoveDown}
             onMoveUp={handleMoveUp}
             avatarSize={avatarSize}
-            contextType='notifications'
             showGroup={false}
+            notification={{ icon: renderIcon(), text: message }}
           />
         ) : null;
       default:
@@ -369,20 +369,15 @@ const Notification: React.FC<INotificaton> = (props) => {
     )
   ) : '';
 
-  return (
-    <HotKeys handlers={getHandlers()} data-testid='notification'>
-      <div
-        className='notification focusable'
-        tabIndex={0}
-        aria-label={ariaLabel}
-      >
-        <div className='focusable p-4'>
+  const render = () => {
+    const content = renderContent();
+
+    return (
+      <>
+        {(content !== null && (content.type as any).name !== 'Status') && (
           <div className='mb-2'>
             <HStack alignItems='center' space={3}>
-              <div
-                className='flex justify-end'
-                style={{ flexBasis: avatarSize }}
-              >
+              <div className='flex justify-end'>
                 {renderIcon()}
               </div>
 
@@ -398,10 +393,24 @@ const Notification: React.FC<INotificaton> = (props) => {
               </div>
             </HStack>
           </div>
+        )}
 
-          <div>
-            {renderContent()}
-          </div>
+        <div>
+          {renderContent()}
+        </div>
+      </>
+    );
+  };
+
+  return (
+    <HotKeys handlers={getHandlers()} data-testid='notification'>
+      <div
+        className='notification focusable'
+        tabIndex={0}
+        aria-label={ariaLabel}
+      >
+        <div className='focusable p-4'>
+          {render()}
         </div>
       </div>
     </HotKeys>
