@@ -386,7 +386,7 @@ const Notification: React.FC<INotificaton> = (props) => {
 
     return (
       <>
-        {(content !== null && type >= 1) && (
+        {(content !== null && type !== 1) && (
           <div className='mb-2'>
             <HStack alignItems='center' space={3}>
               <div className='flex justify-end'>
