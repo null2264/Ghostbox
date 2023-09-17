@@ -91,7 +91,7 @@ const configuration: Configuration = {
     new webpack.ProvidePlugin({
       process: 'process/browser',
     }),
-    new ForkTsCheckerWebpackPlugin({ typescript: { memoryLimit: 8192 } }),
+    new ForkTsCheckerWebpackPlugin({ typescript: { memoryLimit: 4096 } }),
     new MiniCssExtractPlugin({
       filename: 'packs/css/[name]-[contenthash:8].css',
       chunkFilename: 'packs/css/[name]-[contenthash:8].chunk.css',
