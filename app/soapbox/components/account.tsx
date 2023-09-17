@@ -208,7 +208,7 @@ const Account = ({
           <div className='grow overflow-hidden'>
             <ProfilePopper
               condition={showProfileHoverCard}
-              wrapper={(children) => <HoverRefWrapper className="block w-fit" accountId={account.id} inline>{children}</HoverRefWrapper>}
+              wrapper={(children) => <HoverRefWrapper className='block w-fit' accountId={account.id} inline>{children}</HoverRefWrapper>}
             >
               <LinkEl
                 to={`/@${account.acct}`}
