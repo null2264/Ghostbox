@@ -299,33 +299,42 @@ const Notification: React.FC<INotificaton> = (props) => {
     switch (type as NotificationType) {
       case 'follow':
       case 'user_approved':
-        return account && typeof account === 'object' ? (
-          <AccountContainer
-            id={account.id}
-            hidden={hidden}
-            avatarSize={avatarSize}
-            withRelationship
-          />
-        ) : null;
+        return {
+          type: 0,
+          content: account && typeof account === 'object' ? (
+            <AccountContainer
+              id={account.id}
+              hidden={hidden}
+              avatarSize={avatarSize}
+              withRelationship
+            />
+          ) : null,
+        };
       case 'follow_request':
-        return account && typeof account === 'object' ? (
-          <AccountContainer
-            id={account.id}
-            hidden={hidden}
-            avatarSize={avatarSize}
-            actionType='follow_request'
-            withRelationship
-          />
-        ) : null;
+        return {
+          type: 0,
+          content: account && typeof account === 'object' ? (
+            <AccountContainer
+              id={account.id}
+              hidden={hidden}
+              avatarSize={avatarSize}
+              actionType='follow_request'
+              withRelationship
+            />
+          ) : null,
+        };
       case 'move':
-        return account && typeof account === 'object' && notification.target && typeof notification.target === 'object' ? (
-          <AccountContainer
-            id={notification.target.id}
-            hidden={hidden}
-            avatarSize={avatarSize}
-            withRelationship
-          />
-        ) : null;
+        return {
+          type: 0,
+          content: account && typeof account === 'object' && notification.target && typeof notification.target === 'object' ? (
+            <AccountContainer
+              id={notification.target.id}
+              hidden={hidden}
+              avatarSize={avatarSize}
+              withRelationship
+            />
+          ) : null,
+        };
       case 'favourite':
       case 'group_favourite':
       case 'mention':
@@ -338,19 +347,22 @@ const Notification: React.FC<INotificaton> = (props) => {
       case 'pleroma:event_reminder':
       case 'pleroma:participation_accepted':
       case 'pleroma:participation_request':
-        return status && typeof status === 'object' ? (
-          <Status
-            status={status}
-            hidden={hidden}
-            onMoveDown={handleMoveDown}
-            onMoveUp={handleMoveUp}
-            avatarSize={avatarSize}
-            showGroup={false}
-            notification={{ icon: renderIcon(), text: message }}
-          />
-        ) : null;
+        return {
+          type: 1,
+          content: status && typeof status === 'object' ? (
+            <Status
+              status={status}
+              hidden={hidden}
+              onMoveDown={handleMoveDown}
+              onMoveUp={handleMoveUp}
+              avatarSize={avatarSize}
+              showGroup={false}
+              notification={{ icon: renderIcon(), text: message }}
+            />
+          ) : null,
+        };
       default:
-        return null;
+        return { type: -1, content: null };
     }
   };
 
@@ -370,11 +382,11 @@ const Notification: React.FC<INotificaton> = (props) => {
   ) : '';
 
   const render = () => {
-    const content = renderContent();
+    const { type, content } = renderContent();
 
     return (
       <>
-        {(content !== null && (content.type as any).name !== 'Status') && (
+        {(content !== null && type >= 1) && (
           <div className='mb-2'>
             <HStack alignItems='center' space={3}>
               <div className='flex justify-end'>
@@ -395,9 +407,11 @@ const Notification: React.FC<INotificaton> = (props) => {
           </div>
         )}
 
-        <div>
-          {renderContent()}
-        </div>
+        {(content !== null) && (
+          <div>
+            {content}
+          </div>
+        )}
       </>
     );
   };
