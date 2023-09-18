@@ -3,14 +3,18 @@ import ReactDOM from 'react-dom';
 
 interface IPortal {
   children: React.ReactNode
-  target?: Element | DocumentFragment
+  target?: Element | DocumentFragment | null
 }
 
 /**
  * Portal
  */
-const Portal: React.FC<IPortal> = ({ children, target = document.getElementById('soapbox') as HTMLDivElement }) => {
+const Portal: React.FC<IPortal> = ({ children, target }) => {
   const [isRendered, setIsRendered] = useState<boolean>(false);
+
+  if (!target) {
+    target = target = document.getElementById('soapbox') as HTMLDivElement;
+  }
 
   useLayoutEffect(() => {
     setIsRendered(true);
