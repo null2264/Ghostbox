@@ -1,9 +1,7 @@
-/* @preval */
+import fs from 'node:fs';
+import path from 'path';
 
-const fs   = require('fs');
-const path = require('path');
-
-const filtered  = {};
+const filtered: Record<string, Record<string, string>> = {};
 const filenames = fs.readdirSync(path.resolve(__dirname, '../locales'));
 
 filenames.forEach(filename => {
@@ -35,4 +33,4 @@ filenames.forEach(filename => {
   };
 });
 
-module.exports = JSON.parse(JSON.stringify(filtered));
+export default filtered;
