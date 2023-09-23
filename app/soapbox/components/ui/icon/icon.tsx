@@ -19,13 +19,15 @@ interface IIcon extends Pick<React.SVGAttributes<SVGAElement>, 'strokeWidth'> {
   size?: number
   /** Override the data-testid */
   'data-testid'?: string
+  title?: string
 }
 
 /** Renders and SVG icon with optional counter. */
-const Icon: React.FC<IIcon> = ({ src, alt, count, size, countMax, ...filteredProps }): JSX.Element => (
+const Icon: React.FC<IIcon> = ({ src, alt, count, size, countMax, title, ...filteredProps }): JSX.Element => (
   <div
     className='relative flex shrink-0 flex-col'
     data-testid={filteredProps['data-testid'] || 'icon'}
+    title={title}
   >
     {count ? (
       <span className='absolute -right-3 -top-2 flex h-5 min-w-[20px] shrink-0 items-center justify-center whitespace-nowrap break-words'>
