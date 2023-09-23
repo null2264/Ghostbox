@@ -34,7 +34,7 @@ export default defineConfig({
   plugins: [
     compileTime(),
     createHtmlPlugin({
-      template: 'app/index.ejs',
+      template: 'app/index.html',
       minify: {
         collapseWhitespace: true,
         removeComments: false,
