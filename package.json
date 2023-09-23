@@ -190,6 +190,7 @@
     "vite": "^4.4.9",
     "vite-plugin-compile-time": "^0.2.1",
     "vite-plugin-html": "^3.2.0",
+    "vite-plugin-static-copy": "^0.17.0",
     "webpack": "^5.72.1",
     "webpack-assets-manifest": "^5.1.0",
     "webpack-bundle-analyzer": "^4.5.0",

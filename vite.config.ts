@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import compileTime from 'vite-plugin-compile-time';
 import { createHtmlPlugin } from 'vite-plugin-html';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 /** Return file as string, or return empty string. */
 const readFile = (filename: string) => {
@@ -50,6 +51,20 @@ export default defineConfig({
       babel: {
         configFile: './babel.config.cjs',
       },
+    }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: './node_modules/twemoji/assets/svg/*',
+          dest: './packs/emoji/',
+        }, {
+          src: './app/instance',
+          dest: '.',
+        }, {
+          src: './custom/instance',
+          dest: '.',
+        },
+      ],
     }),
   ],
 });
