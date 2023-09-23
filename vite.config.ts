@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import compileTime from 'vite-plugin-compile-time';
 import { createHtmlPlugin } from 'vite-plugin-html';
+import { VitePWA } from 'vite-plugin-pwa';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 /** Return file as string, or return empty string. */
@@ -51,6 +52,25 @@ export default defineConfig({
       babel: {
         configFile: './babel.config.cjs',
       },
+    }),
+    VitePWA({
+      injectRegister: null,
+      strategies: 'injectManifest',
+      injectManifest: {
+        injectionPoint: undefined,
+        plugins: [
+          // @ts-ignore
+          compileTime(),
+        ],
+      },
+      manifestFilename: 'manifest.json',
+      manifest: {
+        name: 'Ghostbox',
+        short_name: 'Ghostbox',
+        description: 'An alternative frontend for Akkoma',
+      },
+      srcDir: 'app/soapbox/service-worker',
+      filename: 'sw.ts',
     }),
     viteStaticCopy({
       targets: [
