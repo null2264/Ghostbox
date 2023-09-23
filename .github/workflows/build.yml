@@ -28,10 +28,11 @@ jobs:
         yarn install --ignore-scripts
         yarn patch-package
         env NODE_ENV=production yarn build
-        zip -r static.zip dist
+        mv dist/ static/
+        zip -r static.zip static/
         # -- For artifact
         mkdir __build/
-        cp -r dist/ __build/static
+        cp -r static/ __build/
 
     - name: Upload build folder as artifact
       uses: actions/upload-artifact@v3
