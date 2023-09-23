@@ -49,6 +49,8 @@ const makeHtmlConfig = (params = {}): HtmlWebpackPlugin.Options => {
 };
 
 const configuration: Configuration = {
+  stats: { children: true },
+
   entry: {
     application: resolve('app/soapbox/main.tsx'),
   },
