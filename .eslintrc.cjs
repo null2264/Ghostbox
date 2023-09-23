@@ -240,7 +240,15 @@ module.exports = {
       },
     ],
     'import/newline-after-import': 'error',
-    'import/no-extraneous-dependencies': 'error',
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        'devDependencies': [
+          '**/*.test.ts',
+          '**/*.test.tsx',
+        ],
+      },
+    ],
     'import/no-unresolved': 'error',
     'import/no-webpack-loader-syntax': 'error',
     'import/order': [
