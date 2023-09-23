@@ -39,13 +39,14 @@ import './precheck';
 import { default as Soapbox } from './containers/soapbox';
 import * as monitoring from './monitoring';
 import ready from './ready';
+import { registerSw } from './utils/sw';
 
 // Sentry
 monitoring.start();
 
-// Print console warning
 if (BuildConfig.NODE_ENV === 'production') {
   printConsoleWarning();
+  registerSw('/sw.js');
 }
 
 ready(() => {
