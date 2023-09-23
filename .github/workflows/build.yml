@@ -6,6 +6,7 @@ on:
       - develop
       - feat/**
       - fix/**
+      - refactor/**
   release:
     types: [ published ]
 
