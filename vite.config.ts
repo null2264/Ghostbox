@@ -73,7 +73,7 @@ export default defineConfig({
     compileTime(),
     createHtmlPlugin({
       entry: 'app/soapbox/main.tsx',
-      template: 'app/index.html',
+      template: 'index.html',
       minify: {
         collapseWhitespace: true,
         removeComments: false,
