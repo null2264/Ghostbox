@@ -5,6 +5,7 @@ import { defineConfig } from 'vite';
 import compileTime from 'vite-plugin-compile-time';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import { VitePWA } from 'vite-plugin-pwa';
+import vitePluginRequire from 'vite-plugin-require';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 /** Return file as string, or return empty string. */
@@ -35,6 +36,8 @@ export default defineConfig({
     port: 2264,
   },
   plugins: [
+    // @ts-ignore
+    vitePluginRequire.default(),
     compileTime(),
     createHtmlPlugin({
       template: 'app/index.html',
