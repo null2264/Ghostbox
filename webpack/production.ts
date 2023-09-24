@@ -90,7 +90,6 @@ const configuration: Configuration = {
         '404.html',
         'assets-manifest.json',
         // It would be nice to serve these, but they bloat up sw.js
-        'packs/images/crypto/**/*',
         'packs/emoji/**/*',
       ],
       ServiceWorker: {

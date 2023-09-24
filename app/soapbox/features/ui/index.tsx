@@ -90,7 +90,6 @@ import {
   ServerInfo,
   Dashboard,
   ModerationLog,
-  CryptoDonate,
   ScheduledStatuses,
   UserIndex,
   FederationRestrictions,
@@ -162,8 +161,7 @@ const SwitchingColumnsArea: React.FC<ISwitchingColumnsArea> = ({ children }) => 
   const features = useFeatures();
   const { search } = useLocation();
 
-  const { authenticatedProfile, cryptoAddresses } = useSoapboxConfig();
-  const hasCrypto = cryptoAddresses.size > 0;
+  const { authenticatedProfile } = useSoapboxConfig();
 
   // NOTE: Mastodon and Pleroma route some basenames to the backend.
   // When adding new routes, use a basename that does NOT conflict
@@ -345,7 +343,6 @@ const SwitchingColumnsArea: React.FC<ISwitchingColumnsArea> = ({ children }) => 
       <WrappedRoute path='/error/network' developerOnly page={EmptyPage} component={() => new Promise((_resolve, reject) => reject())} content={children} />
       <WrappedRoute path='/error' developerOnly page={EmptyPage} component={IntentionalError} content={children} />
 
-      {hasCrypto && <WrappedRoute path='/donate/crypto' publicRoute page={DefaultPage} component={CryptoDonate} content={children} />}
       {features.federating && <WrappedRoute path='/federation_restrictions' publicRoute page={DefaultPage} component={FederationRestrictions} content={children} />}
 
       <WrappedRoute path='/share' page={DefaultPage} component={Share} content={children} exact />

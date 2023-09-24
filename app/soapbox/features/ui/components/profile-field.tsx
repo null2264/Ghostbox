@@ -4,13 +4,8 @@ import { defineMessages, useIntl, FormatDateOptions } from 'react-intl';
 
 import Markup from 'soapbox/components/markup';
 import { HStack, Icon } from 'soapbox/components/ui';
-import BundleContainer from 'soapbox/features/ui/containers/bundle-container';
-import { CryptoAddress } from 'soapbox/features/ui/util/async-components';
 
 import type { Account } from 'soapbox/schemas';
-
-const getTicker = (value: string): string => (value.match(/\$([a-zA-Z]*)/i) || [])[1];
-const isTicker = (value: string): boolean => Boolean(getTicker(value));
 
 const messages = defineMessages({
   linkVerifiedOn: { id: 'account.link_verified_on', defaultMessage: 'Ownership of this link was checked on {date}' },
@@ -32,19 +27,6 @@ interface IProfileField {
 /** Renders a single profile field. */
 const ProfileField: React.FC<IProfileField> = ({ field }) => {
   const intl = useIntl();
-
-  if (isTicker(field.name)) {
-    return (
-      <BundleContainer fetchComponent={CryptoAddress}>
-        {Component => (
-          <Component
-            ticker={getTicker(field.name).toLowerCase()}
-            address={field.value_plain}
-          />
-        )}
-      </BundleContainer>
-    );
-  }
 
   return (
     <dl>

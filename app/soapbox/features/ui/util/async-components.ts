@@ -386,22 +386,6 @@ export function StatusHoverCard() {
   return import(/* webpackChunkName: "features/ui" */'soapbox/components/status-hover-card');
 }
 
-export function CryptoDonate() {
-  return import(/* webpackChunkName: "features/crypto_donate" */'../../crypto-donate');
-}
-
-export function CryptoDonatePanel() {
-  return import(/* webpackChunkName: "features/crypto_donate" */'../../crypto-donate/components/crypto-donate-panel');
-}
-
-export function CryptoAddress() {
-  return import(/* webpackChunkName: "features/crypto_donate" */'../../crypto-donate/components/crypto-address');
-}
-
-export function CryptoDonateModal() {
-  return import(/* webpackChunkName: "features/crypto_donate" */'../components/modals/crypto-donate-modal');
-}
-
 export function ScheduledStatuses() {
   return import(/* webpackChunkName: "features/scheduled_statuses" */'../../scheduled-statuses');
 }

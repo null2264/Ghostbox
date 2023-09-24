@@ -68,13 +68,6 @@ const rules: RuleSetRule[] = [{
   generator: {
     filename: 'packs/icons/[name]-[contenthash:8][ext]',
   },
-}, {
-  test: /\.svg$/,
-  type: 'asset/resource',
-  include: resolve('node_modules', 'cryptocurrency-icons'),
-  generator: {
-    filename: 'packs/images/crypto/[name]-[contenthash:8][ext]',
-  },
 }];
 
 export default rules;
