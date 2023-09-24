@@ -27,6 +27,8 @@ export default defineConfig({
         entryFileNames: 'packs/[name]-[hash].js',
       },
     },
+    outDir: 'static',
+    emptyOutDir: true,
   },
   assetsInclude: ['**/*.oga'],
   server: {

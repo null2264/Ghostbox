@@ -28,7 +28,6 @@ jobs:
         yarn install --ignore-scripts
         yarn patch-package
         env NODE_ENV=production yarn build
-        mv dist/ static/
         zip -r static.zip static/
         # -- For artifact
         mkdir __build/
