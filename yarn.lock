@@ -12,6 +12,11 @@
   resolved "https://registry.yarnpkg.com/@adobe/css-tools/-/css-tools-4.3.1.tgz#abfccb8ca78075a2b6187345c26243c1a0842f28"
   integrity sha512-/62yikz7NLScCGAAST5SHdnjaDJQBDq0M2muyRTpf2VQhw6StBg2ALiu73zSJQ4fMVLA+0uBhBHAle7Wg+2kSg==
 
+"@akryum/flexsearch-es@^0.7.32":
+  version "0.7.32"
+  resolved "https://registry.yarnpkg.com/@akryum/flexsearch-es/-/flexsearch-es-0.7.32.tgz#9d00e6bdf2418ae686323a4a9224b7a1568075e9"
+  integrity sha512-jA9b9oYefRJkuhGAjd9lB2iVkOFzgdzuy1giserUo+usstEjuNSe9Pod6ZfC8S9xvCmPT2ovY09DNFnEQSgpMA==
+
 "@alloc/quick-lru@^5.2.0":
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
@@ -5984,11 +5989,6 @@ flatted@^3.2.7:
   version "3.2.9"
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.9.tgz#7eb4c67ca1ba34232ca9d2d93e9886e611ad7daf"
   integrity sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==
-
-flexsearch-ts@^0.7.31:
-  version "0.7.35"
-  resolved "https://registry.yarnpkg.com/flexsearch-ts/-/flexsearch-ts-0.7.35.tgz#9475533ab893c5b71f3f79028a8bb4d07c36e7a0"
-  integrity sha512-u+9rKRd9lsoUXyesQcDJ/aFdfFAWInigK95DUnmifbeOLU5LvjGiwqq+Xr55rCUbJCOSG8KTY+BoWWqFx5gbwA==
 
 follow-redirects@^1.0.0, follow-redirects@^1.15.0:
   version "1.15.3"
