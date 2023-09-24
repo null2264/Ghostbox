@@ -3,13 +3,13 @@ type MessageModule = { default: MessageJson };
 
 /** Import custom messages */
 const importCustom = (locale: string): Promise<MessageModule> => {
-  return import(/* webpackChunkName: "locale_[request]" */`custom/locales/${locale}.json`)
+  return import(/* @vite-ignore */`custom/locales/${locale}.json`)
     .catch(() => ({ default: {} }));
 };
 
 /** Import git-checked messages */
 const importMessages = (locale: string): Promise<MessageModule> => {
-  return import(/* webpackChunkName: "locale_[request]" */`./${locale}.json`);
+  return import(/* @vite-ignore */`./${locale}.json`);
 };
 
 /** Override custom messages */
