@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
@@ -17,6 +18,33 @@ const readFile = (filename: string) => {
   }
 };
 
+const {
+  DEVSERVER_URL,
+  BACKEND_URL,
+} = process.env;
+
+const DEFAULTS = {
+  DEVSERVER_URL: 'http://localhost:3036',
+  PATRON_URL: 'http://localhost:3037',
+  BACKEND_URL: 'http://localhost:4000',
+};
+
+const backendUrl = (() => {
+  try {
+    return new URL(BACKEND_URL || DEFAULTS.BACKEND_URL);
+  } catch {
+    return new URL(DEFAULTS.BACKEND_URL);
+  }
+})();
+
+const devServerUrl = (() => {
+  try {
+    return new URL(DEVSERVER_URL || DEFAULTS.DEVSERVER_URL);
+  } catch {
+    return new URL(DEFAULTS.DEVSERVER_URL);
+  }
+})();
+
 export default defineConfig({
   build: {
     assetsDir: 'packs',
@@ -34,12 +62,17 @@ export default defineConfig({
   assetsInclude: ['**/*.oga'],
   server: {
     port: 2264,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Security-Policy': `upgrade-insecure-requests;style-src 'self' 'nonce-TEST';font-src 'self';script-src 'self' 'nonce-TEST' ;connect-src 'self' https://${backendUrl.hostname} wss://${backendUrl.hostname} http://${devServerUrl.hostname} ws://localhost:*/ws;media-src 'self' https:;img-src 'self' data: blob: https:;default-src 'none';base-uri 'none';frame-ancestors 'none';manifest-src 'self';`,
+    },
   },
   plugins: [
     // @ts-ignore
-    vitePluginRequire.default(),
+    vitePluginRequire(),
     compileTime(),
     createHtmlPlugin({
+      entry: 'app/soapbox/main.tsx',
       template: 'app/index.html',
       minify: {
         collapseWhitespace: true,
@@ -92,4 +125,9 @@ export default defineConfig({
       ],
     }),
   ],
+  resolve: {
+    alias: [
+      { find: 'soapbox', replacement: fileURLToPath(new URL('./app/soapbox', import.meta.url)) },
+    ],
+  },
 });
