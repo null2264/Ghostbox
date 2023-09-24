@@ -22,34 +22,34 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   const {
-    GHOSTBOX_DEVSERVER_URL,
-    GHOSTBOX_BACKEND_URL,
+    DEVSERVER_URL,
+    BACKEND_URL,
   } = env;
 
   const DEFAULTS = {
-    GHOSTBOX_DEVSERVER_URL: 'http://localhost:3036',
-    GHOSTBOX_PATRON_URL: 'http://localhost:3037',
-    GHOSTBOX_BACKEND_URL: 'http://localhost:4000',
+    DEVSERVER_URL: 'http://localhost:3036',
+    PATRON_URL: 'http://localhost:3037',
+    BACKEND_URL: 'http://localhost:4000',
   };
 
   const backendUrl = (() => {
     try {
-      return new URL(GHOSTBOX_BACKEND_URL || DEFAULTS.GHOSTBOX_BACKEND_URL);
+      return new URL(BACKEND_URL || DEFAULTS.BACKEND_URL);
     } catch {
-      return new URL(DEFAULTS.GHOSTBOX_BACKEND_URL);
+      return new URL(DEFAULTS.BACKEND_URL);
     }
   })();
 
   const devServerUrl = (() => {
     try {
-      return new URL(GHOSTBOX_DEVSERVER_URL || DEFAULTS.GHOSTBOX_DEVSERVER_URL);
+      return new URL(DEVSERVER_URL || DEFAULTS.DEVSERVER_URL);
     } catch {
-      return new URL(DEFAULTS.GHOSTBOX_DEVSERVER_URL);
+      return new URL(DEFAULTS.DEVSERVER_URL);
     }
   })();
 
   return {
-    envPrefix: ['VITE_', 'GHOSTBOX_', 'FE_', 'CI_'],
+    envPrefix: 'GHOSTBOX_',
     build: {
       assetsDir: 'packs',
       assetsInlineLimit: 0,
@@ -134,6 +134,9 @@ export default defineConfig(({ mode }) => {
         { find: 'soapbox', replacement: fileURLToPath(new URL('./app/soapbox', import.meta.url)) },
         { find: 'assets', replacement: fileURLToPath(new URL('./app/assets', import.meta.url)) },
       ],
+    },
+    define: {
+      'process.env.BACKEND_URL': JSON.stringify(BACKEND_URL),
     },
   };
 });
