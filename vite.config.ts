@@ -128,6 +128,7 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: 'soapbox', replacement: fileURLToPath(new URL('./app/soapbox', import.meta.url)) },
+      { find: 'assets', replacement: fileURLToPath(new URL('./app/assets', import.meta.url)) },
     ],
   },
 });

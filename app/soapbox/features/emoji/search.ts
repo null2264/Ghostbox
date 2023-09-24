@@ -1,11 +1,11 @@
-import { Index } from 'flexsearch-ts';
+import Flexsearch from 'flexsearch-ts';
 import { Map as ImmutableMap, List as ImmutableList } from 'immutable';
 
 import data from './data';
 
 import type { Emoji } from './index';
 
-const index = new Index({
+const index = new Flexsearch.Index({
   tokenize: 'full',
   optimize: true,
   context: true,

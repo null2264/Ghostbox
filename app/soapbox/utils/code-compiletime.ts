@@ -1,14 +1,13 @@
-// @preval
-const { execSync } = require('child_process');
+import { execSync } from 'child_process';
 
-const pkg = require('../../../package.json');
+import pkg from '../../../package.json';
 
 const { CI_COMMIT_TAG, CI_COMMIT_REF_NAME, CI_COMMIT_SHA } = process.env;
 
-const shortRepoName = url => new URL(url).pathname.substring(1);
-const trimHash = hash => hash.substring(0, 7);
+const shortRepoName = (url: string) => new URL(url).pathname.substring(1);
+const trimHash = (hash: string) => hash.substring(0, 7);
 
-const tryGit = cmd => {
+const tryGit = (cmd: string) => {
   try {
     return String(execSync(cmd));
   } catch (e) {
@@ -16,7 +15,7 @@ const tryGit = cmd => {
   }
 };
 
-const version = pkg => {
+const version = (pkg: Record<string, any>) => {
   // Try to discern from GitLab CI first
   if (CI_COMMIT_TAG === `v${pkg.version}` || CI_COMMIT_REF_NAME === 'stable') {
     return pkg.version;
@@ -36,7 +35,7 @@ const version = pkg => {
   return pkg.version;
 };
 
-module.exports = {
+const data = {
   name: pkg.name,
   displayName: pkg.displayName,
   url: pkg.repository.url,
@@ -45,3 +44,9 @@ module.exports = {
   homepage: pkg.homepage,
   ref: CI_COMMIT_TAG || CI_COMMIT_SHA || tryGit('git rev-parse HEAD'),
 };
+
+export type Code = typeof data;
+
+export default () => ({
+  data: data,
+});
