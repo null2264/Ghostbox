@@ -10,12 +10,12 @@ import trim from 'lodash/trim.js';
 import trimEnd from 'lodash/trimEnd.js';
 
 const {
-  NODE_ENV,
-  GHOSTBOX_BACKEND_URL,
+  MODE,
+  BACKEND_URL,
   FE_SUBDIRECTORY,
   FE_INSTANCE_SOURCE_DIR,
-  GHOSTBOX_SENTRY_DSN,
-} = import.meta.env;
+  SENTRY_DSN,
+} = process.env || {};
 
 const sanitizeURL = (url: string | undefined = '') => {
   try {
@@ -30,11 +30,11 @@ const sanitizeBasename = (path: string | undefined = '') => {
 };
 
 const env = {
-  NODE_ENV: NODE_ENV || 'development',
-  BACKEND_URL: sanitizeURL(GHOSTBOX_BACKEND_URL),
+  NODE_ENV: MODE || 'development',
+  BACKEND_URL: sanitizeURL(BACKEND_URL),
   FE_SUBDIRECTORY: sanitizeBasename(FE_SUBDIRECTORY),
   FE_INSTANCE_SOURCE_DIR: FE_INSTANCE_SOURCE_DIR || 'instance',
-  SENTRY_DSN: GHOSTBOX_SENTRY_DSN,
+  SENTRY_DSN,
 };
 
 export type BuildConfig = typeof env;
