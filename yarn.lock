@@ -1472,6 +1472,13 @@
   dependencies:
     tslib "^2.0.1"
 
+"@formatjs/ecma402-abstract@1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.6.4.tgz#cff5ef03837fb6bae70b16d04940213c17e87884"
+  integrity sha512-ukFjGD9dLsxcD9D5AEshJqQElPQeUAlTALT/lzIV6OcYojyuU81gw/uXDUOrs6XW79jtOJwQDkLqHbCJBJMOTw==
+  dependencies:
+    tslib "^2.1.0"
+
 "@formatjs/fast-memoize@1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@formatjs/fast-memoize/-/fast-memoize-1.2.1.tgz#e6f5aee2e4fd0ca5edba6eba7668e2d855e0fc21"
@@ -6772,6 +6779,14 @@ intl-messageformat-parser@^5.3.7:
   integrity sha512-TvB3LqF2VtP6yI6HXlRT5TxX98HKha6hCcrg9dwlPwNaedVNuQA9KgBdtWKgiyakyCTYHQ+KJeFEstNKfZr64w==
   dependencies:
     "@formatjs/intl-numberformat" "^5.5.2"
+
+intl-messageformat-parser@^6.4.4:
+  version "6.4.4"
+  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-6.4.4.tgz#abbd94e96dc4ff41607376bfab024553450cc1e0"
+  integrity sha512-7AaFKNZEfzLQR6+jivOuz9e7yA8ka5KrmLebgY4QHTRLf8r64dp3LjnW98LkBWjdk8GK0sawD2dHDqW++A/pXA==
+  dependencies:
+    "@formatjs/ecma402-abstract" "1.6.4"
+    tslib "^2.1.0"
 
 intl-messageformat@9.13.0:
   version "9.13.0"
