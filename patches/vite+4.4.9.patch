@@ -1,0 +1,12 @@
+diff --git a/node_modules/vite/dist/client/client.mjs b/node_modules/vite/dist/client/client.mjs
+index 37c32b4..1a86ed2 100644
+--- a/node_modules/vite/dist/client/client.mjs
++++ b/node_modules/vite/dist/client/client.mjs
+@@ -542,6 +542,7 @@ function updateStyle(id, content) {
+         style.setAttribute('type', 'text/css');
+         style.setAttribute('data-vite-dev-id', id);
+         style.textContent = content;
++        style.nonce = 'NONCE_PLACEHOLDER';
+         if (!lastInsertedStyle) {
+             document.head.appendChild(style);
+             // reset lastInsertedStyle after async
