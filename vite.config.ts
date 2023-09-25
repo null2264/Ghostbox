@@ -80,10 +80,10 @@ export default defineConfig(({ mode }) => {
         typescript: true,
         */
         eslint: {
-          lintCommand: 'npx run lint:js',
+          lintCommand: 'yarn lint:js',
         },
         stylelint: {
-          lintCommand: 'npx run lint:sass',
+          lintCommand: 'yarn lint:sass',
         },
       }),
       EnvironmentPlugin({
