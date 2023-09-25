@@ -94,6 +94,16 @@ export default defineConfig(({ mode }) => {
           },
         },
       }),
+      {
+        name: 'html-inject-nonce',
+        enforce: 'post',
+        transformIndexHtml(html) {
+          const regex = /<(style|script)/gi;
+          const replacement = '<$1 nonce="TEST"';
+
+          return html.replace(regex, replacement);
+        },
+      },
       react({
         // Use React plugin in all *.jsx and *.tsx files
         include: '**/*.{jsx,tsx}',
