@@ -4,7 +4,7 @@ import IntlMessageFormat from 'intl-messageformat';
 import 'intl-pluralrules';
 import unescape from 'lodash/unescape';
 
-const locales = import.meta.compileTime('./web-push-locales.ts');
+const locales = import.meta.compileTime<Record<string, Record<string, string>>>('./web-push-locales.ts');
 
 import type {
   Account as AccountEntity,
