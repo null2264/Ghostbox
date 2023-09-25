@@ -299,6 +299,7 @@ const Audio: React.FC<IAudio> = (props) => {
   };
 
   const _renderCanvas = () => {
+    // eslint-disable-next-line compat/compat
     requestAnimationFrame(() => {
       if (!audio.current) return;
 
