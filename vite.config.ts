@@ -75,15 +75,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
-      checker({
-        typescript: true,
-        eslint: {
-          lintCommand: 'eslint --ext .js,.jsx,.cjs,.mjs,.ts,.tsx . --cache',
-        },
-        stylelint: {
-          lintCommand: 'stylelint app/styles/**/*.scss',
-        },
-      }),
+      checker({ typescript: true }),
       EnvironmentPlugin({
         NODE_ENV: 'development',
         // null = optional, undefined = required
