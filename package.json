@@ -29,6 +29,7 @@
     "lint:js": "npx eslint --ext .js,.jsx,.cjs,.mjs,.ts,.tsx . --cache",
     "lint:sass": "npx stylelint app/styles/**/*.scss",
     "prepare": "husky install",
+    "preview": "npx vite preview",
     "postinstall": "npx patch-package"
   },
   "license": "AGPL-3.0-or-later",
