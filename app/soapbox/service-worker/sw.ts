@@ -1,4 +1,4 @@
-/// <reference lib="dom" />
+/// <reference lib="webworker" />
 /* eslint-disable compat/compat */
 import IntlMessageFormat from 'intl-messageformat';
 import 'intl-pluralrules';
