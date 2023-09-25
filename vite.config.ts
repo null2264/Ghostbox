@@ -82,7 +82,7 @@ export default defineConfig(({ mode }) => {
       vitePluginRequire(),
       compileTime(),
       createHtmlPlugin({
-        entry: 'app/soapbox/main.tsx',
+        entry: '/app/soapbox/main.tsx',
         template: 'index.html',
         minify: {
           collapseWhitespace: true,
