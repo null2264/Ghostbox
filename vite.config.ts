@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
+import checker from 'vite-plugin-checker';
 import compileTime from 'vite-plugin-compile-time';
 import EnvironmentPlugin from 'vite-plugin-environment';
 import { createHtmlPlugin } from 'vite-plugin-html';
@@ -74,6 +75,15 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
+      checker({
+        typescript: true,
+        eslint: {
+          lintCommand: 'yarn lint:js',
+        },
+        stylelint: {
+          lintCommand: 'yarn lint:sass',
+        },
+      }),
       EnvironmentPlugin({
         NODE_ENV: 'development',
         // null = optional, undefined = required
