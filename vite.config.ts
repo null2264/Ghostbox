@@ -71,7 +71,7 @@ export default defineConfig(({ mode }) => {
       port: 2264,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Security-Policy': `upgrade-insecure-requests;style-src 'self' 'nonce-${nonce}';font-src 'self';script-src 'self' 'nonce-${nonce}' ;connect-src 'self' https://${backendUrl.hostname} wss://${backendUrl.hostname} http://${devServerUrl.hostname} ws://localhost:*/ws;media-src 'self' https:;img-src 'self' data: blob: https:;default-src 'none';base-uri 'none';frame-ancestors 'none';manifest-src 'self';`,
+        'Content-Security-Policy': `upgrade-insecure-requests;style-src 'self' 'nonce-${nonce}';font-src 'self';script-src 'self' 'nonce-${nonce}' ;connect-src 'self' https://${backendUrl.hostname} wss://${backendUrl.hostname} http://${devServerUrl.hostname} ws://localhost:*/ ws://localhost:*/ws;media-src 'self' https:;img-src 'self' data: blob: https:;default-src 'none';base-uri 'none';frame-ancestors 'none';manifest-src 'self';`,
       },
     },
     plugins: [
@@ -112,6 +112,8 @@ export default defineConfig(({ mode }) => {
         name: 'html-inject-nonce',
         enforce: 'post',
         transformIndexHtml(html) {
+          if (mode !== 'development') return html;
+
           const regex = /<(style|script)/gi;
           const replacement = `<$1 nonce="${nonce}"`;
 
