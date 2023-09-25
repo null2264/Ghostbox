@@ -78,10 +78,10 @@ export default defineConfig(({ mode }) => {
       checker({
         typescript: true,
         eslint: {
-          lintCommand: 'yarn lint:js',
+          lintCommand: 'npx run lint:js',
         },
         stylelint: {
-          lintCommand: 'yarn lint:sass',
+          lintCommand: 'npx run lint:sass',
         },
       }),
       EnvironmentPlugin({
