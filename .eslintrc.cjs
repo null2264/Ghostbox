@@ -293,6 +293,7 @@ module.exports = {
       },
     ],
     'tailwindcss/migration-from-tailwind-2': 'error',
+    'tailwindcss/no-custom-classname': 'warn',
   },
   overrides: [
     {
