@@ -1,0 +1,12 @@
+diff --git a/node_modules/vite-plugin-checker/dist/@runtime/main.js b/node_modules/vite-plugin-checker/dist/@runtime/main.js
+index 9d8282d..fd81e5b 100644
+--- a/node_modules/vite-plugin-checker/dist/@runtime/main.js
++++ b/node_modules/vite-plugin-checker/dist/@runtime/main.js
+@@ -7133,6 +7133,7 @@ class VueElement extends BaseClass {
+       styles.forEach((css) => {
+         const s = document.createElement("style");
+         s.textContent = css;
++        s.nonce = 'NONCE_PLACEHOLDER';
+         this.shadowRoot.appendChild(s);
+         this._childStylesAnchor = s;
+         if (!!(process.env.NODE_ENV !== "production")) {
