@@ -82,9 +82,11 @@ export default defineConfig(({ mode }) => {
         eslint: {
           lintCommand: 'yarn lint:js',
         },
+        /*
         stylelint: {
           lintCommand: 'yarn lint:sass',
         },
+        */
       }),
       EnvironmentPlugin({
         NODE_ENV: 'development',
