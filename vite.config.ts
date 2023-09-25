@@ -76,12 +76,10 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       checker({
-        /*
         typescript: true,
         eslint: {
           lintCommand: 'eslint --ext .js,.jsx,.cjs,.mjs,.ts,.tsx . --cache',
         },
-        */
         stylelint: {
           lintCommand: 'stylelint app/styles/**/*.scss',
         },
