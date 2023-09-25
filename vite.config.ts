@@ -80,13 +80,11 @@ export default defineConfig(({ mode }) => {
         typescript: true,
         */
         eslint: {
-          lintCommand: 'yarn lint:js',
+          lintCommand: 'eslint --ext .js,.jsx,.cjs,.mjs,.ts,.tsx . --cache',
         },
-        /*
         stylelint: {
-          lintCommand: 'yarn lint:sass',
+          lintCommand: 'stylelint app/styles/**/*.scss',
         },
-        */
       }),
       EnvironmentPlugin({
         NODE_ENV: 'development',
