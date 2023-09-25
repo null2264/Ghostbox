@@ -76,15 +76,15 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       checker({
-        typescript: true,
         /*
+        typescript: true,
+        */
         eslint: {
           lintCommand: 'npx run lint:js',
         },
         stylelint: {
           lintCommand: 'npx run lint:sass',
         },
-        */
       }),
       EnvironmentPlugin({
         NODE_ENV: 'development',
