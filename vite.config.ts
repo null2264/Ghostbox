@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
 import compileTime from 'vite-plugin-compile-time';
+import EnvironmentPlugin from 'vite-plugin-environment';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import { VitePWA } from 'vite-plugin-pwa';
 import vitePluginRequire from 'vite-plugin-require';
@@ -49,7 +50,6 @@ export default defineConfig(({ mode }) => {
   })();
 
   return {
-    envPrefix: 'GHOSTBOX_',
     build: {
       assetsDir: 'packs',
       assetsInlineLimit: 0,
@@ -72,6 +72,12 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
+      EnvironmentPlugin({
+        NODE_ENV: 'development',
+        // null = optional, undefined = required
+        BACKEND_URL: env.BACKEND_URL || null,
+        DEVSERVER_URL: env.DEVSERVER_URL || null,
+      }),
       // @ts-ignore
       vitePluginRequire(),
       compileTime(),
@@ -134,9 +140,6 @@ export default defineConfig(({ mode }) => {
         { find: 'soapbox', replacement: fileURLToPath(new URL('./app/soapbox', import.meta.url)) },
         { find: 'assets', replacement: fileURLToPath(new URL('./app/assets', import.meta.url)) },
       ],
-    },
-    define: {
-      'process.env.BACKEND_URL': JSON.stringify(BACKEND_URL),
     },
   };
 });
