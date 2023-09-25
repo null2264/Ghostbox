@@ -1,9 +1,9 @@
-/node_modules/**
-/static/**
-/static-test/**
-/public/**
-/tmp/**
-/coverage/**
-/custom/**
+node_modules/**
+static/**
+static-test/**
+public/**
+tmp/**
+coverage/**
+custom/**
 !.eslintrc.cjs
-/toaster/**
+toaster/**
