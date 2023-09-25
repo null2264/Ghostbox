@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 /* eslint-disable compat/compat */
 import IntlMessageFormat from 'intl-messageformat';
 import 'intl-pluralrules';
