@@ -83,7 +83,7 @@ export default defineConfig(({ mode }) => {
         DEVSERVER_URL: env.DEVSERVER_URL || null,
       }),
       // @ts-ignore
-      vitePluginRequire.default(),
+      vitePluginRequire(),
       compileTime(),
       createHtmlPlugin({
         template: 'index.html',
