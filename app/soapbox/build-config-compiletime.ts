@@ -10,7 +10,7 @@ import trim from 'lodash/trim.js';
 import trimEnd from 'lodash/trimEnd.js';
 
 const {
-  MODE,
+  NODE_ENV,
   BACKEND_URL,
   FE_SUBDIRECTORY,
   FE_INSTANCE_SOURCE_DIR,
@@ -30,7 +30,7 @@ const sanitizeBasename = (path: string | undefined = '') => {
 };
 
 const env = {
-  NODE_ENV: MODE || 'development',
+  NODE_ENV: NODE_ENV || 'development',
   BACKEND_URL: sanitizeURL(BACKEND_URL),
   FE_SUBDIRECTORY: sanitizeBasename(FE_SUBDIRECTORY),
   FE_INSTANCE_SOURCE_DIR: FE_INSTANCE_SOURCE_DIR || 'instance',
