@@ -51,7 +51,7 @@ if (BuildConfig.NODE_ENV === 'production') {
 
 ready(() => {
   if (BuildConfig.NODE_ENV !== 'production')
-    window.__webpack_nonce__ = window.__webpack_nonce__ || 'NONCE_PLACEHOLDER';
+    window.__webpack_nonce__ = 'NONCE_PLACEHOLDER';
 
   const goober = document.querySelector('#_goober');
   if (goober instanceof HTMLStyleElement)

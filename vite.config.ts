@@ -77,7 +77,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       checker({ typescript: true }),
       EnvironmentPlugin({
-        NODE_ENV: 'development',
+        NODE_ENV: 'production',
         // null = optional, undefined = required
         BACKEND_URL: env.BACKEND_URL || null,
         DEVSERVER_URL: env.DEVSERVER_URL || null,
