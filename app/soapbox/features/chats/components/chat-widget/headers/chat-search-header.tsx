@@ -3,6 +3,7 @@ import { defineMessages, useIntl } from 'react-intl';
 
 import { HStack, Icon, Text } from 'soapbox/components/ui';
 import { ChatWidgetScreens, useChatContext } from 'soapbox/contexts/chat-context';
+import { useHotkey } from 'soapbox/hooks';
 
 import ChatPaneHeader from '../chat-pane-header';
 
@@ -24,6 +25,7 @@ const ChatSearchHeader = () => {
             onClick={() => {
               changeScreen(ChatWidgetScreens.INBOX);
             }}
+            ref={useHotkey('Backspace')}
           >
             <Icon
               src={require('@tabler/icons/arrow-left.svg')}

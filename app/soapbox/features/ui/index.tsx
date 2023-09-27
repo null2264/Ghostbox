@@ -134,7 +134,6 @@ import {
   EditGroup,
   FollowedTags,
 } from './util/async-components';
-import GlobalHotkeys from './util/global-hotkeys';
 import { WrappedRoute } from './util/react-router-helpers';
 
 // Dummy import, to make sure that <Status /> ends up in the application bundle.
@@ -474,62 +473,60 @@ const UI: React.FC<IUI> = ({ children }) => {
   };
 
   return (
-    <GlobalHotkeys node={node}>
-      <div ref={node} style={style}>
-        <div
-          className={clsx('pointer-events-none fixed z-[90] h-screen w-screen transition', {
-            'backdrop-blur': isDragging,
-          })}
-        />
+    <div ref={node} style={style}>
+      <div
+        className={clsx('pointer-events-none fixed z-[90] h-screen w-screen transition', {
+          'backdrop-blur': isDragging,
+        })}
+      />
 
-        <BackgroundShapes />
+      <BackgroundShapes />
 
-        <div className='z-10 flex flex-col'>
-          <Navbar />
+      <div className='z-10 flex flex-col'>
+        <Navbar />
 
-          <Layout>
-            <Layout.Sidebar>
-              {!standalone && <SidebarNavigation />}
-            </Layout.Sidebar>
+        <Layout>
+          <Layout.Sidebar>
+            {!standalone && <SidebarNavigation />}
+          </Layout.Sidebar>
 
-            <SwitchingColumnsArea>
-              {children}
-            </SwitchingColumnsArea>
-          </Layout>
+          <SwitchingColumnsArea>
+            {children}
+          </SwitchingColumnsArea>
+        </Layout>
 
-          {(me && !shouldHideFAB()) && (
-            <div className='fixed bottom-24 right-4 z-40 transition-all rtl:left-4 rtl:right-auto lg:hidden'>
-              <FloatingActionButton />
-            </div>
-          )}
+        {(me && !shouldHideFAB()) && (
+          <div className='fixed bottom-24 right-4 z-40 transition-all rtl:left-4 rtl:right-auto lg:hidden'>
+            <FloatingActionButton />
+          </div>
+        )}
 
-          {me && (
-            <BundleContainer fetchComponent={SidebarMenu}>
-              {Component => <Component />}
-            </BundleContainer>
-          )}
-
-          {me && features.chats && (
-            <BundleContainer fetchComponent={ChatWidget}>
-              {Component => (
-                <div className='hidden xl:block'>
-                  <Component />
-                </div>
-              )}
-            </BundleContainer>
-          )}
-          <ThumbNavigation />
-
-          <BundleContainer fetchComponent={ProfileHoverCard}>
+        {me && (
+          <BundleContainer fetchComponent={SidebarMenu}>
             {Component => <Component />}
           </BundleContainer>
+        )}
 
-          <BundleContainer fetchComponent={StatusHoverCard}>
-            {Component => <Component />}
+        {me && features.chats && (
+          <BundleContainer fetchComponent={ChatWidget}>
+            {Component => (
+              <div className='hidden xl:block'>
+                <Component />
+              </div>
+            )}
           </BundleContainer>
-        </div>
+        )}
+        <ThumbNavigation />
+
+        <BundleContainer fetchComponent={ProfileHoverCard}>
+          {Component => <Component />}
+        </BundleContainer>
+
+        <BundleContainer fetchComponent={StatusHoverCard}>
+          {Component => <Component />}
+        </BundleContainer>
       </div>
-    </GlobalHotkeys>
+    </div>
   );
 };
 

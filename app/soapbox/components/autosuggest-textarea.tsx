@@ -1,3 +1,4 @@
+import { install, uninstall } from '@github/hotkey';
 import clsx from 'clsx';
 import React from 'react';
 import ImmutablePureComponent from 'react-immutable-pure-component';
@@ -30,12 +31,14 @@ interface IAutosuggesteTextarea {
   onFocus: () => void
   onBlur?: () => void
   condensed?: boolean
+  keymap?: string
   children: React.ReactNode
 }
 
 class AutosuggestTextarea extends ImmutablePureComponent<IAutosuggesteTextarea> {
 
   textarea: HTMLTextAreaElement | null = null;
+  keymap?: string = undefined;
 
   static defaultProps = {
     autoFocus: true,
@@ -171,7 +174,12 @@ class AutosuggestTextarea extends ImmutablePureComponent<IAutosuggesteTextarea> 
 
   setTextarea: React.Ref<HTMLTextAreaElement> = (c) => {
     this.textarea = c;
+    if (this.keymap) install(this.textarea as HTMLTextAreaElement, this.keymap);
   };
+
+  componentWillUnmount(): void {
+    if (this.textarea && this.keymap) uninstall(this.textarea);
+  }
 
   onPaste: React.ClipboardEventHandler<HTMLTextAreaElement> = (e) => {
     if (e.clipboardData && e.clipboardData.files.length === 1) {
@@ -227,7 +235,8 @@ class AutosuggestTextarea extends ImmutablePureComponent<IAutosuggesteTextarea> 
   }
 
   render() {
-    const { value, suggestions, disabled, placeholder, onKeyUp, autoFocus, children, condensed, id } = this.props;
+    const { value, suggestions, disabled, placeholder, onKeyUp, autoFocus, children, condensed, id, keymap } = this.props;
+    if (keymap) this.keymap = keymap;
     const { suggestionsHidden } = this.state;
     const style = { direction: 'ltr', minRows: 10 };
 

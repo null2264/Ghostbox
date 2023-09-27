@@ -319,6 +319,7 @@ const ComposeForm = <ID extends string>({ id, shouldCondense, autoFocus, clickab
         autoFocus={shouldAutoFocus}
         condensed={condensed}
         id='compose-textarea'
+        keymap='n'
       >
         {
           !condensed &&
