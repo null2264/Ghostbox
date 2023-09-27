@@ -174,7 +174,7 @@ class AutosuggestTextarea extends ImmutablePureComponent<IAutosuggesteTextarea> 
 
   setTextarea: React.Ref<HTMLTextAreaElement> = (c) => {
     this.textarea = c;
-    if (this.keymap) install(this.textarea as HTMLTextAreaElement, this.keymap);
+    if (this.textarea && this.keymap) install(this.textarea, this.keymap);
   };
 
   componentWillUnmount(): void {
