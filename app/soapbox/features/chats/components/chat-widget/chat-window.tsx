@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { Avatar, HStack, Icon, Stack, Text, Tooltip } from 'soapbox/components/ui';
 import VerificationBadge from 'soapbox/components/verification-badge';
 import { ChatWidgetScreens, useChatContext } from 'soapbox/contexts/chat-context';
-import { useHotkey } from 'soapbox/hooks';
 import { secondsToDays } from 'soapbox/utils/numbers';
 
 import Chat from '../chat';
@@ -73,8 +72,7 @@ const ChatWindow = () => {
             {isOpen && (
               <button
                 onClick={closeChat}
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                ref={useHotkey('Backspace')}
+                //ref={useHotkey('Backspace')}
               >
                 <Icon
                   src={require('@tabler/icons/arrow-left.svg')}

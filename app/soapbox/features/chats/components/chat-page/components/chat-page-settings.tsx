@@ -6,7 +6,7 @@ import { changeSetting } from 'soapbox/actions/settings';
 import List, { ListItem } from 'soapbox/components/list';
 import { Button, CardBody, CardTitle, Form, HStack, IconButton, Stack, Toggle } from 'soapbox/components/ui';
 import SettingToggle from 'soapbox/features/notifications/components/setting-toggle';
-import { useAppDispatch, useOwnAccount, useSettings, useHotkey } from 'soapbox/hooks';
+import { useAppDispatch, useOwnAccount, useSettings } from 'soapbox/hooks';
 import { useUpdateCredentials } from 'soapbox/queries/accounts';
 
 type FormData = {
@@ -52,7 +52,7 @@ const ChatPageSettings = () => {
         <IconButton
           src={require('@tabler/icons/arrow-left.svg')}
           className='mr-2 h-7 w-7 sm:mr-0 sm:hidden'
-          ref={useHotkey('Backspace')}
+          //ref={useHotkey('Backspace')}
           onClick={() => history.push('/chats')}
         />
 

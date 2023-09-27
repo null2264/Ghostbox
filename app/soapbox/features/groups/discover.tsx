@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { HStack, Icon, IconButton, Input, Stack } from 'soapbox/components/ui';
-import { useHotkey } from 'soapbox/hooks';
 
 import PopularGroups from './components/discover/popular-groups';
 import PopularTags from './components/discover/popular-tags';
@@ -39,8 +38,7 @@ const Discover: React.FC = () => {
             <IconButton
               src={require('@tabler/icons/arrow-left.svg')}
               iconClassName='mr-2 h-5 w-5 fill-current text-gray-600'
-              // eslint-disable-next-line react-hooks/rules-of-hooks
-              ref={useHotkey('Backspace')}
+              //ref={useHotkey('Backspace')}
               onClick={cancelSearch}
               data-testid='group-search-icon'
             />

@@ -3,7 +3,6 @@ import { defineMessages, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
 import { CardTitle, HStack, IconButton, Stack } from 'soapbox/components/ui';
-import { useHotkey } from 'soapbox/hooks';
 
 import ChatSearch from '../../chat-search/chat-search';
 
@@ -26,7 +25,7 @@ const ChatPageNew: React.FC<IChatPageNew> = () => {
           <IconButton
             src={require('@tabler/icons/arrow-left.svg')}
             className='mr-2 h-7 w-7 sm:mr-0 sm:hidden'
-            ref={useHotkey('Backspace')}
+            //ref={useHotkey('Backspace')}
             onClick={() => history.push('/chats')}
           />
 
