@@ -122,6 +122,7 @@ const ChatPageMain = () => {
             <IconButton
               src={require('@tabler/icons/arrow-left.svg')}
               className='mr-2 h-7 w-7 sm:mr-0 sm:hidden'
+              //ref={useHotkey('Backspace')}
               onClick={() => history.push('/chats')}
             />
 

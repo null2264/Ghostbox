@@ -260,7 +260,6 @@ module.exports = {
         alphabetize: { order: 'asc' },
       },
     ],
-    '@typescript-eslint/no-duplicate-imports': 'error',
     '@typescript-eslint/member-delimiter-style': [
       'error',
       {
@@ -285,6 +284,7 @@ module.exports = {
       },
     ],
     'tailwindcss/migration-from-tailwind-2': 'error',
+    'tailwindcss/no-custom-classname': 'warn',
   },
   overrides: [
     {

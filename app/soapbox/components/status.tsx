@@ -1,13 +1,9 @@
 import clsx from 'clsx';
 import React, { useEffect, useRef, useState } from 'react';
-import { HotKeys } from 'react-hotkeys';
 import { useIntl, FormattedMessage, defineMessages } from 'react-intl';
 import { Link, useHistory } from 'react-router-dom';
 
-import { mentionCompose, replyCompose } from 'soapbox/actions/compose';
-import { toggleFavourite, toggleReblog } from 'soapbox/actions/interactions';
-import { openModal } from 'soapbox/actions/modals';
-import { toggleStatusHidden, unfilterStatus } from 'soapbox/actions/statuses';
+import { unfilterStatus } from 'soapbox/actions/statuses';
 import AccountContainer from 'soapbox/containers/account-container';
 import StatusContainer from 'soapbox/containers/neo/status-container';
 import QuotedStatus from 'soapbox/features/status/containers/quoted-status-container';
@@ -21,7 +17,6 @@ import Tombstone from './tombstone';
 import { Card, Icon, Text } from './ui';
 
 import type {
-  Account as AccountEntity,
   Status as StatusEntity,
 } from 'soapbox/types/entities';
 
@@ -129,6 +124,7 @@ const Status: React.FC<IStatus> = (props) => {
     }
   };
 
+  /*
   const handleHotkeyOpenMedia = (e?: KeyboardEvent): void => {
     const status = actualStatus;
     const firstAttachment = status.media_attachments.first();
@@ -199,13 +195,16 @@ const Status: React.FC<IStatus> = (props) => {
   const handleHotkeyReact = (): void => {
     _expandEmojiSelector();
   };
+  */
 
   const handleUnfilter = () => dispatch(unfilterStatus(status.filtered.size ? status.id : actualStatus.id));
 
+  /*
   const _expandEmojiSelector = (): void => {
     const firstEmoji: HTMLDivElement | null | undefined = node.current?.querySelector('.emoji-react-selector .emoji-react-selector__emoji');
     firstEmoji?.focus();
   };
+  */
 
   const renderStatusInfo = () => {
     if (typeof notification !== 'undefined') {
@@ -343,23 +342,23 @@ const Status: React.FC<IStatus> = (props) => {
   }
 
   if (filtered && status.showFiltered) {
+    /*
     const minHandlers = muted ? undefined : {
       moveUp: handleHotkeyMoveUp,
       moveDown: handleHotkeyMoveDown,
     };
+    */
 
     return (
-      <HotKeys handlers={minHandlers}>
-        <div className={clsx('status__wrapper text-center', { focusable })} tabIndex={focusable ? 0 : undefined} ref={node}>
-          <Text theme='muted'>
-            <FormattedMessage id='status.filtered' defaultMessage='Filtered' />: {status.filtered.join(', ')}.
-            {' '}
-            <button className='text-primary-600 hover:underline dark:text-accent-blue' onClick={handleUnfilter}>
-              <FormattedMessage id='status.show_filter_reason' defaultMessage='Show anyway' />
-            </button>
-          </Text>
-        </div>
-      </HotKeys>
+      <div className={clsx('status__wrapper text-center', { focusable })} tabIndex={focusable ? 0 : undefined} ref={node}>
+        <Text theme='muted'>
+          <FormattedMessage id='status.filtered' defaultMessage='Filtered' />: {status.filtered.join(', ')}.
+          {' '}
+          <button className='text-primary-600 hover:underline dark:text-accent-blue' onClick={handleUnfilter}>
+            <FormattedMessage id='status.show_filter_reason' defaultMessage='Show anyway' />
+          </button>
+        </Text>
+      </div>
     );
   }
 
@@ -385,6 +384,7 @@ const Status: React.FC<IStatus> = (props) => {
     }
   }
 
+  /*
   const handlers = muted ? undefined : {
     reply: handleHotkeyReply,
     favourite: handleHotkeyFavourite,
@@ -399,6 +399,7 @@ const Status: React.FC<IStatus> = (props) => {
     openMedia: handleHotkeyOpenMedia,
     react: handleHotkeyReact,
   };
+  */
 
   const isUnderReview = actualStatus.visibility === 'self';
   const isSensitive = actualStatus.sensitive;
@@ -415,70 +416,68 @@ const Status: React.FC<IStatus> = (props) => {
   }
 
   return (
-    <HotKeys handlers={handlers} data-testid='status'>
-      <div
-        className={clsx('status cursor-pointer', { focusable })}
-        tabIndex={focusable && !muted ? 0 : undefined}
-        data-featured={featured ? 'true' : null}
-        aria-label={textForScreenReader(intl, actualStatus, rebloggedByText)}
-        ref={node}
-        onClick={handleClick}
-        role='link'
+    <div
+      className={clsx('status cursor-pointer', { focusable })}
+      tabIndex={focusable && !muted ? 0 : undefined}
+      data-featured={featured ? 'true' : null}
+      aria-label={textForScreenReader(intl, actualStatus, rebloggedByText)}
+      ref={node}
+      onClick={handleClick}
+      role='link'
+    >
+      <Card
+        variant={variant}
+        className={clsx('status__wrapper space-y-4', `status-${actualStatus.visibility}`, {
+          'py-6 sm:p-5': variant === 'rounded',
+          'status-reply': !!status.in_reply_to_id,
+          muted,
+          read: unread === false,
+        })}
+        data-id={status.id}
       >
-        <Card
-          variant={variant}
-          className={clsx('status__wrapper space-y-4', `status-${actualStatus.visibility}`, {
-            'py-6 sm:p-5': variant === 'rounded',
-            'status-reply': !!status.in_reply_to_id,
-            muted,
-            read: unread === false,
-          })}
-          data-id={status.id}
-        >
-          <div>
-            {renderStatusInfo()}
+        <div>
+          {renderStatusInfo()}
 
-            <AccountContainer
-              key={actualStatus.account.id}
-              id={actualStatus.account.id}
-              timestamp={actualStatus.created_at}
-              timestampUrl={statusUrl}
-              action={accountAction}
-              hideActions={!accountAction}
-              showEdit={!!actualStatus.edited_at}
-              showProfileHoverCard={hoverable}
-              withLinkToProfile={hoverable}
-              approvalStatus={actualStatus.approval_status}
-              avatarSize={avatarSize}
-            />
-          </div>
+          <AccountContainer
+            key={actualStatus.account.id}
+            id={actualStatus.account.id}
+            timestamp={actualStatus.created_at}
+            timestampUrl={statusUrl}
+            action={accountAction}
+            hideActions={!accountAction}
+            showEdit={!!actualStatus.edited_at}
+            showProfileHoverCard={hoverable}
+            withLinkToProfile={hoverable}
+            approvalStatus={actualStatus.approval_status}
+            avatarSize={avatarSize}
+          />
+        </div>
 
-          <div className='status__content-wrapper'>
-            <StatusReplyMentions status={actualStatus} hoverable={hoverable} />
+        <div className='status__content-wrapper'>
+          <StatusReplyMentions status={actualStatus} hoverable={hoverable} />
 
-            <StatusContainer
-              showMedia={showMedia || false}
-              isSensitive={isUnderReview || isSensitive}
-              onToggleMediaVisibility={handleToggleMediaVisibility}
-              quote={quote}
-              hasMedia={!!(quote || actualStatus.card || actualStatus.media_attachments.size > 0)}
-              contentOption={{
-                status: actualStatus,
-                onClick: handleClick,
-                collapsable: true,
-                translatable: true,
-              }}
-            />
+          <StatusContainer
+            showMedia={showMedia || false}
+            isSensitive={isUnderReview || isSensitive}
+            onToggleMediaVisibility={handleToggleMediaVisibility}
+            quote={quote}
+            hasMedia={!!(quote || actualStatus.card || actualStatus.media_attachments.size > 0)}
+            contentOption={{
+              status: actualStatus,
+              onClick: handleClick,
+              collapsable: true,
+              translatable: true,
+            }}
+          />
 
-            {(!hideActionBar && !isUnderReview) && (
-              <div className='pt-4'>
-                <StatusActionBar status={actualStatus} />
-              </div>
-            )}
-          </div>
-        </Card>
-      </div >
-    </HotKeys >
+          {(!hideActionBar && !isUnderReview) && (
+            <div className='pt-4'>
+              <StatusActionBar status={actualStatus} />
+            </div>
+          )}
+        </div>
+      </Card>
+    </div >
   );
 };
 

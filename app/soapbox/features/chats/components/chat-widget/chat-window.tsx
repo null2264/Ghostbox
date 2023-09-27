@@ -70,7 +70,10 @@ const ChatWindow = () => {
         title={
           <HStack alignItems='center' space={2}>
             {isOpen && (
-              <button onClick={closeChat}>
+              <button
+                onClick={closeChat}
+                //ref={useHotkey('Backspace')}
+              >
                 <Icon
                   src={require('@tabler/icons/arrow-left.svg')}
                   className='h-6 w-6 text-gray-600 dark:text-gray-400'

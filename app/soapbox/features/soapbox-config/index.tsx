@@ -25,7 +25,6 @@ import { useAppSelector, useAppDispatch, useFeatures } from 'soapbox/hooks';
 import { normalizeSoapboxConfig } from 'soapbox/normalizers';
 import toast from 'soapbox/toast';
 
-import CryptoAddressInput from './components/crypto-address-input';
 import FooterLinkInput from './components/footer-link-input';
 import PromoPanelInput from './components/promo-panel-input';
 import SitePreview from './components/site-preview';
@@ -34,7 +33,6 @@ const messages = defineMessages({
   heading: { id: 'column.soapbox_config', defaultMessage: 'Soapbox config' },
   saved: { id: 'soapbox_config.saved', defaultMessage: 'Soapbox config saved!' },
   copyrightFooterLabel: { id: 'soapbox_config.copyright_footer.meta_fields.label_placeholder', defaultMessage: 'Copyright footer' },
-  cryptoDonatePanelLimitLabel: { id: 'soapbox_config.crypto_donate_panel_limit.meta_fields.limit_placeholder', defaultMessage: 'Number of items to display in the crypto homepage widget' },
   customCssLabel: { id: 'soapbox_config.custom_css.meta_fields.url_placeholder', defaultMessage: 'URL' },
   rawJSONLabel: { id: 'soapbox_config.raw_json_label', defaultMessage: 'Advanced: Edit raw JSON data' },
   rawJSONHint: { id: 'soapbox_config.raw_json_hint', defaultMessage: 'Edit the settings data directly. Changes made directly to the JSON file will override the form fields above. Click "Save" to apply your changes.' },
@@ -64,7 +62,6 @@ type ThemeChangeHandler = (theme: string) => void;
 const templates: Record<string, Template> = {
   promoPanelItem: ImmutableMap({ icon: '', text: '', url: '' }),
   footerItem: ImmutableMap({ title: '', url: '' }),
-  cryptoAddress: ImmutableMap({ ticker: '', address: '', note: '' }),
 };
 
 const SoapboxConfig: React.FC = () => {
@@ -345,31 +342,6 @@ const SoapboxConfig: React.FC = () => {
               </FormGroup>
             </>
           )}
-
-          <CardHeader>
-            <CardTitle title={<FormattedMessage id='soapbox_config.headings.cryptocurrency' defaultMessage='Cryptocurrency' />} />
-          </CardHeader>
-
-          <Streamfield
-            label={<FormattedMessage id='soapbox_config.fields.crypto_addresses_label' defaultMessage='Cryptocurrency addresses' />}
-            hint={<FormattedMessage id='soapbox_config.hints.crypto_addresses' defaultMessage='Add cryptocurrency addresses so users of your site can donate to you. Order matters, and you must use lowercase ticker values.' />}
-            component={CryptoAddressInput}
-            values={soapbox.cryptoAddresses.toArray()}
-            onChange={handleStreamItemChange(['cryptoAddresses'])}
-            onAddItem={addStreamItem(['cryptoAddresses'], templates.cryptoAddress)}
-            onRemoveItem={deleteStreamItem(['cryptoAddresses'])}
-          />
-
-          <FormGroup labelText={intl.formatMessage(messages.cryptoDonatePanelLimitLabel)}>
-            <Input
-              type='number'
-              min={0}
-              pattern='[0-9]+'
-              placeholder={intl.formatMessage(messages.cryptoDonatePanelLimitLabel)}
-              value={soapbox.cryptoDonatePanel.get('limit')}
-              onChange={handleChange(['cryptoDonatePanel', 'limit'], (e) => Number(e.target.value))}
-            />
-          </FormGroup>
 
           <CardHeader>
             <CardTitle title={<FormattedMessage id='soapbox_config.headings.advanced' defaultMessage='Advanced' />} />

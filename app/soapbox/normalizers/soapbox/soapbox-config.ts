@@ -4,7 +4,6 @@ import {
   Record as ImmutableRecord,
   fromJS,
 } from 'immutable';
-import trimStart from 'lodash/trimStart';
 
 import { adSchema } from 'soapbox/schemas';
 import { filteredArray } from 'soapbox/schemas/utils';
@@ -16,7 +15,6 @@ import type {
   Ad,
   PromoPanelItem,
   FooterItem,
-  CryptoAddress,
 } from 'soapbox/types/soapbox';
 
 const DEFAULT_COLORS = ImmutableMap<string, any>({
@@ -63,12 +61,6 @@ export const FooterItemRecord = ImmutableRecord({
   url: '',
 });
 
-export const CryptoAddressRecord = ImmutableRecord({
-  address: '',
-  note: '',
-  ticker: '',
-});
-
 export const SoapboxConfigRecord = ImmutableRecord({
   ads: ImmutableList<Ad>(),
   appleAppId: null,
@@ -101,10 +93,6 @@ export const SoapboxConfigRecord = ImmutableRecord({
   verifiedIcon: '',
   verifiedCanEditName: false,
   displayFqn: true,
-  cryptoAddresses: ImmutableList<CryptoAddress>(),
-  cryptoDonatePanel: ImmutableMap({
-    limit: 1,
-  }),
   aboutPages: ImmutableMap<string, ImmutableMap<string, unknown>>(),
   authenticatedProfile: true,
   linkFooterMessage: '',
@@ -131,17 +119,6 @@ const normalizeAds = (soapboxConfig: SoapboxConfigMap): SoapboxConfigMap => {
   } else {
     return soapboxConfig;
   }
-};
-
-const normalizeCryptoAddress = (address: unknown): CryptoAddress => {
-  return CryptoAddressRecord(ImmutableMap(fromJS(address))).update('ticker', ticker => {
-    return trimStart(ticker, '$').toLowerCase();
-  });
-};
-
-const normalizeCryptoAddresses = (soapboxConfig: SoapboxConfigMap): SoapboxConfigMap => {
-  const addresses = ImmutableList(soapboxConfig.get('cryptoAddresses'));
-  return soapboxConfig.set('cryptoAddresses', addresses.map(normalizeCryptoAddress));
 };
 
 const normalizeBrandColor = (soapboxConfig: SoapboxConfigMap): SoapboxConfigMap => {
@@ -249,7 +226,6 @@ export const normalizeSoapboxConfig = (soapboxConfig: Record<string, any>) => {
       normalizePromoPanel(soapboxConfig);
       normalizeFooterLinks(soapboxConfig);
       maybeAddMissingColors(soapboxConfig);
-      normalizeCryptoAddresses(soapboxConfig);
       normalizeAds(soapboxConfig);
       normalizeAdsAlgorithm(soapboxConfig);
       upgradeSingleUserMode(soapboxConfig);

@@ -1,9 +1,10 @@
+/// <reference lib="webworker" />
 /* eslint-disable compat/compat */
 import IntlMessageFormat from 'intl-messageformat';
 import 'intl-pluralrules';
 import unescape from 'lodash/unescape';
 
-import locales from './web-push-locales';
+const locales = import.meta.compileTime<Record<string, Record<string, string>>>('./web-push-locales.ts');
 
 import type {
   Account as AccountEntity,

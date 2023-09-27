@@ -2,16 +2,10 @@ import { createSelector } from '@reduxjs/toolkit';
 import clsx from 'clsx';
 import { List as ImmutableList, OrderedSet as ImmutableOrderedSet } from 'immutable';
 import React, { useEffect, useRef, useState } from 'react';
-import { HotKeys } from 'react-hotkeys';
 import { useIntl } from 'react-intl';
-import { useHistory } from 'react-router-dom';
 import { type VirtuosoHandle } from 'react-virtuoso';
 
-import { mentionCompose, replyCompose } from 'soapbox/actions/compose';
-import { favourite, reblog, unfavourite, unreblog } from 'soapbox/actions/interactions';
 import { openModal } from 'soapbox/actions/modals';
-import { getSettings } from 'soapbox/actions/settings';
-import { hideStatus, revealStatus } from 'soapbox/actions/statuses';
 import ScrollableList from 'soapbox/components/scrollable-list';
 import StatusActionBar from 'soapbox/components/status-action-bar';
 import Tombstone from 'soapbox/components/tombstone';
@@ -20,7 +14,7 @@ import PlaceholderStatus from 'soapbox/features/placeholder/components/placehold
 import PendingStatus from 'soapbox/features/ui/components/pending-status';
 import { useAppDispatch, useAppSelector, useOwnAccount, useSettings } from 'soapbox/hooks';
 import { RootState } from 'soapbox/store';
-import { type Account, type Status } from 'soapbox/types/entities';
+import { type Status } from 'soapbox/types/entities';
 import { defaultMediaVisibility, textForScreenReader } from 'soapbox/utils/status';
 
 import DetailedStatus from './detailed-status';
@@ -93,7 +87,6 @@ const Thread = (props: IThread) => {
   } = props;
 
   const dispatch = useAppDispatch();
-  const history = useHistory();
   const intl = useIntl();
   const { account: me } = useOwnAccount();
   const settings = useSettings();
@@ -133,6 +126,7 @@ const Thread = (props: IThread) => {
     setShowMedia(!showMedia);
   };
 
+  /*
   const handleHotkeyReact = () => {
     if (statusRef.current) {
       const firstEmoji: HTMLButtonElement | null = statusRef.current.querySelector('.emoji-react-selector .emoji-react-selector__emoji');
@@ -232,6 +226,7 @@ const Thread = (props: IThread) => {
   const handleHotkeyToggleSensitive = () => {
     handleToggleMediaVisibility();
   };
+  */
 
   const handleMoveUp = (id: string) => {
     if (id === status?.id) {
@@ -348,6 +343,7 @@ const Thread = (props: IThread) => {
   const hasAncestors = ancestorsIds.size > 0;
   const hasDescendants = descendantsIds.size > 0;
 
+  /*
   type HotkeyHandlers = { [key: string]: (keyEvent?: KeyboardEvent) => void };
 
   const handlers: HotkeyHandlers = {
@@ -363,40 +359,39 @@ const Thread = (props: IThread) => {
     openMedia: handleHotkeyOpenMedia,
     react: handleHotkeyReact,
   };
+  */
 
   const focusedStatus = (
     <div className={clsx({ 'pb-4': hasDescendants })} key={status.id}>
-      <HotKeys handlers={handlers}>
-        <div
-          ref={statusRef}
-          className='focusable relative'
-          tabIndex={0}
-          // FIXME: no "reblogged by" text is added for the screen reader
-          aria-label={textForScreenReader(intl, status)}
-        >
+      <div
+        ref={statusRef}
+        className='focusable relative'
+        tabIndex={0}
+        // FIXME: no "reblogged by" text is added for the screen reader
+        aria-label={textForScreenReader(intl, status)}
+      >
 
-          <DetailedStatus
-            status={status}
-            showMedia={showMedia}
-            withMedia={withMedia}
-            onToggleMediaVisibility={handleToggleMediaVisibility}
-            onOpenCompareHistoryModal={handleOpenCompareHistoryModal}
-          />
+        <DetailedStatus
+          status={status}
+          showMedia={showMedia}
+          withMedia={withMedia}
+          onToggleMediaVisibility={handleToggleMediaVisibility}
+          onOpenCompareHistoryModal={handleOpenCompareHistoryModal}
+        />
 
-          {!isUnderReview ? (
-            <>
-              <hr className='-mx-4 mb-2 max-w-[100vw] border-t-2 dark:border-gray-800' />
+        {!isUnderReview ? (
+          <>
+            <hr className='-mx-4 mb-2 max-w-[100vw] border-t-2 dark:border-gray-800' />
 
-              <StatusActionBar
-                status={status}
-                expandable={false}
-                space='lg'
-                withLabels
-              />
-            </>
-          ) : null}
-        </div>
-      </HotKeys>
+            <StatusActionBar
+              status={status}
+              expandable={false}
+              space='lg'
+              withLabels
+            />
+          </>
+        ) : null}
+      </div>
 
       {hasDescendants && (
         <hr className='-mx-4 mt-2 max-w-[100vw] border-t-2 dark:border-gray-800' />

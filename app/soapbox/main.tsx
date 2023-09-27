@@ -39,18 +39,22 @@ import './precheck';
 import { default as Soapbox } from './containers/soapbox';
 import * as monitoring from './monitoring';
 import ready from './ready';
+import { registerSw } from './utils/sw';
 
 // Sentry
 monitoring.start();
 
-// Print console warning
 if (BuildConfig.NODE_ENV === 'production') {
   printConsoleWarning();
+  registerSw('/sw.js');
 }
 
 ready(() => {
+  console.debug(BuildConfig.NODE_ENV);
+
   if (BuildConfig.NODE_ENV !== 'production')
-    window.__webpack_nonce__ = 'TEST';
+    // FIXME: This keep firing even tho NODE_ENV is set to prod
+    window.__webpack_nonce__ = window.__webpack_nonce__ || 'NONCE_PLACEHOLDER';
 
   const goober = document.querySelector('#_goober');
   if (goober instanceof HTMLStyleElement)

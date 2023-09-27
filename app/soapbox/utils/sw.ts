@@ -1,3 +1,12 @@
+/** Register the ServiceWorker. */
+const registerSw = (path: string) => {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register(path, { scope: '/' });
+    });
+  }
+};
+
 /** Unregister the ServiceWorker */
 // https://stackoverflow.com/a/49771828/8811886
 const unregisterSw = async(): Promise<void> => {
@@ -12,4 +21,5 @@ const unregisterSw = async(): Promise<void> => {
 
 export {
   unregisterSw,
+  registerSw,
 };

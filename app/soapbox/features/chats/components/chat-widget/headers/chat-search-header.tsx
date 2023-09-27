@@ -24,6 +24,7 @@ const ChatSearchHeader = () => {
             onClick={() => {
               changeScreen(ChatWidgetScreens.INBOX);
             }}
+            //ref={useHotkey('Backspace')}
           >
             <Icon
               src={require('@tabler/icons/arrow-left.svg')}

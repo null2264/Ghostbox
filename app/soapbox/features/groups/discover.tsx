@@ -38,6 +38,7 @@ const Discover: React.FC = () => {
             <IconButton
               src={require('@tabler/icons/arrow-left.svg')}
               iconClassName='mr-2 h-5 w-5 fill-current text-gray-600'
+              //ref={useHotkey('Backspace')}
               onClick={cancelSearch}
               data-testid='group-search-icon'
             />

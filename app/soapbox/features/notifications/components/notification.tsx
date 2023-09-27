@@ -1,17 +1,11 @@
 import React, { useCallback } from 'react';
-import { HotKeys } from 'react-hotkeys';
 import { defineMessages, useIntl, FormattedMessage, IntlShape, MessageDescriptor, defineMessage } from 'react-intl';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import { mentionCompose } from 'soapbox/actions/compose';
-import { reblog, favourite, unreblog, unfavourite } from 'soapbox/actions/interactions';
-import { openModal } from 'soapbox/actions/modals';
-import { getSettings } from 'soapbox/actions/settings';
-import { hideStatus, revealStatus } from 'soapbox/actions/statuses';
 import Status from 'soapbox/components/status';
 import { HStack, Text, Emoji, Icon } from 'soapbox/components/ui';
 import AccountContainer from 'soapbox/containers/account-container';
-import { useAppDispatch, useAppSelector, useInstance } from 'soapbox/hooks';
+import { useAppSelector, useInstance } from 'soapbox/hooks';
 import { makeGetNotification } from 'soapbox/selectors';
 import { NotificationType, validType } from 'soapbox/utils/notification';
 
@@ -175,19 +169,17 @@ interface INotificaton {
 const Notification: React.FC<INotificaton> = (props) => {
   const { hidden = false, onMoveUp, onMoveDown } = props;
 
-  const dispatch = useAppDispatch();
-
   const getNotification = useCallback(makeGetNotification(), []);
 
   const notification = useAppSelector((state) => getNotification(state, props.notification));
 
-  const history = useHistory();
   const intl = useIntl();
   const instance = useInstance();
 
   const type = notification.type;
   const { account, status } = notification;
 
+  /*
   const getHandlers = () => ({
     reply: handleMention,
     favourite: handleHotkeyFavourite,
@@ -260,6 +252,7 @@ const Notification: React.FC<INotificaton> = (props) => {
       }
     }
   }, [status]);
+  */
 
   const handleMoveUp = () => {
     if (onMoveUp) {
@@ -417,17 +410,15 @@ const Notification: React.FC<INotificaton> = (props) => {
   };
 
   return (
-    <HotKeys handlers={getHandlers()} data-testid='notification'>
-      <div
-        className='notification focusable'
-        tabIndex={0}
-        aria-label={ariaLabel}
-      >
-        <div className='focusable p-4'>
-          {render()}
-        </div>
+    <div
+      className='notification focusable'
+      tabIndex={0}
+      aria-label={ariaLabel}
+    >
+      <div className='focusable p-4'>
+        {render()}
       </div>
-    </HotKeys>
+    </div>
   );
 };
 

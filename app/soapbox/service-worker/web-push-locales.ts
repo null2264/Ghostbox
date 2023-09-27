@@ -33,4 +33,6 @@ filenames.forEach(filename => {
   };
 });
 
-export default filtered;
+export default () => ({
+  data: filtered,
+});

@@ -93,7 +93,10 @@ const ChatSettings = () => {
         onToggle={minimizeChatPane}
         title={
           <HStack alignItems='center' space={2}>
-            <button onClick={closeSettings}>
+            <button
+              onClick={closeSettings}
+              //ref={useHotkey('Backspace')}
+            >
               <Icon
                 src={require('@tabler/icons/arrow-left.svg')}
                 className='h-6 w-6 text-gray-600 dark:text-gray-400'

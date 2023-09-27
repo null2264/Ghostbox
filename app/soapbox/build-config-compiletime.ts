@@ -4,19 +4,20 @@
  * @module soapbox/build-config
  */
 
-const trim = require('lodash/trim');
-const trimEnd = require('lodash/trimEnd');
+// eslint-disable-next-line import/extensions
+import trim from 'lodash/trim.js';
+// eslint-disable-next-line import/extensions
+import trimEnd from 'lodash/trimEnd.js';
 
 const {
   NODE_ENV,
   BACKEND_URL,
   FE_SUBDIRECTORY,
-  FE_BUILD_DIR,
   FE_INSTANCE_SOURCE_DIR,
   SENTRY_DSN,
-} = process.env;
+} = process.env || {};
 
-const sanitizeURL = url => {
+const sanitizeURL = (url: string | undefined = '') => {
   try {
     return trimEnd(new URL(url).toString(), '/');
   } catch {
@@ -24,23 +25,20 @@ const sanitizeURL = url => {
   }
 };
 
-const sanitizeBasename = path => {
+const sanitizeBasename = (path: string | undefined = '') => {
   return `/${trim(path, '/')}`;
 };
 
-const sanitizePath = path => {
-  return trim(path, '/');
-};
-
-// JSON.parse/stringify is to emulate what @preval is doing and avoid any
-// inconsistent behavior in dev mode
-const sanitize = obj => JSON.parse(JSON.stringify(obj));
-
-module.exports = sanitize({
+const env = {
   NODE_ENV: NODE_ENV || 'development',
   BACKEND_URL: sanitizeURL(BACKEND_URL),
   FE_SUBDIRECTORY: sanitizeBasename(FE_SUBDIRECTORY),
-  FE_BUILD_DIR: sanitizePath(FE_BUILD_DIR) || 'static',
   FE_INSTANCE_SOURCE_DIR: FE_INSTANCE_SOURCE_DIR || 'instance',
   SENTRY_DSN,
+};
+
+export type BuildConfig = typeof env;
+
+export default () => ({
+  data: env,
 });

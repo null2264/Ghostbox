@@ -12,7 +12,6 @@ import {
   SignUpPanel,
   PromoPanel,
   FundingPanel,
-  CryptoDonatePanel,
   BirthdayPanel,
   CtaBanner,
   AnnouncementsPanel,
@@ -40,8 +39,6 @@ const HomePage: React.FC<IHomePage> = ({ children }) => {
   const composeBlock = useRef<HTMLDivElement>(null);
 
   const hasPatron = soapboxConfig.extensions.getIn(['patron', 'enabled']) === true;
-  const hasCrypto = typeof soapboxConfig.cryptoAddresses.getIn([0, 'ticker']) === 'string';
-  const cryptoLimit = soapboxConfig.cryptoDonatePanel.get('limit', 0);
 
   const { isDragging, isDraggedOver } = useDraggedFiles(composeBlock, (files) => {
     dispatch(uploadCompose(composeId, files, intl));
@@ -111,11 +108,6 @@ const HomePage: React.FC<IHomePage> = ({ children }) => {
         {hasPatron && (
           <BundleContainer fetchComponent={FundingPanel}>
             {Component => <Component />}
-          </BundleContainer>
-        )}
-        {hasCrypto && cryptoLimit > 0 && (
-          <BundleContainer fetchComponent={CryptoDonatePanel}>
-            {Component => <Component limit={cryptoLimit} />}
           </BundleContainer>
         )}
         <BundleContainer fetchComponent={PromoPanel}>

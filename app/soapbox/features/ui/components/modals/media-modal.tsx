@@ -293,6 +293,7 @@ const MediaModal: React.FC<IMediaModal> = (props) => {
                 <button
                   tabIndex={0}
                   className='flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 text-white'
+                  //ref={useHotkey('Backspace')}
                   onClick={handlePrevClick}
                   aria-label={intl.formatMessage(messages.previous)}
                 >

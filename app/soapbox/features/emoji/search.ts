@@ -1,11 +1,12 @@
-import { Index } from 'flexsearch-ts';
+import Index from '@akryum/flexsearch-es';
 import { Map as ImmutableMap, List as ImmutableList } from 'immutable';
 
 import data from './data';
 
 import type { Emoji } from './index';
 
-const index = new Index({
+// @ts-ignore
+const index: Index.Index = new Index({
   tokenize: 'full',
   optimize: true,
   context: true,
