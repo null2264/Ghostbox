@@ -13,6 +13,13 @@
 - UI: rename Soapbox to Ghostbox
 - UI: changed spinner's look
 - UI: add hide video button
+- Dev: migrate from Webpack to Vite
+- UI: add privacy indicator to posts
+- UI: fixed dropdown misalignments and overflows
+- UI: add MFM support
+- UI: improve emoji picker for mobile
+- Compatibility: fixed CSP support
+- UI: fixed 'load more' button misalignment in Media page
 
 ---
 
