@@ -152,9 +152,7 @@ const PollOption: React.FC<IPollOption> = (props): JSX.Element | null => {
 
               <div className='text-primary-600 dark:text-white'>
                 <Text weight='medium' theme='inherit'>
-                  { poll.multiple
-                    ? `${pollVotesCount} votes` // TODO: localize
-                    : `${Math.round(percent)}%` }
+                  { poll.multiple ? message : `${Math.round(percent)}%` }
                 </Text>
               </div>
             </HStack>
