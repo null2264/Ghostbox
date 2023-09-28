@@ -142,20 +142,10 @@ You only need to set this if Soapbox is hosted in a different place than the bac
 
 Options:
 
-- An absolute URL, eg `"https://gleasonator.com"`
+- An absolute URL, eg `"https://fedi.aap.my.id"`
 - Empty string (`""`)`
 
 Default: `""`
-
-### `FE_BUILD_DIR`
-
-The folder to put build files in. This is mostly useful for CI tasks like GitLab Pages.
-
-Options:
-
-- Any directory name, eg `"public"`
-
-Default: `"static"`
 
 ### `FE_SUBDIRECTORY`
 
@@ -169,7 +159,7 @@ Options:
 
 Default: `"/"`
 
-For example, if you want to host the build on `https://gleasonator.com/soapbox`, you can compile it like this:
+For example, if you want to host the build on `https://aap.my.id/soapbox`, you can compile it like this:
 
 ```sh
 NODE_ENV="production" FE_SUBDIRECTORY="/soapbox" yarn build

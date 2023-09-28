@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 
 import pkg from '../../../package.json';
 
-const { CI_COMMIT_TAG, CI_COMMIT_REF_NAME, CI_COMMIT_SHA } = process.env;
+const { GITHUB_REF_NAME, GITHUB_SHA } = process.env;
 
 const shortRepoName = (url: string) => new URL(url).pathname.substring(1);
 const trimHash = (hash: string) => hash.substring(0, 7);
@@ -16,13 +16,13 @@ const tryGit = (cmd: string) => {
 };
 
 const version = (pkg: Record<string, any>) => {
-  // Try to discern from GitLab CI first
-  if (CI_COMMIT_TAG === `v${pkg.version}` || CI_COMMIT_REF_NAME === 'stable') {
+  // Try to discern from GitHub CI first
+  if (GITHUB_REF_NAME === `v${pkg.version}` || GITHUB_REF_NAME === 'stable') {
     return pkg.version;
   }
 
-  if (typeof CI_COMMIT_SHA === 'string') {
-    return `${pkg.version}-${trimHash(CI_COMMIT_SHA)}`;
+  if (typeof GITHUB_SHA === 'string') {
+    return `${pkg.version}-${trimHash(GITHUB_SHA)}`;
   }
 
   // Fall back to git directly
@@ -42,7 +42,7 @@ const data = {
   repository: shortRepoName(pkg.repository.url),
   version: version(pkg),
   homepage: pkg.homepage,
-  ref: CI_COMMIT_TAG || CI_COMMIT_SHA || tryGit('git rev-parse HEAD'),
+  ref: GITHUB_REF_NAME || GITHUB_SHA || tryGit('git rev-parse HEAD'),
 };
 
 export type Code = typeof data;
