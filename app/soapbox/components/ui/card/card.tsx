@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { HStack, Text } from 'soapbox/components/ui';
 import SvgIcon from 'soapbox/components/ui/icon/svg-icon';
+import { useHotkey } from 'soapbox/hooks';
 
 const sizes = {
   md: 'p-4 sm:rounded-xl',
@@ -69,12 +70,7 @@ const CardHeader: React.FC<ICardHeader> = ({ className, children, backHref, onBa
 
     return (
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      <Comp
-        //ref={useHotkey('Backspace')}
-        {...backAttributes}
-        className='rounded-full text-gray-900 focus:ring-2 focus:ring-primary-500 dark:text-gray-100'
-        aria-label={intl.formatMessage(messages.back)}
-      >
+      <Comp ref={useHotkey('Backspace')} {...backAttributes} className='rounded-full text-gray-900 focus:ring-2 focus:ring-primary-500 dark:text-gray-100' aria-label={intl.formatMessage(messages.back)}>
         <SvgIcon src={require('@tabler/icons/arrow-left.svg')} className='h-6 w-6 rtl:rotate-180' />
         <span className='sr-only' data-testid='back-button'>{intl.formatMessage(messages.back)}</span>
       </Comp>

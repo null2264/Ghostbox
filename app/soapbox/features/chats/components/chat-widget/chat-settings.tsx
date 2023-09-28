@@ -6,7 +6,7 @@ import { openModal } from 'soapbox/actions/modals';
 import List, { ListItem } from 'soapbox/components/list';
 import { Avatar, HStack, Icon, Select, Stack, Text } from 'soapbox/components/ui';
 import { ChatWidgetScreens, useChatContext } from 'soapbox/contexts/chat-context';
-import { useAppDispatch, useAppSelector, useFeatures } from 'soapbox/hooks';
+import { useAppDispatch, useAppSelector, useFeatures, useHotkey } from 'soapbox/hooks';
 import { messageExpirationOptions, MessageExpirationValues, useChatActions } from 'soapbox/queries/chats';
 import { secondsToDays } from 'soapbox/utils/numbers';
 
@@ -95,7 +95,8 @@ const ChatSettings = () => {
           <HStack alignItems='center' space={2}>
             <button
               onClick={closeSettings}
-              //ref={useHotkey('Backspace')}
+              // eslint-disable-next-line react-hooks/rules-of-hooks
+              ref={useHotkey('Backspace')}
             >
               <Icon
                 src={require('@tabler/icons/arrow-left.svg')}

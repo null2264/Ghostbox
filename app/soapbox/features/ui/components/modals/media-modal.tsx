@@ -14,7 +14,7 @@ import Audio from 'soapbox/features/audio';
 import PlaceholderStatus from 'soapbox/features/placeholder/components/placeholder-status';
 import Thread from 'soapbox/features/status/components/thread';
 import Video from 'soapbox/features/video';
-import { useAppDispatch, useAppSelector } from 'soapbox/hooks';
+import { useAppDispatch, useAppSelector, useHotkey } from 'soapbox/hooks';
 import { isUserTouching } from 'soapbox/is-mobile';
 import { makeGetStatus } from 'soapbox/selectors';
 
@@ -293,7 +293,8 @@ const MediaModal: React.FC<IMediaModal> = (props) => {
                 <button
                   tabIndex={0}
                   className='flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 text-white'
-                  //ref={useHotkey('Backspace')}
+                  // eslint-disable-next-line react-hooks/rules-of-hooks
+                  ref={useHotkey('Backspace')}
                   onClick={handlePrevClick}
                   aria-label={intl.formatMessage(messages.previous)}
                 >

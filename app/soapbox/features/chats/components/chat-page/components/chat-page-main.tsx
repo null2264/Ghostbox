@@ -8,7 +8,7 @@ import List, { ListItem } from 'soapbox/components/list';
 import { Avatar, HStack, Icon, IconButton, Menu, MenuButton, MenuItem, MenuList, Stack, Text, Tooltip } from 'soapbox/components/ui';
 import VerificationBadge from 'soapbox/components/verification-badge';
 import { useChatContext } from 'soapbox/contexts/chat-context';
-import { useAppDispatch, useAppSelector, useFeatures } from 'soapbox/hooks';
+import { useAppDispatch, useAppSelector, useFeatures, useHotkey } from 'soapbox/hooks';
 import { MessageExpirationValues, useChat, useChatActions, useChats } from 'soapbox/queries/chats';
 import { secondsToDays } from 'soapbox/utils/numbers';
 
@@ -122,7 +122,8 @@ const ChatPageMain = () => {
             <IconButton
               src={require('@tabler/icons/arrow-left.svg')}
               className='mr-2 h-7 w-7 sm:mr-0 sm:hidden'
-              //ref={useHotkey('Backspace')}
+              // eslint-disable-next-line react-hooks/rules-of-hooks
+              ref={useHotkey('Backspace')}
               onClick={() => history.push('/chats')}
             />
 
