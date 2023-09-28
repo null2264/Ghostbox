@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.1.0 - Untitled (**Not yet released**)
+- UI: disable voters count
+
 ## v1.0.0 - Divergence (**Not yet released**)
 - UI: fixed options in setting page not shown properly
 - UI: [improved sensitive content and CW UI/UX](/CHANGELOG.UI.md)
