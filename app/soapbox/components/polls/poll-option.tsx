@@ -110,7 +110,7 @@ const PollOption: React.FC<IPollOption> = (props): JSX.Element | null => {
 
   if (!poll) return null;
 
-  const pollVotesCount = poll.multiple ? poll.voters_count : poll.votes_count;
+  const pollVotesCount = poll.votes_count;
   const percent = pollVotesCount === 0 ? 0 : (option.votes_count / pollVotesCount) * 100;
   const voted = poll.own_votes?.includes(index);
   const message = intl.formatMessage(messages.votes, { votes: option.votes_count });
@@ -151,7 +151,11 @@ const PollOption: React.FC<IPollOption> = (props): JSX.Element | null => {
               )}
 
               <div className='text-primary-600 dark:text-white'>
-                <Text weight='medium' theme='inherit'>{Math.round(percent)}%</Text>
+                <Text weight='medium' theme='inherit'>
+                  { poll.multiple
+                    ? `${pollVotesCount} votes` // TODO: localize
+                    : `${Math.round(percent)}%` }
+                </Text>
               </div>
             </HStack>
           </HStack>

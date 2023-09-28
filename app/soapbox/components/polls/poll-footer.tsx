@@ -39,13 +39,7 @@ const PollFooter: React.FC<IPollFooter> = ({ poll, showResults, selected }): JSX
       intl.formatMessage(messages.closed) :
       <RelativeTimestamp weight='medium' timestamp={poll.expires_at} futureDate />;
 
-  let votesCount = null;
-
-  if (poll.multiple) {
-    votesCount = <FormattedMessage id='poll.total_people' defaultMessage='{count, plural, one {# person} other {# people}}' values={{ count: poll.voters_count }} />;
-  } else {
-    votesCount = <FormattedMessage id='poll.total_votes' defaultMessage='{count, plural, one {# vote} other {# votes}}' values={{ count: poll.votes_count }} />;
-  }
+  const votesCount = <FormattedMessage id='poll.total_votes' defaultMessage='{count, plural, one {# vote} other {# votes}}' values={{ count: poll.votes_count }} />;
 
   return (
     <Stack space={4} data-testid='poll-footer'>
