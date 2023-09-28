@@ -15,7 +15,7 @@ const {
   FE_SUBDIRECTORY,
   FE_INSTANCE_SOURCE_DIR,
   SENTRY_DSN,
-} = process.env || {};
+} = process.env;
 
 const sanitizeURL = (url: string | undefined = '') => {
   try {

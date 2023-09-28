@@ -21,14 +21,14 @@ const readFile = (filename: string) => {
 };
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd(), '') };
 
   const nonce = 'NONCE_PLACEHOLDER';
 
   const {
     DEVSERVER_URL,
     BACKEND_URL,
-  } = env;
+  } = process.env;
 
   const DEFAULTS = {
     DEVSERVER_URL: 'http://localhost:3036',
@@ -79,9 +79,9 @@ export default defineConfig(({ mode }) => {
       EnvironmentPlugin({
         NODE_ENV: 'production',
         // null = optional, undefined = required
-        BACKEND_URL: env.BACKEND_URL || null,
-        DEVSERVER_URL: env.DEVSERVER_URL || null,
-      }),
+        BACKEND_URL: null,
+        DEVSERVER_URL: null,
+      }, { loadEnvFiles: false }),
       // @ts-ignore
       vitePluginRequire(),
       compileTime(),
