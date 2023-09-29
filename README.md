@@ -1,8 +1,8 @@
 # Ghostbox
 
-Ghostbox is an alternative frontend for Akkoma. Developed specifically for [fedi.aap](https://fedi.aap.my.id) Akkoma instance.
+Ghostbox is a frontend for [Spirit](https://github.com/null2264/spirit) (and Akkoma/Pleroma). Developed specifically for [fedi.aap](https://fedi.aap.my.id) Spirit instance.
 
-This fork is created because I do not want to be associated with the original project's maintainer or their controversial opinions.
+This fork was created because I do not want to be associated with the original project's maintainer or their controversial opinions.
 
 ## Troubleshoot
 
