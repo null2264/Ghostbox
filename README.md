@@ -6,6 +6,10 @@ This fork was created because I do not want to be associated with the original p
 
 ## Troubleshoot
 
+### Posts / Notifications refuses to load (Akkoma/Spirit/Pleroma)
+
+This may be caused by a bottleneck in your system. You try adjusting your postgresql config with the configuration from [PGTune](https://pgtune.leopard.in.ua/), or simply upgrade your server.
+
 ## License & Credits
 
 Ghostbox is free software: you can redistribute it and/or modify
