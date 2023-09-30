@@ -249,7 +249,7 @@ const expandDirectTimeline = ({ url, maxId }: Record<string, any> = {}, done = n
   expandTimeline('direct', url || '/api/v1/timelines/direct', url ? {} : { max_id: maxId }, done);
 
 const expandAccountTimeline = (accountId: string, { url, maxId, withReplies }: Record<string, any> = {}) =>
-  expandTimeline(`account:${accountId}${withReplies ? ':with_replies' : ''}`, url || `/api/v1/accounts/${accountId}/statuses`, url ? {} : { exclude_replies: !withReplies, max_id: maxId, with_muted: true, limit: 15 }); // TODO: Adjustable limit from Ghostbox config
+  expandTimeline(`account:${accountId}${withReplies ? ':with_replies' : ''}`, url || `/api/v1/accounts/${accountId}/statuses`, url ? {} : { exclude_replies: !withReplies, max_id: maxId, with_muted: true, limit: 20 }); // TODO: Adjustable limit from Ghostbox config
 
 const expandAccountFeaturedTimeline = (accountId: string) =>
   expandTimeline(`account:${accountId}:pinned`, `/api/v1/accounts/${accountId}/statuses`, { pinned: true, with_muted: true });
