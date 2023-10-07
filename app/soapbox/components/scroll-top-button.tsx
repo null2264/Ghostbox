@@ -30,7 +30,7 @@ const ScrollTopButton: React.FC<IScrollTopButton> = ({
   const intl = useIntl();
   const settings = useSettings();
 
-  const timer = React.useRef(null);
+  const timer = React.useRef<NodeJS.Timeout | null>(null);
   const [scrolled, setScrolled] = useState<boolean>(false);
   const autoload = settings.get('autoloadTimelines') === true;
 
