@@ -30,6 +30,7 @@ const ScrollTopButton: React.FC<IScrollTopButton> = ({
   const intl = useIntl();
   const settings = useSettings();
 
+  const timer = React.useRef(null);
   const [scrolled, setScrolled] = useState<boolean>(false);
   const autoload = settings.get('autoloadTimelines') === true;
 
@@ -38,10 +39,17 @@ const ScrollTopButton: React.FC<IScrollTopButton> = ({
   }, []);
 
   const maybeUnload = React.useCallback(() => {
-    if (autoload && getScrollTop() <= autoloadThreshold) {
-      onClick();
-    }
-  }, [autoload, autoloadThreshold, onClick]);
+    // we need to add a timer since there is a delay between content render and
+    // scroll top calculation. Without it, new content is always loaded because
+    // scrollTop is 0 at first.
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      if (count > 0 && autoload && getScrollTop() <= autoloadThreshold) {
+        onClick();
+      }
+      timer.current = null;
+    }, 250);
+  }, [autoload, autoloadThreshold, onClick, count]);
 
   const handleScroll = useCallback(throttle(() => {
     if (getScrollTop() > threshold) {
@@ -70,7 +78,7 @@ const ScrollTopButton: React.FC<IScrollTopButton> = ({
 
   useEffect(() => {
     maybeUnload();
-  }, [count]);
+  }, [maybeUnload]);
 
   const visible = React.useMemo(() => count > 0 && scrolled, [count, scrolled]) ;
 
@@ -79,7 +87,7 @@ const ScrollTopButton: React.FC<IScrollTopButton> = ({
   return (
     <div className='fixed left-1/2 top-20 z-50 -translate-x-1/2'>
       <button
-        className='flex items-center bg-primary-600 hover:bg-primary-700 hover:scale-105 active:scale-100 transition-transform text-white rounded-full px-4 py-2 space-x-1.5 cursor-pointer whitespace-nowrap' 
+        className='flex cursor-pointer items-center space-x-1.5 whitespace-nowrap rounded-full bg-primary-600 px-4 py-2 text-white transition-transform hover:scale-105 hover:bg-primary-700 active:scale-100'
         onClick={handleClick}
       >
         <Icon src={require('@tabler/icons/arrow-bar-to-up.svg')} />

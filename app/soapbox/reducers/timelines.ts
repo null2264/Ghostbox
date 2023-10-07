@@ -99,7 +99,7 @@ const expandNormalizedTimeline = (
   isLoadingMore: boolean,
 ) => {
   let newIds = getStatusIds(statuses);
-  const unseens = ImmutableOrderedSet<any>();
+  let unseens = ImmutableOrderedSet<any>();
 
   return state.withMutations((s: any) => {
     s.update(timelineId, TimelineRecord(), (timeline: any) => timeline.withMutations((timeline: any) => {
@@ -118,10 +118,14 @@ const expandNormalizedTimeline = (
       if (!newIds.isEmpty()) {
         // we need to sort between queue and actual list to avoid
         // messing with user position in the timeline by inserting inseen statuses
-        let unseens = ImmutableOrderedSet<any>();
-        if (!isLoadingMore && timeline.items.count() > 0) {
+        unseens = ImmutableOrderedSet<any>();
+        if (!isLoadingMore
+          && timeline.items.count() > 0
+          && newIds.first() > timeline.items.first()
+        ) {
           unseens = newIds.subtract(timeline.items);
         }
+
         newIds = newIds.subtract(unseens);
         timeline.update('items', (oldIds: any) => {
           if (newIds.first() > oldIds.first()!) {
@@ -132,7 +136,7 @@ const expandNormalizedTimeline = (
         });
       }
     }));
-    unseens.forEach((statusId: any) => updateTimelineQueue(s, timelineId, statusId));
+    unseens.forEach((statusId: string) => s.set(timelineId, updateTimelineQueue(s, timelineId, statusId).get(timelineId)));
   });
 };
 
