@@ -464,7 +464,6 @@ const Audio: React.FC<IAudio> = (props) => {
         onPause={handlePause}
         onProgress={handleProgress}
         onLoadedData={handleLoadedData}
-        crossOrigin='anonymous'
       />
 
       <canvas
