@@ -5,17 +5,17 @@ import { NavLink, useLocation } from 'react-router-dom';
 import IconWithCounter from 'soapbox/components/icon-with-counter';
 import { Icon, Text } from 'soapbox/components/ui';
 
-interface IThumbNavigationLink {
+export interface IThumbNavigationLink {
   count?: number
   countMax?: number
   src: string
-  text: string | React.ReactElement
+  text?: string | React.ReactElement
   to: string
   exact?: boolean
   paths?: Array<string>
 }
 
-const ThumbNavigationLink: React.FC<IThumbNavigationLink> = ({ count, countMax, src, text, to, exact, paths }): JSX.Element => {
+const ThumbNavigationLink: React.FC<IThumbNavigationLink> = ({ count, countMax, src, text = undefined, to, exact, paths }): JSX.Element => {
   const { pathname } = useLocation();
 
   const isActive = (): boolean => {
@@ -29,12 +29,14 @@ const ThumbNavigationLink: React.FC<IThumbNavigationLink> = ({ count, countMax, 
   const active = isActive();
 
   return (
+    // eslint-disable-next-line tailwindcss/no-custom-classname
     <NavLink to={to} exact={exact} className='thumb-navigation__link'>
       {count !== undefined ? (
         <IconWithCounter
           src={src}
           className={clsx({
-            'h-5 w-5': true,
+            'h-5 w-5': text !== undefined,
+            'h-6 w-6': text === undefined,
             'text-gray-600': !active,
             'text-primary-500': active,
           })}
@@ -45,24 +47,27 @@ const ThumbNavigationLink: React.FC<IThumbNavigationLink> = ({ count, countMax, 
         <Icon
           src={src}
           className={clsx({
-            'h-5 w-5': true,
+            'h-5 w-5': text !== undefined,
+            'h-6 w-6': text === undefined,
             'text-gray-600': !active,
             'text-primary-500': active,
           })}
         />
       )}
 
-      <Text
-        tag='span'
-        size='xs'
-        weight='medium'
-        className={clsx({
-          'text-gray-600': !active,
-          'text-primary-500': active,
-        })}
-      >
-        {text}
-      </Text>
+      {text !== undefined && (
+        <Text
+          tag='span'
+          size='xs'
+          weight='medium'
+          className={clsx({
+            'text-gray-600': !active,
+            'text-primary-500': active,
+          })}
+        >
+          {text}
+        </Text>
+      )}
     </NavLink>
   );
 };
