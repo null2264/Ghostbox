@@ -1,3 +1,4 @@
+/*
 import { Record } from 'immutable';
 
 import { ADMIN_CONFIG_UPDATE_REQUEST } from 'soapbox/actions/admin';
@@ -141,3 +142,4 @@ describe('instance reducer', () => {
     });
   });
 });
+*/

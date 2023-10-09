@@ -4,13 +4,11 @@ import { defineMessages, IntlShape, useIntl } from 'react-intl';
 import { IconButton } from 'soapbox/components/ui';
 import { useInstance } from 'soapbox/hooks';
 
-import type { List as ImmutableList } from 'immutable';
-
 const messages = defineMessages({
   upload: { id: 'upload_button.label', defaultMessage: 'Add media attachment' },
 });
 
-const onlyImages = (types: ImmutableList<string>) => {
+const onlyImages = (types: string[] | undefined) => {
   return Boolean(types && types.every(type => type.startsWith('image/')));
 };
 
@@ -38,7 +36,7 @@ const UploadButton: React.FC<IUploadButton> = ({
   const { configuration } = useInstance();
 
   const fileElement = useRef<HTMLInputElement>(null);
-  const attachmentTypes = configuration.getIn(['media_attachments', 'supported_mime_types']) as ImmutableList<string>;
+  const attachmentTypes = configuration.media_attachments.supported_mime_types;
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.files?.length) {
@@ -78,7 +76,7 @@ const UploadButton: React.FC<IUploadButton> = ({
           ref={fileElement}
           type='file'
           multiple
-          accept={attachmentTypes && attachmentTypes.toArray().join(',')}
+          accept={attachmentTypes && attachmentTypes.join(',')}
           onChange={handleChange}
           disabled={disabled}
           className='hidden'

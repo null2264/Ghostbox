@@ -391,10 +391,10 @@ const submitComposeFail = (composeId: string, error: AxiosError) => ({
 const uploadCompose = (composeId: string, files: FileList, intl: IntlShape) =>
   (dispatch: AppDispatch, getState: () => RootState) => {
     if (!isLoggedIn(getState)) return;
-    const attachmentLimit = getState().instance.configuration.getIn(['statuses', 'max_media_attachments']) as number;
-    const maxImageSize = getState().instance.configuration.getIn(['media_attachments', 'image_size_limit']) as number | undefined;
-    const maxVideoSize = getState().instance.configuration.getIn(['media_attachments', 'video_size_limit']) as number | undefined;
-    const maxVideoDuration = getState().instance.configuration.getIn(['media_attachments', 'video_duration_limit']) as number | undefined;
+    const attachmentLimit = getState().instance.configuration.statuses.max_media_attachments;
+    const maxImageSize = getState().instance.configuration.media_attachments.image_size_limit;
+    const maxVideoSize = getState().instance.configuration.media_attachments.video_size_limit;
+    const maxVideoDuration = getState().instance.configuration.media_attachments.video_duration_limit;
 
     const media  = getState().compose.get(composeId)?.media_attachments;
     const progress = new Array(files.length).fill(0);

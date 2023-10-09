@@ -4,22 +4,32 @@ import ConfigDB from 'soapbox/utils/config-db';
 
 import { fetchConfig, updateConfig } from './admin';
 
+import type { MRFSimple } from 'soapbox/schemas/pleroma';
 import type { AppDispatch, RootState } from 'soapbox/store';
-import type { Policy } from 'soapbox/utils/config-db';
 
-const simplePolicyMerge = (simplePolicy: Policy, host: string, restrictions: ImmutableMap<string, any>) => {
-  return simplePolicy.map((hosts, key) => {
+const simplePolicyMerge = (simplePolicy: MRFSimple, host: string | boolean, restrictions: ImmutableMap<string, any>) => {
+  const entries = Object.entries(simplePolicy).map(([key, value]) => {
     const isRestricted = restrictions.get(key);
 
+    if (typeof value === 'boolean') {
+      return [key, value];  // TODO
+    }
+
+    if (typeof host === 'boolean') {
+      return [key, ImmutableSet(value).toJS()];
+    }
+
     if (isRestricted) {
-      return ImmutableSet(hosts).add(host);
+      return [key, ImmutableSet(value).add(host).toJS()];
     } else {
-      return ImmutableSet(hosts).delete(host);
+      return [key, ImmutableSet(value).delete(host).toJS()];
     }
   });
+
+  return Object.fromEntries(entries);
 };
 
-const updateMrf = (host: string, restrictions: ImmutableMap<string, any>) =>
+const updateMrf = (host: string, restrictions: ImmutableMap<string, any>): any =>
   (dispatch: AppDispatch, getState: () => RootState) =>
     dispatch(fetchConfig())
       .then(() => {

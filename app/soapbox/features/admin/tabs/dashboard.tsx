@@ -41,11 +41,11 @@ const Dashboard: React.FC = () => {
 
   const v = parseVersion(instance.version);
 
-  const userCount   = instance.stats.get('user_count');
-  const statusCount = instance.stats.get('status_count');
-  const domainCount = instance.stats.get('domain_count');
+  const userCount   = instance.stats.user_count;
+  const statusCount = instance.stats.status_count;
+  const domainCount = instance.stats.domain_count;
 
-  const mau = instance.pleroma.getIn(['stats', 'mau']) as number | undefined;
+  const mau = instance.pleroma.stats.mau;
   const retention = (userCount && mau) ? Math.round(mau / userCount * 100) : undefined;
 
   if (!account) return null;

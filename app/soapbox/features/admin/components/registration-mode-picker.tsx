@@ -6,7 +6,7 @@ import { RadioGroup, RadioItem } from 'soapbox/components/radio';
 import { useAppDispatch, useInstance } from 'soapbox/hooks';
 import toast from 'soapbox/toast';
 
-import type { Instance } from 'soapbox/types/entities';
+import type { Instance } from 'soapbox/schemas';
 
 type RegistrationMode = 'open' | 'approval' | 'closed';
 

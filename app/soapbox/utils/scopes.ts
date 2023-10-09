@@ -1,8 +1,8 @@
 
 import { PLEROMA, AKKOMA, parseVersion } from './features';
 
+import type { Instance } from 'soapbox/schemas';
 import type { RootState } from 'soapbox/store';
-import type { Instance } from 'soapbox/types/entities';
 
 /**
  * Get the OAuth scopes to use for login & signup.

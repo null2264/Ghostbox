@@ -113,7 +113,7 @@ const InstanceRestrictions: React.FC<IInstanceRestrictions> = ({ remoteInstance 
     if (!instance || !remoteInstance) return null;
 
     const host = remoteInstance.get('host');
-    const siteTitle = instance.get('title');
+    const siteTitle = instance.title;
 
     if (remoteInstance.getIn(['federation', 'reject']) === true) {
       return (

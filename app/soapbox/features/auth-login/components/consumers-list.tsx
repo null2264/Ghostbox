@@ -13,7 +13,7 @@ interface IConsumersList {
 /** Displays OAuth consumers to log in with. */
 const ConsumersList: React.FC<IConsumersList> = () => {
   const instance = useInstance();
-  const providers = ImmutableList<string>(instance.pleroma.get('oauth_consumer_strategies'));
+  const providers = ImmutableList<string>(instance.pleroma.oauth_consumer_strategies);
 
   if (providers.size > 0) {
     return (

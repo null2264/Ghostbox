@@ -8,7 +8,6 @@ import { useAppDispatch, useCompose, useFeatures, useInstance } from 'soapbox/ho
 
 import DurationSelector from './duration-selector';
 
-import type { Map as ImmutableMap } from 'immutable';
 import type { AutoSuggestion } from 'soapbox/components/autosuggest-input';
 
 const messages = defineMessages({
@@ -118,14 +117,14 @@ const PollForm: React.FC<IPollForm> = ({ composeId }) => {
 
   const compose = useCompose(composeId);
 
-  const pollLimits = configuration.get('polls') as ImmutableMap<string, number>;
+  const pollLimits = configuration.polls;
   const options = compose.poll?.options;
   const expiresIn = compose.poll?.expires_in;
   const isMultiple = compose.poll?.multiple;
   const [cachedExpiresIn, setCachedExpiresIn] = useState(expiresIn as number);
 
-  const maxOptions = pollLimits.get('max_options') as number;
-  const maxOptionChars = pollLimits.get('max_characters_per_option') as number;
+  const maxOptions = pollLimits.max_options;
+  const maxOptionChars = pollLimits.max_characters_per_option;
 
   const onRemoveOption = (index: number) => dispatch(removePollOption(composeId, index));
   const onChangeOption = (index: number, title: string) => dispatch(changePollOption(composeId, index, title));

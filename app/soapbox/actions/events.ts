@@ -154,7 +154,7 @@ const changeEditEventLocation = (value: string | null) =>
 
 const uploadEventBanner = (file: File, intl: IntlShape) =>
   (dispatch: AppDispatch, getState: () => RootState) => {
-    const maxImageSize = getState().instance.configuration.getIn(['media_attachments', 'image_size_limit']) as number | undefined;
+    const maxImageSize = getState().instance.configuration.media_attachments.image_size_limit;
 
     let progress = 0;
 
