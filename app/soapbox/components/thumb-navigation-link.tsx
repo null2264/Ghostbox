@@ -28,30 +28,27 @@ const ThumbNavigationLink: React.FC<IThumbNavigationLink> = ({ count, countMax, 
 
   const active = isActive();
 
+  const classNames = clsx({
+    'h-5 w-5': text !== undefined,
+    'h-6 w-6': text === undefined,
+    'text-gray-600': !active,
+    'text-primary-500': active,
+  });
+
   return (
     // eslint-disable-next-line tailwindcss/no-custom-classname
     <NavLink to={to} exact={exact} className='thumb-navigation__link'>
       {count !== undefined ? (
         <IconWithCounter
           src={src}
-          className={clsx({
-            'h-5 w-5': text !== undefined,
-            'h-6 w-6': text === undefined,
-            'text-gray-600': !active,
-            'text-primary-500': active,
-          })}
+          className={classNames}
           count={count}
           countMax={countMax}
         />
       ) : (
         <Icon
           src={src}
-          className={clsx({
-            'h-5 w-5': text !== undefined,
-            'h-6 w-6': text === undefined,
-            'text-gray-600': !active,
-            'text-primary-500': active,
-          })}
+          className={classNames}
         />
       )}
 
