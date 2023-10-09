@@ -491,7 +491,7 @@ const getInstanceFeatures = (instance: Instance) => {
      */
     explicitAddressing: any([
       v.software === PLEROMA && gte(v.version, '1.0.0'),
-      v.software === AKKOMA,
+      v.software === AKKOMA && v.build !== SPIRIT,
       v.software === TRUTHSOCIAL,
     ]),
 
