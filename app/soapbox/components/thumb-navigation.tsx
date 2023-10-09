@@ -79,12 +79,12 @@ const ThumbNavigation: React.FC = (): JSX.Element => {
 
   return (
     <div className='thumb-navigation'>
-      {items.map((item): React.JSX.Element => {
+      {items.map((item, idx): React.JSX.Element => {
         if (items.length >= 5)
           item.text = undefined;
 
         return (
-          <ThumbNavigationLink {...item} />
+          <ThumbNavigationLink key={idx} {...item} />
         );
       })}
     </div>
