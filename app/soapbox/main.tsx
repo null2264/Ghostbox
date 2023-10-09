@@ -50,10 +50,7 @@ if (BuildConfig.NODE_ENV === 'production') {
 }
 
 ready(() => {
-  console.debug(BuildConfig.NODE_ENV);
-
   if (BuildConfig.NODE_ENV !== 'production')
-    // FIXME: This keep firing even tho NODE_ENV is set to prod
     window.__webpack_nonce__ = window.__webpack_nonce__ || 'NONCE_PLACEHOLDER';
 
   const goober = document.querySelector('#_goober');
