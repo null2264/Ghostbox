@@ -58,6 +58,11 @@ const messages = defineMessages({
   saveChanges: { id: 'compose_form.save_changes', defaultMessage: 'Save changes' },
 });
 
+interface PollValidation {
+  status: boolean
+  message?: string
+}
+
 interface IComposeForm<ID extends string> {
   id: ID extends 'default' ? never : ID
   shouldCondense?: boolean
@@ -141,15 +146,24 @@ const ComposeForm = <ID extends string>({ id, shouldCondense, autoFocus, clickab
     setComposeFocused(true);
   };
 
-  const findDuplicateOption = (options: string[]): boolean => {
+  const isOptionsValid = (options: string[]): PollValidation => {
     const seen: string[] = [];
+    let isValid: PollValidation = { status: true };
 
-    options.forEach((option) => {
-      if (seen.includes(option))
-        return false;
+    for (const option of options) {
+      if (!option) {
+        isValid = { status: false, message: 'Empty poll options are not allowed.' };
+        break;
+      }
+
+      if (seen.includes(option)) {
+        isValid = { status: false, message: 'Duplicate poll options are not allowed.' };
+        break;
+      }
+
       seen.push(option);
-    });
-    return true;
+    }
+    return isValid;
   };
 
   const handleSubmit = (e?: React.FormEvent<Element>) => {
@@ -166,11 +180,13 @@ const ComposeForm = <ID extends string>({ id, shouldCondense, autoFocus, clickab
       e.preventDefault();
     }
 
-    const isValid = !findDuplicateOption(compose.poll?.options.toArray() || [] as string[]);
-    if (!isValid)
-      toast.error('Duplicate poll options are not allowed.');
+    const isValid = isOptionsValid(compose.poll?.options.toArray() || [] as string[]);
+    if (!isValid.status) {
+      toast.error(isValid.message || 'Invalid poll options');
+      return;
+    }
 
-    if (isSubmitting || isUploading || isChangingUpload || length(fulltext) > maxTootChars || (fulltext.length !== 0 && fulltext.trim().length === 0 && !anyMedia) || !isValid) {
+    if (isSubmitting || isUploading || isChangingUpload || length(fulltext) > maxTootChars || (fulltext.length !== 0 && fulltext.trim().length === 0 && !anyMedia)) {
       return;
     }
 
