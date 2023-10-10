@@ -1,3 +1,4 @@
+# --- Terms
 -brand-name = Ghostbox
 -collapse =
   { $case ->
@@ -10,6 +11,7 @@
     [lower] expand
   }
 
+# --- Actual l10n
 accordian-collapse = { -collapse }
 accordian-expand = { -expand }
 account-manage-list = Add or Remove from lists
