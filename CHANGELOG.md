@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.1.0 - Untitled (**Not yet released**)
+## v1.1.0 - Compatibility Fixes (**Not yet released**)
 - UI: disable voters count
 - Dev: fixed `process.env` variables inaccessible at compile time
 - UX: fixed post will always post regardless if poll valid or not
@@ -14,7 +14,7 @@
 - UI: fixed poll vote count
 - UX: fixed video player refuses to go fullscreen
 
-## v1.0.0 - Divergence (**Not yet released**)
+## v1.0.0 - Divergence
 - UI: fixed options in setting page not shown properly
 - UI: [improved sensitive content and CW UI/UX](/CHANGELOG.UI.md)
 - UI: moved settings and dashboard into "More" menu
