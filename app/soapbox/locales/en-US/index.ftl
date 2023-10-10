@@ -12,8 +12,10 @@
   }
 
 # --- Actual l10n
-accordian-collapse = { -collapse }
-accordian-expand = { -expand }
+accordion-collapse =
+  .title = { -collapse }
+accordion-expand =
+  .title = { -expand }
 account-manage-list = Add or Remove from lists
 account-badges-admin = Admin
 account-badges-bot = Bot

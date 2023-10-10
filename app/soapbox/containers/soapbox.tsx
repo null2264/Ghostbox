@@ -1,5 +1,8 @@
 'use strict';
 
+import { FluentBundle, FluentResource } from '@fluent/bundle';
+import { negotiateLanguages } from '@fluent/langneg';
+import { LocalizationProvider, ReactLocalization } from '@fluent/react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import clsx from 'clsx';
 import React, { useState, useEffect } from 'react';
@@ -256,10 +259,36 @@ const SoapboxLoad: React.FC<ISoapboxLoad> = ({ children }) => {
     return <LoadingScreen />;
   }
 
+  // TODO: Load from file
+  const RESOURCES: Record<string, FluentResource> = {
+    'fr': new FluentResource('hello = Salut le monde !'),
+    'en-US': new FluentResource('hello = Hello, world!'),
+    'pl': new FluentResource('hello = Witaj świecie!'),
+  };
+
+  function* generateBundles(userLocales: string[]) {
+    // Choose locales that are best for the user.
+    const currentLocales = negotiateLanguages(
+      userLocales,
+      ['fr', 'en-US', 'pl'],
+      { defaultLocale: 'en-US' },
+    );
+
+    for (const locale of currentLocales) {
+      const bundle = new FluentBundle(locale);
+      bundle.addResource(RESOURCES[locale]);
+      yield bundle;
+    }
+  }
+
+  const l10n = new ReactLocalization(generateBundles([...navigator.languages]));
+
   return (
-    <IntlProvider locale={locale} messages={messages}>
-      {children}
-    </IntlProvider>
+    <LocalizationProvider l10n={l10n}>
+      <IntlProvider locale={locale} messages={messages}>
+        {children}
+      </IntlProvider>
+    </LocalizationProvider>
   );
 };
 

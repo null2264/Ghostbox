@@ -1,6 +1,6 @@
+import { Localized } from '@fluent/react';
 import clsx from 'clsx';
 import React from 'react';
-import { defineMessages, useIntl } from 'react-intl';
 
 import DropdownMenu from 'soapbox/components/dropdown-menu';
 
@@ -10,10 +10,6 @@ import Text from '../text/text';
 
 import type { Menu } from 'soapbox/components/dropdown-menu';
 
-const messages = defineMessages({
-  collapse: { id: 'accordion.collapse', defaultMessage: 'Collapse' },
-  expand: { id: 'accordion.expand', defaultMessage: 'Expand' },
-});
 
 interface IAccordion {
   headline: React.ReactNode
@@ -31,8 +27,6 @@ interface IAccordion {
  * An accordion is a vertically stacked group of collapsible sections.
  */
 const Accordion: React.FC<IAccordion> = ({ headline, children, menu, expanded = false, onToggle = () => {}, action, actionIcon, actionLabel }) => {
-  const intl = useIntl();
-
   const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
     onToggle(!expanded);
     e.preventDefault();
@@ -47,36 +41,38 @@ const Accordion: React.FC<IAccordion> = ({ headline, children, menu, expanded = 
 
   return (
     <div className='rounded-lg bg-white text-gray-900 shadow dark:bg-primary-800 dark:text-gray-100 dark:shadow-none'>
-      <button
-        type='button'
-        onClick={handleToggle}
-        title={intl.formatMessage(expanded ? messages.collapse : messages.expand)}
-        aria-expanded={expanded}
-        className='flex w-full items-center justify-between px-4 py-3 font-semibold'
-      >
-        <span>{headline}</span>
+      <Localized id={'accordion-' + expanded ? 'collapse' : 'expand'} attrs={{ title: true }}>
+        <button
+          type='button'
+          onClick={handleToggle}
+          title={expanded ? 'Collapse' : 'Expand'}
+          aria-expanded={expanded}
+          className='flex w-full items-center justify-between px-4 py-3 font-semibold'
+        >
+          <span>{headline}</span>
 
-        <HStack alignItems='center' space={2}>
-          {menu && (
-            <DropdownMenu
-              items={menu}
-              src={require('@tabler/icons/dots-vertical.svg')}
-            />
-          )}
-          {action && actionIcon && (
-            <button onClick={handleAction} title={actionLabel}>
-              <Icon
-                src={actionIcon}
-                className='h-5 w-5 text-gray-700 dark:text-gray-600'
+          <HStack alignItems='center' space={2}>
+            {menu && (
+              <DropdownMenu
+                items={menu}
+                src={require('@tabler/icons/dots-vertical.svg')}
               />
-            </button>
-          )}
-          <Icon
-            src={expanded ? require('@tabler/icons/chevron-up.svg') : require('@tabler/icons/chevron-down.svg')}
-            className='h-5 w-5 text-gray-700 dark:text-gray-600'
-          />
-        </HStack>
-      </button>
+            )}
+            {action && actionIcon && (
+              <button onClick={handleAction} title={actionLabel}>
+                <Icon
+                  src={actionIcon}
+                  className='h-5 w-5 text-gray-700 dark:text-gray-600'
+                />
+              </button>
+            )}
+            <Icon
+              src={expanded ? require('@tabler/icons/chevron-up.svg') : require('@tabler/icons/chevron-down.svg')}
+              className='h-5 w-5 text-gray-700 dark:text-gray-600'
+            />
+          </HStack>
+        </button>
+      </Localized>
 
       <div
         className={
