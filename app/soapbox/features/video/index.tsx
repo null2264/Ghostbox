@@ -136,6 +136,7 @@ const Video: React.FC<IVideo> = ({
 }) => {
   const intl = useIntl();
 
+  const playerPlaceholder = useRef<HTMLDivElement>(null);
   const player = useRef<HTMLDivElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const seek = useRef<HTMLDivElement>(null);
@@ -424,6 +425,7 @@ const Video: React.FC<IVideo> = ({
 
   const progress = (currentTime / duration) * 100;
   const playerStyle: React.CSSProperties = {};
+  let containerHeight = DEFAULT_HEIGHT;
 
   if (inline && containerWidth) {
     width = containerWidth;
@@ -437,8 +439,14 @@ const Video: React.FC<IVideo> = ({
       height = Math.floor(containerWidth / aspectRatio);
     }
 
-    playerStyle.height = height || DEFAULT_HEIGHT;
+    containerHeight = height || DEFAULT_HEIGHT;
+    playerStyle.height = containerHeight;
   }
+
+  useEffect(() => {
+    if (playerPlaceholder.current)
+      playerPlaceholder.current.style.height = `${containerHeight}px`;
+  }, [playerPlaceholder.current]);
 
   useEffect(() => {
     document.addEventListener('fullscreenchange', handleFullscreenChange, true);
@@ -467,134 +475,137 @@ const Video: React.FC<IVideo> = ({
   }, [visible]);
 
   return (
-    <div
-      role='menuitem'
-      className={clsx('video-player', { detailed, 'video-player--inline': inline && !fullscreen, fullscreen })}
-      style={playerStyle}
-      ref={player}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleClickRoot}
-      onKeyDown={handleKeyDown}
-      tabIndex={0}
-    >
-      {sensitiveOverlay}
-
-      {!fullscreen && (
-        <Blurhash hash={blurhash} className='media-gallery__preview' />
-      )}
-
-      <video
-        ref={video}
-        src={src}
-        loop
-        role='button'
+    <>
+      <div className={clsx({ 'hidden': !fullscreen })} ref={playerPlaceholder} />
+      <div
+        role='menuitem'
+        className={clsx('video-player', { detailed, 'video-player--inline': inline && !fullscreen, fullscreen })}
+        style={playerStyle}
+        ref={player}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClickRoot}
+        onKeyDown={handleKeyDown}
         tabIndex={0}
-        aria-label={alt}
-        title={alt}
-        width={width}
-        height={height || DEFAULT_HEIGHT}
-        onClick={togglePlay}
-        onKeyDown={handleVideoKeyDown}
-        onPlay={handlePlay}
-        onPause={handlePause}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedData={handleLoadedData}
-        onProgress={handleProgress}
-        onVolumeChange={handleVolumeChange}
-        style={{
-          display: visible ? 'block' : 'none',
-        }}
-      />
+      >
+        {sensitiveOverlay}
 
-      {visible && (
-        <>
-          <div className={clsx('video-player__controls', { active: paused || hovered })}>
-            <div className='video-player__seek' onMouseDown={handleMouseDown} ref={seek}>
-              <div className='video-player__seek__buffer' style={{ width: `${buffer}%` }} />
-              <div className='video-player__seek__progress' style={{ width: `${progress}%` }} />
+        {!fullscreen && (
+          <Blurhash hash={blurhash} className='media-gallery__preview' />
+        )}
 
-              <span
-                className={clsx('video-player__seek__handle', { active: dragging })}
-                tabIndex={0}
-                style={{ left: `${progress}%` }}
-                onKeyDown={handleVideoKeyDown}
-              />
-            </div>
+        <video
+          ref={video}
+          src={src}
+          loop
+          role='button'
+          tabIndex={0}
+          aria-label={alt}
+          title={alt}
+          width={width}
+          height={height || DEFAULT_HEIGHT}
+          onClick={togglePlay}
+          onKeyDown={handleVideoKeyDown}
+          onPlay={handlePlay}
+          onPause={handlePause}
+          onTimeUpdate={handleTimeUpdate}
+          onLoadedData={handleLoadedData}
+          onProgress={handleProgress}
+          onVolumeChange={handleVolumeChange}
+          style={{
+            display: visible ? 'block' : 'none',
+          }}
+        />
 
-            <div className='video-player__buttons-bar'>
-              <div className='video-player__buttons left'>
-                <button
-                  type='button'
-                  title={intl.formatMessage(paused ? messages.play : messages.pause)}
-                  aria-label={intl.formatMessage(paused ? messages.play : messages.pause)}
-                  className='player-button'
-                  onClick={togglePlay}
-                  autoFocus={autoFocus}
-                >
-                  <Icon src={paused ? require('@tabler/icons/player-play.svg') : require('@tabler/icons/player-pause.svg')} />
-                </button>
+        {visible && (
+          <>
+            <div className={clsx('video-player__controls', { active: paused || hovered })}>
+              <div className='video-player__seek' onMouseDown={handleMouseDown} ref={seek}>
+                <div className='video-player__seek__buffer' style={{ width: `${buffer}%` }} />
+                <div className='video-player__seek__progress' style={{ width: `${progress}%` }} />
 
-                <button
-                  type='button'
-                  title={intl.formatMessage(muted ? messages.unmute : messages.mute)}
-                  aria-label={intl.formatMessage(muted ? messages.unmute : messages.mute)}
-                  className='player-button'
-                  onClick={toggleMute}
-                >
-                  <Icon src={muted ? require('@tabler/icons/volume-3.svg') : require('@tabler/icons/volume.svg')} />
-                </button>
-
-                <div className={clsx('video-player__volume', { active: hovered })} onMouseDown={handleVolumeMouseDown} ref={slider}>
-                  <div className='video-player__volume__current' style={{ width: `${volume * 100}%` }} />
-                  <span
-                    className={clsx('video-player__volume__handle')}
-                    tabIndex={0}
-                    style={{ left: `${volume * 100}%` }}
-                  />
-                </div>
-
-                {(detailed || fullscreen) && (
-                  <span>
-                    <span className='video-player__time-current'>{formatTime(currentTime)}</span>
-                    <span className='video-player__time-sep'>/</span>
-                    <span className='video-player__time-total'>{formatTime(duration)}</span>
-                  </span>
-                )}
-
-                {link && (
-                  <span className='video-player__link'>{link}</span>
-                )}
+                <span
+                  className={clsx('video-player__seek__handle', { active: dragging })}
+                  tabIndex={0}
+                  style={{ left: `${progress}%` }}
+                  onKeyDown={handleVideoKeyDown}
+                />
               </div>
 
-              <div className='video-player__buttons right'>
-                { !fullscreen && (
+              <div className='video-player__buttons-bar'>
+                <div className='video-player__buttons left'>
                   <button
                     type='button'
-                    title={intl.formatMessage(messages.hide)}
-                    aria-label={intl.formatMessage(messages.hide)}
+                    title={intl.formatMessage(paused ? messages.play : messages.pause)}
+                    aria-label={intl.formatMessage(paused ? messages.play : messages.pause)}
                     className='player-button'
-                    onClick={onToggleVisibility}
+                    onClick={togglePlay}
+                    autoFocus={autoFocus}
                   >
-                    <Icon src={require('@tabler/icons/eye-off.svg')} />
+                    <Icon src={paused ? require('@tabler/icons/player-play.svg') : require('@tabler/icons/player-pause.svg')} />
                   </button>
-                )}
 
-                <button
-                  type='button'
-                  title={intl.formatMessage(fullscreen ? messages.exit_fullscreen : messages.fullscreen)}
-                  aria-label={intl.formatMessage(fullscreen ? messages.exit_fullscreen : messages.fullscreen)}
-                  className='player-button'
-                  onClick={toggleFullscreen}
-                >
-                  <Icon src={fullscreen ? require('@tabler/icons/arrows-minimize.svg') : require('@tabler/icons/arrows-maximize.svg')} />
-                </button>
+                  <button
+                    type='button'
+                    title={intl.formatMessage(muted ? messages.unmute : messages.mute)}
+                    aria-label={intl.formatMessage(muted ? messages.unmute : messages.mute)}
+                    className='player-button'
+                    onClick={toggleMute}
+                  >
+                    <Icon src={muted ? require('@tabler/icons/volume-3.svg') : require('@tabler/icons/volume.svg')} />
+                  </button>
+
+                  <div className={clsx('video-player__volume', { active: hovered })} onMouseDown={handleVolumeMouseDown} ref={slider}>
+                    <div className='video-player__volume__current' style={{ width: `${volume * 100}%` }} />
+                    <span
+                      className={clsx('video-player__volume__handle')}
+                      tabIndex={0}
+                      style={{ left: `${volume * 100}%` }}
+                    />
+                  </div>
+
+                  {(detailed || fullscreen) && (
+                    <span>
+                      <span className='video-player__time-current'>{formatTime(currentTime)}</span>
+                      <span className='video-player__time-sep'>/</span>
+                      <span className='video-player__time-total'>{formatTime(duration)}</span>
+                    </span>
+                  )}
+
+                  {link && (
+                    <span className='video-player__link'>{link}</span>
+                  )}
+                </div>
+
+                <div className='video-player__buttons right'>
+                  { !fullscreen && (
+                    <button
+                      type='button'
+                      title={intl.formatMessage(messages.hide)}
+                      aria-label={intl.formatMessage(messages.hide)}
+                      className='player-button'
+                      onClick={onToggleVisibility}
+                    >
+                      <Icon src={require('@tabler/icons/eye-off.svg')} />
+                    </button>
+                  )}
+
+                  <button
+                    type='button'
+                    title={intl.formatMessage(fullscreen ? messages.exit_fullscreen : messages.fullscreen)}
+                    aria-label={intl.formatMessage(fullscreen ? messages.exit_fullscreen : messages.fullscreen)}
+                    className='player-button'
+                    onClick={toggleFullscreen}
+                  >
+                    <Icon src={fullscreen ? require('@tabler/icons/arrows-minimize.svg') : require('@tabler/icons/arrows-maximize.svg')} />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 
