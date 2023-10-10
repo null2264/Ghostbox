@@ -402,9 +402,9 @@ const Audio: React.FC<IAudio> = (props) => {
     }
   };
 
-  const getDuration = () => duration || props.duration || 0;
+  const getDuration = () => duration || props.duration;
 
-  const progress = Math.min((currentTime / getDuration()) * 100, 100);
+  const progress = Math.min((currentTime / (getDuration() || 0)) * 100, 100);
 
   useLayoutEffect(() => {
     if (player.current) {
@@ -572,7 +572,7 @@ const Audio: React.FC<IAudio> = (props) => {
                   <span className='video-player__time-current'>{formatTime(Math.floor(currentTime))}</span>
                   {getDuration() && (<>
                     <span className='video-player__time-sep'>/</span>
-                    <span className='video-player__time-total'>{formatTime(Math.floor(getDuration()))}</span>
+                    <span className='video-player__time-total'>{formatTime(Math.floor(getDuration() || 0))}</span>
                   </>)}
                 </span>
               </div>
