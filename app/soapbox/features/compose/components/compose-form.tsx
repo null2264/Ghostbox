@@ -152,6 +152,7 @@ const ComposeForm = <ID extends string>({ id, shouldCondense, autoFocus, clickab
 
     for (const option of options) {
       if (!option) {
+        // Not an actual rule from Akkoma, but it just make sense.
         isValid = { status: false, message: 'Empty poll options are not allowed.' };
         break;
       }
