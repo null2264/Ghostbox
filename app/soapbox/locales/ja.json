@@ -155,6 +155,8 @@
   "aliases.success.add": "Account alias created successfully",
   "aliases.success.remove": "Account alias removed successfully",
   "announcements.title": "Announcements",
+  "audio.hide": "Hide audio",
+  "audio.expand": "Expand audio",
   "app_create.name_label": "App name",
   "app_create.name_placeholder": "e.g. 'Ghostbox'",
   "app_create.redirect_uri_label": "Redirect URIs",

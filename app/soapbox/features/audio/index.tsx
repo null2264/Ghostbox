@@ -15,6 +15,8 @@ const messages = defineMessages({
   mute: { id: 'video.mute', defaultMessage: 'Mute sound' },
   unmute: { id: 'video.unmute', defaultMessage: 'Unmute sound' },
   download: { id: 'video.download', defaultMessage: 'Download file' },
+  hide: { id: 'audio.hide', defaultMessage: 'Hide audio' },
+  expand: { id: 'audio.expand', defaultMessage: 'Expand audio' },
 });
 
 const TICK_SIZE = 10;
@@ -39,6 +41,8 @@ interface IAudio {
   muted?: boolean
   deployPictureInPicture?: (type: string, opts: Record<string, any>) => void
   sensitiveOverlay?: JSX.Element | null
+  onToggleVisibility?: () => void
+  visible?: boolean
 }
 
 const Audio: React.FC<IAudio> = (props) => {
@@ -55,6 +59,8 @@ const Audio: React.FC<IAudio> = (props) => {
     editable,
     deployPictureInPicture = false,
     sensitiveOverlay = null,
+    onToggleVisibility = () => { },
+    visible = true,
   } = props;
 
   const intl = useIntl();
@@ -438,6 +444,12 @@ const Audio: React.FC<IAudio> = (props) => {
     _draw();
   }, [src, width, height, accentColor]);
 
+  useEffect(() => {
+    if (!visible) {
+      audio.current?.pause();
+    }
+  }, [visible]);
+
   return (
     <div
       className={clsx('audio-player', { editable })}
@@ -466,117 +478,133 @@ const Audio: React.FC<IAudio> = (props) => {
         onLoadedData={handleLoadedData}
       />
 
-      <canvas
-        role='button'
-        tabIndex={0}
-        className='audio-player__canvas absolute left-0 top-0 w-full'
-        width={width}
-        height={height}
-        ref={canvas}
-        onClick={togglePlay}
-        onKeyDown={handleAudioKeyDown}
-        title={alt}
-        aria-label={alt}
-      />
+      {visible && (
+        <>
+          <canvas
+            role='button'
+            tabIndex={0}
+            className='audio-player__canvas absolute left-0 top-0 w-full'
+            width={width}
+            height={height}
+            ref={canvas}
+            onClick={togglePlay}
+            onKeyDown={handleAudioKeyDown}
+            title={alt}
+            aria-label={alt}
+          />
 
-      {poster && (
-        <img
-          src={poster}
-          alt=''
-          className='pointer-events-none absolute aspect-1 -translate-x-1/2 -translate-y-1/2 rounded-full object-cover'
-          width={(_getRadius() - TICK_SIZE) * 2}
-          height={(_getRadius() - TICK_SIZE) * 2}
-          style={{
-            left: _getCX(),
-            top: _getCY(),
-          }}
-        />
-      )}
+          {poster && (
+            <img
+              src={poster}
+              alt=''
+              className='pointer-events-none absolute aspect-1 -translate-x-1/2 -translate-y-1/2 rounded-full object-cover'
+              width={(_getRadius() - TICK_SIZE) * 2}
+              height={(_getRadius() - TICK_SIZE) * 2}
+              style={{
+                left: _getCX(),
+                top: _getCY(),
+              }}
+            />
+          )}
 
-      <div className='video-player__seek' onMouseDown={handleMouseDown} ref={seek}>
+          <div className='video-player__seek' onMouseDown={handleMouseDown} ref={seek}>
 
-        <div className='video-player__seek__buffer' style={{ width: `${buffer}%` }} />
-
-        <div
-          className='video-player__seek__progress'
-          style={{ width: `${progress}%`, backgroundColor: accentColor }}
-        />
-
-        <span
-          className={clsx('video-player__seek__handle', { active: dragging })}
-          tabIndex={0}
-          style={{ left: `${progress}%`, backgroundColor: accentColor }}
-          onKeyDown={handleAudioKeyDown}
-        />
-      </div>
-
-      <div className='video-player__controls active'>
-        <div className='video-player__buttons-bar'>
-          <div className='video-player__buttons left'>
-
-            <button
-              type='button'
-              title={intl.formatMessage(paused ? messages.play : messages.pause)}
-              aria-label={intl.formatMessage(paused ? messages.play : messages.pause)}
-              className='player-button'
-              onClick={togglePlay}
-            >
-              <Icon src={paused ? require('@tabler/icons/player-play.svg') : require('@tabler/icons/player-pause.svg')} />
-            </button>
-
-            <button
-              type='button'
-              title={intl.formatMessage(muted ? messages.unmute : messages.mute)}
-              aria-label={intl.formatMessage(muted ? messages.unmute : messages.mute)}
-              className='player-button'
-              onClick={toggleMute}
-            >
-              <Icon src={muted ? require('@tabler/icons/volume-3.svg') : require('@tabler/icons/volume.svg')} />
-            </button>
+            <div className='video-player__seek__buffer' style={{ width: `${buffer}%` }} />
 
             <div
-              className={clsx('video-player__volume', { active: hovered })}
-              ref={slider}
-              onMouseDown={handleVolumeMouseDown}
-            >
-              <div
-                className='video-player__volume__current'
-                style={{
-                  width: `${volume * 100}%`,
-                  backgroundColor: _getAccentColor(),
-                }}
-              />
+              className='video-player__seek__progress'
+              style={{ width: `${progress}%`, backgroundColor: accentColor }}
+            />
 
-              <span
-                className='video-player__volume__handle'
-                tabIndex={0}
-                style={{ left: `${volume * 100}%`, backgroundColor: _getAccentColor() }}
-              />
+            <span
+              className={clsx('video-player__seek__handle', { active: dragging })}
+              tabIndex={0}
+              style={{ left: `${progress}%`, backgroundColor: accentColor }}
+              onKeyDown={handleAudioKeyDown}
+            />
+          </div>
+
+          <div className='video-player__controls active'>
+            <div className='video-player__buttons-bar'>
+              <div className='video-player__buttons left'>
+
+                <button
+                  type='button'
+                  title={intl.formatMessage(paused ? messages.play : messages.pause)}
+                  aria-label={intl.formatMessage(paused ? messages.play : messages.pause)}
+                  className='player-button'
+                  onClick={togglePlay}
+                >
+                  <Icon src={paused ? require('@tabler/icons/player-play.svg') : require('@tabler/icons/player-pause.svg')} />
+                </button>
+
+                <button
+                  type='button'
+                  title={intl.formatMessage(muted ? messages.unmute : messages.mute)}
+                  aria-label={intl.formatMessage(muted ? messages.unmute : messages.mute)}
+                  className='player-button'
+                  onClick={toggleMute}
+                >
+                  <Icon src={muted ? require('@tabler/icons/volume-3.svg') : require('@tabler/icons/volume.svg')} />
+                </button>
+
+                <div
+                  className={clsx('video-player__volume', { active: hovered })}
+                  ref={slider}
+                  onMouseDown={handleVolumeMouseDown}
+                >
+                  <div
+                    className='video-player__volume__current'
+                    style={{
+                      width: `${volume * 100}%`,
+                      backgroundColor: _getAccentColor(),
+                    }}
+                  />
+
+                  <span
+                    className='video-player__volume__handle'
+                    tabIndex={0}
+                    style={{ left: `${volume * 100}%`, backgroundColor: _getAccentColor() }}
+                  />
+                </div>
+
+                <span className='video-player__time'>
+                  <span className='video-player__time-current'>{formatTime(Math.floor(currentTime))}</span>
+                  {getDuration() && (<>
+                    <span className='video-player__time-sep'>/</span>
+                    <span className='video-player__time-total'>{formatTime(Math.floor(getDuration()))}</span>
+                  </>)}
+                </span>
+              </div>
+
+              <div className='video-player__buttons right'>
+                { !fullscreen && (
+                  <button
+                    type='button'
+                    title={intl.formatMessage(messages.hide)}
+                    aria-label={intl.formatMessage(messages.hide)}
+                    className='player-button'
+                    onClick={onToggleVisibility}
+                  >
+                    <Icon src={require('@tabler/icons/eye-off.svg')} />
+                  </button>
+                )}
+
+                <a
+                  title={intl.formatMessage(messages.download)}
+                  aria-label={intl.formatMessage(messages.download)}
+                  className='video-player__download__icon player-button'
+                  href={src}
+                  download
+                  target='_blank'
+                >
+                  <Icon src={require('@tabler/icons/download.svg')} />
+                </a>
+              </div>
             </div>
-
-            <span className='video-player__time'>
-              <span className='video-player__time-current'>{formatTime(Math.floor(currentTime))}</span>
-              {getDuration() && (<>
-                <span className='video-player__time-sep'>/</span>
-                <span className='video-player__time-total'>{formatTime(Math.floor(getDuration()))}</span>
-              </>)}
-            </span>
           </div>
-
-          <div className='video-player__buttons right'>
-            <a
-              title={intl.formatMessage(messages.download)}
-              aria-label={intl.formatMessage(messages.download)}
-              className='video-player__download__icon player-button'
-              href={src}
-              download
-              target='_blank'
-            >
-              <Icon src={require('@tabler/icons/download.svg')} />
-            </a>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

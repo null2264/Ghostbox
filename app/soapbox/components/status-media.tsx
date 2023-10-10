@@ -139,7 +139,6 @@ const StatusMedia: React.FC<IStatusMedia> = ({
       media = (
         <Bundle fetchComponent={Audio} loading={renderLoadingAudioPlayer}>
           {(Component: any) => (
-            // TODO: Add hide content button, similar to what we have in Video
             <Component
               src={attachment.url}
               alt={attachment.description}
@@ -149,7 +148,9 @@ const StatusMedia: React.FC<IStatusMedia> = ({
               accentColor={attachment.meta.getIn(['colors', 'accent'])}
               duration={attachment.meta.getIn(['original', 'duration'], 0)}
               height={263}
+              visible={showMedia}
               sensitiveOverlay={sensitiveOverlay}
+              onToggleVisibility={onToggleVisibility}
             />
           )}
         </Bundle>
