@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.1.0 - Compatibility Fixes (**Not yet released**)
+## v1.1.0 - Compatibility Fixes
 - UI: disable voters count
 - Dev: fixed `process.env` variables inaccessible at compile time
 - UX: fixed post will always post regardless if poll valid or not
