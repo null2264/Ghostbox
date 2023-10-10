@@ -3,6 +3,15 @@
 ## v1.1.0 - Untitled (**Not yet released**)
 - UI: disable voters count
 - Dev: fixed `process.env` variables inaccessible at compile time
+- UX: fixed post will always post regardless if poll valid or not
+- Misskey: fixed audio CORS issue
+- Spirit: explicitly mention post author on reply
+- UX: ghostbox now assume browser is mobile from User-Agent
+- Compatibility: crashes on instance timeline
+- UI: remove navbar items' text if there's more than 4 items
+- UX: fixed timeline jumping (Thanks to https://github.com/BDX-town/Mangane/pull/247)
+- Compatibility: support indefinite poll
+- UI: fixed poll vote count
 
 ## v1.0.0 - Divergence (**Not yet released**)
 - UI: fixed options in setting page not shown properly
