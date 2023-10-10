@@ -6,7 +6,7 @@ import { groupComposeModal } from 'soapbox/actions/compose';
 import { openModal } from 'soapbox/actions/modals';
 import { useGroupLookup } from 'soapbox/api/hooks';
 import { Avatar, Button, HStack } from 'soapbox/components/ui';
-import { useAppDispatch } from 'soapbox/hooks';
+import { useAppDispatch, useHotkey } from 'soapbox/hooks';
 
 const ComposeButton = () => {
   const location = useLocation();
@@ -32,6 +32,7 @@ const HomeComposeButton = () => {
       size='lg'
       onClick={onOpenCompose}
       block
+      ref={useHotkey('n')}
     >
       <FormattedMessage id='navigation.compose' defaultMessage='Compose' />
     </Button>

@@ -4,7 +4,7 @@ import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import { Stack } from 'soapbox/components/ui';
 import { useStatContext } from 'soapbox/contexts/stat-context';
 import ComposeButton from 'soapbox/features/ui/components/compose-button';
-import { useAppSelector, useGroupsPath, useFeatures, useOwnAccount, useSettings } from 'soapbox/hooks';
+import { useAppSelector, useGroupsPath, useFeatures, useOwnAccount, useSettings, useHotkey } from 'soapbox/hooks';
 
 import DropdownMenu, { Menu } from './dropdown-menu';
 import SidebarNavigationLink from './sidebar-navigation-link';
@@ -132,6 +132,7 @@ const SidebarNavigation = () => {
           to='/'
           icon={require('@tabler/icons/home.svg')}
           text={<FormattedMessage id='tabs_bar.home' defaultMessage='Home' />}
+          ref={useHotkey('g h')}
         />
 
         <SidebarNavigationLink
@@ -166,6 +167,8 @@ const SidebarNavigation = () => {
               icon={require('@tabler/icons/bell.svg')}
               count={notificationCount}
               text={<FormattedMessage id='tabs_bar.notifications' defaultMessage='Notifications' />}
+              // eslint-disable-next-line react-hooks/rules-of-hooks
+              ref={useHotkey('g n')}
             />
 
             {renderMessagesLink()}
@@ -182,6 +185,8 @@ const SidebarNavigation = () => {
               to={`/@${account.acct}`}
               icon={require('@tabler/icons/user.svg')}
               text={<FormattedMessage id='tabs_bar.profile' defaultMessage='Profile' />}
+              // eslint-disable-next-line react-hooks/rules-of-hooks
+              ref={useHotkey('g u')}
             />
           </>
         )}

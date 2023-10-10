@@ -1,3 +1,4 @@
+import { install, uninstall } from '@github/hotkey';
 import clsx from 'clsx';
 import { List as ImmutableList } from 'immutable';
 import React from 'react';
@@ -34,6 +35,7 @@ export interface IAutosuggestInput extends Pick<React.HTMLAttributes<HTMLInputEl
   renderSuggestion?: React.FC<{ id: string }>
   hidePortal?: boolean
   theme?: InputThemes
+  hotkey?: string
 }
 
 export default class AutosuggestInput extends ImmutablePureComponent<IAutosuggestInput> {
@@ -57,6 +59,7 @@ export default class AutosuggestInput extends ImmutablePureComponent<IAutosugges
   };
 
   input: HTMLInputElement | null = null;
+  hotkey: string | undefined = undefined;
 
   onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const [tokenStart, token] = textAtCursorMatchesToken(
@@ -172,7 +175,12 @@ export default class AutosuggestInput extends ImmutablePureComponent<IAutosugges
 
   setInput = (c: HTMLInputElement) => {
     this.input = c;
+    if (this.hotkey) install(c, this.hotkey);
   };
+
+  componentWillUnmount(): void {
+    if (this.input) uninstall(this.input);
+  }
 
   renderSuggestion = (suggestion: AutoSuggestion, i: number) => {
     const { selectedSuggestion } = this.state;
@@ -262,7 +270,8 @@ export default class AutosuggestInput extends ImmutablePureComponent<IAutosugges
   }
 
   render() {
-    const { value, suggestions, disabled, placeholder, onKeyUp, autoFocus, className, id, maxLength, menu, theme } = this.props;
+    const { value, suggestions, disabled, placeholder, onKeyUp, autoFocus, className, id, maxLength, menu, theme, hotkey } = this.props;
+    this.hotkey = hotkey;
     const { suggestionsHidden } = this.state;
     const style: React.CSSProperties = { direction: 'ltr' };
 

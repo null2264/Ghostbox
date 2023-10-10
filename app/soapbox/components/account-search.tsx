@@ -66,6 +66,7 @@ const AccountSearch: React.FC<IAccountSearch> = ({ onSelected, ...rest }) => {
           onChange={handleChange}
           onSelected={handleSelected}
           onKeyDown={handleKeyDown}
+          hotkey='/'
           {...rest}
         />
 

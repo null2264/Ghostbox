@@ -22,6 +22,7 @@ interface IAutosuggestAccountInput {
   menu?: Menu
   onKeyDown?: React.KeyboardEventHandler
   theme?: InputThemes
+  hotkey?: string
 }
 
 const AutosuggestAccountInput: React.FC<IAutosuggestAccountInput> = ({

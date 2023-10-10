@@ -15,7 +15,7 @@ import {
 import AutosuggestAccountInput from 'soapbox/components/autosuggest-account-input';
 import { Input } from 'soapbox/components/ui';
 import SvgIcon from 'soapbox/components/ui/icon/svg-icon';
-import { useAppDispatch, useAppSelector } from 'soapbox/hooks';
+import { useAppDispatch, useAppSelector, useHotkey } from 'soapbox/hooks';
 import { selectAccount } from 'soapbox/selectors';
 import { AppDispatch, RootState } from 'soapbox/store';
 
@@ -154,9 +154,10 @@ const Search = (props: ISearch) => {
 
       <div className='relative'>
         {autosuggest ? (
-          <AutosuggestAccountInput {...componentProps} />
+          <AutosuggestAccountInput hotkey='s,/' {...componentProps} />
         ) : (
-          <Input {...componentProps} />
+          // eslint-disable-next-line react-hooks/rules-of-hooks
+          <Input ref={useHotkey('s,/')} {...componentProps} />
         )}
 
         <div

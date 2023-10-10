@@ -7,7 +7,7 @@ interface HotkeyOptions {
 }
 
 const useHotkey = (
-  keymap: string,
+  keymap?: string,
   options: HotkeyOptions = {
     initialEl: null,
   },
@@ -15,7 +15,7 @@ const useHotkey = (
   const [el, setEl] = useState<HTMLElement | null>(options.initialEl);
 
   useEffect(() => {
-    if (!el) return () => {};
+    if (!el || !keymap) return () => {};
 
     install(el, keymap);
     if (options.event)
