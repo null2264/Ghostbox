@@ -19,6 +19,7 @@ import { Button, HStack, Stack } from 'soapbox/components/ui';
 import EmojiPickerDropdown from 'soapbox/features/emoji/containers/emoji-picker-dropdown-container';
 import { useAppDispatch, useAppSelector, useCompose, useDraggedFiles, useFeatures, useInstance, usePrevious } from 'soapbox/hooks';
 import { isMobile } from 'soapbox/is-mobile';
+import toast from 'soapbox/toast';
 
 import QuotedStatusContainer from '../containers/quoted-status-container';
 import ReplyIndicatorContainer from '../containers/reply-indicator-container';
@@ -140,6 +141,17 @@ const ComposeForm = <ID extends string>({ id, shouldCondense, autoFocus, clickab
     setComposeFocused(true);
   };
 
+  const findDuplicateOption = (options: string[]): boolean => {
+    const seen: string[] = [];
+
+    options.forEach((option) => {
+      if (seen.includes(option))
+        return false;
+      seen.push(option);
+    });
+    return true;
+  };
+
   const handleSubmit = (e?: React.FormEvent<Element>) => {
     if (text !== autosuggestTextareaRef.current?.textarea?.value) {
       // Something changed the text inside the textarea (e.g. browser extensions like Grammarly)
@@ -154,7 +166,11 @@ const ComposeForm = <ID extends string>({ id, shouldCondense, autoFocus, clickab
       e.preventDefault();
     }
 
-    if (isSubmitting || isUploading || isChangingUpload || length(fulltext) > maxTootChars || (fulltext.length !== 0 && fulltext.trim().length === 0 && !anyMedia)) {
+    const isValid = !findDuplicateOption(compose.poll?.options.toArray() || [] as string[]);
+    if (!isValid)
+      toast.error('Duplicate poll options are not allowed.');
+
+    if (isSubmitting || isUploading || isChangingUpload || length(fulltext) > maxTootChars || (fulltext.length !== 0 && fulltext.trim().length === 0 && !anyMedia) || !isValid) {
       return;
     }
 
@@ -243,7 +259,7 @@ const ComposeForm = <ID extends string>({ id, shouldCondense, autoFocus, clickab
   const condensed = shouldCondense && !isDraggedOver && !composeFocused && isEmpty() && !isUploading;
   const disabled = isSubmitting;
   const countedText = [spoilerText, countableText(text)].join('');
-  const disabledButton = disabled || isUploading || isChangingUpload || length(countedText) > maxTootChars || (countedText.length !== 0 && countedText.trim().length === 0 && !anyMedia);
+  const disabledButton = disabled || isUploading || isChangingUpload || length(countedText) > maxTootChars || (countedText.length !== 0 && countedText.trim().length === 0 && !anyMedia) || !countedText;
   const shouldAutoFocus = autoFocus && !showSearch && !isMobile(window.innerWidth);
 
   let publishText: string = '';
