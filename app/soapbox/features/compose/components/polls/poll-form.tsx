@@ -135,7 +135,7 @@ const PollForm: React.FC<IPollForm> = ({ composeId }) => {
   };
   const handleSelectDuration = (value: number) => onChangeSettings(value, isMultiple);
   const handleToggleExpiry = () => onChangeSettings(expiresIn === null ? cachedExpiresIn : null, isMultiple);
-  const handleToggleMultiple = () => onChangeSettings(Number(expiresIn), !isMultiple);
+  const handleToggleMultiple = () => onChangeSettings(expiresIn ?? null, !isMultiple);
   const onRemovePoll = () => dispatch(removePoll(composeId));
 
   if (!options) {
