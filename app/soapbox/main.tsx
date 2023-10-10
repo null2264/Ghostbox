@@ -2,6 +2,7 @@ declare global {
   interface Window {
     __webpack_nonce__: string
     _akkomaNonce: string
+    opera?: string
   }
 }
 
