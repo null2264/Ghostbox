@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.1.1 - Akkoma Fix
+- Akkoma: fixed MRF due to backend breaking changes
+
 ## v1.1.0 - Compatibility Fixes
 - UI: disable voters count
 - Dev: fixed `process.env` variables inaccessible at compile time

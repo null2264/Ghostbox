@@ -306,7 +306,7 @@ const getRemoteInstanceFederation = (state: RootState, host: string) => {
   const simplePolicy = getSimplePolicy(state);
 
   return fromJS<HostFederation>(Object.fromEntries(
-    Object.entries(simplePolicy).map(([key, value]) => [key, typeof (value) === 'boolean' ? value : value.includes(host)]),
+    Object.entries(simplePolicy).map(([key, value]) => [key, typeof (value) === 'boolean' ? value : !!value.find(hosts => hosts[0] === host)]),
   ) as HostFederation);
 };
 

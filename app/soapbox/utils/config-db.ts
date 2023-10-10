@@ -8,22 +8,11 @@ import trimStart from 'lodash/trimStart';
 
 import { mrfSimpleSchema, MRFSimple } from 'soapbox/schemas/pleroma';
 
+import { isSuperset } from './collection';
+import { getQuirks } from './quirks';
+
 export type Config = ImmutableMap<string, any>;
-export type Policy = ImmutableMap<string, ImmutableList<string> | boolean>;
-
-const isSuperset = (record: Record<string, any>, subset: ImmutableMap<string, any>): boolean => {
-  // FIXME: Workaround for isSuperset because Soapbox can't seem to decide if they gonna use ImmutableMap or not
-  // Delete later when I find out how to make only use ImmutableMap
-  if (record.isSuperset !== undefined)
-    return record.isSuperset(subset);
-
-  for (const key in subset) {
-    if (!Object.prototype.hasOwnProperty.call(record, key) || record[key] !== subset.get(key)) {
-      return false;
-    }
-  }
-  return true;
-};
+export type Policy = ImmutableMap<string, ImmutableList<string | ImmutableList<string>> | boolean>;
 
 const find = (
   configs: ImmutableList<Config> | Array<Config>,
@@ -40,13 +29,16 @@ const toSimplePolicy = (configs: ImmutableList<Config>): MRFSimple => {
 
   const reducer = (acc: ImmutableMap<string, any>, curr: ImmutableMap<string, any>) => {
     const key = curr.getIn(['tuple', 0]) as string;
-    const maybeHosts = curr.getIn(['tuple', 1]) as ImmutableList<string> | boolean;
+    const maybeHosts = curr.getIn(['tuple', 1]) as ImmutableList<string | ImmutableMap<string, any>> | boolean;
 
-    let value: ImmutableSet<string> | boolean;
+    let value: ImmutableSet<ImmutableSet<string>> | boolean;
     if (typeof (maybeHosts) === 'boolean') {
       value = maybeHosts;
     } else {
-      value = ImmutableSet(maybeHosts);
+      value = ImmutableSet(maybeHosts.map(host => {
+        if (typeof host === 'string') return ImmutableSet([host, 'No reason']);
+        return ImmutableSet(host.get('tuple'));
+      }));
     }
     return acc.set(trimStart(key, ':'), value);
   };
@@ -60,8 +52,24 @@ const toSimplePolicy = (configs: ImmutableList<Config>): MRFSimple => {
   }
 };
 
-const fromSimplePolicy = (simplePolicy: Policy): ImmutableList<Config> => {
-  const value = Object.entries(simplePolicy).map(([key, value]: [string, any]) => fromJS({ tuple: [`:${key}`, value] }));
+const fromSimplePolicy = (simplePolicy: Policy, getState: () => any): ImmutableList<Config> => {
+  const quirks = getQuirks(getState().instance);
+
+  const value = Object.entries(simplePolicy).map(([key, value]: [string, any]) => {
+    const rt = [`:${key}`, value];
+
+    if (typeof value === 'boolean') return fromJS({ tuple: rt });
+
+    if (quirks.mrfWithReason) {
+      const rtValue: Array<string | ImmutableList<string>> = value.map((host: string | string[]) => {
+        if (typeof host === 'string') return fromJS({ tuple: [ host, 'No reason'] });
+        return fromJS({ tuple: [ host[0], host[1] ] });
+      });
+
+      rt[1] = rtValue;
+    }
+    return fromJS({ tuple: rt });
+  });
 
   return ImmutableList([
     ImmutableMap({

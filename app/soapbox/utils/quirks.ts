@@ -1,7 +1,8 @@
 /* eslint sort-keys: "error" */
 import { createSelector } from 'reselect';
+import gte from 'semver/functions/gte';
 
-import { parseVersion, PLEROMA, MITRA, AKKOMA, any } from './features';
+import { parseVersion, PLEROMA, MITRA, AKKOMA, any, SPIRIT } from './features';
 
 import type { Instance } from 'soapbox/schemas';
 import type { RootState } from 'soapbox/store';
@@ -20,6 +21,14 @@ export const getQuirks = createSelector([
       v.software === PLEROMA,
       v.software === AKKOMA,
     ]),
+
+    /**
+     * Akkoma's MRFs are now list of tuples instead of list of string.
+     * Not entirely sure when this was added, from the changelog, it seems to be around 3.1.0.
+     * @see GET /api/v1/pleroma/admin/config
+     * @see POST /api/v1/pleroma/admin/config
+     */
+    mrfWithReason: v.software === AKKOMA && (gte(v.compatVersion, '3.1.0') || v.build === SPIRIT),
 
     /**
      * Apps are not supported by the API, and should not be created during login or registration.

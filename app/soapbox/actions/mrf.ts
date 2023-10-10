@@ -7,7 +7,7 @@ import { fetchConfig, updateConfig } from './admin';
 import type { MRFSimple } from 'soapbox/schemas/pleroma';
 import type { AppDispatch, RootState } from 'soapbox/store';
 
-const simplePolicyMerge = (simplePolicy: MRFSimple, host: string | boolean, restrictions: ImmutableMap<string, any>) => {
+const simplePolicyMerge = (simplePolicy: MRFSimple, host: string, restrictions: ImmutableMap<string, any>) => {
   const entries = Object.entries(simplePolicy).map(([key, value]) => {
     const isRestricted = restrictions.get(key);
 
@@ -15,14 +15,12 @@ const simplePolicyMerge = (simplePolicy: MRFSimple, host: string | boolean, rest
       return [key, value];  // TODO
     }
 
-    if (typeof host === 'boolean') {
-      return [key, ImmutableSet(value).toJS()];
-    }
-
     if (isRestricted) {
-      return [key, ImmutableSet(value).add(host).toJS()];
+      return [key, ImmutableSet(value).add([host, 'No reason']).toJS()];
     } else {
-      return [key, ImmutableSet(value).delete(host).toJS()];
+      const host_ = ImmutableSet(value).find(hosts => hosts[0] === host);
+      if (!host_) return [key, value];
+      return [key, ImmutableSet(value).delete(host_).toJS()];
     }
   });
 
@@ -36,7 +34,7 @@ const updateMrf = (host: string, restrictions: ImmutableMap<string, any>): any =
         const configs = getState().admin.get('configs');
         const simplePolicy = ConfigDB.toSimplePolicy(configs);
         const merged = simplePolicyMerge(simplePolicy, host, restrictions);
-        const config = ConfigDB.fromSimplePolicy(merged);
+        const config = ConfigDB.fromSimplePolicy(merged, getState);
         return dispatch(updateConfig(config.toJS() as Array<Record<string, any>>));
       });
 
