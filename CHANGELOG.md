@@ -12,6 +12,7 @@
 - UX: fixed timeline jumping (Thanks to https://github.com/BDX-town/Mangane/pull/247)
 - Compatibility: support indefinite poll
 - UI: fixed poll vote count
+- UX: fixed video player refuses to go fullscreen
 
 ## v1.0.0 - Divergence (**Not yet released**)
 - UI: fixed options in setting page not shown properly
