@@ -174,8 +174,9 @@ export default class AutosuggestInput extends ImmutablePureComponent<IAutosugges
   }
 
   setInput = (c: HTMLInputElement) => {
+    if (this.input) uninstall(this.input);
     this.input = c;
-    if (this.hotkey) install(c, this.hotkey);
+    if (this.input && this.hotkey) install(this.input, this.hotkey);
   };
 
   componentWillUnmount(): void {
