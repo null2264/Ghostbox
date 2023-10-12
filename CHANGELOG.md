@@ -1,5 +1,8 @@
 # Changelog
 
+## 2023.10.0
+- Pleroma: backport MRF breaking changes fixes from Akkoma
+
 ## v1.1.1 - Akkoma Fix
 - Akkoma: fixed MRF due to backend breaking changes
 
