@@ -1,5 +1,5 @@
 import { isLoggedIn } from 'soapbox/utils/auth';
-import { getFeatures } from 'soapbox/utils/features';
+import { getFeatures, parseVersion, AKKOMA } from 'soapbox/utils/features';
 import { shouldHaveCard } from 'soapbox/utils/status';
 
 import api, { getNextLink } from '../api';
@@ -319,13 +319,20 @@ const toggleStatusHidden = (status: Status) => {
 const translateStatus = (id: string, targetLanguage?: string) => (dispatch: AppDispatch, getState: () => RootState) => {
   dispatch({ type: STATUS_TRANSLATE_REQUEST, id });
 
-  api(getState).post(`/api/v1/statuses/${id}/translate`, {
+  const instance = getState().instance;
+  const v = parseVersion(instance.version);
+
+  api(getState).post(`/api/v1/statuses/${id}/${v.software === AKKOMA ? `translations/${targetLanguage || 'en'}` : 'translate'}`, v.software !== AKKOMA ? {
     target_language: targetLanguage,
-  }).then(response => {
+  } : undefined).then(({ data }) => {
     dispatch({
       type: STATUS_TRANSLATE_SUCCESS,
       id,
-      translation: response.data,
+      translation: v.software !== AKKOMA ? data : {
+        content: data.text,
+        detected_source_language: data.detected_language,
+        provider: 'ghost',  // Akkoma's API don't give info about provider
+      },
     });
   }).catch(error => {
     dispatch({

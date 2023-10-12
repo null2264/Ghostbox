@@ -1035,8 +1035,12 @@ const getInstanceFeatures = (instance: Instance) => {
     /**
      * Can translate statuses.
      * @see POST /api/v1/statuses/:id/translate
+     * @see POST /api/v1/statuses/:id/translations/:language
      */
-    translations: features.includes('translation'),
+    translations: any([
+      features.includes('translation'),
+      features.includes('akkoma:machine_translation'),
+    ]),
 
     /**
      * Trending statuses.
