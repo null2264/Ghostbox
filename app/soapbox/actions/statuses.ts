@@ -322,7 +322,9 @@ const translateStatus = (id: string, targetLanguage?: string) => (dispatch: AppD
   const instance = getState().instance;
   const v = parseVersion(instance.version);
 
-  api(getState).post(`/api/v1/statuses/${id}/${v.software === AKKOMA ? `translations/${targetLanguage || 'en'}` : 'translate'}`, v.software !== AKKOMA ? {
+  const req = v.software === AKKOMA ? api(getState).get : api(getState).post;
+
+  req(`/api/v1/statuses/${id}/${v.software === AKKOMA ? `translations/${targetLanguage || 'en'}` : 'translate'}`, v.software !== AKKOMA ? {
     target_language: targetLanguage,
   } : undefined).then(({ data }) => {
     dispatch({
