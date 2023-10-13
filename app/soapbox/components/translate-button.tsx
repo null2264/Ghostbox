@@ -47,7 +47,8 @@ const TranslateButton: React.FC<ITranslateButton> = ({ status }) => {
 
   if (status.translation) {
     const languageNames = new Intl.DisplayNames([intl.locale], { type: 'language' });
-    const languageName = languageNames.of(status.language!);
+    const langFromStatus = status.language ?? status.translation.get('detected_source_language');
+    const languageName = langFromStatus ? languageNames.of(langFromStatus) : 'Unknown';
     const provider     = status.translation.get('provider');
 
     return (
