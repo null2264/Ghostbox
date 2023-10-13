@@ -323,26 +323,26 @@ const translateStatus = (id: string, targetLanguage?: string) => (dispatch: AppD
   const v = parseVersion(instance.version);
 
   const req = v.software === AKKOMA ? api(getState).get : api(getState).post;
+  const endpoint = `/api/v1/statuses/${id}/` + v.software === AKKOMA ? `translations/${targetLanguage || 'en'}` : 'translate';
 
-  req(`/api/v1/statuses/${id}/${v.software === AKKOMA ? `translations/${targetLanguage || 'en'}` : 'translate'}`, v.software !== AKKOMA ? {
-    target_language: targetLanguage,
-  } : undefined).then(({ data }) => {
-    dispatch({
-      type: STATUS_TRANSLATE_SUCCESS,
-      id,
-      translation: v.software !== AKKOMA ? data : {
-        content: data.text,
-        detected_source_language: data.detected_language,
-        provider: 'ghost',  // Akkoma's API don't give info about provider
-      },
+  req(endpoint, v.software !== AKKOMA ? { target_language: targetLanguage } : undefined)
+    .then(({ data }) => {
+      dispatch({
+        type: STATUS_TRANSLATE_SUCCESS,
+        id,
+        translation: v.software !== AKKOMA ? data : {
+          content: data.text,
+          detected_source_language: data.detected_language,
+          provider: 'Ghost',  // Akkoma's API don't give info about provider
+        },
+      });
+    }).catch(error => {
+      dispatch({
+        type: STATUS_TRANSLATE_FAIL,
+        id,
+        error,
+      });
     });
-  }).catch(error => {
-    dispatch({
-      type: STATUS_TRANSLATE_FAIL,
-      id,
-      error,
-    });
-  });
 };
 
 const undoStatusTranslation = (id: string) => ({

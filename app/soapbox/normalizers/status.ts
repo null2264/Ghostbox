@@ -40,6 +40,12 @@ interface Tombstone {
   reason: 'deleted'
 }
 
+interface Translation {
+  content: string
+  detected_source_language: string
+  provider: string
+}
+
 // https://docs.joinmastodon.org/entities/status/
 export const StatusRecord = ImmutableRecord({
   account: null as unknown as Account,
@@ -89,7 +95,7 @@ export const StatusRecord = ImmutableRecord({
   search_index: '',
   showFiltered: true,
   spoilerHtml: '',
-  translation: null as ImmutableMap<string, string> | null,
+  translation: null as Translation | null,
 });
 
 const normalizeAttachments = (status: ImmutableMap<string, any>) => {

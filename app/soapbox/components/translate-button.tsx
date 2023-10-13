@@ -3,9 +3,11 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { translateStatus, undoStatusTranslation } from 'soapbox/actions/statuses';
 import { useAppDispatch, useAppSelector, useFeatures, useInstance } from 'soapbox/hooks';
+import { isRtl } from 'soapbox/rtl';
 import { isLocal } from 'soapbox/utils/accounts';
 import { AKKOMA, parseVersion } from 'soapbox/utils/features';
 
+import Markup from './markup';
 import { Stack, Button, Text } from './ui';
 
 import type { Account, Status } from 'soapbox/types/entities';
@@ -47,9 +49,10 @@ const TranslateButton: React.FC<ITranslateButton> = ({ status }) => {
 
   if (status.translation) {
     const languageNames = new Intl.DisplayNames([intl.locale], { type: 'language' });
-    const langFromStatus = status.language ?? status.translation.get('detected_source_language');
+    const langFromStatus = status.language ?? status.translation.detected_source_language;
     const languageName = langFromStatus ? languageNames.of(langFromStatus) : 'Unknown';
-    const provider     = status.translation.get('provider');
+    const provider = status.translation.provider;
+    const direction = isRtl(status.search_index) ? 'rtl' : 'ltr';
 
     return (
       <Stack space={3} alignItems='start'>
@@ -62,6 +65,15 @@ const TranslateButton: React.FC<ITranslateButton> = ({ status }) => {
         <Text theme='muted'>
           <FormattedMessage id='status.translated_from_with' defaultMessage='Translated from {lang} using {provider}' values={{ lang: languageName, provider }} />
         </Text>
+        <Markup
+          tabIndex={0}
+          key='content'
+          className='relative overflow-y-clip overflow-x-visible text-ellipsis break-words text-gray-900 focus:outline-none dark:text-gray-100'
+          direction={direction}
+          dangerouslySetInnerHTML={{ __html: status.translation.content ?? '' }}
+          lang={status.language || undefined}
+          size='md'
+        />
       </Stack>
     );
   }

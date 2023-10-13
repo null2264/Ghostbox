@@ -42,7 +42,6 @@ const StatusContent: React.FC<IStatusContent> = ({
   status,
   onClick,
   collapsable = false,
-  translatable,
   textSize = 'md',
 }) => {
   const history = useHistory();
@@ -130,8 +129,9 @@ const StatusContent: React.FC<IStatusContent> = ({
   });
 
   const parsedHtml = useMemo((): string => {
-    return translatable && status.translation ? status.translation.get('content')! : status.contentHtml;
-  }, [status.contentHtml, status.translation]);
+    // TODO: Add greentext back?
+    return status.contentHtml;
+  }, [status.contentHtml]);
 
   if (status.content.length === 0) {
     return null;
