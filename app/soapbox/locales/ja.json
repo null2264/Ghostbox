@@ -1130,6 +1130,7 @@
   "status.title": "Post",
   "status.title_direct": "Direct message",
   "status.translate": "Translate",
+  "status.translate_hide": "Hide translation",
   "status.translated_from_with": "Translated from {lang} using {provider}",
   "status.unbookmark": "ブックマークを解除",
   "status.unbookmarked": "ブックマークを解除しました。",

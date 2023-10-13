@@ -58,7 +58,7 @@ const TranslateButton: React.FC<ITranslateButton> = ({ status }) => {
       <Stack space={3} alignItems='start'>
         <Button
           theme='muted'
-          text={<FormattedMessage id='status.show_original' defaultMessage='Show original' />}
+          text={<FormattedMessage id='status.translate_hide' defaultMessage='Hide translation' />}
           icon={require('@tabler/icons/language.svg')}
           onClick={handleTranslate}
         />
