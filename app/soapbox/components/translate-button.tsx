@@ -49,9 +49,9 @@ const TranslateButton: React.FC<ITranslateButton> = ({ status }) => {
 
   if (status.translation) {
     const languageNames = new Intl.DisplayNames([intl.locale], { type: 'language' });
-    const langFromStatus = status.language ?? status.translation.detected_source_language;
+    const langFromStatus = status.language ?? status.translation.get('detected_source_language');
     const languageName = langFromStatus ? languageNames.of(langFromStatus) : 'Unknown';
-    const provider = status.translation.provider;
+    const provider = status.translation.get('provider');
     const direction = isRtl(status.search_index) ? 'rtl' : 'ltr';
 
     return (
@@ -70,7 +70,7 @@ const TranslateButton: React.FC<ITranslateButton> = ({ status }) => {
           key='content'
           className='relative overflow-y-clip overflow-x-visible text-ellipsis break-words text-gray-900 focus:outline-none dark:text-gray-100'
           direction={direction}
-          dangerouslySetInnerHTML={{ __html: status.translation.content ?? '' }}
+          dangerouslySetInnerHTML={{ __html: status.translation.get('content') || '' }}
           lang={status.language || undefined}
           size='md'
         />
