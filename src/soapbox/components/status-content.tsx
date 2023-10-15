@@ -34,6 +34,7 @@ const StatusContent: React.FC<IStatusContent> = ({
 }) => {
   const history = useHistory();
 
+  const [isCollapsable, setCollapsable] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [onlyEmoji, setOnlyEmoji] = useState(false);
 
@@ -102,6 +103,7 @@ const StatusContent: React.FC<IStatusContent> = ({
 
     if (collapsable && !collapsed) {
       if (node.current.clientHeight > MAX_HEIGHT) {
+        setCollapsable(true);
         setCollapsed(true);
       }
     }
@@ -161,7 +163,7 @@ const StatusContent: React.FC<IStatusContent> = ({
     />,
   ];
 
-  if (collapsable && collapsed) {
+  if (isCollapsable && collapsed) {
     output.push(
       <div className='flex w-full justify-center pt-2' role='button' tabIndex={0} onClick={toggleCollapsed}>
         <Button
@@ -181,7 +183,7 @@ const StatusContent: React.FC<IStatusContent> = ({
     output.push(<Poll id={status.poll} key='poll' status={status.url} />);
   }
 
-  if (collapsable && !collapsed) {
+  if (isCollapsable && !collapsed) {
     output.push(
       <div className='flex w-full justify-center pt-2' role='button' tabIndex={0} onClick={toggleCollapsed}>
         <Button

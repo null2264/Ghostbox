@@ -5,6 +5,9 @@
 - Type: changes
 -->
 
+## 2023.10.2
+- UI: fixed read more button always shown
+
 ## 2023.10.1
 - Dev: move files from `app/` to `src/`
 - Dev: cache translation instead always requesting new one
