@@ -38,10 +38,10 @@ const TranslateButton: React.FC<ITranslateButton> = ({ status }) => {
   const handleTranslate: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
 
-    if (status.translation) {
-      dispatch(undoStatusTranslation(status.id));
-    } else {
+    if (!status.translation || status.translation.get('status') === 'hidden') {
       dispatch(translateStatus(status.id, intl.locale));
+    } else {
+      dispatch(undoStatusTranslation(status.id));
     }
   };
 
@@ -60,48 +60,46 @@ const TranslateButton: React.FC<ITranslateButton> = ({ status }) => {
 
   if (!features.translations || !renderTranslate || !supportsLanguages) return null;
 
-  if (status.translation) {
-    const languageNames = new Intl.DisplayNames([intl.locale], { type: 'language' });
-    const langFromStatus = status.language ?? status.translation.get('detected_source_language');
-    const languageName = langFromStatus ? languageNames.of(langFromStatus) : 'Unknown';
-    const provider = status.translation.get('provider');
-    const direction = isRtl(status.search_index) ? 'rtl' : 'ltr';
-
+  if (!status.translation || status.translation.get('status') === 'hidden')
     return (
-      <Stack space={3} alignItems='start'>
+      <div>
         <Button
           theme='muted'
-          text={<FormattedMessage id='status.translate_hide' defaultMessage='Hide translation' />}
+          text={<FormattedMessage id='status.translate' defaultMessage='Translate' />}
           icon={require('@tabler/icons/language.svg')}
           onClick={handleTranslate}
         />
-        <Text theme='muted'>
-          <FormattedMessage id='status.translated_from_with' defaultMessage='Translated from {lang} using {provider}' values={{ lang: languageName, provider }} />
-        </Text>
-        <Markup
-          ref={node}
-          tabIndex={0}
-          key='content'
-          className='relative overflow-y-clip overflow-x-visible text-ellipsis break-words text-gray-900 focus:outline-none dark:text-gray-100'
-          direction={direction}
-          dangerouslySetInnerHTML={{ __html: status.translation.get('content') || '' }}
-          lang={status.language || undefined}
-          size='md'
-        />
-      </Stack>
+      </div>
     );
-  }
+
+  const languageNames = new Intl.DisplayNames([intl.locale], { type: 'language' });
+  const langFromStatus = status.language ?? status.translation.get('detected_source_language');
+  const languageName = langFromStatus ? languageNames.of(langFromStatus) : 'Unknown';
+  const provider = status.translation.get('provider');
+  const direction = isRtl(status.search_index) ? 'rtl' : 'ltr';
 
   return (
-    <div>
+    <Stack space={3} alignItems='start'>
       <Button
         theme='muted'
-        text={<FormattedMessage id='status.translate' defaultMessage='Translate' />}
+        text={<FormattedMessage id='status.translate_hide' defaultMessage='Hide translation' />}
         icon={require('@tabler/icons/language.svg')}
         onClick={handleTranslate}
       />
-    </div>
-
+      <Text theme='muted'>
+        <FormattedMessage id='status.translated_from_with' defaultMessage='Translated from {lang} using {provider}' values={{ lang: languageName, provider }} />
+      </Text>
+      <Markup
+        ref={node}
+        tabIndex={0}
+        key='content'
+        className='relative overflow-y-clip overflow-x-visible text-ellipsis break-words text-gray-900 focus:outline-none dark:text-gray-100'
+        direction={direction}
+        dangerouslySetInnerHTML={{ __html: status.translation.get('content') || '' }}
+        lang={status.language || undefined}
+        size='md'
+      />
+    </Stack>
   );
 };
 

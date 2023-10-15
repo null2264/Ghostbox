@@ -1,3 +1,5 @@
+import { Map as ImmutableMap } from 'immutable';
+
 import { isLoggedIn } from 'soapbox/utils/auth';
 import { getFeatures, parseVersion, AKKOMA } from 'soapbox/utils/features';
 import { shouldHaveCard } from 'soapbox/utils/status';
@@ -47,6 +49,7 @@ const STATUS_HIDE   = 'STATUS_HIDE';
 const STATUS_TRANSLATE_REQUEST = 'STATUS_TRANSLATE_REQUEST';
 const STATUS_TRANSLATE_SUCCESS = 'STATUS_TRANSLATE_SUCCESS';
 const STATUS_TRANSLATE_FAIL    = 'STATUS_TRANSLATE_FAIL';
+const STATUS_TRANSLATE_REDO    = 'STATUS_TRANSLATE_REDO';
 const STATUS_TRANSLATE_UNDO    = 'STATUS_TRANSLATE_UNDO';
 
 const STATUS_UNFILTER = 'STATUS_UNFILTER';
@@ -316,10 +319,27 @@ const toggleStatusHidden = (status: Status) => {
   }
 };
 
+export interface Translation {
+  content: string
+  detected_source_language: string
+  provider: string
+  status: 'hidden' | 'visible'
+}
+
 const translateStatus = (id: string, targetLanguage?: string) => (dispatch: AppDispatch, getState: () => RootState) => {
   dispatch({ type: STATUS_TRANSLATE_REQUEST, id });
 
-  const instance = getState().instance;
+  const state = getState();
+  const cur = ImmutableMap<keyof Translation, string>(state.statuses.getIn([id, 'translation']) || {});
+  if (cur.get('status')) {
+    dispatch({
+      type: STATUS_TRANSLATE_REDO,
+      id,
+    });
+    return;
+  }
+
+  const instance = state.instance;
   const v = parseVersion(instance.version);
 
   const req = v.software === AKKOMA ? api(getState).get : api(getState).post;
@@ -334,6 +354,7 @@ const translateStatus = (id: string, targetLanguage?: string) => (dispatch: AppD
           content: data.text,
           detected_source_language: data.detected_language,
           provider: 'Ghost',  // Akkoma's API don't give info about provider
+          status: 'visible',
         },
       });
     }).catch(error => {
@@ -382,6 +403,7 @@ export {
   STATUS_TRANSLATE_REQUEST,
   STATUS_TRANSLATE_SUCCESS,
   STATUS_TRANSLATE_FAIL,
+  STATUS_TRANSLATE_REDO,
   STATUS_TRANSLATE_UNDO,
   STATUS_UNFILTER,
   createStatus,

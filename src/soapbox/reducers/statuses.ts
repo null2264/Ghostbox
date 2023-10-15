@@ -40,8 +40,10 @@ import {
   STATUS_DELETE_REQUEST,
   STATUS_DELETE_FAIL,
   STATUS_TRANSLATE_SUCCESS,
+  STATUS_TRANSLATE_REDO,
   STATUS_TRANSLATE_UNDO,
   STATUS_UNFILTER,
+  type Translation,
 } from '../actions/statuses';
 import { TIMELINE_DELETE } from '../actions/timelines';
 
@@ -222,12 +224,6 @@ const simulateDislike = (
   return state.set(statusId, updatedStatus);
 };
 
-interface Translation {
-  content: string
-  detected_source_language: string
-  provider: string
-}
-
 /** Import translation from translation service into the store. */
 const importTranslation = (state: State, statusId: string, translation: Translation) => {
   const map = ImmutableMap(translation);
@@ -235,10 +231,20 @@ const importTranslation = (state: State, statusId: string, translation: Translat
   return state.setIn([statusId, 'translation'], result);
 };
 
+const showTranslation = (state: State, statusId: string) => {
+  return state.setIn([statusId, 'translation', 'status'], 'visible');
+};
+
+const hideTranslation = (state: State, statusId: string) => {
+  return state.setIn([statusId, 'translation', 'status'], 'hidden');
+};
+
 /** Delete translation from the store. */
+/*
 const deleteTranslation = (state: State, statusId: string) => {
   return state.deleteIn([statusId, 'translation']);
 };
+*/
 
 const initialState: State = ImmutableMap();
 
@@ -310,8 +316,10 @@ export default function statuses(state = initialState, action: AnyAction): State
       return incrementReplyCount(state, action.params);
     case STATUS_TRANSLATE_SUCCESS:
       return importTranslation(state, action.id, action.translation);
+    case STATUS_TRANSLATE_REDO:
+      return showTranslation(state, action.id);
     case STATUS_TRANSLATE_UNDO:
-      return deleteTranslation(state, action.id);
+      return hideTranslation(state, action.id);
     case STATUS_UNFILTER:
       return state.setIn([action.id, 'showFiltered'], false);
     case TIMELINE_DELETE:
