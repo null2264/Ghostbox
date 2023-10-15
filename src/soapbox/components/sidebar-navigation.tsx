@@ -80,7 +80,7 @@ const SidebarNavigation = () => {
 
       if (account.staff) {
         menu.push({
-          to: '/soapbox/admin',
+          to: '/ghostbox/admin',
           icon: require('@tabler/icons/dashboard.svg'),
           text: intl.formatMessage(messages.dashboard),
         });

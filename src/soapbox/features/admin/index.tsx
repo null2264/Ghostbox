@@ -25,9 +25,9 @@ const Admin: React.FC = () => {
       <AdminTabs />
 
       <Switch>
-        <Route path='/soapbox/admin' exact component={Dashboard} />
-        <Route path='/soapbox/admin/reports' exact component={Reports} />
-        <Route path='/soapbox/admin/approval' exact component={Waitlist} />
+        <Route path='/ghostbox/admin' exact component={Dashboard} />
+        <Route path='/ghostbox/admin/reports' exact component={Reports} />
+        <Route path='/ghostbox/admin/approval' exact component={Waitlist} />
       </Switch>
     </Column>
   );

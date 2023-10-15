@@ -204,7 +204,7 @@ const SoapboxConfig: React.FC = () => {
 
             <ListItem
               label={<FormattedMessage id='soapbox_config.fields.edit_theme_label' defaultMessage='Edit theme' />}
-              to='/soapbox/admin/theme'
+              to='/ghostbox/admin/theme'
             />
           </List>
 

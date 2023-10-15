@@ -317,7 +317,7 @@ const SidebarMenu: React.FC = (): JSX.Element | null => {
 
                   {account.admin && (
                     <SidebarLink
-                      to='/soapbox/config'
+                      to='/ghostbox/admin/config'
                       icon={require('@tabler/icons/settings.svg')}
                       text={intl.formatMessage(messages.soapboxConfig)}
                       onClick={onClose}

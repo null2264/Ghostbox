@@ -72,7 +72,7 @@ const ThumbNavigation: React.FC = (): JSX.Element => {
     items.push({
       src: require('@tabler/icons/dashboard.svg'),
       text: (<FormattedMessage id='navigation.dashboard' defaultMessage='Dashboard' />),
-      to: '/soapbox/admin',
+      to: '/ghostbox/admin',
       count: dashboardCount,
     });
   }

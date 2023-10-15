@@ -58,7 +58,7 @@ const Dashboard: React.FC = () => {
           label={<FormattedMessage id='admin.dashcounters.mau_label' defaultMessage='monthly active users' />}
         />
         <DashCounter
-          to='/soapbox/admin/users'
+          to='/ghostbox/admin/users'
           count={userCount}
           label={<FormattedMessage id='admin.dashcounters.user_count_label' defaultMessage='total users' />}
         />
@@ -81,19 +81,19 @@ const Dashboard: React.FC = () => {
       <List>
         {account.admin && (
           <ListItem
-            to='/soapbox/config'
+            to='/ghostbox/admin/config'
             label={<FormattedMessage id='navigation_bar.soapbox_config' defaultMessage='Soapbox config' />}
           />
         )}
 
         <ListItem
-          to='/soapbox/admin/log'
+          to='/ghostbox/admin/log'
           label={<FormattedMessage id='column.admin.moderation_log' defaultMessage='Moderation Log' />}
         />
 
         {features.announcements && (
           <ListItem
-            to='/soapbox/admin/announcements'
+            to='/ghostbox/admin/announcements'
             label={<FormattedMessage id='column.admin.announcements' defaultMessage='Announcements' />}
           />
         )}
