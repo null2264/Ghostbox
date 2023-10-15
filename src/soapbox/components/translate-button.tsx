@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { translateStatus, undoStatusTranslation } from 'soapbox/actions/statuses';
@@ -45,6 +45,18 @@ const TranslateButton: React.FC<ITranslateButton> = ({ status }) => {
     }
   };
 
+  const node = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    if (!node.current) return;
+
+    const links = node.current.querySelectorAll('a[href]');
+
+    links.forEach((link) => {
+      link.setAttribute('href', '#');
+    });
+  }, [status.translation]);
+
   if (!features.translations || !renderTranslate || !supportsLanguages) return null;
 
   if (status.translation) {
@@ -66,6 +78,7 @@ const TranslateButton: React.FC<ITranslateButton> = ({ status }) => {
           <FormattedMessage id='status.translated_from_with' defaultMessage='Translated from {lang} using {provider}' values={{ lang: languageName, provider }} />
         </Text>
         <Markup
+          ref={node}
           tabIndex={0}
           key='content'
           className='relative overflow-y-clip overflow-x-visible text-ellipsis break-words text-gray-900 focus:outline-none dark:text-gray-100'
