@@ -5,6 +5,7 @@ import { importFetchedAccount, importFetchedAccounts, importFetchedStatuses } fr
 import { accountIdsToAccts } from 'soapbox/selectors';
 import toast from 'soapbox/toast';
 import { filterBadges, getTagDiff } from 'soapbox/utils/badges';
+import { tuple } from 'soapbox/utils/collection';
 import { getFeatures } from 'soapbox/utils/features';
 
 import api, { getLinks } from '../api';
@@ -143,9 +144,9 @@ const updateSoapboxConfig = (data: Record<string, any>) =>
     const params = [{
       group: ':pleroma',
       key: ':frontend_configurations',
-      value: [{
-        tuple: [':soapbox_fe', data],
-      }],
+      value: [
+        tuple(':soapbox_fe', data),
+      ],
     }];
 
     return dispatch(updateConfig(params));

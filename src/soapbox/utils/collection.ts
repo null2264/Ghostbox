@@ -1,5 +1,6 @@
 import {
   Map as ImmutableMap,
+  List as ImmutableList,
 } from 'immutable';
 
 export const isSuperset = (record: Record<string, any>, subset: ImmutableMap<string, any>): boolean => {
@@ -14,4 +15,12 @@ export const isSuperset = (record: Record<string, any>, subset: ImmutableMap<str
     }
   }
   return true;
+};
+
+export const tuple = <T, U>(left: T, right: U) => {
+  return { tuple: [left, right] };
+};
+
+export const ImmutableTuple = <T, U>(left: T, right: U) => {
+  return ImmutableMap({ tuple: ImmutableList([left, right]) });
 };

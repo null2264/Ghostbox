@@ -5,6 +5,7 @@ import { updateConfig } from 'soapbox/actions/admin';
 import { RadioGroup, RadioItem } from 'soapbox/components/radio';
 import { useAppDispatch, useInstance } from 'soapbox/hooks';
 import toast from 'soapbox/toast';
+import { tuple } from 'soapbox/utils/collection';
 
 import type { Instance } from 'soapbox/schemas';
 
@@ -16,9 +17,9 @@ const messages = defineMessages({
 
 const generateConfig = (mode: RegistrationMode) => {
   const configMap = {
-    open: [{ tuple: [':registrations_open', true] }, { tuple: [':account_approval_required', false] }],
-    approval: [{ tuple: [':registrations_open', true] }, { tuple: [':account_approval_required', true] }],
-    closed: [{ tuple: [':registrations_open', false] }],
+    open: [tuple(':registrations_open', true), tuple(':account_approval_required', false)],
+    approval: [tuple(':registrations_open', true), tuple(':account_approval_required', true)],
+    closed: [tuple(':registrations_open', false)],
   };
 
   return [{

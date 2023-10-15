@@ -8,7 +8,7 @@ import trimStart from 'lodash/trimStart';
 
 import { mrfSimpleSchema, MRFSimple } from 'soapbox/schemas/pleroma';
 
-import { isSuperset } from './collection';
+import { isSuperset, tuple } from './collection';
 import { getQuirks } from './quirks';
 
 export type Config = ImmutableMap<string, any>;
@@ -58,17 +58,17 @@ const fromSimplePolicy = (simplePolicy: Policy, getState: () => any): ImmutableL
   const value = Object.entries(simplePolicy).map(([key, value]: [string, any]) => {
     const rt = [`:${key}`, value];
 
-    if (typeof value === 'boolean') return fromJS({ tuple: rt });
+    if (typeof value === 'boolean') return fromJS(tuple(rt[0], rt[1]));
 
     if (quirks.mrfWithReason) {
       const rtValue: Array<string | ImmutableList<string>> = value.map((host: string | string[]) => {
-        if (typeof host === 'string') return fromJS({ tuple: [ host, 'No reason'] });
-        return fromJS({ tuple: [ host[0], host[1] ] });
+        if (typeof host === 'string') return fromJS(tuple(host, 'No reason'));
+        return fromJS(tuple(host[0], host[1]));
       });
 
       rt[1] = rtValue;
     }
-    return fromJS({ tuple: rt });
+    return fromJS(tuple(rt[0], rt[1]));
   });
 
   return ImmutableList([
