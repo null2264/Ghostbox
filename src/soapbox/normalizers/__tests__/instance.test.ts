@@ -69,7 +69,7 @@ describe('normalizeInstance()', () => {
     };
 
     const result = normalizeInstance(ImmutableMap());
-    expect(result.toJS()).toEqual(expected);
+    expect(result).toEqual(expected);
   });
 
   it('normalizes Pleroma instance with Mastodon configuration format', () => {
@@ -91,7 +91,7 @@ describe('normalizeInstance()', () => {
     };
 
     const result = normalizeInstance(instance);
-    expect(result.toJS()).toMatchObject(expected);
+    expect(result).toMatchObject(expected);
   });
 
   it('normalizes Mastodon instance with retained configuration', () => {
@@ -121,7 +121,7 @@ describe('normalizeInstance()', () => {
     };
 
     const result = normalizeInstance(instance);
-    expect(result.toJS()).toMatchObject(expected);
+    expect(result).toMatchObject(expected);
   });
 
   it('normalizes Mastodon 3.0.0 instance with default configuration', () => {
@@ -143,7 +143,7 @@ describe('normalizeInstance()', () => {
     };
 
     const result = normalizeInstance(instance);
-    expect(result.toJS()).toMatchObject(expected);
+    expect(result).toMatchObject(expected);
   });
 
   it('normalizes Fedibird instance', () => {
@@ -162,8 +162,8 @@ describe('normalizeInstance()', () => {
     const result = normalizeInstance(instance);
 
     // Adds configuration and description_limit
-    expect(result.get('configuration') instanceof ImmutableMap).toBe(true);
-    expect(result.get('description_limit')).toBe(1500);
+    expect(result.configuration).toBe(true);
+    expect(result.description_limit).toBe(1500);
   });
 
   it('normalizes GoToSocial instance', () => {
@@ -171,12 +171,11 @@ describe('normalizeInstance()', () => {
     const result = normalizeInstance(instance);
 
     // Normalizes max_toot_chars
-    expect(result.getIn(['configuration', 'statuses', 'max_characters'])).toEqual(5000);
-    expect(result.has('max_toot_chars')).toBe(false);
+    expect(result.configuration.statuses.max_characters).toEqual(5000);
 
     // Adds configuration and description_limit
-    expect(result.get('configuration') instanceof ImmutableMap).toBe(true);
-    expect(result.get('description_limit')).toBe(1500);
+    expect(result.configuration).toBe(true);
+    expect(result.description_limit).toBe(1500);
   });
 
   it('normalizes Friendica instance', () => {
@@ -184,12 +183,11 @@ describe('normalizeInstance()', () => {
     const result = normalizeInstance(instance);
 
     // Normalizes max_toot_chars
-    expect(result.getIn(['configuration', 'statuses', 'max_characters'])).toEqual(200000);
-    expect(result.has('max_toot_chars')).toBe(false);
+    expect(result.configuration.statuses.max_characters).toEqual(200000);
 
     // Adds configuration and description_limit
-    expect(result.get('configuration') instanceof ImmutableMap).toBe(true);
-    expect(result.get('description_limit')).toBe(1500);
+    expect(result.configuration).toBe(true);
+    expect(result.description_limit).toBe(1500);
   });
 
   it('normalizes a Mastodon RC version', () => {

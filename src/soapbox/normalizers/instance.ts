@@ -10,6 +10,7 @@ import {
   fromJS,
 } from 'immutable';
 
+import { instanceSchema } from 'soapbox/schemas';
 import { parseVersion, PLEROMA, AKKOMA } from 'soapbox/utils/features';
 import { mergeDefined } from 'soapbox/utils/normalizers';
 import { isNumber } from 'soapbox/utils/numbers';
@@ -123,7 +124,7 @@ const fixTakahe = (instance: ImmutableMap<string, any>) => {
 
 // Normalize instance (Pleroma, Mastodon, etc.) to Mastodon's format
 export const normalizeInstance = (instance: Record<string, any>) => {
-  return InstanceRecord(
+  return instanceSchema.parse(
     ImmutableMap(fromJS(instance)).withMutations((instance: ImmutableMap<string, any>) => {
       const { software } = parseVersion(instance.get('version'));
       const mastodonConfig = pleromaToMastodonConfig(instance);
@@ -147,6 +148,6 @@ export const normalizeInstance = (instance: Record<string, any>) => {
 
       // Merge defaults
       instance.mergeDeepWith(mergeDefined, InstanceRecord());
-    }),
+    }).toJS(),
   );
 };

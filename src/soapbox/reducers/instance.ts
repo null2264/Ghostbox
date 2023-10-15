@@ -3,6 +3,7 @@ import { Map as ImmutableMap, List as ImmutableList } from 'immutable';
 
 import { ADMIN_CONFIG_UPDATE_REQUEST, ADMIN_CONFIG_UPDATE_SUCCESS } from 'soapbox/actions/admin';
 import { PLEROMA_PRELOAD_IMPORT } from 'soapbox/actions/preload';
+import { normalizeInstance } from 'soapbox/normalizers';
 import { type Instance, instanceSchema } from 'soapbox/schemas';
 import KVStore from 'soapbox/storage/kv-store';
 import { ConfigDB } from 'soapbox/utils/config-db';
@@ -17,7 +18,7 @@ import type { AnyAction } from 'redux';
 const initialState: Instance = instanceSchema.parse({});
 
 const importInstance = (_state: typeof initialState, instance: any) => {
-  return instanceSchema.parse(instance);
+  return normalizeInstance(instance);
 };
 
 const preloadImport = (state: typeof initialState, action: Record<string, any>, path: string) => {
