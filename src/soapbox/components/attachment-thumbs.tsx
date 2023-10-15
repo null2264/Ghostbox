@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { openModal } from 'soapbox/actions/modals';
-import Bundle from 'soapbox/features/ui/components/bundle';
 import { MediaGallery } from 'soapbox/features/ui/util/async-components';
 import { useAppDispatch } from 'soapbox/hooks';
 
@@ -15,7 +14,7 @@ interface IAttachmentThumbs {
 }
 
 const AttachmentThumbs = (props: IAttachmentThumbs) => {
-  const { media, onClick, sensitive } = props;
+  const { media, onClick } = props;
   const dispatch = useAppDispatch();
 
   const renderLoading = () => <div className='media-gallery--compact' />;
@@ -23,18 +22,15 @@ const AttachmentThumbs = (props: IAttachmentThumbs) => {
 
   return (
     <div className='attachment-thumbs'>
-      <Bundle fetchComponent={MediaGallery} loading={renderLoading}>
-        {(Component: any) => (
-          <Component
-            media={media}
-            onOpenMedia={onOpenMedia}
-            height={50}
-            compact
-            sensitive={sensitive}
-            visible
-          />
-        )}
-      </Bundle>
+      <Suspense fallback={renderLoading()}>
+        <MediaGallery
+          media={media}
+          onOpenMedia={onOpenMedia}
+          height={50}
+          compact
+          visible
+        />
+      </Suspense>
 
       {onClick && (
         <div className='attachment-thumbs__clickable-region' onClick={onClick} />

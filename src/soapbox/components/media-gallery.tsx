@@ -275,7 +275,6 @@ const Item: React.FC<IItem> = ({
 };
 
 export interface IMediaGallery {
-  sensitive?: boolean
   media: ImmutableList<Attachment>
   height?: number
   onOpenMedia: (media: ImmutableList<Attachment>, index: number) => void

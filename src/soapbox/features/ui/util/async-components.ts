@@ -1,3 +1,5 @@
+import { lazy } from 'react';
+
 export function EmojiPicker() {
   return import(/* webpackChunkName: "emoji_picker" */'../../emoji/components/emoji-picker');
 }
@@ -118,17 +120,11 @@ export function PolicyModal() {
   return import(/* webpackChunkName: "modals/policy-modal" */'../components/modals/policy-modal');
 }
 
-export function MediaGallery() {
-  return import(/* webpackChunkName: "status/media_gallery" */'../../../components/media-gallery');
-}
+export const MediaGallery = lazy(() => import('../../../components/media-gallery'));
 
-export function Video() {
-  return import(/* webpackChunkName: "features/video" */'../../video');
-}
+export const Video = lazy(() => import('../../video'));
 
-export function Audio() {
-  return import(/* webpackChunkName: "features/audio" */'../../audio');
-}
+export const Audio = lazy(() => import('../../audio'));
 
 export function MediaModal() {
   return import(/* webpackChunkName: "features/ui" */'../components/modals/media-modal');

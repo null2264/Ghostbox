@@ -570,7 +570,7 @@ const Audio: React.FC<IAudio> = (props) => {
 
                 <span className='video-player__time'>
                   <span className='video-player__time-current'>{formatTime(Math.floor(currentTime))}</span>
-                  {getDuration() && (<>
+                  {typeof (getDuration()) !== 'undefined' && (<>
                     <span className='video-player__time-sep'>/</span>
                     <span className='video-player__time-total'>{formatTime(Math.floor(getDuration() || 0))}</span>
                   </>)}

@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 
 import { openModal } from 'soapbox/actions/modals';
 import AttachmentThumbs from 'soapbox/components/attachment-thumbs';
 import { GroupLinkPreview } from 'soapbox/features/groups/components/group-link-preview';
 import PlaceholderCard from 'soapbox/features/placeholder/components/placeholder-card';
 import Card from 'soapbox/features/status/components/card';
-import Bundle from 'soapbox/features/ui/components/bundle';
 import { MediaGallery, Video, Audio } from 'soapbox/features/ui/util/async-components';
 import { useAppDispatch, useSettings } from 'soapbox/hooks';
 import { addAutoPlay } from 'soapbox/utils/media';
@@ -13,7 +12,6 @@ import { addAutoPlay } from 'soapbox/utils/media';
 import SensitiveContentOverlay from './statuses/sensitive-content-overlay';
 
 import type { List as ImmutableList } from 'immutable';
-import type VideoType from 'soapbox/features/video';
 import type { Status, Attachment } from 'soapbox/types/entities';
 
 interface IStatusMedia {
@@ -115,9 +113,9 @@ const StatusMedia: React.FC<IStatusMedia> = ({
         );
       } else {
         media = (
-          <Bundle fetchComponent={Video} loading={renderLoadingVideoPlayer}>
-            {(Component: typeof VideoType) => (
-              <Component
+          <>
+            <Suspense fallback={renderLoadingVideoPlayer()}>
+              <Video
                 preview={video.preview_url}
                 blurhash={video.blurhash}
                 src={video.url}
@@ -129,47 +127,46 @@ const StatusMedia: React.FC<IStatusMedia> = ({
                 onToggleVisibility={onToggleVisibility}
                 inline
               />
-            )}
-          </Bundle>
+            </Suspense>
+          </>
         );
       }
     } else if (size === 1 && firstAttachment.type === 'audio') {
       const attachment = firstAttachment;
 
       media = (
-        <Bundle fetchComponent={Audio} loading={renderLoadingAudioPlayer}>
-          {(Component: any) => (
-            <Component
+        <>
+          <Suspense fallback={renderLoadingAudioPlayer()}>
+            <Audio
               src={attachment.url}
               alt={attachment.description}
-              poster={attachment.preview_url !== attachment.url ? attachment.preview_url : status.getIn(['account', 'avatar_static'])}
-              backgroundColor={attachment.meta.getIn(['colors', 'background'])}
-              foregroundColor={attachment.meta.getIn(['colors', 'foreground'])}
-              accentColor={attachment.meta.getIn(['colors', 'accent'])}
-              duration={attachment.meta.getIn(['original', 'duration'], 0)}
+              poster={attachment.preview_url !== attachment.url ? attachment.preview_url : status.getIn(['account', 'avatar_static']) as string | undefined}
+              backgroundColor={attachment.meta.getIn(['colors', 'background']) as string | undefined}
+              foregroundColor={attachment.meta.getIn(['colors', 'foreground']) as string | undefined}
+              accentColor={attachment.meta.getIn(['colors', 'accent']) as string | undefined}
+              duration={attachment.meta.getIn(['original', 'duration'], 0) as number}
               height={263}
               visible={showMedia}
               sensitiveOverlay={sensitiveOverlay}
               onToggleVisibility={onToggleVisibility}
             />
-          )}
-        </Bundle>
+          </Suspense>
+        </>
       );
     } else {
       media = (
-        <Bundle fetchComponent={MediaGallery} loading={renderLoadingMediaGallery}>
-          {(Component: any) => (
-            <Component
+        <>
+          <Suspense fallback={renderLoadingMediaGallery()}>
+            <MediaGallery
               media={status.media_attachments}
               sensitiveOverlay={sensitiveOverlay}
-              sensitive={status.sensitive}
               height={285}
               onOpenMedia={openMedia}
               visible={showMedia}
               onToggleVisibility={onToggleVisibility}
             />
-          )}
-        </Bundle>
+          </Suspense>
+        </>
       );
     }
   } else if (status.spoiler_text.length === 0 && !status.quote && status.card?.group) {
