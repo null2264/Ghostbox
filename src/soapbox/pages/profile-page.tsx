@@ -88,7 +88,7 @@ const ProfilePage: React.FC<IProfilePage> = ({ params, children }) => {
   return (
     <>
       <Layout.Main>
-        <Column size='lg' label={account ? `@${getAcct(account, displayFqn)}` : ''} withHeader={false}>
+        <Column size='lg' label={account ? `${account.display_name} (@${getAcct(account, displayFqn)})` : ''} withHeader={false}>
           <div className='space-y-4'>
             <Header account={account} />
 

@@ -116,7 +116,7 @@ const AccountGallery = () => {
   }
 
   return (
-    <Column label={`@${account.acct}`} transparent withHeader={false}>
+    <Column label={`${account.display_name} (@${account.acct})`} transparent withHeader={false}>
       <div role='feed' className='flex flex-wrap gap-2' ref={node}>
         {attachments.map((attachment, index) => attachment === null ? (
           <LoadMoreMedia key={'more:' + attachments.get(index + 1)?.id} maxId={index > 0 ? (attachments.get(index - 1)?.id || null) : null} onLoadMore={handleLoadMore} />
