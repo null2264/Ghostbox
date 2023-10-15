@@ -244,7 +244,7 @@ const normalizeFavicon = (account: ImmutableMap<string, any>) => {
 };
 
 const addDomain = (account: ImmutableMap<string, any>) => {
-  const domain = account.get('fqn', '').split('@')[1] || '';
+  const domain = account.get('acct', '').split('@')[1] || '';
   return account.set('domain', domain);
 };
 
