@@ -53,6 +53,7 @@ const TranslateButton: React.FC<ITranslateButton> = ({ status }) => {
     const links = node.current.querySelectorAll('a[href]');
 
     links.forEach((link) => {
+      // TODO: Maybe this should be removeAttribute instead?
       link.setAttribute('href', '#');
     });
   }, [status.translation]);
