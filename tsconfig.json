@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "app/",
+    "baseUrl": "src/",
     "outDir": "build/",
     "sourceMap": true,
     "strict": true,
@@ -14,7 +14,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "paths": {
-      "ghostbox/*": ["app/*"]
+      "ghostbox/*": ["src/*"]
     },
     "typeRoots": [ "./types", "./node_modules/@types", "./node_modules"],
     "types": [ "vite/client", "vite-plugin-compile-time/client" ]

@@ -32,7 +32,7 @@ import '@fontsource/roboto-mono/400.css';
 import 'line-awesome/dist/font-awesome-line-awesome/css/all.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import '../soapbox/iframe';
+import './iframe';
 import '../styles/application.scss';
 import '../styles/tailwind.css';
 

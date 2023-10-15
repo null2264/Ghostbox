@@ -25,8 +25,9 @@ import { download } from 'soapbox/utils/download';
 import { shortNumberFormat } from 'soapbox/utils/numbers';
 
 import PlaceholderEventHeader from '../../placeholder/components/placeholder-event-header';
-import EventActionButton from '../components/event-action-button';
-import EventDate from '../components/event-date';
+
+import EventActionButton from './event-action-button';
+import EventDate from './event-date';
 
 import type { Menu as MenuType } from 'soapbox/components/dropdown-menu';
 import type { Account as AccountEntity, Status as StatusEntity } from 'soapbox/types/entities';

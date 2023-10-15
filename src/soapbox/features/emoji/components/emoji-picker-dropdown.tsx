@@ -8,7 +8,7 @@ import { changeSetting } from 'soapbox/actions/settings';
 import { useAppDispatch, useAppSelector, useSettings } from 'soapbox/hooks';
 import { RootState } from 'soapbox/store';
 
-import { buildCustomEmojiPack, ICustomEmojiPack } from '../../emoji';
+import { buildCustomEmojiPack, ICustomEmojiPack } from '..';
 import { EmojiPicker as EmojiPickerAsync } from '../../ui/util/async-components';
 
 import type { Emoji, CustomEmoji, NativeEmoji } from 'soapbox/features/emoji';
