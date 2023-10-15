@@ -542,7 +542,7 @@ const Audio: React.FC<IAudio> = (props) => {
                   type='button'
                   title={intl.formatMessage(muted ? messages.unmute : messages.mute)}
                   aria-label={intl.formatMessage(muted ? messages.unmute : messages.mute)}
-                  className='player-button'
+                  className={clsx('player-button volume_button', { active: hovered })}
                   onClick={toggleMute}
                 >
                   <Icon src={muted ? require('@tabler/icons/volume-3.svg') : require('@tabler/icons/volume.svg')} />
@@ -583,7 +583,7 @@ const Audio: React.FC<IAudio> = (props) => {
                     type='button'
                     title={intl.formatMessage(messages.hide)}
                     aria-label={intl.formatMessage(messages.hide)}
-                    className='player-button'
+                    className='video-player__download__icon player-button'
                     onClick={onToggleVisibility}
                   >
                     <Icon src={require('@tabler/icons/eye-off.svg')} />
