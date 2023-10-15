@@ -3,31 +3,19 @@ import React, { useState, useRef, useLayoutEffect, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
-import Icon from 'soapbox/components/icon';
 import { onlyEmoji as isOnlyEmoji } from 'soapbox/utils/rich-content';
 
 import { isRtl } from '../rtl';
 
 import Markup from './markup';
 import Poll from './polls/poll';
+import { Button } from './ui';
 
 import type { Sizes } from 'soapbox/components/ui/text/text';
 import type { Status, Mention } from 'soapbox/types/entities';
 
 const MAX_HEIGHT = 642; // 20px * 32 (+ 2px padding at the top)
 const BIG_EMOJI_LIMIT = 10;
-
-interface IReadMoreButton {
-  onClick: React.MouseEventHandler
-}
-
-/** Button to expand a truncated status (due to too much content) */
-const ReadMoreButton: React.FC<IReadMoreButton> = ({ onClick }) => (
-  <button className='flex items-center border-0 bg-transparent p-0 pt-2 text-gray-900 hover:underline active:underline dark:text-gray-300' onClick={onClick}>
-    <FormattedMessage id='status.read_more' defaultMessage='Read more' />
-    <Icon className='inline-block h-5 w-5' src={require('@tabler/icons/chevron-right.svg')} />
-  </button>
-);
 
 export interface IStatusContent {
   status: Status
@@ -103,10 +91,16 @@ const StatusContent: React.FC<IStatusContent> = ({
     });
   };
 
+  const toggleCollapsed: React.MouseEventHandler = (e) => {
+    e.stopPropagation();
+
+    setCollapsed(!collapsed);
+  };
+
   const maybeSetCollapsed = (): void => {
     if (!node.current) return;
 
-    if (collapsable && onClick && !collapsed) {
+    if (collapsable && !collapsed) {
       if (node.current.clientHeight > MAX_HEIGHT) {
         setCollapsed(true);
       }
@@ -124,6 +118,9 @@ const StatusContent: React.FC<IStatusContent> = ({
 
   useLayoutEffect(() => {
     maybeSetCollapsed();
+  }, []);
+
+  useLayoutEffect(() => {
     maybeSetOnlyEmoji();
     updateStatusLinks();
   });
@@ -149,53 +146,61 @@ const StatusContent: React.FC<IStatusContent> = ({
     'max-h-[300px]': collapsed,
     'leading-normal big-emoji': onlyEmoji,
   });
+  const hasPoll = status.poll && typeof status.poll === 'string';
 
-  if (onClick) {
-    const output = [
-      <Markup
-        ref={node}
-        tabIndex={0}
-        key='content'
-        className={className}
-        direction={direction}
-        dangerouslySetInnerHTML={content}
-        lang={status.language || undefined}
-        size={textSize}
-      />,
-    ];
+  const output = [
+    <Markup
+      ref={node}
+      tabIndex={0}
+      key='content'
+      className={className}
+      direction={direction}
+      dangerouslySetInnerHTML={content}
+      lang={status.language || undefined}
+      size={textSize}
+    />,
+  ];
 
-    if (collapsed) {
-      output.push(<ReadMoreButton onClick={onClick} key='read-more' />);
-    }
-
-    const hasPoll = status.poll && typeof status.poll === 'string';
-    if (hasPoll) {
-      output.push(<Poll id={status.poll} key='poll' status={status.url} />);
-    }
-
-    return <div className={clsx({ 'bg-gray-100 dark:bg-primary-800 rounded-md p-4': hasPoll })}>{output}</div>;
-  } else {
-    const output = [
-      <Markup
-        ref={node}
-        tabIndex={0}
-        key='content'
-        className={clsx(baseClassName, {
-          'leading-normal big-emoji': onlyEmoji,
-        })}
-        direction={direction}
-        dangerouslySetInnerHTML={content}
-        lang={status.language || undefined}
-        size={textSize}
-      />,
-    ];
-
-    if (status.poll && typeof status.poll === 'string') {
-      output.push(<Poll id={status.poll} key='poll' status={status.url} />);
-    }
-
-    return <>{output}</>;
+  if (collapsable && collapsed) {
+    output.push(
+      <div className='flex w-full justify-center pt-2' role='button' tabIndex={0} onClick={toggleCollapsed}>
+        <Button
+          type='button'
+          theme='primary'
+          size='sm'
+          icon={require('@tabler/icons/chevron-down.svg')}
+          onClick={toggleCollapsed}
+        >
+          <FormattedMessage id='status.show_more' defaultMessage='Show more' />
+        </Button>
+      </div>,
+    );
   }
+
+  if (hasPoll && !collapsed) {
+    output.push(<Poll id={status.poll} key='poll' status={status.url} />);
+  }
+
+  if (collapsable && !collapsed) {
+    output.push(
+      <div className='flex w-full justify-center pt-2' role='button' tabIndex={0} onClick={toggleCollapsed}>
+        <Button
+          type='button'
+          theme='primary'
+          size='sm'
+          icon={require('@tabler/icons/chevron-up.svg')}
+          onClick={toggleCollapsed}
+        >
+          <FormattedMessage id='status.show_less' defaultMessage='Show less' />
+        </Button>
+      </div>,
+    );
+  }
+
+  if (onClick)
+    return <div className={clsx({ 'bg-gray-100 dark:bg-primary-800 rounded-md p-4': hasPoll })}>{output}</div>;
+  else
+    return <>{output}</>;
 };
 
 export default React.memo(StatusContent);

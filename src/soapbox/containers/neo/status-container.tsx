@@ -62,6 +62,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
 
   const hasCW = status.spoiler_text;
   const hasMediaAndNoCW = hasMedia && !hasCW;
+  const { collapsable, ...opts } = contentOption;
 
   return (
     // eslint-disable-next-line tailwindcss/no-custom-classname
@@ -99,7 +100,8 @@ const StatusContainer: React.FC<IStatusContainer> = ({
 
             <Stack space={4}>
               <StatusContent
-                {...contentOption}
+                {...opts}
+                collapsable={collapsable && !(isSensitive && hasCW)}
               />
 
               {showTranslateButton && (<TranslateButton status={status} />)}
@@ -118,7 +120,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
           </Stack>
 
           {(!hasMediaAndNoCW && isSensitive && !isHidden && hasCW) && (
-            <div className='mt-2 flex w-full justify-center' role='button' tabIndex={0} onClick={handleToggleContent}>
+            <div className='flex w-full justify-center pt-2' role='button' tabIndex={0} onClick={handleToggleContent}>
               <Button
                 type='button'
                 theme='primary'
