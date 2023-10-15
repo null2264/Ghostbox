@@ -5,6 +5,10 @@
 - Type: changes
 -->
 
+## 2023.10.1
+- Dev: move files from `app/` to `src/`
+- Dev: cache translation instead always requesting new one
+
 ## 2023.10.0
 - Pleroma: backport MRF breaking changes fixes from Akkoma
 - Akkoma: add support for Akkoma's "machine translation"
