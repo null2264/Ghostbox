@@ -14,7 +14,7 @@
 - UX: rename `soapbox/` routes to `ghostbox/`
 - UX: change `ghostbox/config` route to `ghostbox/admin/config` for consistency
 - UX: redirect `notice/:statusId` to `posts/:statusId` for consistency
-- UX: read more now act like CW's show more
+- UX: read more now act like CW's show content
 - Pleroma: fixed instance not being normalised
 
 ## 2023.10.0
