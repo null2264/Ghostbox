@@ -11,6 +11,8 @@
 - Dev: start replacing `<Bundle />` with React's lazy load
 - UI: fixed audio player hide button colour on hover
 - UI: show display name on profile page's title
+- UX: rename `soapbox/` routes to `ghostbox/`
+- UX: change `ghostbox/config` route to `ghostbox/admin/config` for consistency
 
 ## 2023.10.0
 - Pleroma: backport MRF breaking changes fixes from Akkoma
