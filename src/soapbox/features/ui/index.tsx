@@ -202,7 +202,7 @@ const SwitchingColumnsArea: React.FC<ISwitchingColumnsArea> = ({ children }) => 
       <Redirect from='/main/friends' to='/' />
       <Redirect from='/tag/:id' to='/tags/:id' />
       <Redirect from='/user-settings' to='/settings/profile' />
-      <WrappedRoute path='/notice/:statusId' publicRoute exact page={DefaultPage} component={Status} content={children} />
+      <Redirect from='/notice/:statusId' to='/posts/:statusId' />
       <Redirect from='/users/:username/statuses/:statusId' to='/@:username/posts/:statusId' />
       <Redirect from='/users/:username/chats' to='/chats' />
       <Redirect from='/users/:username' to='/@:username' />
@@ -271,6 +271,7 @@ const SwitchingColumnsArea: React.FC<ISwitchingColumnsArea> = ({ children }) => 
       <WrappedRoute path='/@:username/favorites' component={FavouritedStatuses} page={ProfilePage} content={children} />
       <WrappedRoute path='/@:username/pins' component={PinnedStatuses} page={ProfilePage} content={children} />
       <WrappedRoute path='/@:username/posts/:statusId' publicRoute exact page={StatusPage} component={Status} content={children} />
+      <WrappedRoute path='/posts/:statusId' publicRoute exact page={DefaultPage} component={Status} content={children} />
       <WrappedRoute path='/@:username/posts/:statusId/quotes' publicRoute page={StatusPage} component={Quotes} content={children} />
       {features.events && <WrappedRoute path='/@:username/events/:statusId' publicRoute exact page={EventPage} component={EventInformation} content={children} />}
       {features.events && <WrappedRoute path='/@:username/events/:statusId/discussion' publicRoute exact page={EventPage} component={EventDiscussion} content={children} />}
