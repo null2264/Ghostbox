@@ -55,7 +55,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
     }
   };
 
-  const handleToggleContent = (event: React.MouseEvent<HTMLButtonElement>): any => {
+  const handleToggleContent = (event: React.MouseEvent<HTMLButtonElement | HTMLDivElement>): any => {
     event.stopPropagation();
     toggleHidden();
   };
@@ -78,7 +78,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
         <div className='relative'>
 
           {(!hasMediaAndNoCW && isSensitive && isHidden && hasCW) && (
-            <button className='absolute z-[1] flex h-full w-full items-center justify-center' onClick={handleToggleContent}>
+            <div className='absolute z-[1] flex h-full w-full items-center justify-center' role='button' tabIndex={0} onClick={handleToggleContent}>
               <Button
                 type='button'
                 theme='primary'
@@ -88,7 +88,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
               >
                 {intl.formatMessage(messages.show)}
               </Button>
-            </button>
+            </div>
           )}
 
           <Stack
@@ -118,7 +118,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
           </Stack>
 
           {(!hasMediaAndNoCW && isSensitive && !isHidden && hasCW) && (
-            <button className='mt-2 flex w-full justify-center' onClick={handleToggleContent}>
+            <div className='mt-2 flex w-full justify-center' role='button' tabIndex={0} onClick={handleToggleContent}>
               <Button
                 type='button'
                 theme='primary'
@@ -128,7 +128,7 @@ const StatusContainer: React.FC<IStatusContainer> = ({
               >
                 {intl.formatMessage(messages.hide)}
               </Button>
-            </button>
+            </div>
           )}
         </div>
       )}
