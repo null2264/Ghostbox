@@ -236,7 +236,7 @@ export interface ICustomEmojiPack {
 export const buildCustomEmojiPack = (customEmojis: any) => {
   const emojiPacks: { [name: string]: ICustomEmojiPack } = {};
 
-  customEmojis.forEach((emoji: any) => {
+  customEmojis.filter((c: any) => typeof (c) !== 'undefined').forEach((emoji: any) => {
     const packName: string = emoji.get('category').replace('pack:', '') || 'custom';
     const shortcode        = emoji.get('shortcode');
     const url              = emoji.get('static_url');
