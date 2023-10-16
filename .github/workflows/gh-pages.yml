@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push:
+    branches: 
+      - develop
+      - feat/**
+      - fix/**
+      - refactor/**
+  release:
+    types: [ published ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Queue
+      uses: ahmadnassri/action-workflow-queue@v1
+
+    - name: Use NodeJS v20
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Build
+      run: |
+        # -- Build one time for release
+        yarn install --ignore-scripts
+        yarn patch-package
+        env NODE_ENV=production yarn build
+        zip -r static.zip static/
+        # -- For artifact
+        mkdir __build/
+        cp -r static/ __build/
+
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: static/
