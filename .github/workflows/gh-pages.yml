@@ -25,14 +25,12 @@ jobs:
 
     - name: Build
       run: |
+        mv .ci/snippets.html custom/snippets.html
         # -- Build one time for release
         yarn install --ignore-scripts
         yarn patch-package
         env NODE_ENV=production yarn build
         zip -r static.zip static/
-        # -- For artifact
-        mkdir __build/
-        cp -r static/ __build/
 
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@v4
