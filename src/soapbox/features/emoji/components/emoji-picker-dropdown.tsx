@@ -236,7 +236,7 @@ const EmojiPickerDropdown: React.FC<IEmojiPickerDropdown> = ({
   }, []);
 
   let emojiPacks: { [name: string]: ICustomEmojiPack } | undefined;
-  if (withCustom) emojiPacks = buildCustomEmojiPack(customEmojis);
+  if (withCustom && typeof (emojiPacks) !== 'undefined') emojiPacks = buildCustomEmojiPack(customEmojis);
   const packNames = emojiPacks ? Object.keys(emojiPacks) : [];
   const categories: string[] = ['frequent', ...packNames, 'people', 'nature', 'foods', 'activity', 'places', 'objects', 'symbols', 'flags'];
 
