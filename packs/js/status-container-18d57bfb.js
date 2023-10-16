@@ -1,0 +1,1 @@
+import{as as o,r as c,aL as i,q as l,R as S,S as x,av as d}from"../index-384d6887.js";var v=["id","contextType"],m=function(t){var a=t.id,r=t.contextType,s=o(t,v),n=c.useCallback(i(),[]),e=l(function(u){return n(u,{id:a,contextType:r})});return e?S.createElement(x,d({status:e},s)):null};export{m as S};
