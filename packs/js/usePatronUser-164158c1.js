@@ -1,0 +1,1 @@
+import{bj as a,hH as o,hI as r,bm as i}from"../index-5dcc55da.js";function c(t){const e=a(),{entity:n,...s}=o([i.PATRON_USERS,t||""],()=>e.get(`/api/patron/v1/accounts/${encodeURIComponent(t)}`),{schema:r,enabled:!!t});return{patronUser:n,...s}}export{c as u};
