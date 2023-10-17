@@ -1,0 +1,1 @@
+import{a as o,F as l,aa as d}from"../index-3380e2b2.js";var u=function(a){var i=a.onClick,t=a.disabled,e=a.visible,s=e===void 0?!0:e,r=a.className;return s?o(d,{className:r,theme:"primary",block:!0,disabled:t||!s,onClick:i},void 0,o(l,{id:"status.load_more",defaultMessage:"Load more"})):null};export{u as L};
