@@ -211,7 +211,7 @@ export default emojify;
 export const buildCustomEmojis = (customEmojis: any) => {
   const emojis: EmojiMart<EmojiMartCustom>[] = [];
 
-  customEmojis.filter((c: any) => typeof (c) !== 'undefined').forEach((emoji: any) => {
+  customEmojis.forEach((emoji: any) => {
     const shortcode = emoji.get('shortcode');
     const url       = emoji.get('static_url');
     const name      = shortcode.replace(':', '');
