@@ -23,13 +23,13 @@ export const Mention: React.FC<IMention> = ({ mention }) => {
 
   if (!account)
     return (
-      <Link to={`/@${mention.acct}`} title={`@${mention.acct}`} className={clsx(common, 'px-2 py-1')}>
+      <Link onClick={e => e.stopPropagation()} to={`/@${mention.acct}`} title={`@${mention.acct}`} className={clsx(common, 'px-2 py-1')}>
         @{mention.acct}
       </Link>
     );
 
   return (
-    <Link to={`/@${account.acct}`} title={`@${account.fqn}`} className={clsx(common, 'py-1 pl-1 pr-2')}>
+    <Link onClick={e => e.stopPropagation()} to={`/@${account.acct}`} title={`@${account.fqn}`} className={clsx(common, 'py-1 pl-1 pr-2')}>
       <HoverRefWrapper key={account.id} accountId={account.id} className='inline-flex items-center align-top'>
         <Avatar size={avatarSize} src={account.avatar} className='mr-1.5 inline-flex items-center align-bottom' />
         <span>@{account.acct}</span>
