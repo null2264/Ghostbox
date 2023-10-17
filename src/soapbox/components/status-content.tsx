@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import parse, { HTMLReactParserOptions, domToReact, Element as ParserElement } from 'html-react-parser';
 import React, { useState, useRef, useLayoutEffect, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Link as DomLink } from 'react-router-dom';
 
 import { reactText } from 'soapbox/utils/react';
 import { onlyEmoji as isOnlyEmoji } from 'soapbox/utils/rich-content';
@@ -11,10 +10,12 @@ import { isRtl } from '../rtl';
 
 import Link from './link';
 import Markup from './markup';
+import { Mention } from './mention';
 import Poll from './polls/poll';
 import { Button } from './ui';
 
 import type { Sizes } from 'soapbox/components/ui/text/text';
+import type { Mention as MentionEntity } from 'soapbox/schemas';
 import type { Status } from 'soapbox/types/entities';
 
 const MAX_HEIGHT = 642; // 20px * 32 (+ 2px padding at the top)
@@ -83,13 +84,18 @@ const StatusContent: React.FC<IStatusContent> = ({
         const classes = node.attribs.class?.split(' ') || [];
 
         if (classes.includes('mention')) {
-          const mention = status.mentions.find(({ url }) => node.attribs.href === url);
-          if (mention)
-            return (
-              <DomLink to={`/@${mention.acct}`} title={`@${mention.acct}`} className='inline-block rounded-full bg-primary-200 px-2 py-1'>
-                @{mention.acct}
-              </DomLink>
-            );
+          const mention: MentionEntity | undefined = status.mentions.find(({ url }) => node.attribs.href === url);
+          if (mention) {
+            return (<Mention mention={mention} />);
+          } else if (node.attribs.href) {
+            // User is not present in database, construct acct from url
+            const regex = /^http(?:s)?:\/\/(\S+)\/(@\S+)/;
+            const matches = [...node.attribs.href.matchAll(regex)];
+
+            if (matches) {
+              return (<Mention mention={{ acct: `${matches[1]}@${matches[0]}`, url: node.attribs.href, id: '', username: '' }} />);
+            }
+          }
         }
 
         if (classes.includes('hashtag') || node.attribs.href.match(/^http(?:s)?:\/\/\S*\/tags/)) {
@@ -98,7 +104,7 @@ const StatusContent: React.FC<IStatusContent> = ({
           if (!hashtag) {
             const child = domToReact(node.children);
             if (Array.isArray(child)) {
-              // Sometime hashtag is '#<span>tag</span>' for some reason, mostly hashtags from Mastodon
+              // Sometime hashtag is rendered '#<span>tag</span>' for some reason, mostly hashtags from Mastodon
               hashtag = child.map(e => reactText(e, ['#'])).join('');
             } else {
               hashtag = typeof child === 'string' ? child.replace('#', '') : undefined;

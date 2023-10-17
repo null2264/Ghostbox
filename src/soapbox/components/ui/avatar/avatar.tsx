@@ -15,7 +15,7 @@ interface IAvatar extends Pick<IStillImage, 'src' | 'onError' | 'className'> {
 
 /** Round profile avatar for accounts. */
 const Avatar = (props: IAvatar) => {
-  const { src, size = AVATAR_SIZE, className, user } = props;
+  const { src, size = AVATAR_SIZE, className } = props;
 
   const [isAvatarMissing, setIsAvatarMissing] = useState<boolean>(false);
 
@@ -26,41 +26,32 @@ const Avatar = (props: IAvatar) => {
     height: size,
   }), [size]);
 
-  const render = () => {
-    if (isAvatarMissing) {
-      return (
-        <div
-          style={{
-            width: size,
-            height: size,
-          }}
-          className={clsx('flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-900', className)}
-        >
-          <Icon
-            src={require('@tabler/icons/photo-off.svg')}
-            className='h-4 w-4 text-gray-500 dark:text-gray-700'
-            alt='Avatar'
-          />
-        </div>
-      );
-    }
-
+  if (isAvatarMissing) {
     return (
-      <StillImage
-        className={clsx('rounded-full', className)}
-        style={style}
-        src={src}
-        alt='Avatar'
-        onError={handleLoadFailure}
-      />
+      <div
+        style={{
+          width: size,
+          height: size,
+        }}
+        className={clsx('flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-900', className)}
+      >
+        <Icon
+          src={require('@tabler/icons/photo-off.svg')}
+          className='h-4 w-4 text-gray-500 dark:text-gray-700'
+          alt='Avatar'
+        />
+      </div>
     );
-  };
+  }
 
-  // TODO: Actually provide 'user'
   return (
-    <div data-avatar-user={user}>
-      {render()}
-    </div>
+    <StillImage
+      className={clsx('rounded-full', className)}
+      style={style}
+      src={src}
+      alt='Avatar'
+      onError={handleLoadFailure}
+    />
   );
 };
 

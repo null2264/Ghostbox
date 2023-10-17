@@ -10,7 +10,7 @@
   @apply mb-0;
 }
 
-[data-markup] a {
+[data-markup] a:not(.mention) {
   @apply text-primary-600 dark:text-accent-blue hover:underline;
 }
 
@@ -69,7 +69,7 @@
 }
 
 /* Hide Markdown images (Pleroma) */
-[data-markup] img:not(.emojione) {
+[data-markup] a:not(.mention) img:not(.emojione) {
   @apply hidden;
 }
 
