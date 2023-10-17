@@ -7,6 +7,7 @@
 
 ## 2023.10.3
 - Mastodon: don't crash the client when emoji is undefined
+- UI: highlight mentions
 
 ## 2023.10.2
 - UI: fixed read more button always shown
