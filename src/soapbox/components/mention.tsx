@@ -24,7 +24,13 @@ export const Mention: React.FC<IMention> = ({ mention }) => {
   if (!account)
     return (
       <Link onClick={e => e.stopPropagation()} to={`/@${mention.acct}`} title={`@${mention.acct}`} className={clsx(common, 'px-2 py-1')}>
-        @{mention.acct}
+        {mention.id !== '' ? (
+          <HoverRefWrapper key={mention.id} accountId={mention.id} className='inline-flex items-center align-top'>
+            @{mention.acct}
+          </HoverRefWrapper>
+        ) : (
+          mention.acct
+        )}
       </Link>
     );
 
