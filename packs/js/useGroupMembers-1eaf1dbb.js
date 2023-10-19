@@ -1,0 +1,1 @@
+import{bj as m,bk as u,bm as a,kx as o}from"../index-9e17f5e3.js";function n(e,s){const t=m(),{entities:r,...i}=u([a.GROUP_MEMBERSHIPS,e,s],()=>t.get(`/api/v1/groups/${e}/memberships?role=${s}`),{schema:o});return{...i,groupMembers:r}}export{n as u};
