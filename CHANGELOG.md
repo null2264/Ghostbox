@@ -6,7 +6,6 @@
 -->
 
 ## 2023.10.3
-- Mastodon: don't crash the client when emoji is undefined
 - UI: highlight mentions
 - UI: add user avatar next to user mention
 - UX: fixed mention not rendered properly when user is not in the database
