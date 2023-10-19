@@ -29,7 +29,9 @@ export const Mention: React.FC<IMention> = ({ mention }) => {
             @{mention.acct}
           </HoverRefWrapper>
         ) : (
-          mention.acct
+          <>
+            @{mention.acct}
+          </>
         )}
       </Link>
     );
