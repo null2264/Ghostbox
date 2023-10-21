@@ -5,6 +5,8 @@
 - Type: changes
 -->
 
+## 2023.10.4
+
 ## 2023.10.3
 - UI: highlight mentions
 - UI: add user avatar next to user mention
