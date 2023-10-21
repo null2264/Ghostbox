@@ -22,7 +22,7 @@ export const Mention: React.FC<IMention> = ({ mention }) => {
     if (mention.id !== '') dispatch(fetchAccount(mention.id));
     dispatch(fetchAccountByUsername(mention.acct));
   };
-  const account: any = useAppSelector(state => (mention.id !== '') ? getAccount(state, mention.id) : null) || { id: mention.id, fqn: mention.acct, acct: mention.acct, url: mention.url, username: mention.username, avatar: '' };
+  const account: any = useAppSelector(state => ((mention.id !== '') ? getAccount(state, mention.id) : null) || { id: mention.id, fqn: mention.acct, acct: mention.acct, url: mention.url, username: mention.username, avatar: '' });
   const avatarSize = 20;
 
   useLayoutEffect(() => {
