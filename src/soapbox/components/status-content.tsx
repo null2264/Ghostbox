@@ -89,10 +89,10 @@ const StatusContent: React.FC<IStatusContent> = ({
             return (<Mention mention={mention} />);
           } else if (node.attribs.href) {
             // User is not present in database, construct acct from url
-            const matches = [...node.attribs.href.matchAll(/^http(?:s)?:\/\/(\S+)\/@(\S+)/gm)][0];
+            const matches = [...node.attribs.href.matchAll(/^http(?:s)?:\/\/((?:[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,})\/(?:@|users?\/)(\S+)/gm)][0];
 
             if (matches) {
-              return (<Mention mention={{ acct: `${matches[2]}@${matches[1]}`, url: node.attribs.href, id: '', username: '' }} />);
+              return (<Mention mention={{ acct: `${matches[3]}@${matches[1]}`, url: node.attribs.href, id: '', username: '' }} />);
             }
           }
         }
