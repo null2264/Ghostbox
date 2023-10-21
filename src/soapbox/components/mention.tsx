@@ -1,8 +1,8 @@
-import clsx from 'clsx';
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useAppSelector } from 'soapbox/hooks';
+import { fetchAccount, fetchAccountByUsername } from 'soapbox/actions/accounts';
+import { useAppSelector, useAppDispatch } from 'soapbox/hooks';
 import { makeGetAccount } from 'soapbox/selectors';
 
 import HoverRefWrapper from './hover-ref-wrapper';
@@ -17,27 +17,20 @@ export interface IMention {
 }
 
 export const Mention: React.FC<IMention> = ({ mention }) => {
-  const account = useAppSelector(state => mention.id !== '' ? getAccount(state, mention.id) : null);
+  const dispatch = useAppDispatch();
+  const getchAccount = () => {
+    if (mention.id !== '') dispatch(fetchAccount(mention.id));
+    dispatch(fetchAccountByUsername(mention.acct));
+  };
+  const account: any = useAppSelector(state => (mention.id !== '') ? getAccount(state, mention.id) : null) || { id: mention.id, fqn: mention.acct, acct: mention.acct, url: mention.url, username: mention.username, avatar: '' };
   const avatarSize = 20;
-  const common = 'mention inline-block rounded-full bg-primary-200 text-primary-600 dark:bg-primary-800 dark:text-primary-400';
 
-  if (!account)
-    return (
-      <Link onClick={e => e.stopPropagation()} to={`/@${mention.acct}`} title={`@${mention.acct}`} className={clsx(common, 'px-2 py-1')}>
-        {mention.id !== '' ? (
-          <HoverRefWrapper key={mention.id} accountId={mention.id} className='inline-flex items-center align-top'>
-            @{mention.acct}
-          </HoverRefWrapper>
-        ) : (
-          <>
-            @{mention.acct}
-          </>
-        )}
-      </Link>
-    );
+  useLayoutEffect(() => {
+    getchAccount();
+  }, []);
 
   return (
-    <Link onClick={e => e.stopPropagation()} to={`/@${account.acct}`} title={`@${account.fqn}`} className={clsx(common, 'py-1 pl-1 pr-2')}>
+    <Link onClick={e => e.stopPropagation()} to={`/@${account.acct}`} title={`@${account.fqn}`} className='mention inline-block rounded-full bg-primary-200 py-1 pl-1 pr-2 text-primary-600 dark:bg-primary-800 dark:text-primary-400'>
       <HoverRefWrapper key={account.id} accountId={account.id} className='inline-flex items-center align-top'>
         <Avatar size={avatarSize} src={account.avatar} className='mr-1.5 inline-flex items-center align-bottom' />
         <span>@{account.acct}</span>
