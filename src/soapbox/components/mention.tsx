@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { fetchAccount, fetchAccountByUsername } from 'soapbox/actions/accounts';
+import { fetchAccount } from 'soapbox/actions/accounts';
 import { useAppSelector, useAppDispatch } from 'soapbox/hooks';
 import { makeGetAccount } from 'soapbox/selectors';
 
@@ -20,7 +20,6 @@ export const Mention: React.FC<IMention> = ({ mention }) => {
   const dispatch = useAppDispatch();
   const getchAccount = () => {
     if (mention.id !== '') dispatch(fetchAccount(mention.id));
-    dispatch(fetchAccountByUsername(mention.acct));
   };
   const account: any = useAppSelector(state => ((mention.id !== '') ? getAccount(state, mention.id) : null) || { id: mention.id, fqn: mention.acct, acct: mention.acct, url: mention.url, username: mention.username, avatar: '' });
   const avatarSize = 20;
