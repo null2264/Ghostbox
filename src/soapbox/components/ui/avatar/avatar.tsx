@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 
 import StillImage, { IStillImage } from 'soapbox/components/still-image';
 
@@ -20,6 +20,10 @@ const Avatar = (props: IAvatar) => {
   const [isAvatarMissing, setIsAvatarMissing] = useState<boolean>(false);
 
   const handleLoadFailure = () => setIsAvatarMissing(true);
+
+  useLayoutEffect(() => {
+    setIsAvatarMissing(!src);
+  }, [src]);
 
   const style: React.CSSProperties = React.useMemo(() => ({
     width: size,
