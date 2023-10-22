@@ -1,0 +1,1 @@
+import{a as p,R as m,az as r,bw as s}from"../index-3657f38e.js";var d=function(o){var e=o.onClose,t=o.component,n=o.componentProps,a=n===void 0?{}:n;return p(s,{onClose:e,title:""},void 0,m.createElement(t,r({onClose:e},a)))};export{d as default};
