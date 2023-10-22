@@ -86,7 +86,7 @@ const HomeTimeline: React.FC = () => {
   return (
     <Column label={intl.formatMessage(messages.title)} transparent withHeader={false}>
       <PullToRefresh onRefresh={handleRefresh}>
-        <Card variant='rounded' pad={false} className='px-4'>
+        <Card variant='rounded' pad={false} className='px-6'>
           <Timeline
             scrollKey='home_timeline'
             onLoadMore={handleLoadMore}

@@ -38,7 +38,7 @@ const CommunityTimeline = () => {
   }, [onlyMedia]);
 
   return (
-    <Card variant='rounded'>
+    <Card variant='rounded' pad={false} className='p-6'>
       <Column className='-mt-3 sm:mt-0' label={intl.formatMessage(messages.title)} transparent>
         <PullToRefresh onRefresh={handleRefresh}>
           <Timeline
