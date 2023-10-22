@@ -1,0 +1,1 @@
+import{a as o,F as l,ae as d}from"../index-220d7bfb.js";var u=function(e){var i=e.onClick,t=e.disabled,a=e.visible,s=a===void 0?!0:a,r=e.className;return s?o(d,{className:r,theme:"primary",block:!0,disabled:t||!s,onClick:i},void 0,o(l,{id:"status.load_more",defaultMessage:"Load more"})):null};export{u as L};
