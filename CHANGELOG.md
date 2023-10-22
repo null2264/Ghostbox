@@ -9,7 +9,7 @@
 - UX: fetch account when mention component is rendering
 - UX: "missing" account now show missing image icon as avatar next to user mention
 - UI: avatar size adjust depending on status' text size (kinda, currently only check for large text size)
-- UI: changed home timeline layout to border instead of space
+- UI: make home, fediverse, and remote (instance) timeline layout more consistent with the other pages
 
 ## 2023.10.3
 - UI: highlight mentions

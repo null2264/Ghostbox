@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { expandRemoteTimeline } from 'soapbox/actions/timelines';
 import { useRemoteStream } from 'soapbox/api/hooks';
 import IconButton from 'soapbox/components/icon-button';
-import { Column, HStack, Text } from 'soapbox/components/ui';
+import { Card, Column, HStack, Text } from 'soapbox/components/ui';
 import { useAppSelector, useAppDispatch, useSettings } from 'soapbox/hooks';
 
 import Timeline from '../ui/components/timeline';
@@ -47,36 +47,41 @@ const RemoteTimeline: React.FC<IRemoteTimeline> = ({ params }) => {
   }, [onlyMedia]);
 
   return (
-    <Column label={instance} transparent>
+    <>
       {instance && <PinnedHostsPicker host={instance} />}
 
-      {!pinned && (
-        <HStack className='mb-4 px-2' space={2}>
-          <IconButton iconClassName='h-5 w-5' src={require('@tabler/icons/x.svg')} onClick={handleCloseClick} />
-          <Text>
-            <FormattedMessage
-              id='remote_timeline.filter_message'
-              defaultMessage='You are viewing the timeline of {instance}.'
-              values={{ instance }}
-            />
-          </Text>
-        </HStack>
-      )}
+      <Card variant='rounded'>
+        <Column label={instance} transparent>
 
-      <Timeline
-        scrollKey={`${timelineId}_${instance}_timeline`}
-        timelineId={`${timelineId}${onlyMedia ? ':media' : ''}:${instance}`}
-        onLoadMore={handleLoadMore}
-        emptyMessage={
-          <FormattedMessage
-            id='empty_column.remote'
-            defaultMessage='There is nothing here! Manually follow users from {instance} to fill it up.'
-            values={{ instance }}
+          {!pinned && (
+            <HStack className='rounded-lg bg-white p-2 text-gray-900 shadow dark:bg-primary-800 dark:text-gray-100 dark:shadow-none' space={2}>
+              <IconButton iconClassName='h-5 w-5' src={require('@tabler/icons/x.svg')} onClick={handleCloseClick} />
+              <Text>
+                <FormattedMessage
+                  id='remote_timeline.filter_message'
+                  defaultMessage='You are viewing the timeline of {instance}.'
+                  values={{ instance }}
+                />
+              </Text>
+            </HStack>
+          )}
+
+          <Timeline
+            scrollKey={`${timelineId}_${instance}_timeline`}
+            timelineId={`${timelineId}${onlyMedia ? ':media' : ''}:${instance}`}
+            onLoadMore={handleLoadMore}
+            emptyMessage={
+              <FormattedMessage
+                id='empty_column.remote'
+                defaultMessage='There is nothing here! Manually follow users from {instance} to fill it up.'
+                values={{ instance }}
+              />
+            }
+            divideType='border'
           />
-        }
-        divideType='space'
-      />
-    </Column>
+        </Column>
+      </Card>
+    </>
   );
 };
 

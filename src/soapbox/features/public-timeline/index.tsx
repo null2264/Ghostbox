@@ -6,7 +6,7 @@ import { changeSetting } from 'soapbox/actions/settings';
 import { expandPublicTimeline } from 'soapbox/actions/timelines';
 import { usePublicStream } from 'soapbox/api/hooks';
 import PullToRefresh from 'soapbox/components/pull-to-refresh';
-import { Accordion, Column } from 'soapbox/components/ui';
+import { Accordion, Card, Column } from 'soapbox/components/ui';
 import { useAppSelector, useAppDispatch, useInstance, useSettings } from 'soapbox/hooks';
 
 import PinnedHostsPicker from '../remote-timeline/components/pinned-hosts-picker';
@@ -54,47 +54,52 @@ const CommunityTimeline = () => {
   }, [onlyMedia]);
 
   return (
-    <Column className='-mt-3 sm:mt-0' label={intl.formatMessage(messages.title)} transparent>
+    <>
       <PinnedHostsPicker />
 
-      {showExplanationBox && <div className='mb-4'>
-        <Accordion
-          headline={<FormattedMessage id='fediverse_tab.explanation_box.title' defaultMessage='What is the Fediverse?' />}
-          action={dismissExplanationBox}
-          actionIcon={require('@tabler/icons/x.svg')}
-          actionLabel={intl.formatMessage(messages.dismiss)}
-          expanded={explanationBoxExpanded}
-          onToggle={toggleExplanationBox}
-        >
-          <FormattedMessage
-            id='fediverse_tab.explanation_box.explanation'
-            defaultMessage='{site_title} is part of the Fediverse, a social network made up of thousands of independent social media sites (aka "servers"). The posts you see here are from 3rd-party servers. You have the freedom to engage with them, or to block any server you don&apos;t like. Pay attention to the full username after the second @ symbol to know which server a post is from. To see only {site_title} posts, visit {local}.'
-            values={{
-              site_title: instance.title,
-              local: (
-                <Link to='/timeline/local'>
-                  <FormattedMessage
-                    id='empty_column.home.local_tab'
-                    defaultMessage='the {site_title} tab'
-                    values={{ site_title: instance.title }}
-                  />
-                </Link>
-              ),
-            }}
-          />
-        </Accordion>
-      </div>}
-      <PullToRefresh onRefresh={handleRefresh}>
-        <Timeline
-          scrollKey={`${timelineId}_timeline`}
-          timelineId={`${timelineId}${onlyMedia ? ':media' : ''}`}
-          prefix='home'
-          onLoadMore={handleLoadMore}
-          emptyMessage={<FormattedMessage id='empty_column.public' defaultMessage='There is nothing here! Write something publicly, or manually follow users from other servers to fill it up' />}
-          divideType='space'
-        />
-      </PullToRefresh>
-    </Column>
+      <Card variant='rounded'>
+        <Column className='-mt-3 sm:mt-0' label={intl.formatMessage(messages.title)} transparent>
+
+          {showExplanationBox && <div className='mb-4'>
+            <Accordion
+              headline={<FormattedMessage id='fediverse_tab.explanation_box.title' defaultMessage='What is the Fediverse?' />}
+              action={dismissExplanationBox}
+              actionIcon={require('@tabler/icons/x.svg')}
+              actionLabel={intl.formatMessage(messages.dismiss)}
+              expanded={explanationBoxExpanded}
+              onToggle={toggleExplanationBox}
+            >
+              <FormattedMessage
+                id='fediverse_tab.explanation_box.explanation'
+                defaultMessage='{site_title} is part of the Fediverse, a social network made up of thousands of independent social media sites (aka "servers"). The posts you see here are from 3rd-party servers. You have the freedom to engage with them, or to block any server you don&apos;t like. Pay attention to the full username after the second @ symbol to know which server a post is from. To see only {site_title} posts, visit {local}.'
+                values={{
+                  site_title: instance.title,
+                  local: (
+                    <Link to='/timeline/local'>
+                      <FormattedMessage
+                        id='empty_column.home.local_tab'
+                        defaultMessage='the {site_title} tab'
+                        values={{ site_title: instance.title }}
+                      />
+                    </Link>
+                  ),
+                }}
+              />
+            </Accordion>
+          </div>}
+          <PullToRefresh onRefresh={handleRefresh}>
+            <Timeline
+              scrollKey={`${timelineId}_timeline`}
+              timelineId={`${timelineId}${onlyMedia ? ':media' : ''}`}
+              prefix='home'
+              onLoadMore={handleLoadMore}
+              emptyMessage={<FormattedMessage id='empty_column.public' defaultMessage='There is nothing here! Write something publicly, or manually follow users from other servers to fill it up' />}
+              divideType='border'
+            />
+          </PullToRefresh>
+        </Column>
+      </Card>
+    </>
   );
 };
 
