@@ -36,6 +36,7 @@ export interface IAutosuggestInput extends Pick<React.HTMLAttributes<HTMLInputEl
   hidePortal?: boolean
   theme?: InputThemes
   hotkey?: string
+  icon?: string
 }
 
 export default class AutosuggestInput extends ImmutablePureComponent<IAutosuggestInput> {
@@ -271,7 +272,7 @@ export default class AutosuggestInput extends ImmutablePureComponent<IAutosugges
   }
 
   render() {
-    const { value, suggestions, disabled, placeholder, onKeyUp, autoFocus, className, id, maxLength, menu, theme, hotkey } = this.props;
+    const { value, suggestions, disabled, placeholder, onKeyUp, autoFocus, className, id, maxLength, menu, theme, hotkey, icon } = this.props;
     this.hotkey = hotkey;
     const { suggestionsHidden } = this.state;
     const style: React.CSSProperties = { direction: 'ltr' };
@@ -307,6 +308,7 @@ export default class AutosuggestInput extends ImmutablePureComponent<IAutosugges
           maxLength={maxLength}
           data-testid='autosuggest-input'
           theme={theme}
+          icon={icon}
         />
       </div>,
       <Portal key='portal'>

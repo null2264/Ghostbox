@@ -11,6 +11,7 @@
 - UI: avatar size adjust depending on status' text size (kinda, currently only check for large text size)
 - UI: make home, fediverse, and remote (instance) timeline layout more consistent with the other pages
 - UX: move pin button to remote (instance) timeline's header
+- UI: move search icon to the start of textbox
 
 ## 2023.10.3
 - UI: highlight mentions
