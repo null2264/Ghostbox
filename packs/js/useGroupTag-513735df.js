@@ -1,0 +1,1 @@
+import{bl as u,hJ as i,ku as o,bo as n}from"../index-31181b4d.js";function p(t){const s=u(),{entity:a,...e}=i([n.GROUP_TAGS,t],()=>s.get(`/api/v1/tags/${t}`),{schema:o});return{...e,tag:a}}export{p as u};
