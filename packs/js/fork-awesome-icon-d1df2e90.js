@@ -1,0 +1,1 @@
+import{at as o,R as c,aw as d,W as r}from"../index-851c1ca9.js";var m=["id","className","fixedWidth"],x=function(a){var e=a.id,s=a.className,t=a.fixedWidth,i=o(a,m);return c.createElement("i",d({role:"img",className:r("fa","fa-".concat(e),s,{"fa-fw":t})},i))};export{x as F};
