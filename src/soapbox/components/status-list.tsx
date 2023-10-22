@@ -254,7 +254,7 @@ const StatusList: React.FC<IStatusList> = ({
       isLoading={isLoading}
       showLoading={isLoading && statusIds.size === 0}
       onLoadMore={handleLoadOlder}
-      placeholderComponent={() => <PlaceholderStatus variant={divideType === 'border' ? 'slim' : 'rounded'} />}
+      placeholderComponent={() => <PlaceholderStatus showPrivacyIndicator variant={divideType === 'border' ? 'slim' : 'rounded'} />}
       placeholderCount={20}
       ref={node}
       className={clsx('divide-y divide-solid divide-gray-200 dark:divide-gray-800', {
