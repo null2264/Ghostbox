@@ -8,9 +8,9 @@ import SvgIcon from 'soapbox/components/ui/icon/svg-icon';
 import { useHotkey } from 'soapbox/hooks';
 
 const sizes = {
-  md: 'p-4 sm:rounded-xl',
-  lg: 'p-4 sm:p-6 sm:rounded-xl',
-  xl: 'p-4 sm:p-10 sm:rounded-3xl',
+  md: 'sm:rounded-xl',
+  lg: 'sm:p-6 sm:rounded-xl',
+  xl: 'sm:p-10 sm:rounded-3xl',
 };
 
 const messages = defineMessages({
@@ -29,15 +29,17 @@ interface ICard {
   /** Elements inside the card. */
   children: React.ReactNode
   tabIndex?: number
+  pad?: boolean
 }
 
 /** An opaque backdrop to hold a collection of related elements. */
-const Card = React.forwardRef<HTMLDivElement, ICard>(({ children, variant = 'default', size = 'md', className, ...filteredProps }, ref): JSX.Element => (
+const Card = React.forwardRef<HTMLDivElement, ICard>(({ children, variant = 'default', size = 'md', className, pad = true, ...filteredProps }, ref): JSX.Element => (
   <div
     ref={ref}
     {...filteredProps}
     className={clsx({
       'bg-white dark:bg-primary-900 text-gray-900 dark:text-gray-100 shadow-lg dark:shadow-none': variant === 'rounded',
+      'p-4': variant === 'rounded' && pad,
       [sizes[size]]: variant === 'rounded',
       'py-4': variant === 'slim',
     }, className)}

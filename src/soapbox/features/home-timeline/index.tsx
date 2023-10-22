@@ -6,7 +6,7 @@ import { fetchRelationships } from 'soapbox/actions/accounts';
 import { fetchSuggestionsForTimeline } from 'soapbox/actions/suggestions';
 import { expandHomeTimeline } from 'soapbox/actions/timelines';
 import PullToRefresh from 'soapbox/components/pull-to-refresh';
-import { Column, Stack, Text } from 'soapbox/components/ui';
+import { Card, Column, Stack, Text } from 'soapbox/components/ui';
 import Timeline from 'soapbox/features/ui/components/timeline';
 import { useAppSelector, useAppDispatch, useFeatures, useInstance } from 'soapbox/hooks';
 
@@ -86,47 +86,49 @@ const HomeTimeline: React.FC = () => {
   return (
     <Column label={intl.formatMessage(messages.title)} transparent withHeader={false}>
       <PullToRefresh onRefresh={handleRefresh}>
-        <Timeline
-          scrollKey='home_timeline'
-          onLoadMore={handleLoadMore}
-          timelineId='home'
-          divideType='space'
-          showAds
-          emptyMessage={
-            <Stack space={1}>
-              <Text size='xl' weight='medium' align='center'>
-                <FormattedMessage
-                  id='empty_column.home.title'
-                  defaultMessage="You're not following anyone yet"
-                />
-              </Text>
-
-              <Text theme='muted' align='center'>
-                <FormattedMessage
-                  id='empty_column.home.subtitle'
-                  defaultMessage='{siteTitle} gets more interesting once you follow other users.'
-                  values={{ siteTitle: instance.title }}
-                />
-              </Text>
-
-              {features.federating && (
-                <Text theme='muted' align='center'>
+        <Card variant='rounded' pad={false} className='px-4'>
+          <Timeline
+            scrollKey='home_timeline'
+            onLoadMore={handleLoadMore}
+            timelineId='home'
+            divideType='border'
+            showAds
+            emptyMessage={
+              <Stack space={1}>
+                <Text size='xl' weight='medium' align='center'>
                   <FormattedMessage
-                    id='empty_column.home'
-                    defaultMessage='Or you can visit {public} to get started and meet other users.'
-                    values={{
-                      public: (
-                        <Link to='/timeline/local' className='text-primary-600 hover:underline dark:text-primary-400'>
-                          <FormattedMessage id='empty_column.home.local_tab' defaultMessage='the {site_title} tab' values={{ site_title: instance.title }} />
-                        </Link>
-                      ),
-                    }}
+                    id='empty_column.home.title'
+                    defaultMessage="You're not following anyone yet"
                   />
                 </Text>
-              )}
-            </Stack>
-          }
-        />
+
+                <Text theme='muted' align='center'>
+                  <FormattedMessage
+                    id='empty_column.home.subtitle'
+                    defaultMessage='{siteTitle} gets more interesting once you follow other users.'
+                    values={{ siteTitle: instance.title }}
+                  />
+                </Text>
+
+                {features.federating && (
+                  <Text theme='muted' align='center'>
+                    <FormattedMessage
+                      id='empty_column.home'
+                      defaultMessage='Or you can visit {public} to get started and meet other users.'
+                      values={{
+                        public: (
+                          <Link to='/timeline/local' className='text-primary-600 hover:underline dark:text-primary-400'>
+                            <FormattedMessage id='empty_column.home.local_tab' defaultMessage='the {site_title} tab' values={{ site_title: instance.title }} />
+                          </Link>
+                        ),
+                      }}
+                    />
+                  </Text>
+                )}
+              </Stack>
+            }
+          />
+        </Card>
       </PullToRefresh>
     </Column>
   );
