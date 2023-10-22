@@ -11,7 +11,7 @@ import { displayFqn } from 'soapbox/utils/state';
 
 import Badge from './badge';
 import RelativeTimestamp from './relative-timestamp';
-import { Avatar, Emoji, HStack, Icon, IconButton, Stack, Text } from './ui';
+import { Avatar, Button, Emoji, HStack, Icon, IconButton, Stack, Text } from './ui';
 
 import type { StatusApprovalStatus } from 'soapbox/normalizers/status';
 import type { Account as AccountSchema } from 'soapbox/schemas';
@@ -19,13 +19,14 @@ import type { Account as AccountSchema } from 'soapbox/schemas';
 interface IInstanceFavicon {
   account: AccountSchema
   disabled?: boolean
+  linkify?: boolean
 }
 
 const messages = defineMessages({
   bot: { id: 'account.badges.bot', defaultMessage: 'Bot' },
 });
 
-const InstanceFavicon: React.FC<IInstanceFavicon> = ({ account, disabled }) => {
+const InstanceFavicon: React.FC<IInstanceFavicon> = ({ account, disabled, linkify }) => {
   const history = useHistory();
 
   const handleClick: React.MouseEventHandler = (e) => {
@@ -45,15 +46,22 @@ const InstanceFavicon: React.FC<IInstanceFavicon> = ({ account, disabled }) => {
     return null;
   }
 
-  return (
-    <button
-      className='h-4 w-4 flex-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2'
-      onClick={handleClick}
-      disabled={disabled}
-    >
-      <img src={account.pleroma.favicon} alt='' title={account.domain} className='max-h-full w-full' />
-    </button>
+  const renderIcon = (className: string) => (
+    <img src={account.pleroma?.favicon} alt='' title={account.domain} className={className} />
   );
+
+  if (linkify)
+    return (
+      <button
+        className='h-4 w-4 flex-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2'
+        onClick={handleClick}
+        disabled={disabled}
+      >
+        {renderIcon('max-h-full w-full')}
+      </button>
+    );
+
+  return renderIcon('h-4 w-4');
 };
 
 interface IProfilePopper {
@@ -96,6 +104,7 @@ export interface IAccount {
   emoji?: string
   emojiUrl?: string
   note?: string
+  compact?: boolean
 }
 
 const Account = ({
@@ -122,12 +131,16 @@ const Account = ({
   emoji,
   emojiUrl,
   note,
+  compact = true,
 }: IAccount) => {
   const overflowRef = useRef<HTMLDivElement>(null);
   const actionRef = useRef<HTMLDivElement>(null);
 
   const me = useAppSelector((state) => state.me);
-  const username = useAppSelector((state) => account ? getAcct(account, displayFqn(state)) : null);
+  const username = useAppSelector((state) => {
+    if (!account) return null;
+    return compact ? getAcct(account, displayFqn(state)) : account.username;
+  });
 
   const handleAction = () => {
     onActionClick!(account);
@@ -160,6 +173,10 @@ const Account = ({
 
     return null;
   };
+
+  const renderInstanceFavicon = (linkify: boolean) => account.pleroma?.favicon && (
+    <InstanceFavicon account={account} disabled={!withLinkToProfile} linkify={linkify} />
+  );
 
   const intl = useIntl();
 
@@ -234,8 +251,13 @@ const Account = ({
               <HStack alignItems='center' space={1}>
                 <Text theme='muted' size='sm' direction='ltr' truncate>@{username}</Text>
 
-                {account.pleroma?.favicon && (
-                  <InstanceFavicon account={account} disabled={!withLinkToProfile} />
+                {compact ? renderInstanceFavicon(true) : (
+                  <Button to={`/timeline/${account.domain}`} size='xs-instance' className='px-1'>
+                    <div className='flex gap-1'>
+                      {account.domain}
+                      {renderInstanceFavicon(false)}
+                    </div>
+                  </Button>
                 )}
 
                 {(timestamp) ? (
