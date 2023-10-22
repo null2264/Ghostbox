@@ -1,1 +1,0 @@
-import{eX as u,r as t,au as c,eY as i,a,aO as f,aC as l}from"../index-f3818f71.js";var h=function(){var r=u(),s=t.useState(!1),e=c(s,2),o=e[0],n=e[1];return t.useEffect(function(){r(i()).then(function(){return n(!0)}).catch(console.warn)},[]),o?a(f,{to:"/"}):a(l,{})};export{h as default};
