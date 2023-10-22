@@ -1,1 +1,0 @@
-import{bl as i,bm as u,bo as r,ku as n}from"../index-220d7bfb.js";function p(s){const t=i(),{entities:e,...a}=u([r.GROUP_TAGS,s],()=>t.get(`/api/v1/truth/trends/groups/${s}/tags`),{schema:n});return{...a,tags:e}}export{p as u};
