@@ -4,7 +4,6 @@ import LinkFooter from 'soapbox/features/ui/components/link-footer';
 import BundleContainer from 'soapbox/features/ui/containers/bundle-container';
 import {
   PromoPanel,
-  InstanceInfoPanel,
   InstanceModerationPanel,
 } from 'soapbox/features/ui/util/async-components';
 import { useAppSelector, useOwnAccount } from 'soapbox/hooks';
@@ -35,9 +34,6 @@ const RemoteInstancePage: React.FC<IRemoteInstancePage> = ({ children, params })
       <Layout.Aside>
         <BundleContainer fetchComponent={PromoPanel}>
           {Component => <Component key='promo-panel' />}
-        </BundleContainer>
-        <BundleContainer fetchComponent={InstanceInfoPanel}>
-          {Component => <Component host={host} />}
         </BundleContainer>
         {(disclosed || account?.admin) && (
           <BundleContainer fetchComponent={InstanceModerationPanel}>

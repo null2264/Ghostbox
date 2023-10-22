@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
+import { pinHost, unpinHost } from 'soapbox/actions/remote-timeline';
 import { expandRemoteTimeline } from 'soapbox/actions/timelines';
 import { useRemoteStream } from 'soapbox/api/hooks';
 import IconButton from 'soapbox/components/icon-button';
@@ -46,12 +47,26 @@ const RemoteTimeline: React.FC<IRemoteTimeline> = ({ params }) => {
     dispatch(expandRemoteTimeline(instance, { onlyMedia, maxId: undefined }));
   }, [onlyMedia]);
 
+  const handlePin = () => {
+    if (!pinned) {
+      dispatch(pinHost(instance));
+    } else {
+      dispatch(unpinHost(instance));
+    }
+  };
+
+  const renderAction = () => {
+    return (
+      <IconButton size={18} src={pinned ? require('@tabler/icons/pinned-off.svg') : require('@tabler/icons/pin.svg')} onClick={handlePin} />
+    );
+  };
+
   return (
     <>
       {instance && <PinnedHostsPicker host={instance} />}
 
       <Card variant='rounded'>
-        <Column label={instance} transparent>
+        <Column label={instance} transparent action={renderAction()}>
 
           {!pinned && (
             <HStack className='rounded-lg bg-white p-2 text-gray-900 shadow dark:bg-primary-800 dark:text-gray-100 dark:shadow-none' space={2}>

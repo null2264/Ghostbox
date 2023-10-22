@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import Icon from 'soapbox/components/icon';
+import { Icon } from 'soapbox/components/ui';
 
 interface IIconButton extends Pick<React.ButtonHTMLAttributes<HTMLButtonElement>, 'className' | 'disabled' | 'onClick' | 'onKeyDown' | 'onKeyPress' | 'onKeyUp' | 'onMouseDown' | 'onMouseEnter' | 'onMouseLeave' | 'tabIndex' | 'title'> {
   active?: boolean
@@ -27,7 +27,7 @@ const IconButton: React.FC<IIconButton> = ({
   onMouseEnter,
   onMouseLeave,
   pressed,
-  size = 18,
+  size = 16,
   src,
   tabIndex = 0,
   text,
@@ -90,7 +90,7 @@ const IconButton: React.FC<IIconButton> = ({
       type='button'
     >
       <div>
-        <Icon className={iconClassName} src={src} aria-hidden='true' />
+        <Icon className={iconClassName} src={src} aria-hidden='true' size={size} />
       </div>
       {text && <span className='icon-button__text'>{text}</span>}
     </button>
