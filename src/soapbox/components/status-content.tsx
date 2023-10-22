@@ -86,13 +86,13 @@ const StatusContent: React.FC<IStatusContent> = ({
         if (classes.includes('mention')) {
           const mention: MentionEntity | undefined = status.mentions.find(({ url }) => node.attribs.href === url);
           if (mention) {
-            return (<Mention mention={mention} />);
+            return (<Mention mention={mention} textSize={textSize} />);
           } else if (node.attribs.href) {
             // User is not present in database, construct acct from url
             const matches = [...node.attribs.href.matchAll(/^http(?:s)?:\/\/((?:[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,})\/(?:@|users?\/)(\S+)/gm)][0];
 
             if (matches) {
-              return (<Mention mention={{ acct: `${matches[3]}@${matches[1]}`, url: node.attribs.href, id: '', username: '' }} />);
+              return (<Mention mention={{ acct: `${matches[3]}@${matches[1]}`, url: node.attribs.href, id: '', username: '' }} textSize={textSize} />);
             }
           }
         }

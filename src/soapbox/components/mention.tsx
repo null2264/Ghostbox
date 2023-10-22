@@ -8,21 +8,23 @@ import { makeGetAccount } from 'soapbox/selectors';
 import HoverRefWrapper from './hover-ref-wrapper';
 import { Avatar } from './ui';
 
+import type { Sizes } from 'soapbox/components/ui/text/text';
 import type { Mention as MentionEntity } from 'soapbox/schemas';
 
 const getAccount = makeGetAccount();
 
 export interface IMention {
   mention: MentionEntity
+  textSize?: Sizes
 }
 
-export const Mention: React.FC<IMention> = ({ mention }) => {
+export const Mention: React.FC<IMention> = ({ mention, textSize = 'md' }) => {
   const dispatch = useAppDispatch();
   const getchAccount = () => {
     if (mention.id !== '') dispatch(fetchAccount(mention.id));
   };
   const account: any = useAppSelector(state => ((mention.id !== '') ? getAccount(state, mention.id) : null) || { id: mention.id, fqn: mention.acct, acct: mention.acct, url: mention.url, username: mention.username, avatar: '' });
-  const avatarSize = 20;
+  const avatarSize = textSize === 'lg' ? 28 : 20;
 
   useLayoutEffect(() => {
     getchAccount();
