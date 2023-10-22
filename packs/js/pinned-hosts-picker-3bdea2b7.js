@@ -1,0 +1,1 @@
+import{f as r,a as n,ab as c,H as o}from"../index-4238fef4.js";var p=function(a){var s=a.host,i=r(),t=i.getIn(["remote_timeline","pinnedHosts"]);return!t||t.isEmpty()?null:n(o,{className:"mb-4",space:2},void 0,t.map(function(e){return n(c,{to:"/timeline/".concat(e),size:"sm",theme:e===s?"accent":"secondary"},e,e)}))};export{p as P};
