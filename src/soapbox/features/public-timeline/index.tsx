@@ -94,7 +94,6 @@ const CommunityTimeline = () => {
               prefix='home'
               onLoadMore={handleLoadMore}
               emptyMessage={<FormattedMessage id='empty_column.public' defaultMessage='There is nothing here! Write something publicly, or manually follow users from other servers to fill it up' />}
-              divideType='border'
             />
           </PullToRefresh>
         </Column>

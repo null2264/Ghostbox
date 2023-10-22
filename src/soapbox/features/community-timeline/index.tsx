@@ -4,7 +4,7 @@ import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import { expandCommunityTimeline } from 'soapbox/actions/timelines';
 import { useCommunityStream } from 'soapbox/api/hooks';
 import PullToRefresh from 'soapbox/components/pull-to-refresh';
-import { Column } from 'soapbox/components/ui';
+import { Card, Column } from 'soapbox/components/ui';
 import { useAppSelector, useAppDispatch, useSettings } from 'soapbox/hooks';
 
 import Timeline from '../ui/components/timeline';
@@ -38,18 +38,19 @@ const CommunityTimeline = () => {
   }, [onlyMedia]);
 
   return (
-    <Column className='-mt-3 sm:mt-0' label={intl.formatMessage(messages.title)} transparent>
-      <PullToRefresh onRefresh={handleRefresh}>
-        <Timeline
-          scrollKey={`${timelineId}_timeline`}
-          timelineId={`${timelineId}${onlyMedia ? ':media' : ''}`}
-          prefix='home'
-          onLoadMore={handleLoadMore}
-          emptyMessage={<FormattedMessage id='empty_column.community' defaultMessage='The local timeline is empty. Write something publicly to get the ball rolling!' />}
-          divideType='space'
-        />
-      </PullToRefresh>
-    </Column>
+    <Card variant='rounded'>
+      <Column className='-mt-3 sm:mt-0' label={intl.formatMessage(messages.title)} transparent>
+        <PullToRefresh onRefresh={handleRefresh}>
+          <Timeline
+            scrollKey={`${timelineId}_timeline`}
+            timelineId={`${timelineId}${onlyMedia ? ':media' : ''}`}
+            prefix='home'
+            onLoadMore={handleLoadMore}
+            emptyMessage={<FormattedMessage id='empty_column.community' defaultMessage='The local timeline is empty. Write something publicly to get the ball rolling!' />}
+          />
+        </PullToRefresh>
+      </Column>
+    </Card>
   );
 };
 

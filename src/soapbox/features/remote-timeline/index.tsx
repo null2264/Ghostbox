@@ -92,7 +92,6 @@ const RemoteTimeline: React.FC<IRemoteTimeline> = ({ params }) => {
                 values={{ instance }}
               />
             }
-            divideType='border'
           />
         </Column>
       </Card>
