@@ -1,6 +1,7 @@
+import { OrderedSet as ImmutableOrderedSet } from 'immutable';
+
 import { getSettings, changeSetting } from 'soapbox/actions/settings';
 
-import type { OrderedSet as ImmutableOrderedSet } from 'immutable';
 import type { AppDispatch, RootState } from 'soapbox/store';
 
 const getPinnedHosts = (state: RootState) => {
@@ -13,7 +14,7 @@ const pinHost = (host: string) =>
     const state = getState();
     const pinnedHosts = getPinnedHosts(state);
 
-    return dispatch(changeSetting(['remote_timeline', 'pinnedHosts'], pinnedHosts.add(host)));
+    return dispatch(changeSetting(['remote_timeline', 'pinnedHosts'], ImmutableOrderedSet(pinnedHosts).add(host)));
   };
 
 const unpinHost = (host: string) =>
@@ -21,7 +22,7 @@ const unpinHost = (host: string) =>
     const state = getState();
     const pinnedHosts = getPinnedHosts(state);
 
-    return dispatch(changeSetting(['remote_timeline', 'pinnedHosts'], pinnedHosts.remove(host)));
+    return dispatch(changeSetting(['remote_timeline', 'pinnedHosts'], ImmutableOrderedSet(pinnedHosts).remove(host)));
   };
 
 export {
