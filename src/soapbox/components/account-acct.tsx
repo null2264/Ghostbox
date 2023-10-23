@@ -31,7 +31,7 @@ const AccountAcct: React.FC<IAccountAcct> = ({ account, disabled }) => {
       </p>
 
       {legacyDomain ? renderInstanceFavicon(true) : (
-        <Button to={`/timeline/${account.domain}`} size='xs-instance' className='mb-0.5 px-1'>
+        <Button to={`/timeline/${account.domain}`} size='xs-instance' className='mb-0.5 px-1' disabled={disabled} noDisabledStyle>
           <p title={account.domain} className='flex gap-1'>
             <span className='truncate'>{account.domain}</span>
             {renderInstanceFavicon(false)}

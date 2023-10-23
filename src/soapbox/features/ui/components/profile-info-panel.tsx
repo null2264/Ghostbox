@@ -155,7 +155,7 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
           </HStack>
 
           <HStack alignItems='center' space={0.5}>
-            <AccountAcct account={account} />
+            <AccountAcct account={account} disabled={account.local} />
 
             {account.locked && (
               <Icon

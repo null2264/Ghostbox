@@ -21,6 +21,7 @@ const UserPanel: React.FC<IUserPanel> = ({ accountId, action, badges, domain }) 
   const { account } = useAccount(accountId);
 
   if (!account) return null;
+
   const displayNameHtml = { __html: account.display_name_html };
   const acct = !account.acct.includes('@') && domain ? `${account.acct}@${domain}` : account.acct;
   const header = account.header;
@@ -67,7 +68,7 @@ const UserPanel: React.FC<IUserPanel> = ({ accountId, action, badges, domain }) 
           </Link>
 
           <HStack alignItems='center' space={1}>
-            <AccountAcct account={account} />
+            <AccountAcct account={account} disabled={account.local} />
           </HStack>
         </Stack>
 

@@ -17,6 +17,8 @@ interface IButton {
   className?: string
   /** Prevent the button from being clicked. */
   disabled?: boolean
+  /** Prevent the button from looking like it's disabled */
+  noDisabledStyle?: boolean
   /** URL to an SVG icon to render inside the button. */
   icon?: string
   /** Action when the button is clicked. */
@@ -39,6 +41,7 @@ const Button = React.forwardRef<HTMLButtonElement, IButton>((props, ref): JSX.El
     block = false,
     children,
     disabled = false,
+    noDisabledStyle = false,
     icon,
     onClick,
     size = 'md',
@@ -54,7 +57,7 @@ const Button = React.forwardRef<HTMLButtonElement, IButton>((props, ref): JSX.El
   const themeClass = useButtonStyles({
     theme,
     block,
-    disabled,
+    disabled: noDisabledStyle ? false : disabled,
     size,
   });
 
