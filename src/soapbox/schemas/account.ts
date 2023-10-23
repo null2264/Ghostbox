@@ -91,6 +91,7 @@ const baseAccountSchema = z.object({
   username: z.string().catch(''),
   verified: z.boolean().catch(false),
   website: z.string().catch(''),
+  local: z.boolean().catch(false),
 });
 
 type BaseAccount = z.infer<typeof baseAccountSchema>;
@@ -145,6 +146,7 @@ const transformAccount = <T extends TransformableAccount>({ pleroma, other_setti
     staff: pleroma?.is_admin || pleroma?.is_moderator || false,
     suspended: account.suspended || pleroma?.deactivated || false,
     verified: account.verified || pleroma?.tags.includes('verified') || false,
+    local: account.acct.split('@')[1] === undefined,
   };
 };
 

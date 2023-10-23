@@ -15,7 +15,6 @@ import ActionButton from 'soapbox/features/ui/components/action-button';
 import BundleContainer from 'soapbox/features/ui/containers/bundle-container';
 import { UserPanel } from 'soapbox/features/ui/util/async-components';
 import { useAppSelector, useAppDispatch } from 'soapbox/hooks';
-import { isLocal } from 'soapbox/utils/accounts';
 
 import { showProfileHoverCard } from './hover-ref-wrapper';
 import { Card, CardBody, HStack, Icon, Stack, Text } from './ui';
@@ -121,7 +120,7 @@ export const ProfileHoverCard: React.FC<IProfileHoverCard> = ({ visible = true }
               )}
             </BundleContainer>
 
-            {isLocal(account) ? (
+            {account.local && (
               <HStack alignItems='center' space={0.5}>
                 <Icon
                   src={require('@tabler/icons/calendar.svg')}
@@ -136,7 +135,7 @@ export const ProfileHoverCard: React.FC<IProfileHoverCard> = ({ visible = true }
                   />
                 </Text>
               </HStack>
-            ) : null}
+            )}
 
             {account.note.length > 0 && (
               <Text size='sm' dangerouslySetInnerHTML={accountBio} />

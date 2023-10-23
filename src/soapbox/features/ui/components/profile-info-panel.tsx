@@ -8,7 +8,6 @@ import Badge from 'soapbox/components/badge';
 import Markup from 'soapbox/components/markup';
 import { Icon, HStack, Stack, Text } from 'soapbox/components/ui';
 import { useAppSelector, useSoapboxConfig } from 'soapbox/hooks';
-import { isLocal } from 'soapbox/utils/accounts';
 import { badgeToTag, getBadges as getAccountBadges } from 'soapbox/utils/badges';
 import { capitalize } from 'soapbox/utils/strings';
 
@@ -177,7 +176,7 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
         )}
 
         <div className='flex flex-col items-start gap-2 md:flex-row md:flex-wrap md:items-center'>
-          {isLocal(account) ? (
+          {account.local && (
             <HStack alignItems='center' space={0.5}>
               <Icon
                 src={require('@tabler/icons/calendar.svg')}
@@ -192,7 +191,7 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
                 />
               </Text>
             </HStack>
-          ) : null}
+          )}
 
           {account.location ? (
             <HStack alignItems='center' space={0.5}>

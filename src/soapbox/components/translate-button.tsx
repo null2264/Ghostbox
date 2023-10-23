@@ -4,7 +4,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { translateStatus, undoStatusTranslation } from 'soapbox/actions/statuses';
 import { useAppDispatch, useAppSelector, useFeatures, useInstance } from 'soapbox/hooks';
 import { isRtl } from 'soapbox/rtl';
-import { isLocal } from 'soapbox/utils/accounts';
 import { AKKOMA, parseVersion } from 'soapbox/utils/features';
 
 import Markup from './markup';
@@ -31,7 +30,7 @@ const TranslateButton: React.FC<ITranslateButton> = ({ status }) => {
   const sourceLanguages = instance.pleroma.metadata.translation.source_languages;
   const targetLanguages = instance.pleroma.metadata.translation.target_languages;
 
-  const renderTranslate = (me || allowUnauthenticated) && (allowRemote || isLocal(status.account as Account)) && ['public', 'unlisted'].includes(status.visibility) && status.contentHtml.length > 0 && ((status.language !== null && intl.locale !== status.language) || v.software === AKKOMA);  // FIXME: This check is not ideal, but will do for now
+  const renderTranslate = (me || allowUnauthenticated) && (allowRemote || (status.account as Account).local) && ['public', 'unlisted'].includes(status.visibility) && status.contentHtml.length > 0 && ((status.language !== null && intl.locale !== status.language) || v.software === AKKOMA);  // FIXME: This check is not ideal, but will do for now
 
   const supportsLanguages = ((!sourceLanguages || sourceLanguages.includes(status.language!)) && (!targetLanguages || targetLanguages.includes(intl.locale)) || v.software === AKKOMA);  // FIXME: This check is not ideal, but will do for now
 

@@ -17,7 +17,7 @@ import {
   PinnedAccountsPanel,
 } from 'soapbox/features/ui/util/async-components';
 import { useAppSelector, useFeatures, useSoapboxConfig } from 'soapbox/hooks';
-import { getAcct, isLocal } from 'soapbox/utils/accounts';
+import { getAcct } from 'soapbox/utils/accounts';
 
 interface IProfilePage {
   params?: {
@@ -125,7 +125,7 @@ const ProfilePage: React.FC<IProfilePage> = ({ params, children }) => {
             {Component => <Component account={account} />}
           </BundleContainer>
         )}
-        {(features.accountEndorsements && account && isLocal(account)) ? (
+        {(features.accountEndorsements && account && account.local) ? (
           <BundleContainer fetchComponent={PinnedAccountsPanel}>
             {Component => <Component account={account} limit={5} key='pinned-accounts-panel' />}
           </BundleContainer>
