@@ -31,8 +31,8 @@ export const Mention: React.FC<IMention> = ({ mention, textSize = 'md' }) => {
   }, []);
 
   return (
-    <Link onClick={e => e.stopPropagation()} to={`/@${account.acct}`} title={`@${account.fqn}`} className='mention inline-block rounded-full bg-primary-200 py-1 pl-1 pr-2 text-primary-600 dark:bg-primary-800 dark:text-primary-400'>
-      <HoverRefWrapper key={account.id} accountId={account.id} className='inline-flex items-center align-top'>
+    <Link onClick={e => e.stopPropagation()} to={`/@${account.acct}`} title={`@${account.fqn}`} className='mention group inline-block rounded-full bg-primary-200 py-1 pl-1 pr-2 text-primary-600 dark:bg-primary-800 dark:text-primary-400'>
+      <HoverRefWrapper key={account.id} accountId={account.id} className='inline-flex items-center align-top group-hover:underline'>
         <Avatar size={avatarSize} src={account.avatar} className='mr-1.5 inline-flex items-center align-bottom' />
         <span>@{account.acct}</span>
       </HoverRefWrapper>

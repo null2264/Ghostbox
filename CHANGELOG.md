@@ -13,6 +13,7 @@
 - Timeline: move pin button to remote (instance) timeline's header
 - Search: move search icon to the start of textbox
 - UI: changed how user acct is rendered, domain now shown as button (similar to Thread)
+- Mention: fix mention doesn't have underline on hover
 
 ## 2023.10.3
 - UI: highlight mentions
