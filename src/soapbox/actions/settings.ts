@@ -171,6 +171,8 @@ const defaultSettings = ImmutableMap({
   remote_timeline: ImmutableMap({
     pinnedHosts: ImmutableOrderedSet(),
   }),
+
+  legacyDomain: false,
 });
 
 const getSettings = createSelector([

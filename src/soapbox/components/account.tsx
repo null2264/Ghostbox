@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React, { useRef } from 'react';
 import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
 import { Link, useHistory } from 'react-router-dom';
@@ -5,9 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import HoverRefWrapper from 'soapbox/components/hover-ref-wrapper';
 import VerificationBadge from 'soapbox/components/verification-badge';
 import ActionButton from 'soapbox/features/ui/components/action-button';
-import { useAppSelector } from 'soapbox/hooks';
-import { getAcct } from 'soapbox/utils/accounts';
-import { displayFqn } from 'soapbox/utils/state';
+import { useAppSelector, useSettings } from 'soapbox/hooks';
 
 import Badge from './badge';
 import RelativeTimestamp from './relative-timestamp';
@@ -104,7 +103,6 @@ export interface IAccount {
   emoji?: string
   emojiUrl?: string
   note?: string
-  compact?: boolean
 }
 
 const Account = ({
@@ -131,16 +129,13 @@ const Account = ({
   emoji,
   emojiUrl,
   note,
-  compact = true,
 }: IAccount) => {
   const overflowRef = useRef<HTMLDivElement>(null);
   const actionRef = useRef<HTMLDivElement>(null);
 
+  const settings = useSettings();
+  const legacyDomain = settings.get('legacyDomain') as boolean;
   const me = useAppSelector((state) => state.me);
-  const username = useAppSelector((state) => {
-    if (!account) return null;
-    return compact ? getAcct(account, displayFqn(state)) : account.username;
-  });
 
   const handleAction = () => {
     onActionClick!(account);
@@ -249,14 +244,19 @@ const Account = ({
 
             <Stack space={withAccountNote || note ? 1 : 0}>
               <HStack alignItems='center' space={1}>
-                <Text theme='muted' size='sm' direction='ltr' truncate>@{username}</Text>
+                <p className={clsx({ 'truncate': legacyDomain })}>
+                  <Text theme='not-so-subtle' size='sm' direction='ltr' tag='span'>@{account.username}</Text>
+                  {legacyDomain && (
+                    <Text theme='muted' size='sm' direction='ltr' tag='span'>@{account.domain}</Text>
+                  )}
+                </p>
 
-                {compact ? renderInstanceFavicon(true) : (
-                  <Button to={`/timeline/${account.domain}`} size='xs-instance' className='px-1'>
-                    <div className='flex gap-1'>
-                      {account.domain}
+                {legacyDomain ? renderInstanceFavicon(true) : (
+                  <Button to={`/timeline/${account.domain}`} size='xs-instance' className='mb-0.5 px-1'>
+                    <p className='flex gap-1'>
+                      <span className='truncate'>{account.domain}</span>
                       {renderInstanceFavicon(false)}
-                    </div>
+                    </p>
                   </Button>
                 )}
 

@@ -107,6 +107,10 @@ const Preferences = () => {
             <SettingToggle settings={settings} settingPath={['preserveSpoilers']} onChange={onToggleChange} />
           </ListItem>
         )}
+
+        <ListItem label={<FormattedMessage id='preferences.fields.legacy_domain_label' defaultMessage='Use legacy domain rendering (plaintext beside username, e.g. @username@example.com)' />}>
+          <SettingToggle settings={settings} settingPath={['legacyDomain']} onChange={onToggleChange} />
+        </ListItem>
       </List>
 
       <List>
