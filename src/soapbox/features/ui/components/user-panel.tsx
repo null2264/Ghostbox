@@ -68,7 +68,7 @@ const UserPanel: React.FC<IUserPanel> = ({ accountId, action, badges, domain }) 
           </Link>
 
           <HStack alignItems='center' space={1}>
-            <AccountAcct account={account} disabled={account.local} />
+            <AccountAcct account={account} />
           </HStack>
         </Stack>
 

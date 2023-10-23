@@ -7,9 +7,10 @@ interface IInstanceFavicon {
   favicon: string
   disabled?: boolean
   linkify?: boolean
+  local?: boolean
 }
 
-const InstanceFavicon: React.FC<IInstanceFavicon> = ({ domain, favicon, disabled, linkify }) => {
+const InstanceFavicon: React.FC<IInstanceFavicon> = ({ domain, favicon, disabled, linkify, local }) => {
   const renderIcon = (className: string) => (
     <img src={favicon} alt='' title={domain} className={className} />
   );
@@ -17,7 +18,8 @@ const InstanceFavicon: React.FC<IInstanceFavicon> = ({ domain, favicon, disabled
   if (linkify)
     return (
       <Button
-        to={`/@${domain}`}
+        onClick={e => e.stopPropagation()}
+        to={local ? '/timeline/local' : `/timeline/${domain}`}
         disabled={disabled}
         theme='transparent'
       >

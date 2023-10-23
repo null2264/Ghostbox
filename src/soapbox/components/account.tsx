@@ -195,7 +195,7 @@ const Account = ({
 
             <Stack space={withAccountNote || note ? 1 : 0}>
               <HStack alignItems='center' space={1}>
-                <AccountAcct account={account} disabled={!withLinkToProfile || account.local} />
+                <AccountAcct account={account} disabled={!withLinkToProfile} />
 
                 {(timestamp) ? (
                   <>
