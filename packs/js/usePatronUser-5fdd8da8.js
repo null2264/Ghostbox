@@ -1,1 +1,0 @@
-import{bl as a,hJ as o,hK as r,bo as i}from"../index-3657f38e.js";function c(t){const e=a(),{entity:n,...s}=o([i.PATRON_USERS,t||""],()=>e.get(`/api/patron/v1/accounts/${encodeURIComponent(t)}`),{schema:r,enabled:!!t});return{patronUser:n,...s}}export{c as u};
