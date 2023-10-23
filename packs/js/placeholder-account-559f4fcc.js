@@ -1,1 +1,0 @@
-import{R as a,a as e,b as c,H as t,c as o}from"../index-c31959b9.js";var l=function(){return e(t,{space:3,alignItems:"center"},void 0,e("div",{className:"shrink-0"},void 0,e(c,{size:42})),e("div",{className:"min-w-0 flex-1"},void 0,e(o,{minLength:3,maxLength:25})))};const r=a.memo(l);export{r as P};

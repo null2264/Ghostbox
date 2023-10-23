@@ -1,1 +1,0 @@
-import{r as o,fa as s}from"../index-c31959b9.js";import{u as i}from"./header-picker-0951ac8a.js";function f(e={}){const[r,a]=o.useState();return{src:i(r)||(r===null?void 0:e.preview),file:r,onChange:async({target:{files:n}})=>{const t=n==null?void 0:n.item(0);t&&(typeof e.maxPixels=="number"?a(await s(t,e.maxPixels)):a(t))},onClear:()=>a(null)}}export{f as u};
