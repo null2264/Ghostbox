@@ -8,10 +8,11 @@
 ## 2023.10.4
 - UX: fetch account when mention component is rendering
 - UX: "missing" account now show missing image icon as avatar next to user mention
-- UI: avatar size adjust depending on status' text size (kinda, currently only check for large text size)
-- UI: make home, local, fediverse, and remote (instance) timeline layout more consistent with the other pages
-- UX: move pin button to remote (instance) timeline's header
-- UI: move search icon to the start of textbox
+- Status: avatar size adjust depending on status' text size (kinda, currently only check for large text size)
+- Timeline: make home, local, fediverse, and remote (instance) timeline layout more consistent with the other pages
+- Timeline: move pin button to remote (instance) timeline's header
+- Search: move search icon to the start of textbox
+- UI: changed how user acct is rendered, domain now shown as button (similar to Thread)
 
 ## 2023.10.3
 - UI: highlight mentions
