@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Redirect, useHistory } from 'react-router-dom';
 
@@ -19,6 +19,8 @@ import {
 import { useAppSelector, useFeatures, useSoapboxConfig } from 'soapbox/hooks';
 import { getAcct } from 'soapbox/utils/accounts';
 
+import type { Account } from 'soapbox/types/entities';
+
 interface IProfilePage {
   params?: {
     username?: string
@@ -31,7 +33,7 @@ const ProfilePage: React.FC<IProfilePage> = ({ params, children }) => {
   const history = useHistory();
   const username = params?.username || '';
 
-  const { account } = useAccountLookup(username, { withRelationship: true });
+  const { account } = useAccountLookup(username, { withRelationship: true }) as { account: Account | undefined };
 
   const me = useAppSelector(state => state.me);
   const features = useFeatures();
@@ -92,9 +94,11 @@ const ProfilePage: React.FC<IProfilePage> = ({ params, children }) => {
           <div className='space-y-4'>
             <Header account={account} />
 
-            <BundleContainer fetchComponent={ProfileInfoPanel}>
-              {Component => <Component username={username} account={account} />}
-            </BundleContainer>
+            {account && (
+              <Suspense>
+                <ProfileInfoPanel username={username} account={account} />
+              </Suspense>
+            )}
 
             {account && showTabs && (
               <Tabs key={`profile-tabs-${account.id}`} items={tabItems} activeItem={activeItem} />

@@ -1,67 +1,24 @@
-import clsx from 'clsx';
 import React, { useRef } from 'react';
 import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import HoverRefWrapper from 'soapbox/components/hover-ref-wrapper';
 import VerificationBadge from 'soapbox/components/verification-badge';
 import ActionButton from 'soapbox/features/ui/components/action-button';
-import { useAppSelector, useSettings } from 'soapbox/hooks';
+import { useAppSelector } from 'soapbox/hooks';
 
+import AccountAcct from './account-acct';
 import Badge from './badge';
 import RelativeTimestamp from './relative-timestamp';
-import { Avatar, Button, Emoji, HStack, Icon, IconButton, Stack, Text } from './ui';
+import { Avatar, Emoji, HStack, Icon, IconButton, Stack, Text } from './ui';
 
 import type { StatusApprovalStatus } from 'soapbox/normalizers/status';
 import type { Account as AccountSchema } from 'soapbox/schemas';
 
-interface IInstanceFavicon {
-  account: AccountSchema
-  disabled?: boolean
-  linkify?: boolean
-}
 
 const messages = defineMessages({
   bot: { id: 'account.badges.bot', defaultMessage: 'Bot' },
 });
-
-const InstanceFavicon: React.FC<IInstanceFavicon> = ({ account, disabled, linkify }) => {
-  const history = useHistory();
-
-  const handleClick: React.MouseEventHandler = (e) => {
-    e.stopPropagation();
-
-    if (disabled) return;
-
-    const timelineUrl = `/timeline/${account.domain}`;
-    if (!(e.ctrlKey || e.metaKey)) {
-      history.push(timelineUrl);
-    } else {
-      window.open(timelineUrl, '_blank');
-    }
-  };
-
-  if (!account.pleroma?.favicon) {
-    return null;
-  }
-
-  const renderIcon = (className: string) => (
-    <img src={account.pleroma?.favicon} alt='' title={account.domain} className={className} />
-  );
-
-  if (linkify)
-    return (
-      <button
-        className='h-4 w-4 flex-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2'
-        onClick={handleClick}
-        disabled={disabled}
-      >
-        {renderIcon('max-h-full w-full')}
-      </button>
-    );
-
-  return renderIcon('h-4 w-4');
-};
 
 interface IProfilePopper {
   condition: boolean
@@ -133,8 +90,6 @@ const Account = ({
   const overflowRef = useRef<HTMLDivElement>(null);
   const actionRef = useRef<HTMLDivElement>(null);
 
-  const settings = useSettings();
-  const legacyDomain = settings.get('legacyDomain') as boolean;
   const me = useAppSelector((state) => state.me);
 
   const handleAction = () => {
@@ -168,10 +123,6 @@ const Account = ({
 
     return null;
   };
-
-  const renderInstanceFavicon = (linkify: boolean) => account.pleroma?.favicon && (
-    <InstanceFavicon account={account} disabled={!withLinkToProfile} linkify={linkify} />
-  );
 
   const intl = useIntl();
 
@@ -244,21 +195,7 @@ const Account = ({
 
             <Stack space={withAccountNote || note ? 1 : 0}>
               <HStack alignItems='center' space={1}>
-                <p className={clsx({ 'truncate': legacyDomain })}>
-                  <Text theme='not-so-subtle' size='sm' direction='ltr' tag='span'>@{account.username}</Text>
-                  {legacyDomain && (
-                    <Text theme='muted' size='sm' direction='ltr' tag='span'>@{account.domain}</Text>
-                  )}
-                </p>
-
-                {legacyDomain ? renderInstanceFavicon(true) : (
-                  <Button to={`/timeline/${account.domain}`} size='xs-instance' className='mb-0.5 px-1'>
-                    <p title={account.domain} className='flex gap-1'>
-                      <span className='truncate'>{account.domain}</span>
-                      {renderInstanceFavicon(false)}
-                    </p>
-                  </Button>
-                )}
+                <AccountAcct account={account} disabled={!withLinkToProfile} />
 
                 {(timestamp) ? (
                   <>

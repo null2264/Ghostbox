@@ -4,10 +4,11 @@ import React from 'react';
 import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
 
 import { usePatronUser } from 'soapbox/api/hooks';
+import AccountAcct from 'soapbox/components/account-acct';
 import Badge from 'soapbox/components/badge';
 import Markup from 'soapbox/components/markup';
 import { Icon, HStack, Stack, Text } from 'soapbox/components/ui';
-import { useAppSelector, useSoapboxConfig } from 'soapbox/hooks';
+import { useAppSelector } from 'soapbox/hooks';
 import { badgeToTag, getBadges as getAccountBadges } from 'soapbox/utils/badges';
 import { capitalize } from 'soapbox/utils/strings';
 
@@ -43,7 +44,6 @@ interface IProfileInfoPanel {
 /** User profile metadata, such as location, birthday, etc. */
 const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) => {
   const intl = useIntl();
-  const { displayFqn } = useSoapboxConfig();
   const { patronUser } = usePatronUser(account?.url);
   const me = useAppSelector(state => state.me);
   const ownAccount = account?.id === me;
@@ -155,9 +155,7 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
           </HStack>
 
           <HStack alignItems='center' space={0.5}>
-            <Text size='sm' theme='muted' direction='ltr' truncate>
-              @{displayFqn ? account.fqn : account.acct}
-            </Text>
+            <AccountAcct account={account} />
 
             {account.locked && (
               <Icon

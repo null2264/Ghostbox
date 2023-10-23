@@ -3,13 +3,11 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import { useAccount } from 'soapbox/api/hooks';
+import AccountAcct from 'soapbox/components/account-acct';
 import StillImage from 'soapbox/components/still-image';
 import { Avatar, HStack, Stack, Text } from 'soapbox/components/ui';
 import VerificationBadge from 'soapbox/components/verification-badge';
-import { useAppSelector } from 'soapbox/hooks';
-import { getAcct } from 'soapbox/utils/accounts';
 import { shortNumberFormat } from 'soapbox/utils/numbers';
-import { displayFqn } from 'soapbox/utils/state';
 
 interface IUserPanel {
   accountId: string
@@ -21,7 +19,6 @@ interface IUserPanel {
 const UserPanel: React.FC<IUserPanel> = ({ accountId, action, badges, domain }) => {
   const intl = useIntl();
   const { account } = useAccount(accountId);
-  const fqn = useAppSelector((state) => displayFqn(state));
 
   if (!account) return null;
   const displayNameHtml = { __html: account.display_name_html };
@@ -69,9 +66,9 @@ const UserPanel: React.FC<IUserPanel> = ({ accountId, action, badges, domain }) 
             </HStack>
           </Link>
 
-          <Text size='sm' theme='muted' truncate>
-            @{getAcct(account, fqn)}
-          </Text>
+          <HStack alignItems='center' space={1}>
+            <AccountAcct account={account} />
+          </HStack>
         </Stack>
 
         <HStack alignItems='center' space={3}>

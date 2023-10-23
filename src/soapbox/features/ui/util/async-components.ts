@@ -338,9 +338,7 @@ export function TrendsPanel() {
   return import(/* webpackChunkName: "features/trends" */'../components/trends-panel');
 }
 
-export function ProfileInfoPanel() {
-  return import(/* webpackChunkName: "features/account_timeline" */'../components/profile-info-panel');
-}
+export const ProfileInfoPanel = lazy(() => import('../components/profile-info-panel'));
 
 export function ProfileMediaPanel() {
   return import(/* webpackChunkName: "features/account_gallery" */'../components/profile-media-panel');
