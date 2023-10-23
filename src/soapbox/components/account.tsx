@@ -253,7 +253,7 @@ const Account = ({
 
                 {legacyDomain ? renderInstanceFavicon(true) : (
                   <Button to={`/timeline/${account.domain}`} size='xs-instance' className='mb-0.5 px-1'>
-                    <p className='flex gap-1'>
+                    <p title={account.domain} className='flex gap-1'>
                       <span className='truncate'>{account.domain}</span>
                       {renderInstanceFavicon(false)}
                     </p>
