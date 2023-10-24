@@ -41,7 +41,7 @@ const Accordion: React.FC<IAccordion> = ({ headline, children, menu, expanded = 
 
   return (
     <div className='rounded-lg bg-white text-gray-900 shadow dark:bg-primary-800 dark:text-gray-100 dark:shadow-none'>
-      <Localized id={'accordion-' + (expanded ? 'collapse' : 'expand')} attrs={{ title: true }}>
+      <Localized id={'ui-Accordion-' + (expanded ? '-collapse' : '-expand')} attrs={{ title: true }}>
         <button
           type='button'
           onClick={handleToggle}

@@ -1,4 +1,10 @@
-# --- Terms
+### Localization for Ghostbox
+
+# Naming convention for l10n IDs: "module-ComponentName--string-summary".
+# Please sort alphabetically by (module name, component name).
+
+
+## Terms
 -brand-name = Ghostbox
 -collapse =
   { $case ->
@@ -11,11 +17,12 @@
     [lower] expand
   }
 
-# --- Actual l10n
-accordion-collapse =
+## Accordion (components/ui/accordion.tsx)
+ui-Accordion--collapse =
   .title = { -collapse }
-accordion-expand =
+ui-Accordion--expand =
   .title = { -expand }
+
 account-manage-list = Add or Remove from lists
 account-badges-admin = Admin
 account-badges-bot = Bot
