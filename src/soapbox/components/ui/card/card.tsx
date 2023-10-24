@@ -1,6 +1,6 @@
+import { Localized } from '@fluent/react';
 import clsx from 'clsx';
 import React from 'react';
-import { defineMessages, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import { HStack, Text } from 'soapbox/components/ui';
@@ -12,10 +12,6 @@ const sizes = {
   lg: 'sm:p-6 sm:rounded-xl',
   xl: 'sm:p-10 sm:rounded-3xl',
 };
-
-const messages = defineMessages({
-  back: { id: 'card.back.label', defaultMessage: 'Back' },
-});
 
 export type CardSizes = keyof typeof sizes
 
@@ -60,8 +56,6 @@ interface ICardHeader {
  * Typically holds a CardTitle.
  */
 const CardHeader: React.FC<ICardHeader> = ({ className, children, backHref, onBackClick }): JSX.Element => {
-  const intl = useIntl();
-
   const renderBackButton = () => {
     if (!backHref && !onBackClick) {
       return null;
@@ -71,11 +65,19 @@ const CardHeader: React.FC<ICardHeader> = ({ className, children, backHref, onBa
     const backAttributes = backHref ? { to: backHref } : { onClick: onBackClick };
 
     return (
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      <Comp ref={useHotkey('Backspace')} {...backAttributes} className='rounded-full text-gray-900 focus:ring-2 focus:ring-primary-500 dark:text-gray-100' aria-label={intl.formatMessage(messages.back)}>
-        <SvgIcon src={require('@tabler/icons/arrow-left.svg')} className='h-6 w-6 rtl:rotate-180' />
-        <span className='sr-only' data-testid='back-button'>{intl.formatMessage(messages.back)}</span>
-      </Comp>
+      <Localized id='ui-CardHeader--back-label' attrs={{ 'aria-label': true }}>
+        <Comp
+          ref={
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            useHotkey('Backspace')
+          } {...backAttributes} className='rounded-full text-gray-900 focus:ring-2 focus:ring-primary-500 dark:text-gray-100' aria-label='Back'
+        >
+          <SvgIcon src={require('@tabler/icons/arrow-left.svg')} className='h-6 w-6 rtl:rotate-180' />
+          <Localized id='ui-CardHeader--back-button'>
+            <span className='sr-only' data-testid='back-button'>Back</span>
+          </Localized>
+        </Comp>
+      </Localized>
     );
   };
 

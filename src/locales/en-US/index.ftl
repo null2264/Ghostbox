@@ -3,8 +3,12 @@
 # Naming convention for l10n IDs: "module-ComponentName--string-summary".
 # Please sort alphabetically by (module name, component name).
 
-
-## Terms
+### Terms
+-back =
+  { $case ->
+    *[title] Back
+    [lower] back
+  }
 -brand-name = Ghostbox
 -collapse =
   { $case ->
@@ -17,11 +21,20 @@
     [lower] expand
   }
 
-## Accordion (components/ui/accordion.tsx)
+### Modules
+
+### UI (components/ui/)
+
+## Accordion (components/ui/accordion/...)
 ui-Accordion--collapse =
   .title = { -collapse }
 ui-Accordion--expand =
   .title = { -expand }
+
+## Card (components/ui/card/...)
+ui-CardHeader--back-label =
+  .aria-label = { -back }
+ui-CardHeader--back-button = { -back }
 
 account-manage-list = Add or Remove from lists
 account-badges-admin = Admin
