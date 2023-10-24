@@ -150,8 +150,8 @@ export default defineConfig(({ mode }) => {
             src: './custom/instance',
             dest: '.',
           }, {
-            src: './src/locales',
-            dest: '.',
+            src: './src/locales/*',
+            dest: 'locales/',
           },
         ],
       }),
