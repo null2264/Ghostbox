@@ -132,7 +132,7 @@ export default defineConfig(({ mode }) => {
           short_name: 'Ghostbox',
           description: 'An alternative frontend for Akkoma',
         },
-        srcDir: 'app/soapbox/service-worker',
+        srcDir: 'src/soapbox/service-worker',
         filename: 'sw.ts',
       }),
       viteStaticCopy({
@@ -141,7 +141,7 @@ export default defineConfig(({ mode }) => {
             src: './node_modules/twemoji/assets/svg/*',
             dest: './packs/emoji/',
           }, {
-            src: './app/instance',
+            src: './src/instance',
             dest: '.',
           }, {
             src: './custom/instance',
@@ -152,8 +152,8 @@ export default defineConfig(({ mode }) => {
     ],
     resolve: {
       alias: [
-        { find: 'soapbox', replacement: fileURLToPath(new URL('./app/soapbox', import.meta.url)) },
-        { find: 'assets', replacement: fileURLToPath(new URL('./app/assets', import.meta.url)) },
+        { find: 'soapbox', replacement: fileURLToPath(new URL('./src/soapbox', import.meta.url)) },
+        { find: 'assets', replacement: fileURLToPath(new URL('./src/assets', import.meta.url)) },
       ],
     },
   };

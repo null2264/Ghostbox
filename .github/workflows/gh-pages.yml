@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: 
+      - develop
+      - feat/**
+      - fix/**
+      - refactor/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Queue
+      uses: ahmadnassri/action-workflow-queue@v1
+
+    - name: Use NodeJS v20
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Build
+      run: |
+        mv .ci/snippets.html custom/snippets.html
+        # -- Build one time for release
+        yarn install --ignore-scripts
+        yarn patch-package
+        env NODE_ENV=production yarn build
+        zip -r static.zip static/
+
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: static/
+        clean-exclude: |
+          404.html

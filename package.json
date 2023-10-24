@@ -1,6 +1,6 @@
 {
   "name": "ghostbox",
-  "version": "1.0.0",
+  "version": "2023.10.4",
   "displayName": "Ghostbox",
   "description": "An alternative frontend for Akkoma",
   "homepage": "https://fedi.aap.my.id",
@@ -27,7 +27,7 @@
     "test:all": "${npm_execpath} run test:coverage && ${npm_execpath} run lint",
     "lint": "${npm_execpath} run lint:js && ${npm_execpath} run lint:sass",
     "lint:js": "npx eslint --ext .js,.jsx,.cjs,.mjs,.ts,.tsx . --cache",
-    "lint:sass": "npx stylelint app/styles/**/*.scss",
+    "lint:sass": "npx stylelint src/styles/**/*.scss",
     "prepare": "husky install",
     "preview": "npx vite preview",
     "postinstall": "npx patch-package"
@@ -124,6 +124,7 @@
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "goober": "^2.1.10",
     "graphemesplit": "^2.4.4",
+    "html-react-parser": "^4.2.3",
     "html-webpack-harddisk-plugin": "^2.0.0",
     "html-webpack-plugin": "^5.5.0",
     "http-link-header": "^1.0.2",

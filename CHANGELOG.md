@@ -1,10 +1,62 @@
 # Changelog
 
-## v1.1.0 - Untitled (**Not yet released**)
+<!--
+## 20xx.xx.x
+- Type: changes
+-->
+
+## 2023.10.4
+- UX: fetch account when mention component is rendering
+- UX: "missing" account now show missing image icon as avatar next to user mention
+- Status: avatar size adjust depending on status' text size (kinda, currently only check for large text size)
+- Timeline: make home, local, fediverse, and remote (instance) timeline layout more consistent with the other pages
+- Timeline: move pin button to remote (instance) timeline's header
+- Search: move search icon to the start of textbox
+- UI: changed how user acct is rendered, domain now shown as button (similar to Thread)
+- Mention: fix mention doesn't have underline on hover
+
+## 2023.10.3
+- UI: highlight mentions
+- UI: add user avatar next to user mention
+- UX: fixed mention not rendered properly when user is not in the database
+
+## 2023.10.2
+- UI: fixed read more button always shown
+
+## 2023.10.1
+- Dev: move files from `app/` to `src/`
+- Dev: cache translation instead always requesting new one
+- Dev: start replacing `<Bundle />` with React's lazy load
+- UI: fixed audio player hide button colour on hover
+- UI: show display name on profile page's title
+- UX: rename `soapbox/` routes to `ghostbox/`
+- UX: change `ghostbox/config` route to `ghostbox/admin/config` for consistency
+- UX: redirect `notice/:statusId` to `posts/:statusId` for consistency
+- UX: read more now act like CW's show content
+- Pleroma: fixed instance not being normalised
+
+## 2023.10.0
+- Pleroma: backport MRF breaking changes fixes from Akkoma
+- Akkoma: add support for Akkoma's "machine translation"
+
+## v1.1.1 - Akkoma Fix
+- Akkoma: fixed MRF due to backend breaking changes
+
+## v1.1.0 - Compatibility Fixes
 - UI: disable voters count
 - Dev: fixed `process.env` variables inaccessible at compile time
+- UX: fixed post will always post regardless if poll valid or not
+- Misskey: fixed audio CORS issue
+- Spirit: explicitly mention post author on reply
+- UX: ghostbox now assume browser is mobile from User-Agent
+- Compatibility: crashes on instance timeline
+- UI: remove navbar items' text if there's more than 4 items
+- UX: fixed timeline jumping (Thanks to https://github.com/BDX-town/Mangane/pull/247)
+- Compatibility: support indefinite poll
+- UI: fixed poll vote count
+- UX: fixed video player refuses to go fullscreen
 
-## v1.0.0 - Divergence (**Not yet released**)
+## v1.0.0 - Divergence
 - UI: fixed options in setting page not shown properly
 - UI: [improved sensitive content and CW UI/UX](/CHANGELOG.UI.md)
 - UI: moved settings and dashboard into "More" menu

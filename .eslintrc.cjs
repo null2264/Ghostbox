@@ -51,7 +51,7 @@ module.exports = {
     ],
     'import/resolver': {
       node: {
-        paths: ['app'],
+        paths: ['src'],
       },
     },
     polyfills: [
@@ -298,7 +298,7 @@ module.exports = {
     {
       // Only enforce JSDoc comments on UI components for now.
       // https://www.npmjs.com/package/eslint-plugin-jsdoc
-      files: ['app/soapbox/components/ui/**/*'],
+      files: ['src/soapbox/components/ui/**/*'],
       rules: {
         'jsdoc/require-jsdoc': ['error', {
           publicOnly: true,
