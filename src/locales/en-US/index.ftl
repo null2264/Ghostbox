@@ -25,6 +25,8 @@
 
 ### UI (components/ui/)
 
+# Common components, not exclusive to specific module.
+
 ## Accordion (components/ui/accordion/...)
 ui-Accordion--collapse =
   .title = { -collapse }
