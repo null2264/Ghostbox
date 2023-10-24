@@ -1,1 +1,0 @@
-import{a,eV as r,eW as t}from"../index-7b6dea3f.js";var l=function(){var e=t(15,30);return a("div",{className:"animate-pulse text-primary-200 dark:text-primary-700"},void 0,a("p",{},void 0,r(e)))};export{l as P};
