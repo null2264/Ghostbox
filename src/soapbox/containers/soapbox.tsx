@@ -1,6 +1,5 @@
 'use strict';
 
-import { FluentBundle, FluentResource } from '@fluent/bundle';
 import { negotiateLanguages } from '@fluent/langneg';
 import { LocalizationProvider, ReactLocalization } from '@fluent/react';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -32,6 +31,7 @@ import {
   OnboardingWizard,
   WaitlistPage,
 } from 'soapbox/features/ui/util/async-components';
+import { AVAILABLE_LOCALES, DEFAULT_LOCALE, fetchMessages, lazyParseBundle } from 'soapbox/fluent';
 import { createGlobals } from 'soapbox/globals';
 import {
   useAppSelector,
@@ -223,9 +223,11 @@ const SoapboxLoad: React.FC<ISoapboxLoad> = ({ children }) => {
   const swUpdating = useAppSelector(state => state.meta.swUpdating);
   const { locale } = useLocale();
 
+  // TODO: Migrate fully to FTL
   const [messages, setMessages] = useState<Record<string, string>>({});
   const [localeLoading, setLocaleLoading] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [ftl, setFtl] = useState(null as ReactLocalization | null);
 
   /** Whether to display a loading indicator. */
   const showLoading = [
@@ -253,38 +255,33 @@ const SoapboxLoad: React.FC<ISoapboxLoad> = ({ children }) => {
     });
   }, []);
 
+  const setupLocale = async (userLocales: string[]) => {
+    // Choose locales that are best for the user.
+    const locales = negotiateLanguages(
+      userLocales,
+      AVAILABLE_LOCALES,
+      { defaultLocale: DEFAULT_LOCALE },
+    );
+
+    const indexOfDefaultLocale = locales.indexOf(DEFAULT_LOCALE);
+    const localesToFetch: Array<string> = locales.slice(0, indexOfDefaultLocale + 1);
+    const fetched = await Promise.all(localesToFetch.map(fetchMessages)) as Array<[string, string]>;
+    const bundles = lazyParseBundle(fetched);
+    setFtl(new ReactLocalization(bundles));
+  };
+
+  useEffect(() => {
+    setupLocale(['en-US']);
+  }, []);
+
   // intl is part of loading.
   // It's important nothing in here depends on intl.
-  if (showLoading) {
+  if (showLoading || !ftl) {
     return <LoadingScreen />;
   }
 
-  // TODO: Load from file
-  const RESOURCES: Record<string, FluentResource> = {
-    'fr': new FluentResource('hello = Salut le monde !'),
-    'en-US': new FluentResource('hello = Hello, world!'),
-    'pl': new FluentResource('hello = Witaj świecie!'),
-  };
-
-  function* generateBundles(userLocales: string[]) {
-    // Choose locales that are best for the user.
-    const currentLocales = negotiateLanguages(
-      userLocales,
-      ['fr', 'en-US', 'pl'],
-      { defaultLocale: 'en-US' },
-    );
-
-    for (const locale of currentLocales) {
-      const bundle = new FluentBundle(locale);
-      bundle.addResource(RESOURCES[locale]);
-      yield bundle;
-    }
-  }
-
-  const l10n = new ReactLocalization(generateBundles([...navigator.languages]));
-
   return (
-    <LocalizationProvider l10n={l10n}>
+    <LocalizationProvider l10n={ftl}>
       <IntlProvider locale={locale} messages={messages}>
         {children}
       </IntlProvider>

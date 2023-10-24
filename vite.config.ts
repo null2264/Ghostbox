@@ -11,6 +11,8 @@ import { VitePWA } from 'vite-plugin-pwa';
 import vitePluginRequire from 'vite-plugin-require';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
+const availableLocales = JSON.stringify(fs.readdirSync('./src/locales'));
+
 /** Return file as string, or return empty string. */
 const readFile = (filename: string) => {
   try {
@@ -81,6 +83,7 @@ export default defineConfig(({ mode }) => {
         // null = optional, undefined = required
         BACKEND_URL: null,
         DEVSERVER_URL: null,
+        AVAILABLE_LOCALES: availableLocales,
       }, { loadEnvFiles: false }),
       // @ts-ignore
       vitePluginRequire(),
@@ -145,6 +148,9 @@ export default defineConfig(({ mode }) => {
             dest: '.',
           }, {
             src: './custom/instance',
+            dest: '.',
+          }, {
+            src: './src/locales',
             dest: '.',
           },
         ],
