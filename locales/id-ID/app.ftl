@@ -4,22 +4,7 @@
 # Please sort alphabetically by (module name, component name).
 
 ### Terms
--back =
-  { $case ->
-    *[title] Back
-    [lower] back
-  }
 -brand-name = Ghostbox
--collapse =
-  { $case ->
-    *[title] Collapse
-    [lower] collapse
-  }
--expand =
-  { $case ->
-    *[title] Expand
-    [lower] expand
-  }
 
 ### Modules
 
@@ -29,14 +14,14 @@
 
 ## Accordion (components/ui/accordion/...)
 ui-Accordion--collapse =
-  .title = { -collapse }
+  .title = Tutup 
 ui-Accordion--expand =
-  .title = { -expand }
+  .title = Buka
 
 ## Card (components/ui/card/...)
 ui-CardHeader--back-label =
-  .aria-label = { -back }
-ui-CardHeader--back-button = { -back }
+  .aria-label = Kembali
+ui-CardHeader--back-button = Kembali
 
 account-manage-list = Add or Remove from lists
 account-badges-admin = Admin
