@@ -53,7 +53,7 @@
     "@fluent/bundle": "^0.18.0",
     "@fluent/langneg": "^0.7.0",
     "@fluent/react": "^0.15.2",
-    "@fontsource/inter": "^4.5.1",
+    "@fontsource/nunito-sans": "^5.0.8",
     "@fontsource/roboto-mono": "^4.5.8",
     "@formatjs/icu-messageformat-parser": "^2.6.0",
     "@gamestdio/websocket": "^0.3.2",
