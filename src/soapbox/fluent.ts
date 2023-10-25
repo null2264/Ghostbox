@@ -5,7 +5,7 @@ const AVAILABLE_LOCALES = process.env.AVAILABLE_LOCALES as Array<string> | undef
 const DEFAULT_LOCALE = 'en-US';
 
 const fetchMessages = async (locale: string) => {
-  const resp = await fetch(`/locales/${locale}/index.ftl`);
+  const resp = await fetch(`/locales/${locale}/app.ftl`);
   return [locale, await resp.text()];
 };
 
