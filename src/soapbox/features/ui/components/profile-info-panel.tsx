@@ -1,5 +1,6 @@
 'use strict';
 
+import { Localized } from '@fluent/react';
 import React from 'react';
 import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
 
@@ -50,9 +51,9 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
 
   const getStaffBadge = (): React.ReactNode => {
     if (account?.admin) {
-      return <Badge slug='admin' title={<FormattedMessage id='account_moderation_modal.roles.admin' defaultMessage='Admin' />} key='staff' />;
+      return <Badge slug='admin' title={<Localized id='account-Badge--admin'>Admin</Localized>} key='staff' />;
     } else if (account?.moderator) {
-      return <Badge slug='moderator' title={<FormattedMessage id='account_moderation_modal.roles.moderator' defaultMessage='Moderator' />} key='staff' />;
+      return <Badge slug='moderator' title={<Localized id='account-Badge--moderator'>Moderator</Localized>} key='staff' />;
     } else {
       return null;
     }

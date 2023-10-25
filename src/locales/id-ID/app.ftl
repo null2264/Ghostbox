@@ -28,8 +28,6 @@ ui-CardHeader--back =
 
 account-Header--manage-list--MenuItem = <icon></icon><wrapper>Tambah atau Hapus dari daftar</wrapper><emblem></emblem>
 
-account-badges-admin = Admin
-account-badges-bot = Bot
 account-birthday = Born { $date }
 account-birthday-today = Birthday is today!
 account-block = Block @{ $name }
