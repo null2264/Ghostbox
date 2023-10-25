@@ -30,7 +30,8 @@
 
 ## Card (components/ui/card/...)
 
-account-manage-list = Add or Remove from lists
+### Account (features/account/...)
+
 account-badges-admin = Admin
 account-badges-bot = Bot
 account-birthday = Born { $date }

@@ -22,7 +22,9 @@ ui-CardHeader--back =
   .aria-label = 戻る
   .title = 戻る
 
-account-manage-list = Add or Remove from lists
+### Account (features/account/...)
+account-Header--manage-list--MenuItem = <icon></icon><wrapper>リストから追加または外す</wrapper><emblem></emblem>
+
 account-badges-admin = Admin
 account-badges-bot = Bot
 account-birthday = Born { $date }

@@ -22,7 +22,9 @@ ui-CardHeader--back =
   .aria-label = Kembali
   .title = Kembali
 
-account-manage-list = Add or Remove from lists
+### Account (features/account/...)
+account-Header--manage-list--MenuItem = <icon></icon><wrapper>Tambah atau Hapus dari daftar</wrapper><emblem></emblem>
+
 account-badges-admin = Admin
 account-badges-bot = Bot
 account-birthday = Born { $date }
