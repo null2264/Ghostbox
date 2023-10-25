@@ -41,6 +41,7 @@ import {
   useSoapboxConfig,
   useSettings,
   useTheme,
+  useFTLLocale,
   useLocale,
   useInstance,
   useRegistrationStatus,
@@ -221,6 +222,8 @@ const SoapboxLoad: React.FC<ISoapboxLoad> = ({ children }) => {
   const me = useAppSelector(state => state.me);
   const { account } = useOwnAccount();
   const swUpdating = useAppSelector(state => state.meta.swUpdating);
+  const ftlLocale = useFTLLocale().locale;
+  // TODO: Remove later
   const { locale } = useLocale();
 
   // TODO: Migrate fully to FTL
@@ -271,7 +274,7 @@ const SoapboxLoad: React.FC<ISoapboxLoad> = ({ children }) => {
   };
 
   useEffect(() => {
-    setupLocale(['en-US']);
+    setupLocale([ftlLocale]);
   }, []);
 
   // intl is part of loading.

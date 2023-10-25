@@ -121,7 +121,7 @@ interface ISelectDropdown {
   className?: string
   label?: React.ReactNode
   hint?: React.ReactNode
-  items: Record<string, string>
+  items: Record<string, string> | Map<string, string>
   defaultValue?: string
   onChange?: React.ChangeEventHandler
 }
@@ -129,9 +129,13 @@ interface ISelectDropdown {
 export const SelectDropdown: React.FC<ISelectDropdown> = (props) => {
   const { label, hint, items, ...rest } = props;
 
-  const optionElems = Object.keys(items).map(item => (
-    <option key={item} value={item}>{items[item]}</option>
-  ));
+  const optionElems = items instanceof Map ?
+    [...items.keys()].map(item => (
+      <option key={item} value={item}>{items.get(item)}</option>
+    )) :
+    Object.keys(items).map(item => (
+      <option key={item} value={item}>{items[item]}</option>
+    ));
 
   // @ts-ignore
   const selectElem = <Select {...rest}>{optionElems}</Select>;

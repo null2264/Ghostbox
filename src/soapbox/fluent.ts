@@ -1,8 +1,20 @@
 import { FluentBundle, FluentResource } from '@fluent/bundle';
-
-const AVAILABLE_LOCALES = process.env.AVAILABLE_LOCALES as Array<string> | undefined || ['en'];
+import { Map as ImmutableMap } from 'immutable';
 
 const DEFAULT_LOCALE = 'en-US';
+const AVAILABLE_LOCALES_TO_LOCALIZED_NAMES = ImmutableMap({
+  'en-GB': 'English (GB)',
+  'en-US': 'English (US)',
+  'id-ID': 'Bahasa Indonesia',
+  'ja-JP': '日本語',
+});
+const AVAILABLE_LOCALES: Array<string> = process.env.AVAILABLE_LOCALES ? JSON.parse(process.env.AVAILABLE_LOCALES) : Object.keys(AVAILABLE_LOCALES_TO_LOCALIZED_NAMES);
+
+const getAvailableLocales = () => {
+  return new Map(AVAILABLE_LOCALES.map(locale => {
+    return [locale, AVAILABLE_LOCALES_TO_LOCALIZED_NAMES.get(locale) || locale];
+  }));
+};
 
 const fetchMessages = async (locale: string) => {
   const resp = await fetch(`/locales/${locale}/app.ftl`);
@@ -19,7 +31,9 @@ function* lazyParseBundle(fetchedMessages: Array<[string, string]>) {
 
 export {
   AVAILABLE_LOCALES,
+  AVAILABLE_LOCALES_TO_LOCALIZED_NAMES,
   DEFAULT_LOCALE,
   fetchMessages,
+  getAvailableLocales,
   lazyParseBundle,
 };

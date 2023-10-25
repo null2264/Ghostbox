@@ -39,7 +39,7 @@ const defaultSettings = ImmutableMap({
   defaultPrivacy: 'public',
   defaultContentType: 'text/plain',
   themeMode: 'system',
-  locale: navigator.language || 'en',
+  locale: navigator.language || 'en-US',
   showExplanationBox: true,
   explanationBox: true,
   autoloadTimelines: true,
@@ -241,6 +241,19 @@ const saveSettingsImmediate = (opts?: SettingOpts) =>
 const saveSettings = (opts?: SettingOpts) =>
   (dispatch: AppDispatch) => dispatch(saveSettingsImmediate(opts));
 
+const getFTLLocale = (state: RootState): string => {
+  const legacy = ImmutableMap({
+    en: 'en-US',
+    id: 'id-ID',
+    ja: 'ja-JP',
+  });
+  const locale = (getSettings(state).get('locale') as string).replace('_', '-');
+  if (Object.keys(legacy).includes(locale)) {
+    return legacy.get(locale) || locale;
+  }
+  return locale;
+};
+
 const getLocale = (state: RootState, fallback = 'en') => {
   const localeWithVariant = (getSettings(state).get('locale') as string).replace('_', '-');
   const locale = localeWithVariant.split('-')[0];
@@ -262,6 +275,7 @@ export {
   changeSetting,
   saveSettingsImmediate,
   saveSettings,
+  getFTLLocale,
   getLocale,
   type SettingsAction,
 };
