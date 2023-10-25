@@ -23,10 +23,11 @@ ui-CardHeader--back =
   .title = 戻る
 
 ### Account (features/account/...)
+
+# Components that related to Account such as profile, hover card.
+
 account-Header--manage-list--MenuItem = <icon></icon><wrapper>リストから追加または外す</wrapper><emblem></emblem>
 
-account-badges-admin = Admin
-account-badges-bot = Bot
 account-birthday = Born { $date }
 account-birthday-today = Birthday is today!
 account-block = Block @{ $name }

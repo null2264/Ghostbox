@@ -50,11 +50,14 @@ ui-CardHeader--back =
   .title = { -back }
 
 ### Account (features/account/...)
+
+# Components that related to Account such as profile, hover card.
+
+account-Badge--admin = Admin
+account-Badge--bot = Bot
+account-Badge--moderator = Moderator
 account-Header--manage-list--MenuItem = <icon></icon><wrapper>Add or Remove from lists</wrapper><emblem></emblem>
 
-account-manage-list = Add or Remove from lists
-account-badges-admin = Admin
-account-badges-bot = Bot
 account-birthday = Born { $date }
 account-birthday-today = Birthday is today!
 account-block = Block @{ $name }

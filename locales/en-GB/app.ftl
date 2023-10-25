@@ -32,6 +32,8 @@
 
 ### Account (features/account/...)
 
+# Components that related to Account such as profile, hover card.
+
 account-badges-admin = Admin
 account-badges-bot = Bot
 account-birthday = Born { $date }
