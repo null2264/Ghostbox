@@ -259,7 +259,6 @@ const SoapboxLoad: React.FC<ISoapboxLoad> = ({ children }) => {
   }, []);
 
   const setupLocale = async (userLocales: string[]) => {
-    // Choose locales that are best for the user.
     const locales = negotiateLanguages(
       userLocales,
       AVAILABLE_LOCALES,

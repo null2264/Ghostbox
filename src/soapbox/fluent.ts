@@ -1,18 +1,17 @@
 import { FluentBundle, FluentResource } from '@fluent/bundle';
-import { Map as ImmutableMap } from 'immutable';
 
 const DEFAULT_LOCALE = 'en-US';
-const AVAILABLE_LOCALES_TO_LOCALIZED_NAMES = ImmutableMap({
+const AVAILABLE_LOCALES_TO_LOCALIZED_NAMES: Record<string, string> = {
   'en-GB': 'English (GB)',
   'en-US': 'English (US)',
   'id-ID': 'Bahasa Indonesia',
   'ja-JP': '日本語',
-});
+};
 const AVAILABLE_LOCALES: Array<string> = process.env.AVAILABLE_LOCALES ? JSON.parse(process.env.AVAILABLE_LOCALES) : Object.keys(AVAILABLE_LOCALES_TO_LOCALIZED_NAMES);
 
 const getAvailableLocales = () => {
   return new Map(AVAILABLE_LOCALES.map(locale => {
-    return [locale, AVAILABLE_LOCALES_TO_LOCALIZED_NAMES.get(locale) || locale];
+    return [locale, AVAILABLE_LOCALES_TO_LOCALIZED_NAMES[locale] || locale];
   }));
 };
 
