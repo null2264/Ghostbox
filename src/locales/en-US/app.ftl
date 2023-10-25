@@ -3,7 +3,13 @@
 # Naming convention for l10n IDs: "module-ComponentName--string-summary".
 # Please sort alphabetically by (module name, component name).
 
-# Special Cases (suffixed with "--Case"):
+# -- Special Cases --
+# This is for special cases where the translation have to be formatted in a
+# specific way, these translations should be prefixed with "--Case".
+# 
+# The format should not be changed!
+# You should only change the "TEXT GOES HERE!" text!
+#
 # - MenuItem
 #   ID convention: "module-ComponentName--string-summary--MenuItem"
 #   Formatting: <icon></icon><wrapper>TEXT GOES HERE!</wrapper><emblem></emblem>
