@@ -1464,10 +1464,10 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.1.4.tgz#19654d1026cc410975d46445180e70a5089b3e7d"
   integrity sha512-qprfWkn82Iw821mcKofJ5Pk9wgioHicxcQMxx+5zt5GSKoqdWvgG5AxVmpmUUjzTLPVSH5auBrhI93Deayn/DA==
 
-"@fontsource/inter@^4.5.1":
-  version "4.5.15"
-  resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-4.5.15.tgz#eed1873d68755d3b52d6fcfcfa3493118430a512"
-  integrity sha512-FzleM9AxZQK2nqsTDtBiY0PMEVWvnKnuu2i09+p6DHvrHsuucoV2j0tmw+kAT3L4hvsLdAIDv6MdGehsPIdT+Q==
+"@fontsource/nunito-sans@^5.0.8":
+  version "5.0.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/nunito-sans/-/nunito-sans-5.0.8.tgz#160f2aa51ad7272fb1ec51dce6a2cd1a5921f972"
+  integrity sha512-LxUlZGwVHGe5w6RAeqAHV2VC4VdfG28FvfMN8Z8s3vY+DNP6U0hBT9rV/jry59oNK7/zIC6kaoqq61PGrP/EIw==
 
 "@fontsource/roboto-mono@^4.5.8":
   version "4.5.10"
