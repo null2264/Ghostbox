@@ -50,6 +50,9 @@ ui-CardHeader--back =
   .title = { -back }
 
 ### Account (features/account/...)
+
+# Components that related to Account such as profile, hover card.
+
 account-Header--manage-list--MenuItem = <icon></icon><wrapper>Add or Remove from lists</wrapper><emblem></emblem>
 
 account-manage-list = Add or Remove from lists
