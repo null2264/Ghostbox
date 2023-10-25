@@ -274,7 +274,7 @@ const SoapboxLoad: React.FC<ISoapboxLoad> = ({ children }) => {
 
   useEffect(() => {
     setupLocale([ftlLocale]);
-  }, []);
+  }, [ftlLocale]);
 
   // intl is part of loading.
   // It's important nothing in here depends on intl.
