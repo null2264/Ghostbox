@@ -3,6 +3,11 @@
 # Naming convention for l10n IDs: "module-ComponentName--string-summary".
 # Please sort alphabetically by (module name, component name).
 
+# Special Cases (suffixed with "--Case"):
+# - MenuItem
+#   ID convention: "module-ComponentName--string-summary--MenuItem"
+#   Formatting: <icon></icon><wrapper>TEXT GOES HERE!</wrapper><emblem></emblem>
+
 ### Terms
 -back =
   { $case ->
@@ -34,9 +39,12 @@ ui-Accordion--expand =
   .title = { -expand }
 
 ## Card (components/ui/card/...)
-ui-CardHeader--back-label =
+ui-CardHeader--back =
   .aria-label = { -back }
-ui-CardHeader--back-button = { -back }
+  .title = { -back }
+
+### Account (features/account/...)
+account-Header--manage-list--MenuItem = <icon></icon><wrapper>Add or Remove from lists</wrapper><emblem></emblem>
 
 account-manage-list = Add or Remove from lists
 account-badges-admin = Admin

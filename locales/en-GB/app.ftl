@@ -1,7 +1,6 @@
-### Localization for Ghostbox
+### British English Localization for Ghostbox
 
-# Naming convention for l10n IDs: "module-ComponentName--string-summary".
-# Please sort alphabetically by (module name, component name).
+# Please read top comment in en-US/app.ftl for more information.
 
 ### Terms
 -back =
@@ -28,15 +27,8 @@
 # Common components, not exclusive to specific module.
 
 ## Accordion (components/ui/accordion/...)
-ui-Accordion--collapse =
-  .title = { -collapse }
-ui-Accordion--expand =
-  .title = { -expand }
 
 ## Card (components/ui/card/...)
-ui-CardHeader--back-label =
-  .aria-label = { -back }
-ui-CardHeader--back-button = { -back }
 
 account-manage-list = Add or Remove from lists
 account-badges-admin = Admin

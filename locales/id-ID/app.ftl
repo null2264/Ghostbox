@@ -1,7 +1,6 @@
-### Localization for Ghostbox
+### Bahasa Indonesia Localization for Ghostbox
 
-# Naming convention for l10n IDs: "module-ComponentName--string-summary".
-# Please sort alphabetically by (module name, component name).
+# Mohon untuk membaca komentar paling atas dalam file en-US/app.ftl untuk informasi lebih lanjut.
 
 ### Terms
 -brand-name = Ghostbox
@@ -19,9 +18,9 @@ ui-Accordion--expand =
   .title = Buka
 
 ## Card (components/ui/card/...)
-ui-CardHeader--back-label =
+ui-CardHeader--back =
   .aria-label = Kembali
-ui-CardHeader--back-button = Kembali
+  .title = Kembali
 
 account-manage-list = Add or Remove from lists
 account-badges-admin = Admin
