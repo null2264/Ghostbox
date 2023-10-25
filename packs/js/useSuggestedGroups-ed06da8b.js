@@ -1,1 +1,0 @@
-import{bl as n,g as r,bm as p,bn as g,bo as c,ko as l}from"../index-3d298530.js";function d(){const t=n(),u=r(),{entities:e,...i}=p([c.GROUPS,"suggested"],()=>t.get("/api/v1/truth/suggestions/groups"),{schema:g,enabled:u.groupsDiscovery}),{relationships:o}=l(["suggested"],e.map(s=>s.id)),a=e.map(s=>({...s,relationship:o[s.id]||null}));return{...i,groups:a}}export{d as u};

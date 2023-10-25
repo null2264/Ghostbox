@@ -1,0 +1,1 @@
+import{q as n,a,cN as s,a3 as p}from"../index-1a17d65f.js";import{n as i}from"./noop-3b710ebc.js";var v=function(r){var t=r.pollId,e=n(function(o){return o.polls.get(t)});return e?a(p,{space:2},void 0,e.options.map(function(o,l){return a(s,{poll:e,option:o,index:l,showResults:!1,active:!1,onToggle:i},l)})):null};export{v as P};
