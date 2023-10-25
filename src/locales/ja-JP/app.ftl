@@ -1,25 +1,9 @@
-### Localization for Ghostbox
+### 日本語 Localization for Ghostbox
 
-# Naming convention for l10n IDs: "module-ComponentName--string-summary".
-# Please sort alphabetically by (module name, component name).
+# Please read top comment in en-US/app.ftl for more information.
 
 ### Terms
--back =
-  { $case ->
-    *[title] Back
-    [lower] back
-  }
 -brand-name = Ghostbox
--collapse =
-  { $case ->
-    *[title] Collapse
-    [lower] collapse
-  }
--expand =
-  { $case ->
-    *[title] Expand
-    [lower] expand
-  }
 
 ### Modules
 
@@ -29,14 +13,14 @@
 
 ## Accordion (components/ui/accordion/...)
 ui-Accordion--collapse =
-  .title = { -collapse }
+  .title = 折り畳む
 ui-Accordion--expand =
-  .title = { -expand }
+  .title = 開く
 
 ## Card (components/ui/card/...)
-ui-CardHeader--back-label =
-  .aria-label = { -back }
-ui-CardHeader--back-button = { -back }
+ui-CardHeader--back =
+  .aria-label = 戻る
+  .title = 戻る
 
 account-manage-list = Add or Remove from lists
 account-badges-admin = Admin

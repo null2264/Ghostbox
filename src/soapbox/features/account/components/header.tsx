@@ -388,6 +388,9 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
         if (features.lists) {
           menu.push({
+            fluent: {
+              id: 'account-Header--manage-list--MenuItem',
+            },
             text: intl.formatMessage(messages.add_or_remove_from_list),
             action: onAddToList,
             icon: require('@tabler/icons/list.svg'),
@@ -403,6 +406,9 @@ const Header: React.FC<IHeader> = ({ account }) => {
         }
       } else if (features.lists && features.unrestrictedLists) {
         menu.push({
+          fluent: {
+            id: 'account-Header--manage-list--MenuItem',
+          },
           text: intl.formatMessage(messages.add_or_remove_from_list),
           action: onAddToList,
           icon: require('@tabler/icons/list.svg'),
