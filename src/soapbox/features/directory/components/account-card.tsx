@@ -32,7 +32,8 @@ const AccountCard: React.FC<IAccountCard> = ({ id }) => {
           <div className='absolute left-2.5 top-2.5'>
             <Badge
               slug='opaque'
-              title={<FormattedMessage id='account.follows_you' defaultMessage='Follows you' />}
+              title='Follows you'
+              id='account-Status--follows-you'
             />
           </div>
         )}

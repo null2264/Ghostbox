@@ -524,7 +524,8 @@ const Header: React.FC<IHeader> = ({ account }) => {
         <Badge
           key='followed_by'
           slug='opaque'
-          title={<FormattedMessage id='account.follows_you' defaultMessage='Follows you' />}
+          title='Follows you'
+          id='account-Status--follows-you'
         />,
       );
     } else if (ownAccount.id !== account.id && account.relationship?.blocking) {
@@ -532,11 +533,8 @@ const Header: React.FC<IHeader> = ({ account }) => {
         <Badge
           key='blocked'
           slug='opaque'
-          title={
-            <Localized id='account-Status--block'>
-              <span>Blocked</span>
-            </Localized>
-          }
+          title='Blocked'
+          id='account-Status--block'
         />,
       );
     }
@@ -546,7 +544,8 @@ const Header: React.FC<IHeader> = ({ account }) => {
         <Badge
           key='muted'
           slug='opaque'
-          title={<FormattedMessage id='account.muted' defaultMessage='Muted' />}
+          title='Muted'
+          id='account-Status--muted'
         />,
       );
     } else if (ownAccount.id !== account.id && account.relationship?.domain_blocking) {
