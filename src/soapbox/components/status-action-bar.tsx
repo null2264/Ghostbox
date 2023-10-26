@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import { List as ImmutableList } from 'immutable';
 import React from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
@@ -34,7 +35,6 @@ import type { Account, Group, Status } from 'soapbox/types/entities';
 const messages = defineMessages({
   adminAccount: { id: 'status.admin_account', defaultMessage: 'Moderate @{name}' },
   admin_status: { id: 'status.admin_status', defaultMessage: 'Open this post in the moderation interface' },
-  block: { id: 'account.block', defaultMessage: 'Block @{name}' },
   blocked: { id: 'group.group_mod_block.success', defaultMessage: '@{name} is banned' },
   blockAndReport: { id: 'confirmations.block.block_and_report', defaultMessage: 'Block & Report' },
   blockConfirm: { id: 'confirmations.block.confirm', defaultMessage: 'Block' },
@@ -308,7 +308,11 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
 
     dispatch(openModal('CONFIRM', {
       icon: require('@tabler/icons/ban.svg'),
-      heading: <FormattedMessage id='confirmations.block.heading' defaultMessage='Block @{name}' values={{ name: account.acct }} />,
+      heading: (
+        <Localized id='account-StatusAction--block' vars={{ name: account.acct }}>
+          <span>Block @{account.acct}</span>
+        </Localized>
+      ),
       message: <FormattedMessage id='confirmations.block.message' defaultMessage='Are you sure you want to block {name}?' values={{ name: <strong className='break-words'>@{account.acct}</strong> }} />,
       confirm: intl.formatMessage(messages.blockConfirm),
       onConfirm: () => dispatch(blockAccount(account.id)),
@@ -540,7 +544,11 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
         icon: require('@tabler/icons/volume-3.svg'),
       });
       menu.push({
-        text: intl.formatMessage(messages.block, { name: username }),
+        fluent: {
+          id: 'account-StatusAction--block--MenuItem',
+          vars: { name: username },
+        },
+        text: `Block @${username}`,
         action: handleBlockClick,
         icon: require('@tabler/icons/ban.svg'),
       });

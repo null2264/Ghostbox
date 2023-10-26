@@ -48,7 +48,6 @@ const messages = defineMessages({
   chat: { id: 'status.chat', defaultMessage: 'Chat with @{name}' },
   direct: { id: 'status.direct', defaultMessage: 'Direct message @{name}' },
   mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
-  block: { id: 'account.block', defaultMessage: 'Block @{name}' },
   report: { id: 'status.report', defaultMessage: 'Report @{name}' },
   adminAccount: { id: 'status.admin_account', defaultMessage: 'Moderate @{name}' },
   adminStatus: { id: 'status.admin_status', defaultMessage: 'Open this post in the moderation interface' },
@@ -296,7 +295,11 @@ const EventHeader: React.FC<IEventHeader> = ({ status }) => {
         icon: require('@tabler/icons/circle-x.svg'),
       });
       menu.push({
-        text: intl.formatMessage(messages.block, { name: username }),
+        fluent: {
+          id: 'account-StatusAction--block--MenuItem',
+          vars: { name: username },
+        },
+        text: `Block @${username}`,
         action: handleBlockClick,
         icon: require('@tabler/icons/ban.svg'),
       });

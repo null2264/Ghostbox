@@ -1,5 +1,6 @@
 'use strict';
 
+import { Localized } from '@fluent/react';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { List as ImmutableList } from 'immutable';
@@ -42,14 +43,12 @@ const messages = defineMessages({
   chat: { id: 'account.chat', defaultMessage: 'Chat with @{name}' },
   direct: { id: 'account.direct', defaultMessage: 'Direct message @{name}' },
   unmute: { id: 'account.unmute', defaultMessage: 'Unmute @{name}' },
-  block: { id: 'account.block', defaultMessage: 'Block @{name}' },
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
   mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
   report: { id: 'account.report', defaultMessage: 'Report @{name}' },
   copy: { id: 'account.copy', defaultMessage: 'Copy link to profile' },
   share: { id: 'account.share', defaultMessage: 'Share @{name}\'s profile' },
   media: { id: 'account.media', defaultMessage: 'Media' },
-  blockDomain: { id: 'account.block_domain', defaultMessage: 'Hide everything from {domain}' },
   unblockDomain: { id: 'account.unblock_domain', defaultMessage: 'Unhide {domain}' },
   hideReblogs: { id: 'account.hide_reblogs', defaultMessage: 'Hide reposts from @{name}' },
   showReblogs: { id: 'account.show_reblogs', defaultMessage: 'Show reposts from @{name}' },
@@ -447,7 +446,11 @@ const Header: React.FC<IHeader> = ({ account }) => {
         });
       } else {
         menu.push({
-          text: intl.formatMessage(messages.block, { name: account.username }),
+          fluent: {
+            id: 'account-StatusAction--block--MenuItem',
+            vars: { name: account.username },
+          },
+          text: `Block @${account.username}`,
           action: onBlock,
           icon: require('@tabler/icons/ban.svg'),
         });
@@ -473,7 +476,11 @@ const Header: React.FC<IHeader> = ({ account }) => {
         });
       } else {
         menu.push({
-          text: intl.formatMessage(messages.blockDomain, { domain }),
+          fluent: {
+            id: 'account-StatusAction--block-domain--MenuItem',
+            vars: { domain },
+          },
+          text: `Hide everything from ${domain}`,
           action: () => onBlockDomain(domain),
           icon: require('@tabler/icons/ban.svg'),
         });
@@ -511,7 +518,11 @@ const Header: React.FC<IHeader> = ({ account }) => {
         <Badge
           key='blocked'
           slug='opaque'
-          title={<FormattedMessage id='account.blocked' defaultMessage='Blocked' />}
+          title={
+            <Localized id='account-Status--block'>
+              <span>Blocked</span>
+            </Localized>
+          }
         />,
       );
     }

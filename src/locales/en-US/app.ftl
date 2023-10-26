@@ -12,10 +12,12 @@
 #
 # - MenuItem
 #   ID convention: "module-ComponentName--string-summary--MenuItem"
-#   Formatting: <icon></icon><wrapper>TEXT GOES HERE!</wrapper><emblem></emblem>
+#   Formatting: { -icon }<wrapper>TEXT GOES HERE!</wrapper>{ -emblem }
+#   Attrs:
+#     - title
 # - Icon
 #   ID convention: "module-ComponentName--string-summary--Icon"
-#   Formatting: <icon></icon>TEXT GOES HERE!
+#   Formatting: { -icon }TEXT GOES HERE!
 
 ### Terms
 # You don't need to add every new term here, just add if needed (e.g. the term is commonly used).
@@ -30,11 +32,13 @@
     *[title] Collapse
     [lower] collapse
   }
+-emblem = <emblem></emblem>
 -expand =
   { $case ->
     *[title] Expand
     [lower] expand
   }
+-icon = <icon></icon>
 
 ### Modules
 
@@ -60,17 +64,22 @@ ui-CardHeader--back =
 account-Badge--admin = Admin
 account-Badge--bot = Bot
 account-Badge--moderator = Moderator
--birthday-date =
-  { $suffix ->
-    *[icon] <icon></icon>{ DATETIME($date, year: "numeric", month: "short", day: "numeric") }
-    [text] Born { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
-  }
-account-Birthday--date--Icon = { -birthday-date(suffix: "icon") } 
-  .title = { -birthday-date(suffix: "text") }
-account-Birthday--date = { -birthday-date(suffix: "text") }
-  .title = { -birthday-date(suffix: "text") }
+account-Birthday--date--Icon = { -icon }{ DATETIME($date, year: "numeric", month: "short", day: "numeric") }
+  .title = Born { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
+account-Birthday--date = Born { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
+  .title = Born { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
 account-Birthday--celebration = Birthday is today!
-account-Header--manage-list--MenuItem = <icon></icon><wrapper>Add or Remove from lists</wrapper><emblem></emblem>
+account-Header--manage-list--MenuItem = { -icon }<wrapper>Add or Remove from lists</wrapper>{ -emblem }
+  .title = Add or Remove from lists
+account-Status--block = Blocked
+account-StatusAction--block = Block @{ $name }
+account-StatusAction--block--MenuItem = { -icon }<wrapper>Block @{ $name }</wrapper>{ -emblem }
+  .title = Block @{ $name }
+account-StatusAction--block-domain--MenuItem = { -icon }<wrapper>Hide everything from { $domain }</wrapper>{ -emblem }
+  .title = Hide everything from { $domain }
+account-StatusAction--follow = Follow
+account-StatusAction--unblock = Unblock @{ $name }
+account-StatusAction--unfollow = Unfollow
 
 account-birthday-today = Birthday is today!
 account-block = Block @{ $name }
