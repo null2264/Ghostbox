@@ -74,16 +74,20 @@ const DropdownMenuItem = ({ index, item, onClick }: IDropdownMenuItem) => {
     return <li className='mx-2 my-1 h-[2px] bg-gray-100 dark:bg-gray-800' />;
   }
 
+  const iconElem = item.icon ? <Icon src={item.icon} className='mr-3 h-5 w-5 flex-none rtl:ml-3 rtl:mr-0' /> : <></>;
+  const emblem = item.count ? (
+    <span className='ml-auto h-5 w-5 flex-none'>
+      <Counter count={item.count} />
+    </span>
+  ) : <></>;
+  const wrapperClassName = 'truncate font-medium';
+
   return (
     <li className='truncate focus-visible:ring-2 focus-visible:ring-primary-500'>
       <MaybeLocalized fluent={item.fluent ? { ...item.fluent, elems: {
-        icon: item.icon ? <Icon src={item.icon} className='mr-3 h-5 w-5 flex-none rtl:ml-3 rtl:mr-0' /> : <></>,
-        emblem: item.count ? (
-          <span className='ml-auto h-5 w-5 flex-none'>
-            <Counter count={item.count} />
-          </span>
-        ) : <></>,
-        wrapper: <span className='truncate font-medium' />,
+        icon: iconElem,
+        emblem: emblem,
+        wrapper: <span className={wrapperClassName} />,
       } } : undefined}
       >
         <a
@@ -104,15 +108,9 @@ const DropdownMenuItem = ({ index, item, onClick }: IDropdownMenuItem) => {
             })
           }
         >
-          {item.icon && <Icon src={item.icon} className='mr-3 h-5 w-5 flex-none rtl:ml-3 rtl:mr-0' />}
-
-          <span className='truncate font-medium'>{item.text}</span>
-
-          {item.count ? (
-            <span className='ml-auto h-5 w-5 flex-none'>
-              <Counter count={item.count} />
-            </span>
-          ) : null}
+          {iconElem}
+          <span className={wrapperClassName}>{item.text}</span>
+          {emblem}
         </a>
       </MaybeLocalized>
     </li>
