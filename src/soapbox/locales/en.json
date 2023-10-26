@@ -1,9 +1,5 @@
 {
   "about.also_available": "Available in:",
-  "account.endorse.success": "You are now featuring @{acct} on your profile",
-  "account.familiar_followers": "Followed by {accounts}",
-  "account.familiar_followers.empty": "No one you know follows {name}.",
-  "account.familiar_followers.more": "{count, plural, one {# other} other {# others}} you follow",
   "account.followers": "Followers",
   "account.followers.empty": "No one follows this user yet.",
   "account.follows": "Following",

@@ -1,6 +1,6 @@
+import { Localized } from '@fluent/react';
 import { OrderedSet as ImmutableOrderedSet } from 'immutable';
 import React, { useEffect } from 'react';
-import { FormattedList, FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import { fetchAccountFamiliarFollowers } from 'soapbox/actions/familiar-followers';
@@ -42,49 +42,47 @@ const ProfileFamiliarFollowers: React.FC<IProfileFamiliarFollowers> = ({ account
   if (familiarFollowerIds.size === 0) {
     return null;
   }
+  
+  const renderFollowers = () => (
+    <>
+      {familiarFollowers.map(account => !!account && (
+        <HoverRefWrapper accountId={account.id} inline>
+          <Link className='mention inline-block' to={`/@${account.acct}`}>
+            <HStack space={1} alignItems='center' grow>
+              <Text
+                size='sm'
+                theme='primary'
+                truncate
+                dangerouslySetInnerHTML={{ __html: account.display_name_html }}
+              />
+              {/* <span dangerouslySetInnerHTML={{ __html: account.display_name_html }} /> */}
 
-  const accounts: Array<React.ReactNode> = familiarFollowers.map(account => !!account && (
-    <HoverRefWrapper accountId={account.id} inline>
-      <Link className='mention inline-block' to={`/@${account.acct}`}>
-        <HStack space={1} alignItems='center' grow>
-          <Text
-            size='sm'
-            theme='primary'
-            truncate
-            dangerouslySetInnerHTML={{ __html: account.display_name_html }}
-          />
-          {/* <span dangerouslySetInnerHTML={{ __html: account.display_name_html }} /> */}
+              {account.verified && <VerificationBadge />}
+            </HStack>
+          </Link>
+        </HoverRefWrapper>
+      ))}
 
-          {account.verified && <VerificationBadge />}
-        </HStack>
-      </Link>
-    </HoverRefWrapper>
-  )).toArray();
+      {familiarFollowerIds.size > 2 && (
+        <Localized id='account-Status--familiar-followers-more' vars={{ count: familiarFollowerIds.size - familiarFollowers.size }}>
+          <span className='cursor-pointer hover:underline' role='presentation' onClick={openFamiliarFollowersModal}>
+            0 others you follow
+          </span>
+        </Localized>
+      )}
+    </>
+  );
 
-  if (familiarFollowerIds.size > 2) {
-    accounts.push(
-      <span className='cursor-pointer hover:underline' role='presentation' onClick={openFamiliarFollowersModal}>
-        <FormattedMessage
-          id='account.familiar_followers.more'
-          defaultMessage='{count, plural, one {# other} other {# others}} you follow'
-          values={{ count: familiarFollowerIds.size - familiarFollowers.size }}
-        />
-      </span>,
-    );
-  }
-
+  // TODO: Test this, I can't access it at the moment...
+  // I expect it to have broken HTML
   return (
     <HStack space={2} alignItems='center'>
       <AvatarStack accountIds={familiarFollowerIds} />
-      <Text theme='muted' size='sm'>
-        <FormattedMessage
-          id='account.familiar_followers'
-          defaultMessage='Followed by {accounts}'
-          values={{
-            accounts: <FormattedList type='conjunction' value={accounts} />,
-          }}
-        />
-      </Text>
+      <Localized id='account-Status--familiar-followers' elems={{ accounts: renderFollowers() }}>
+        <Text theme='muted' size='sm'>
+          Followed by {'<accounts></accounts>'}
+        </Text>
+      </Localized>
     </HStack>
   );
 };
