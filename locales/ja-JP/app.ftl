@@ -6,6 +6,8 @@
 -brand-name = Ghostbox
 -emblem = <emblem></emblem>
 -icon = <icon></icon>
+-accounts = <accounts></accounts>
+-display-name = <name></name>
 
 ### Modules
 
@@ -45,6 +47,9 @@ account-Header--manage-list--MenuItem = { -icon }<wrapper>リストから追加�
 account-Status--block = ブロック済み
 account-Status--deactivated = 非アクティブ化
 account-Status--domain-block = ドメイン非表示
+account-Status--familiar-followers = { -accounts }にフォローされています
+account-Status--familiar-followers-empty = あなたの知り合いで{ -display-name }さんをフォローしている人はいません。
+account-Status--familiar-followers-more = { $count } 人のおすすめユーザー
 account-StatusAction--block = @{ $name }さんをブロック
 account-StatusAction--block--MenuItem = { -icon }<wrapper>@{ $name }さんをブロック</wrapper>{ -emblem }
   .title = @{ $name }さんをブロック
