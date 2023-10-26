@@ -51,8 +51,12 @@ account-StatusAction--block--MenuItem = { -icon }<wrapper>@{ $name }さんをブ
 account-StatusAction--block-domain--MenuItem = { -icon }<wrapper>{ $domain }全体を非表示</wrapper>{ -emblem }
   .title = { $domain }全体を非表示
 account-StatusAction--edit-profile = { -edit-profile }
+account-StatusAction--endorse--MenuItem = { -icon }<wrapper>プロフィールで紹介する</wrapper>{ -emblem }
+  .title = プロフィールで紹介する
 account-StatusAction--follow = フォロー
 account-StatusAction--unblock = @{ $name }さんのブロックを解除
+account-StatusAction--unendorse--MenuItem = { -icon }<wrapper>プロフィールから外す</wrapper>{ -emblem }
+  .title = プロフィールから外す
 account-StatusAction--unfollow = フォロー解除
 
 account-block = Block @{ $name }

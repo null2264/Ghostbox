@@ -92,9 +92,15 @@ account-StatusAction--block--MenuItem = { -icon }<wrapper>Block @{ $name }</wrap
 account-StatusAction--block-domain--MenuItem = { -icon }<wrapper>Hide everything from { $domain }</wrapper>{ -emblem }
   .title = Hide everything from { $domain }
 account-StatusAction--edit-profile = { -edit-profile }
+account-StatusAction--endorse--MenuItem = { -icon }<wrapper>Feature on profile</wrapper>{ -emblem }
+  .title = Feature on profile
 account-StatusAction--follow = Follow
 account-StatusAction--unblock = Unblock @{ $name }
+account-StatusAction--unendorse--MenuItem = { -icon }<wrapper>Don't feature on profile</wrapper>{ -emblem }
+  .title = Don't feature on profile
 account-StatusAction--unfollow = Unfollow
+account-Toast--endorsed = You are now featuring @{ $acct } on your profile
+account-Toast--unendorsed = You are no longer featuring @{ $acct }
 
 account-birthday-today = Birthday is today!
 account-block = Block @{ $name }
