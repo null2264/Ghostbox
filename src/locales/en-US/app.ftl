@@ -13,8 +13,12 @@
 # - MenuItem
 #   ID convention: "module-ComponentName--string-summary--MenuItem"
 #   Formatting: <icon></icon><wrapper>TEXT GOES HERE!</wrapper><emblem></emblem>
+# - Icon
+#   ID convention: "module-ComponentName--string-summary--Icon"
+#   Formatting: <icon></icon>TEXT GOES HERE!
 
 ### Terms
+# You don't need to add every new term here, just add if needed (e.g. the term is commonly used).
 -back =
   { $case ->
     *[title] Back
@@ -56,9 +60,18 @@ ui-CardHeader--back =
 account-Badge--admin = Admin
 account-Badge--bot = Bot
 account-Badge--moderator = Moderator
+-birthday-date =
+  { $suffix ->
+    *[icon] <icon></icon>{ DATETIME($date, year: "numeric", month: "short", day: "numeric") }
+    [text] Born { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
+  }
+account-Birthday--date--Icon = { -birthday-date(suffix: "icon") } 
+  .title = { -birthday-date(suffix: "text") }
+account-Birthday--date = { -birthday-date(suffix: "text") }
+  .title = { -birthday-date(suffix: "text") }
+account-Birthday--celebration = Birthday is today!
 account-Header--manage-list--MenuItem = <icon></icon><wrapper>Add or Remove from lists</wrapper><emblem></emblem>
 
-account-birthday = Born { $date }
 account-birthday-today = Birthday is today!
 account-block = Block @{ $name }
 account-block-domain = Hide everything from { $domain }

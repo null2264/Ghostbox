@@ -26,10 +26,18 @@ ui-CardHeader--back =
 
 # Components that related to Account such as profile, hover card.
 
+-birthday-date =
+  { $suffix ->
+    *[icon] <icon></icon>{ DATETIME($date, year: "numeric", month: "short", day: "numeric") }
+    [text] 生年月日 { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
+  }
+account-Birthday--date--Icon = { -birthday-date(suffix: "icon") } 
+  .title = { -birthday-date(suffix: "text") }
+account-Birthday--date = { -birthday-date(suffix: "text") }
+  .title = { -birthday-date(suffix: "text") }
+account-Birthday--celebration = 本日は誕生日です!
 account-Header--manage-list--MenuItem = <icon></icon><wrapper>リストから追加または外す</wrapper><emblem></emblem>
 
-account-birthday = Born { $date }
-account-birthday-today = Birthday is today!
 account-block = Block @{ $name }
 account-block-domain = Hide everything from { $domain }
 account-blocked = Blocked

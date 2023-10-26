@@ -93,8 +93,6 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
     const birthday = account?.pleroma?.birthday;
     if (!birthday) return null;
 
-    const formattedBirthday = intl.formatDate(birthday, { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' });
-
     const date = new Date(birthday);
     const today = new Date();
 
@@ -107,13 +105,15 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
           className='h-4 w-4 text-gray-800 dark:text-gray-200'
         />
 
-        <Text size='sm'>
-          {hasBirthday ? (
-            <FormattedMessage id='account.birthday_today' defaultMessage='Birthday is today!' />
-          ) : (
-            <FormattedMessage id='account.birthday' defaultMessage='Born {date}' values={{ date: formattedBirthday }} />
-          )}
-        </Text>
+        {/* TODO: Test this, Akkoma don't have birthday feature */}
+        <Localized
+          id={'account-Birthday--' + (hasBirthday ? 'celebration' : 'date')}
+          vars={{ date: birthday }}
+        >
+          <Text size='sm'>
+            {'Birthday'}
+          </Text>
+        </Localized>
       </HStack>
     );
   };
