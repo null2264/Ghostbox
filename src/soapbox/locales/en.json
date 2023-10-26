@@ -1,6 +1,5 @@
 {
   "about.also_available": "Available in:",
-  "account.endorse": "Feature on profile",
   "account.endorse.success": "You are now featuring @{acct} on your profile",
   "account.familiar_followers": "Followed by {accounts}",
   "account.familiar_followers.empty": "No one you know follows {name}.",
@@ -40,8 +39,6 @@
   "account.subscribe.failure": "An error occurred trying to subscribe to this account.",
   "account.subscribe.success": "You have subscribed to this account.",
   "account.unblock_domain": "Unhide {domain}",
-  "account.unendorse": "Don't feature on profile",
-  "account.unendorse.success": "You are no longer featuring @{acct}",
   "account.unmute": "Unmute @{name}",
   "account.unsubscribe": "Unsubscribe to notifications from @{name}",
   "account.unsubscribe.failure": "An error occurred trying to unsubscribe to this account.",

@@ -7,6 +7,8 @@ export interface FluentOption {
   attrs?: Record<string, boolean>
   vars?: Record<string, FluentVariable>
   elems?: Record<string, React.ReactElement>
+  /** Not actually available in Fluent, mostly for Toast */
+  fallback?: string
 }
 
 interface LocalizedProps {
@@ -17,7 +19,10 @@ interface LocalizedProps {
 const MaybeLocalized: React.FC<LocalizedProps> = ({ children, fluent }) => {
   if (!fluent)
     return (<>{children}</>);
-  return (<Localized {...fluent}>{children}</Localized>);
+
+  const { fallback, ...filtered } = fluent;
+
+  return (<Localized {...filtered}>{children}</Localized>);
 };
 
 export default MaybeLocalized;

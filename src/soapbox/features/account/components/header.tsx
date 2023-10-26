@@ -25,6 +25,7 @@ import VerificationBadge from 'soapbox/components/verification-badge';
 import MovedNote from 'soapbox/features/account-timeline/components/moved-note';
 import ActionButton from 'soapbox/features/ui/components/action-button';
 import SubscriptionButton from 'soapbox/features/ui/components/subscription-button';
+import { formatMessage } from 'soapbox/fluent';
 import { useAppDispatch, useAppSelector, useFeatures, useOwnAccount } from 'soapbox/hooks';
 import { normalizeAttachment } from 'soapbox/normalizers';
 import { ChatKeys, useChats } from 'soapbox/queries/chats';
@@ -53,8 +54,6 @@ const messages = defineMessages({
   blocks: { id: 'navigation_bar.blocks', defaultMessage: 'Blocked users' },
   domain_blocks: { id: 'navigation_bar.domain_blocks', defaultMessage: 'Hidden domains' },
   mutes: { id: 'navigation_bar.mutes', defaultMessage: 'Muted users' },
-  endorse: { id: 'account.endorse', defaultMessage: 'Feature on profile' },
-  unendorse: { id: 'account.unendorse', defaultMessage: 'Don\'t feature on profile' },
   removeFromFollowers: { id: 'account.remove_from_followers', defaultMessage: 'Remove this follower' },
   adminAccount: { id: 'status.admin_account', defaultMessage: 'Moderate @{name}' },
   add_or_remove_from_list: { id: 'account.add_or_remove_from_list', defaultMessage: 'Add or Remove from lists' },
@@ -160,11 +159,15 @@ const Header: React.FC<IHeader> = ({ account }) => {
   const onEndorseToggle = () => {
     if (account.relationship?.endorsed) {
       dispatch(unpinAccount(account.id))
-        .then(() => toast.success(intl.formatMessage(messages.userUnendorsed, { acct: account.acct })))
+        .then(() => toast.success(
+          formatMessage({ id: 'account-Toast--unendorsed', vars: { acct: account.acct } }),
+        ))
         .catch(() => { });
     } else {
       dispatch(pinAccount(account.id))
-        .then(() => toast.success(intl.formatMessage(messages.userEndorsed, { acct: account.acct })))
+        .then(() => toast.success(
+          formatMessage({ id: 'account-Toast--endorsed', vars: { acct: account.acct } }),
+        ))
         .catch(() => { });
     }
   };
@@ -406,7 +409,10 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
         if (features.accountEndorsements) {
           menu.push({
-            text: intl.formatMessage(account.relationship?.endorsed ? messages.unendorse : messages.endorse),
+            fluent: {
+              id: `account-Header--${account.relationship?.endorsed ? 'unendorse' : 'endorse'}--MenuItem`,
+            },
+            text: 'Endorse/Unendorse',
             action: onEndorseToggle,
             icon: require('@tabler/icons/user-check.svg'),
           });

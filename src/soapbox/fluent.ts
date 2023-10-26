@@ -1,5 +1,7 @@
 import { FluentBundle, FluentResource } from '@fluent/bundle';
 
+import { FluentOption } from './components/maybe-localized';
+
 const DEFAULT_LOCALE = 'en-US';
 const AVAILABLE_LOCALES_TO_LOCALIZED_NAMES: Record<string, string> = {
   'en-GB': 'English (GB)',
@@ -28,11 +30,14 @@ function* lazyParseBundle(fetchedMessages: Array<[string, string]>) {
   }
 }
 
+const formatMessage = (opts: FluentOption): FluentOption => opts;
+
 export {
   AVAILABLE_LOCALES,
   AVAILABLE_LOCALES_TO_LOCALIZED_NAMES,
   DEFAULT_LOCALE,
   fetchMessages,
+  formatMessage,
   getAvailableLocales,
   lazyParseBundle,
 };

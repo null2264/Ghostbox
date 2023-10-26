@@ -1,9 +1,11 @@
+import { Localized } from '@fluent/react';
 import clsx from 'clsx';
 import React from 'react';
 import toast, { Toast as RHToast } from 'react-hot-toast';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
+import { type FluentOption } from 'soapbox/components/maybe-localized';
 import { ToastText, ToastType } from 'soapbox/toast';
 
 import HStack from '../hstack/hstack';
@@ -14,6 +16,13 @@ import Text from '../text/text';
 const renderText = (text: ToastText) => {
   if (typeof text === 'string') {
     return text;
+  } else if (Object.prototype.hasOwnProperty.call(text, 'id')) {
+    const { fallback, ...rest } = text as FluentOption;
+    return (
+      <Localized {...rest}>
+        <span>{fallback}</span>
+      </Localized>
+    );
   } else {
     return <FormattedMessage {...text} />;
   }

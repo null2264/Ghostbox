@@ -49,8 +49,12 @@ account-StatusAction--block--MenuItem = { -icon }<wrapper>Blokir @{ $name }</wra
 account-StatusAction--block-domain--MenuItem = { -icon }<wrapper>Sembunyikan segalanya dari { $domain }</wrapper>{ -emblem }
   .title = Sembunyikan segalanya dari { $domain }
 account-StatusAction--edit-profile = { -edit-profile }
+account-StatusAction--endorse--MenuItem = { -icon }<wrapper>Tampilkan di profil</wrapper>{ -emblem }
+  .title = Tampilkan di profil
 account-StatusAction--follow = Ikuti
 account-StatusAction--unblock = Hapus blokir @{ $name }
+account-StatusAction--unendorse--MenuItem = { -icon }<wrapper>Jangan tampilkan di profil</wrapper>{ -emblem }
+  .title = Jangan tampilkan di profil
 account-StatusAction--unfollow = Berhenti mengikuti
 
 account-birthday = Born { $date }
