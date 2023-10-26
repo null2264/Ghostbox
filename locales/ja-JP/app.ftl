@@ -4,6 +4,8 @@
 
 ### Terms
 -brand-name = Ghostbox
+-emblem = <emblem></emblem>
+-icon = <icon></icon>
 
 ### Modules
 
@@ -26,17 +28,22 @@ ui-CardHeader--back =
 
 # Components that related to Account such as profile, hover card.
 
--birthday-date =
-  { $suffix ->
-    *[icon] <icon></icon>{ DATETIME($date, year: "numeric", month: "short", day: "numeric") }
-    [text] 生年月日 { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
-  }
-account-Birthday--date--Icon = { -birthday-date(suffix: "icon") } 
-  .title = { -birthday-date(suffix: "text") }
-account-Birthday--date = { -birthday-date(suffix: "text") }
-  .title = { -birthday-date(suffix: "text") }
+account-Birthday--date--Icon = { -icon }{ DATETIME($date, year: "numeric", month: "short", day: "numeric") }
+  .title = 生年月日 { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
+account-Birthday--date = 生年月日 { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
+  .title = 生年月日 { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
 account-Birthday--celebration = 本日は誕生日です!
-account-Header--manage-list--MenuItem = <icon></icon><wrapper>リストから追加または外す</wrapper><emblem></emblem>
+account-Header--manage-list--MenuItem = { -icon }<wrapper>リストから追加または外す</wrapper>{ -emblem }
+  .title = リストから追加または外す
+account-Status--block = ブロック済み
+account-StatusAction--block = @{ $name }さんをブロック
+account-StatusAction--block--MenuItem = { -icon }<wrapper>@{ $name }さんをブロック</wrapper>{ -emblem }
+  .title = @{ $name }さんをブロック
+account-StatusAction--block-domain--MenuItem = { -icon }<wrapper>{ $domain }全体を非表示</wrapper>{ -emblem }
+  .title = { $domain }全体を非表示
+account-StatusAction--follow = フォロー
+account-StatusAction--unblock = @{ $name }さんのブロックを解除
+account-StatusAction--unfollow = フォロー解除
 
 account-block = Block @{ $name }
 account-block-domain = Hide everything from { $domain }
