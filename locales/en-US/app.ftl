@@ -88,6 +88,7 @@ account-Header--manage-list--MenuItem = { -icon }<wrapper>Add or Remove from lis
 account-Status--block = Blocked
 account-Status--deactivated = Deactivated
 account-Status--domain-block = Domain blocked
+account-Status--follows-you = Follows you
 account-Status--familiar-followers = Followed by { -accounts }
 account-Status--familiar-followers-empty = No one you know follows { -display-name }
 account-Status--familiar-followers-more =
@@ -95,6 +96,7 @@ account-Status--familiar-followers-more =
     [one] { $count } other you follow
     *[other] { $count } others you follow
   }
+account-Status--muted = Muted
 account-StatusAction--block = Block @{ $name }
 account-StatusAction--block--MenuItem = { -icon }<wrapper>Block @{ $name }</wrapper>{ -emblem }
   .title = Block @{ $name }
