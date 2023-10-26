@@ -36,17 +36,13 @@ import copy from 'soapbox/utils/copy';
 import { MASTODON, parseVersion } from 'soapbox/utils/features';
 
 const messages = defineMessages({
-  edit_profile: { id: 'account.edit_profile', defaultMessage: 'Edit profile' },
   linkVerifiedOn: { id: 'account.link_verified_on', defaultMessage: 'Ownership of this link was checked on {date}' },
   account_locked: { id: 'account.locked_info', defaultMessage: 'This account privacy status is set to locked. The owner manually reviews who can follow them.' },
   mention: { id: 'account.mention', defaultMessage: 'Mention' },
-  chat: { id: 'account.chat', defaultMessage: 'Chat with @{name}' },
-  direct: { id: 'account.direct', defaultMessage: 'Direct message @{name}' },
   unmute: { id: 'account.unmute', defaultMessage: 'Unmute @{name}' },
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
   mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
   report: { id: 'account.report', defaultMessage: 'Report @{name}' },
-  copy: { id: 'account.copy', defaultMessage: 'Copy link to profile' },
   share: { id: 'account.share', defaultMessage: 'Share @{name}\'s profile' },
   media: { id: 'account.media', defaultMessage: 'Media' },
   unblockDomain: { id: 'account.unblock_domain', defaultMessage: 'Unhide {domain}' },
@@ -314,7 +310,10 @@ const Header: React.FC<IHeader> = ({ account }) => {
     }
 
     menu.push({
-      text: intl.formatMessage(messages.copy),
+      fluent: {
+        id: 'account-Header--copy--MenuItem',
+      },
+      text: 'Copy link to profile',
       action: handleCopy,
       icon: require('@tabler/icons/clipboard-copy.svg'),
     });
@@ -335,7 +334,10 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
     if (account.id === ownAccount.id) {
       menu.push({
-        text: intl.formatMessage(messages.edit_profile),
+        fluent: {
+          id: 'account-Header--edit--MenuItem',
+        },
+        text: 'Edit profile',
         to: '/settings/profile',
         icon: require('@tabler/icons/user.svg'),
       });
@@ -364,7 +366,13 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
       if (features.privacyScopes) {
         menu.push({
-          text: intl.formatMessage(messages.direct, { name: account.username }),
+          fluent: {
+            id: 'account-Header--direct--MenuItem',
+            vars: {
+              name: account.username,
+            },
+          },
+          text: `Direct message @${account.username}`,
           action: onDirect,
           icon: require('@tabler/icons/mail.svg'),
         });
@@ -540,7 +548,8 @@ const Header: React.FC<IHeader> = ({ account }) => {
         <Badge
           key='domain_blocked'
           slug='opaque'
-          title={<FormattedMessage id='account.domain_blocked' defaultMessage='Domain hidden' />}
+          title='Domain blocked'
+          id='account-Status--domain-block'
         />,
       );
     }
@@ -583,26 +592,30 @@ const Header: React.FC<IHeader> = ({ account }) => {
       }
 
       return (
-        <IconButton
-          src={require('@tabler/icons/messages.svg')}
-          onClick={() => createAndNavigateToChat.mutate(account.id)}
-          title={intl.formatMessage(messages.chat, { name: account.username })}
-          theme='outlined'
-          className='px-2'
-          iconClassName='h-4 w-4'
-          disabled={createAndNavigateToChat.isLoading}
-        />
+        <Localized id='account-Header--chat' vars={{ name: account.username }} attrs={{ title: true }}>
+          <IconButton
+            src={require('@tabler/icons/messages.svg')}
+            onClick={() => createAndNavigateToChat.mutate(account.id)}
+            title='Chat'
+            theme='outlined'
+            className='px-2'
+            iconClassName='h-4 w-4'
+            disabled={createAndNavigateToChat.isLoading}
+          />
+        </Localized>
       );
     } else if (account.pleroma?.accepts_chat_messages) {
       return (
-        <IconButton
-          src={require('@tabler/icons/messages.svg')}
-          onClick={() => createAndNavigateToChat.mutate(account.id)}
-          title={intl.formatMessage(messages.chat, { name: account.username })}
-          theme='outlined'
-          className='px-2'
-          iconClassName='h-4 w-4'
-        />
+        <Localized id='account-Header--chat' vars={{ name: account.username }} attrs={{ title: true }}>
+          <IconButton
+            src={require('@tabler/icons/messages.svg')}
+            onClick={() => createAndNavigateToChat.mutate(account.id)}
+            title='Chat'
+            theme='outlined'
+            className='px-2'
+            iconClassName='h-4 w-4'
+          />
+        </Localized>
       );
     } else {
       return null;

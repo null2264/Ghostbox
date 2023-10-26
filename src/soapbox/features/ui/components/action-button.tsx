@@ -18,7 +18,6 @@ import { useAppDispatch, useFeatures, useLoggedIn } from 'soapbox/hooks';
 import type { Account } from 'soapbox/schemas';
 
 const messages = defineMessages({
-  edit_profile: { id: 'account.edit_profile', defaultMessage: 'Edit profile' },
   mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
   remote_follow: { id: 'account.remote_follow', defaultMessage: 'Remote follow' },
   requested: { id: 'account.requested', defaultMessage: 'Awaiting approval' },
@@ -252,12 +251,15 @@ const ActionButton: React.FC<IActionButton> = ({ account, actionType, small }) =
   } else {
     // Edit profile
     return (
-      <Button
-        theme='tertiary'
-        size='sm'
-        text={intl.formatMessage(messages.edit_profile)}
-        to='/settings/profile'
-      />
+      <Localized id='account-StatusAction--edit-profile'>
+        <Button
+          theme='tertiary'
+          size='sm'
+          to='/settings/profile'
+        >
+          Edit profile
+        </Button>
+      </Localized>
     );
   }
 

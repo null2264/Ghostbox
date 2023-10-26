@@ -32,7 +32,6 @@ const isSafeUrl = (text: string): boolean => {
 const messages = defineMessages({
   linkVerifiedOn: { id: 'account.link_verified_on', defaultMessage: 'Ownership of this link was checked on {date}' },
   account_locked: { id: 'account.locked_info', defaultMessage: 'This account privacy status is set to locked. The owner manually reviews who can follow them.' },
-  deactivated: { id: 'account.deactivated', defaultMessage: 'Deactivated' },
   bot: { id: 'account.badges.bot', defaultMessage: 'Bot' },
 });
 
@@ -51,9 +50,9 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
 
   const getStaffBadge = (): React.ReactNode => {
     if (account?.admin) {
-      return <Badge slug='admin' title={<Localized id='account-Badge--admin'>Admin</Localized>} key='staff' />;
+      return <Badge slug='admin' title='Admin' key='staff' />;
     } else if (account?.moderator) {
-      return <Badge slug='moderator' title={<Localized id='account-Badge--moderator'>Moderator</Localized>} key='staff' />;
+      return <Badge slug='moderator' title='Moderator' key='staff' />;
     } else {
       return null;
     }
@@ -83,7 +82,7 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
     }
 
     if (isPatron) {
-      badges.push(<Badge slug='patron' title={<FormattedMessage id='account.patron' defaultMessage='Patron' />} key='patron' />);
+      badges.push(<Badge slug='patron' title='Patron' key='patron' />);
     }
 
     return [...badges, ...custom];
@@ -135,7 +134,6 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
   }
 
   const deactivated = account.pleroma?.deactivated ?? false;
-  const displayNameHtml = deactivated ? { __html: intl.formatMessage(messages.deactivated) } : { __html: account.display_name_html };
   const memberSinceDate = intl.formatDate(account.created_at, { month: 'long', year: 'numeric' });
   const badges = getBadges();
 
@@ -144,9 +142,17 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
       <Stack space={2}>
         <Stack>
           <HStack space={1} alignItems='center'>
-            <Text size='lg' weight='bold' dangerouslySetInnerHTML={displayNameHtml} truncate />
+            {!deactivated ? (
+              <Text size='lg' weight='bold' dangerouslySetInnerHTML={{ __html: account.display_name_html }} truncate />
+            ) : (
+              <Localized id='account-Status--deactivated'>
+                <Text size='lg' weight='bold' truncate>
+                  Deactivated
+                </Text>
+              </Localized>
+            )}
 
-            {account.bot && <Badge slug='bot' title={intl.formatMessage(messages.bot)} />}
+            {account.bot && <Badge slug='bot' title='Bot' />}
 
             {badges.length > 0 && (
               <HStack space={1} alignItems='center'>

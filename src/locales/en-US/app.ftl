@@ -61,22 +61,37 @@ ui-CardHeader--back =
 
 # Components that related to Account such as profile, hover card.
 
+-edit-profile = Edit profile
 account-Badge--admin = Admin
 account-Badge--bot = Bot
 account-Badge--moderator = Moderator
+account-Badge--patron = Patron
+# someone messed up the translation (coding error)
+account-Badge--opaque = INVALID!
 account-Birthday--date--Icon = { -icon }{ DATETIME($date, year: "numeric", month: "short", day: "numeric") }
   .title = Born { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
 account-Birthday--date = Born { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
   .title = Born { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
 account-Birthday--celebration = Birthday is today!
+account-Header--chat =
+  .title = Chat with @{ $name }
+account-Header--copy--MenuItem = { -icon }<wrapper>Copy link to profile</wrapper>{ -emblem }
+  .title = Copy link to profile
+account-Header--direct--MenuItem = { -icon }<wrapper>Direct message @{ $name }</wrapper>{ -emblem }
+  .title = Direct message @{ $name }
+account-Header--edit-profile--MenuItem = { -icon }<wrapper>{ -edit-profile }</wrapper>{ -emblem }
+  .title = { -edit-profile }
 account-Header--manage-list--MenuItem = { -icon }<wrapper>Add or Remove from lists</wrapper>{ -emblem }
   .title = Add or Remove from lists
 account-Status--block = Blocked
+account-Status--deactivated = Deactivated
+account-Status--domain-block = Domain blocked
 account-StatusAction--block = Block @{ $name }
 account-StatusAction--block--MenuItem = { -icon }<wrapper>Block @{ $name }</wrapper>{ -emblem }
   .title = Block @{ $name }
 account-StatusAction--block-domain--MenuItem = { -icon }<wrapper>Hide everything from { $domain }</wrapper>{ -emblem }
   .title = Hide everything from { $domain }
+account-StatusAction--edit-profile = { -edit-profile }
 account-StatusAction--follow = Follow
 account-StatusAction--unblock = Unblock @{ $name }
 account-StatusAction--unfollow = Unfollow

@@ -28,18 +28,27 @@ ui-CardHeader--back =
 
 # Components that related to Account such as profile, hover card.
 
+-edit-profile = Ubah profil
 account-Birthday--date--Icon = { -icon }{ DATETIME($date, year: "numeric", month: "short", day: "numeric") }
   .title = Lahir tanggal { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
 account-Birthday--date = Lahir tanggal { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
   .title = Lahir tanggal { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
 account-Birthday--celebration = Lahir hari ini!
+account-Header--copy--MenuItem = { -icon }<wrapper>Salin tautan ke profil</wrapper>{ -emblem }
+  .title = Salin tautan ke profil
+account-Header--edit-profile--MenuItem = { -icon }<wrapper>{ -edit-profile }</wrapper>{ -emblem }
+  .title = { -edit-profile }
 account-Header--manage-list--MenuItem = { -icon }<wrapper>Tambah atau Hapus dari daftar</wrapper>{ -emblem }
   .title = Tambah atau Hapus dari daftar
+account-Status--block = Terblokir
+account-Status--deactivated = Dinonaktifkan
+account-Status--domain-block = Domain terblokir
 account-StatusAction--block = Blokir @{ $name }
 account-StatusAction--block--MenuItem = { -icon }<wrapper>Blokir @{ $name }</wrapper>{ -emblem }
   .title = Blokir @{ $name }
 account-StatusAction--block-domain--MenuItem = { -icon }<wrapper>Sembunyikan segalanya dari { $domain }</wrapper>{ -emblem }
   .title = Sembunyikan segalanya dari { $domain }
+account-StatusAction--edit-profile = { -edit-profile }
 account-StatusAction--follow = Ikuti
 account-StatusAction--unblock = Hapus blokir @{ $name }
 account-StatusAction--unfollow = Berhenti mengikuti
