@@ -118,7 +118,6 @@ account-Status--locked =
   .alt = This account privacy status is set to locked. The owner manually reviews who can follow them.
 account-Status--member-since = Joined { DATETIME($date, year: "numeric", month: "long") }
 account-Status--muted = Muted
-account-Status--muted = Muted
 account-Status--no-followers = No one follows this user yet.
 account-Status--no-following = This user doesn't follow anyone yet.
 account-StatusAction--block = Block @{ $name }
