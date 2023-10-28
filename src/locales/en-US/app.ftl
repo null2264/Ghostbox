@@ -116,15 +116,3 @@ account-StatusAction--unendorse--MenuItem = { -icon }<wrapper>Don't feature on p
 account-StatusAction--unfollow = Unfollow
 account-Toast--endorsed = You are now featuring @{ $acct } on your profile
 account-Toast--unendorsed = You are no longer featuring @{ $acct }
-
-account-birthday-today = Birthday is today!
-account-block = Block @{ $name }
-account-block-domain = Hide everything from { $domain }
-account-blocked = Blocked
-account-chat = Chat with @{ $name }
-account-copy = Copy link to profile
-account-deactivated = Deactivated
-account-direct = Direct message @{ $name }
-account-domain-blocked = Domain blocked
-app-create-name-label = App name
-app-create-name-placeholder = { -brand-name }
