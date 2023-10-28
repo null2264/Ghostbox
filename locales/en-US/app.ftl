@@ -59,6 +59,9 @@ ui-CardHeader--back =
   .aria-label = { -back }
   .title = { -back }
 
+### About (features/about)
+about-Page--available = Also available in:
+
 ### Account (features/account/...)
 
 # Components that related to Account such as profile, hover card.
