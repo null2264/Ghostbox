@@ -77,7 +77,7 @@ const SubscriptionButton = ({ account }: ISubscriptionButton) => {
 
   if (isRequested || isFollowing) {
     return (
-      <Localized id={isSubscribed ? 'account-Action--unsubscribe' : 'account-Action--subscribe'} attrs={{ title: true }}>
+      <Localized id={isSubscribed ? 'account-Action--unsubscribe' : 'account-Action--subscribe'} attrs={{ title: true }} vars={{ name: account.username }}>
         <IconButton
           src={isSubscribed ? require('@tabler/icons/bell-ringing.svg') : require('@tabler/icons/bell.svg')}
           onClick={handleToggle}
