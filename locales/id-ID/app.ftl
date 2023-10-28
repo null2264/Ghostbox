@@ -24,6 +24,9 @@ ui-CardHeader--back =
   .aria-label = Kembali
   .title = Kembali
 
+### About (features/about)
+about-Page--available = Tersedia di:
+
 ### Account (features/account/...)
 
 # Components that related to Account such as profile, hover card.
