@@ -18,8 +18,6 @@ import { useAppDispatch, useFeatures, useLoggedIn } from 'soapbox/hooks';
 import type { Account } from 'soapbox/schemas';
 
 const messages = defineMessages({
-  remote_follow: { id: 'account.remote_follow', defaultMessage: 'Remote follow' },
-  requested: { id: 'account.requested', defaultMessage: 'Awaiting approval' },
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
   authorize: { id: 'follow_request.authorize', defaultMessage: 'Authorize' },
   reject: { id: 'follow_request.reject', defaultMessage: 'Reject' },
@@ -163,11 +161,14 @@ const ActionButton: React.FC<IActionButton> = ({ account, actionType, small }) =
         <form method='POST' action='/main/ostatus'>
           <input type='hidden' name='nickname' value={account.acct} />
           <input type='hidden' name='profile' value='' />
-          <Button
-            text={intl.formatMessage(messages.remote_follow)}
-            type='submit'
-            size='sm'
-          />
+          <Localized id='account-StatusAction--follow-remote'>
+            <Button
+              type='submit'
+              size='sm'
+            >
+              Remote follow
+            </Button>
+          </Localized>
         </form>
       );
     }
@@ -208,12 +209,15 @@ const ActionButton: React.FC<IActionButton> = ({ account, actionType, small }) =
     } else if (account.relationship?.requested) {
       // Awaiting acceptance
       return (
-        <Button
-          size='sm'
-          theme='tertiary'
-          text={intl.formatMessage(messages.requested)}
-          onClick={handleFollow}
-        />
+        <Localized id='account-Status--requested'>
+          <Button
+            size='sm'
+            theme='tertiary'
+            onClick={handleFollow}
+          >
+            Awaiting approval
+          </Button>
+        </Localized>
       );
     } else if (!account.relationship?.blocking && !account.relationship?.muting) {
       // Follow & Unfollow

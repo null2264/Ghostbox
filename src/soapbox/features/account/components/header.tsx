@@ -37,26 +37,19 @@ import { MASTODON, parseVersion } from 'soapbox/utils/features';
 
 const messages = defineMessages({
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
-  report: { id: 'account.report', defaultMessage: 'Report @{name}' },
-  share: { id: 'account.share', defaultMessage: 'Share @{name}\'s profile' },
   unblockDomain: { id: 'account.unblock_domain', defaultMessage: 'Unhide {domain}' },
-  showReblogs: { id: 'account.show_reblogs', defaultMessage: 'Show reposts from @{name}' },
   preferences: { id: 'navigation_bar.preferences', defaultMessage: 'Preferences' },
   follow_requests: { id: 'navigation_bar.follow_requests', defaultMessage: 'Follow requests' },
   blocks: { id: 'navigation_bar.blocks', defaultMessage: 'Blocked users' },
   domain_blocks: { id: 'navigation_bar.domain_blocks', defaultMessage: 'Hidden domains' },
   mutes: { id: 'navigation_bar.mutes', defaultMessage: 'Muted users' },
-  removeFromFollowers: { id: 'account.remove_from_followers', defaultMessage: 'Remove this follower' },
   adminAccount: { id: 'status.admin_account', defaultMessage: 'Moderate @{name}' },
   add_or_remove_from_list: { id: 'account.add_or_remove_from_list', defaultMessage: 'Add or Remove from lists' },
-  search: { id: 'account.search', defaultMessage: 'Search from @{name}' },
-  searchSelf: { id: 'account.search_self', defaultMessage: 'Search your posts' },
   unfollowConfirm: { id: 'confirmations.unfollow.confirm', defaultMessage: 'Unfollow' },
   blockConfirm: { id: 'confirmations.block.confirm', defaultMessage: 'Block' },
   blockDomainConfirm: { id: 'confirmations.domain_block.confirm', defaultMessage: 'Hide entire domain' },
   blockAndReport: { id: 'confirmations.block.block_and_report', defaultMessage: 'Block & Report' },
   removeFromFollowersConfirm: { id: 'confirmations.remove_from_followers.confirm', defaultMessage: 'Remove' },
-  subscribeFeed: { id: 'account.rss_feed', defaultMessage: 'Subscribe to RSS feed' },
 });
 
 interface IHeader {
@@ -279,7 +272,10 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
     if (features.rssFeeds && account.local) {
       menu.push({
-        text: intl.formatMessage(messages.subscribeFeed),
+        fluent: {
+          id: 'account-Header--rss-subscribe--MenuItem',
+        },
+        text: 'Subscribe to RSS feed',
         action: handleRssFeedClick,
         icon: require('@tabler/icons/rss.svg'),
       });
@@ -287,7 +283,11 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
     if ('share' in navigator) {
       menu.push({
-        text: intl.formatMessage(messages.share, { name: account.username }),
+        fluent: {
+          id: 'account-Header--share--MenuItem',
+          vars: { name: account.username },
+        },
+        text: 'Share',
         action: handleShare,
         icon: require('@tabler/icons/upload.svg'),
       });
@@ -319,7 +319,11 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
     if (features.searchFromAccount) {
       menu.push({
-        text: intl.formatMessage(account.id === ownAccount.id ? messages.searchSelf : messages.search, { name: account.username }),
+        fluent: {
+          id: 'account-Header--search' + (account.id === ownAccount.id ? '-self' : '') + '--MenuItem',
+          vars: { name: account.username },
+        },
+        text: 'Search this account',
         action: onSearch,
         icon: require('@tabler/icons/search.svg'),
       });
@@ -393,7 +397,13 @@ const Header: React.FC<IHeader> = ({ account }) => {
           });
         } else {
           menu.push({
-            text: intl.formatMessage(messages.showReblogs, { name: account.username }),
+            fluent: {
+              id: 'account-Header--show-reposts--MenuItem',
+              vars: {
+                name: account.username,
+              },
+            },
+            text: `Show reposts from @${account.username}`,
             action: onReblogToggle,
             icon: require('@tabler/icons/repeat.svg'),
           });
@@ -435,7 +445,10 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
       if (features.removeFromFollowers && account.relationship?.followed_by) {
         menu.push({
-          text: intl.formatMessage(messages.removeFromFollowers),
+          fluent: {
+            id: 'account-Header--remove-follower--MenuItem',
+          },
+          text: 'Remove this follower',
           action: onRemoveFromFollowers,
           icon: require('@tabler/icons/user-x.svg'),
         });
@@ -482,7 +495,11 @@ const Header: React.FC<IHeader> = ({ account }) => {
       }
 
       menu.push({
-        text: intl.formatMessage(messages.report, { name: account.username }),
+        fluent: {
+          id: 'account-Header--report--MenuItem',
+          vars: { name: account.username },
+        },
+        text: `Report @${account.username}`,
         action: onReport,
         icon: require('@tabler/icons/flag.svg'),
       });
@@ -649,14 +666,16 @@ const Header: React.FC<IHeader> = ({ account }) => {
     }
 
     return (
-      <IconButton
-        src={require('@tabler/icons/upload.svg')}
-        onClick={handleShare}
-        title={intl.formatMessage(messages.share, { name: account.username })}
-        theme='outlined'
-        className='px-2'
-        iconClassName='h-4 w-4'
-      />
+      <Localized id='account-Action--share' attrs={{ title: true }}>
+        <IconButton
+          src={require('@tabler/icons/upload.svg')}
+          onClick={handleShare}
+          title='Share'
+          theme='outlined'
+          className='px-2'
+          iconClassName='h-4 w-4'
+        />
+      </Localized>
     );
   };
 
