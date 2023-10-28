@@ -106,6 +106,7 @@ account-Status--familiar-followers-more =
     [one] { $count } other you follow
     *[other] { $count } others you follow
   }
+account-Status--last-status = Last active
 account-Status--muted = Muted
 account-Status--no-followers = No one follows this user yet.
 account-Status--no-following = This user doesn't follow anyone yet.
