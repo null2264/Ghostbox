@@ -2,7 +2,7 @@
 
 import { Localized } from '@fluent/react';
 import React from 'react';
-import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import { usePatronUser } from 'soapbox/api/hooks';
 import AccountAcct from 'soapbox/components/account-acct';
@@ -28,11 +28,6 @@ const isSafeUrl = (text: string): boolean => {
     return false;
   }
 };
-
-const messages = defineMessages({
-  account_locked: { id: 'account.locked_info', defaultMessage: 'This account privacy status is set to locked. The owner manually reviews who can follow them.' },
-  bot: { id: 'account.badges.bot', defaultMessage: 'Bot' },
-});
 
 interface IProfileInfoPanel {
   account?: Account
@@ -164,11 +159,13 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
             <AccountAcct account={account} />
 
             {account.locked && (
-              <Icon
-                src={require('@tabler/icons/lock.svg')}
-                alt={intl.formatMessage(messages.account_locked)}
-                className='h-4 w-4 text-gray-600'
-              />
+              <Localized id='account-Status--locked' attrs={{ alt: true }}>
+                <Icon
+                  src={require('@tabler/icons/lock.svg')}
+                  alt='This account privacy status is set to locked. The owner manually reviews who can follow them.'
+                  className='h-4 w-4 text-gray-600'
+                />
+              </Localized>
             )}
           </HStack>
         </Stack>

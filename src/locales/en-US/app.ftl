@@ -112,6 +112,8 @@ account-Status--familiar-followers-more =
     *[other] { $count } others you follow
   }
 account-Status--last-status = Last active
+account-Status--locked =
+  .alt = This account privacy status is set to locked. The owner manually reviews who can follow them.
 account-Status--muted = Muted
 account-Status--no-followers = No one follows this user yet.
 account-Status--no-following = This user doesn't follow anyone yet.
