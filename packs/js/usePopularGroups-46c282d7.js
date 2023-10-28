@@ -1,0 +1,1 @@
+import{bm as u,g as i,bn as n,bo as l,bp as c,kp as m}from"../index-934baf30.js";function b(){const t=u(),a=i(),{entities:e,...o}=n([c.GROUPS,"popular"],()=>t.get("/api/v1/truth/trends/groups"),{schema:l,enabled:a.groupsDiscovery}),{relationships:p}=m(["popular"],e.map(s=>s.id)),r=e.map(s=>({...s,relationship:p[s.id]||null}));return{...o,groups:r}}export{b as u};

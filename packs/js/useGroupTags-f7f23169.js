@@ -1,1 +1,0 @@
-import{bm as i,bn as n,bp as r,kt as u}from"../index-cda2ee2a.js";function p(s){const t=i(),{entities:e,...a}=n([r.GROUP_TAGS,s],()=>t.get(`/api/v1/truth/trends/groups/${s}/tags`),{schema:u});return{...a,tags:e}}export{p as u};
