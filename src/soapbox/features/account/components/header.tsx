@@ -4,7 +4,7 @@ import { Localized } from '@fluent/react';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { List as ImmutableList } from 'immutable';
-import React from 'react';
+import React, { useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
@@ -67,7 +67,6 @@ const messages = defineMessages({
   userEndorsed: { id: 'account.endorse.success', defaultMessage: 'You are now featuring @{acct} on your profile' },
   userUnendorsed: { id: 'account.unendorse.success', defaultMessage: 'You are no longer featuring @{acct}' },
   profileExternal: { id: 'account.profile_external', defaultMessage: 'View profile on {domain}' },
-  header: { id: 'account.header.alt', defaultMessage: 'Profile header' },
   subscribeFeed: { id: 'account.rss_feed', defaultMessage: 'Subscribe to RSS feed' },
 });
 
@@ -87,6 +86,9 @@ const Header: React.FC<IHeader> = ({ account }) => {
   const { software } = useAppSelector((state) => parseVersion(state.instance.version));
 
   const { getOrCreateChatByAccountId } = useChats();
+
+  const [ isBannerMissing, setIsBannerMissing ] = useState(false);
+  const handleLoadFailure = () => setIsBannerMissing(true);
 
   const createAndNavigateToChat = useMutation((accountId: string) => {
     return getOrCreateChatByAccountId(accountId);
@@ -565,12 +567,15 @@ const Header: React.FC<IHeader> = ({ account }) => {
   const renderHeader = () => {
     let header: React.ReactNode;
 
-    if (account.header) {
+    if (account.header && !isBannerMissing) {
       header = (
-        <StillImage
-          src={account.header}
-          alt={intl.formatMessage(messages.header)}
-        />
+        <Localized id='account-Header--banner' attrs={{ alt: true }}>
+          <StillImage
+            src={account.header}
+            alt='Profile header'
+            onError={handleLoadFailure}
+          />
+        </Localized>
       );
 
       if (!isDefaultHeader(account.header)) {
