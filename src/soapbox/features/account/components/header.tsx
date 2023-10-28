@@ -36,7 +36,6 @@ import copy from 'soapbox/utils/copy';
 import { MASTODON, parseVersion } from 'soapbox/utils/features';
 
 const messages = defineMessages({
-  mention: { id: 'account.mention', defaultMessage: 'Mention' },
   unmute: { id: 'account.unmute', defaultMessage: 'Unmute @{name}' },
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
   mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
@@ -357,7 +356,10 @@ const Header: React.FC<IHeader> = ({ account }) => {
       });
     } else {
       menu.push({
-        text: intl.formatMessage(messages.mention, { name: account.username }),
+        fluent: {
+          id: 'account-Header--mention--MenuItem',
+        },
+        text: 'Mention',
         action: onMention,
         icon: require('@tabler/icons/at.svg'),
       });
