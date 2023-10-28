@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
@@ -146,9 +147,11 @@ const Navbar = () => {
                 </Form>
 
                 <div className='space-x-1.5 lg:hidden'>
-                  <Button theme='tertiary' to='/login' size='sm'>
-                    <FormattedMessage id='account.login' defaultMessage='Log In' />
-                  </Button>
+                  <Localized id='account-Action--login'>
+                    <Button theme='tertiary' to='/login' size='sm'>
+                      Sign in
+                    </Button>
+                  </Localized>
 
                   {isOpen && (
                     <Button theme='primary' to='/signup' size='sm'>

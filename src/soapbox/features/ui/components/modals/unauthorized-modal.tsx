@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import React, { useState } from 'react';
 import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
@@ -103,7 +104,11 @@ const UnauthorizedModal: React.FC<IUnauthorizedModal> = ({ action, onClose, acco
         title={header}
         onClose={onClickClose}
         confirmationAction={onLogin}
-        confirmationText={<FormattedMessage id='account.login' defaultMessage='Log in' />}
+        confirmationText={
+          <Localized id='account-Action--login'>
+            <span>Sign in</span>
+          </Localized>
+        }
         secondaryAction={isOpen ? onRegister : undefined}
         secondaryText={isOpen ? <FormattedMessage id='account.register' defaultMessage='Sign up' /> : undefined}
       >
@@ -144,7 +149,11 @@ const UnauthorizedModal: React.FC<IUnauthorizedModal> = ({ action, onClose, acco
       title={<FormattedMessage id='unauthorized_modal.title' defaultMessage='Sign up for {site_title}' values={{ site_title: instance.title }} />}
       onClose={onClickClose}
       confirmationAction={onLogin}
-      confirmationText={<FormattedMessage id='account.login' defaultMessage='Log in' />}
+      confirmationText={
+        <Localized id='account-Action--login'>
+          <span>Sign in</span>
+        </Localized>
+      }
       secondaryAction={isOpen ? onRegister : undefined}
       secondaryText={isOpen ? <FormattedMessage id='account.register' defaultMessage='Sign up' /> : undefined}
     >

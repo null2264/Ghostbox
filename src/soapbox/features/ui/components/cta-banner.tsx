@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -27,9 +28,11 @@ const CtaBanner = () => {
           </Stack>
 
           <HStack space={2} alignItems='center'>
-            <Button theme='secondary' to='/login'>
-              <FormattedMessage id='account.login' defaultMessage='Log in' />
-            </Button>
+            <Localized id='account-Action--login'>
+              <Button theme='secondary' to='/login'>
+                Sign in
+              </Button>
+            </Localized>
 
             <Button theme='accent' to='/signup'>
               <FormattedMessage id='account.register' defaultMessage='Sign up' />
