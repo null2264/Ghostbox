@@ -67,6 +67,7 @@ about-Page--available = Available in:
 # Components that related to Account such as profile, hover card.
 
 -edit-profile = Edit profile
+account-Action--login = Sign in
 account-Badge--admin = Admin
 account-Badge--bot = Bot
 account-Badge--moderator = Moderator
