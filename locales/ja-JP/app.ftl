@@ -71,6 +71,7 @@ account-Status--familiar-followers-more = { $count } 人のおすすめユーザ
 account-Status--last-status = 最後の活動
 account-Status--locked =
   .alt = このアカウントは承認制アカウントです。相手が承認するまでフォローは完了しません。
+account-Status--member-since = { DATETIME($date, year: "numeric", month: "long") }から利用しています
 account-Status--muted = ミュートしています
 account-Status--no-followers = まだ誰もフォローしていません。
 account-Status--no-following = まだ誰もフォローしていません。

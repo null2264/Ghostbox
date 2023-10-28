@@ -63,6 +63,7 @@ account-Status--follows-you = Mengikuti anda
 account-Status--last-status = Terakhir aktif
 account-Status--locked =
   .alt = Status privasi akun ini disetel untuk dikunci. Pemilik secara manual meninjau siapa yang dapat mengikuti mereka.
+account-Status--member-since = Terdaftar sejak { DATETIME($date, year: "numeric", month: "long") }
 account-Status--muted = Dibisukan
 account-Status--no-followers = Tidak ada yang mengikuti pengguna ini saat ini.
 account-Status--no-following = Pengguna ini belum mengikuti siapapun.
