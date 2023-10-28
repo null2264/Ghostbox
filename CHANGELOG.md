@@ -14,6 +14,8 @@
 - Search: move search icon to the start of textbox
 - UI: changed how user acct is rendered, domain now shown as button (similar to Thread)
 - Mention: fix mention doesn't have underline on hover
+- UI: changed default font to Nunito Sans
+- Dev: migrated l10n to [Project Fluent](https://projectfluent.org/)
 
 ## 2023.10.3
 - UI: highlight mentions
