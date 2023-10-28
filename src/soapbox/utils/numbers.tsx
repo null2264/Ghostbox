@@ -1,5 +1,6 @@
+import { FluentNumber } from '@fluent/bundle';
+import { Localized } from '@fluent/react';
 import React from 'react';
-import { FormattedNumber } from 'react-intl';
 import { z } from 'zod';
 
 /** Check if a value is REALLY a number. */
@@ -39,12 +40,11 @@ export const shortNumberFormat = (number: any, max?: number): React.ReactNode =>
 
   return (
     <span>
-      <FormattedNumber
-        value={value}
-        maximumFractionDigits={0}
-        minimumFractionDigits={0}
-        maximumSignificantDigits={3}
-        style='decimal'
+      <Localized
+        id='naive-format'
+        vars={{
+          data: new FluentNumber(value, { maximumSignificantDigits: 3, minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'decimal' }),
+        }}
       />
       {factor}
     </span>

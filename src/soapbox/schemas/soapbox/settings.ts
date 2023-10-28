@@ -19,8 +19,9 @@ const settingsSchema = z.object({
   deleteModal: z.boolean().catch(true),
   missingDescriptionModal: z.boolean().catch(false),
   defaultPrivacy: z.enum(['public', 'unlisted', 'private', 'direct']).catch('public'),
-  defaultContentType: z.enum(['text/plain', 'text/markdown']).catch('text/plain'),
+  defaultContentType: z.enum(['text/plain', 'text/markdown', 'text/x.misskeymarkdown']).catch('text/plain'),
   themeMode: z.enum(['system', 'light', 'dark']).catch('system'),
+  // FIXME: Use fluent.ts' AVAILABLE_LOCALES
   locale: z.string().catch(navigator.language).pipe(z.enum(locales)).catch('en'),
   showExplanationBox: z.boolean().catch(true),
   explanationBox: z.boolean().catch(true),

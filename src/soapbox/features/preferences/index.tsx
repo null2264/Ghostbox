@@ -6,15 +6,12 @@ import List, { ListItem } from 'soapbox/components/list';
 import { Form } from 'soapbox/components/ui';
 import { SelectDropdown } from 'soapbox/features/forms';
 import SettingToggle from 'soapbox/features/notifications/components/setting-toggle';
+import { getAvailableLocales } from 'soapbox/fluent';
 import { useAppDispatch, useFeatures, useSettings } from 'soapbox/hooks';
 
 import ThemeToggle from '../ui/components/theme-toggle';
 
-const languages = {
-  en: 'English',
-  id: 'Bahasa Indonesia',
-  ja: '日本語',
-};
+const languages = getAvailableLocales();
 
 const messages = defineMessages({
   heading: { id: 'column.preferences', defaultMessage: 'Preferences' },

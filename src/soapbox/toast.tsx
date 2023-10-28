@@ -3,10 +3,12 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { defineMessages, MessageDescriptor } from 'react-intl';
 
+import { FluentOption } from './components/maybe-localized';
 import { Toast } from './components/ui';
 import { httpErrorMessages } from './utils/errors';
 
-export type ToastText = string | MessageDescriptor
+// TODO: Remove MessageDescriptor support
+export type ToastText = string | MessageDescriptor | FluentOption
 export type ToastType = 'success' | 'error' | 'info'
 
 interface IToastOptions {

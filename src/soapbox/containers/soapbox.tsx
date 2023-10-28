@@ -1,5 +1,7 @@
 'use strict';
 
+import { negotiateLanguages } from '@fluent/langneg';
+import { LocalizationProvider, ReactLocalization } from '@fluent/react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import clsx from 'clsx';
 import React, { useState, useEffect } from 'react';
@@ -29,6 +31,7 @@ import {
   OnboardingWizard,
   WaitlistPage,
 } from 'soapbox/features/ui/util/async-components';
+import { AVAILABLE_LOCALES, DEFAULT_LOCALE, fetchMessages, lazyParseBundle } from 'soapbox/fluent';
 import { createGlobals } from 'soapbox/globals';
 import {
   useAppSelector,
@@ -38,6 +41,7 @@ import {
   useSoapboxConfig,
   useSettings,
   useTheme,
+  useFTLLocale,
   useLocale,
   useInstance,
   useRegistrationStatus,
@@ -218,11 +222,15 @@ const SoapboxLoad: React.FC<ISoapboxLoad> = ({ children }) => {
   const me = useAppSelector(state => state.me);
   const { account } = useOwnAccount();
   const swUpdating = useAppSelector(state => state.meta.swUpdating);
+  const ftlLocale = useFTLLocale().locale;
+  // TODO: Remove later
   const { locale } = useLocale();
 
+  // TODO: Migrate fully to FTL
   const [messages, setMessages] = useState<Record<string, string>>({});
   const [localeLoading, setLocaleLoading] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [ftl, setFtl] = useState(null as ReactLocalization | null);
 
   /** Whether to display a loading indicator. */
   const showLoading = [
@@ -250,16 +258,36 @@ const SoapboxLoad: React.FC<ISoapboxLoad> = ({ children }) => {
     });
   }, []);
 
+  const setupLocale = async (userLocales: string[]) => {
+    const locales = negotiateLanguages(
+      userLocales,
+      AVAILABLE_LOCALES,
+      { defaultLocale: DEFAULT_LOCALE },
+    );
+
+    const indexOfDefaultLocale = locales.indexOf(DEFAULT_LOCALE);
+    const localesToFetch: Array<string> = locales.slice(0, indexOfDefaultLocale + 1);
+    const fetched = await Promise.all(localesToFetch.map(fetchMessages)) as Array<[string, string]>;
+    const bundles = lazyParseBundle(fetched);
+    setFtl(new ReactLocalization(bundles));
+  };
+
+  useEffect(() => {
+    setupLocale([ftlLocale]);
+  }, [ftlLocale]);
+
   // intl is part of loading.
   // It's important nothing in here depends on intl.
-  if (showLoading) {
+  if (showLoading || !ftl) {
     return <LoadingScreen />;
   }
 
   return (
-    <IntlProvider locale={locale} messages={messages}>
-      {children}
-    </IntlProvider>
+    <LocalizationProvider l10n={ftl}>
+      <IntlProvider locale={locale} messages={messages}>
+        {children}
+      </IntlProvider>
+    </LocalizationProvider>
   );
 };
 

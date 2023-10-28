@@ -1,7 +1,7 @@
 'use strict';
 
+import { Localized } from '@fluent/react';
 import React from 'react';
-import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
 
 import { usePatronUser } from 'soapbox/api/hooks';
 import AccountAcct from 'soapbox/components/account-acct';
@@ -28,13 +28,6 @@ const isSafeUrl = (text: string): boolean => {
   }
 };
 
-const messages = defineMessages({
-  linkVerifiedOn: { id: 'account.link_verified_on', defaultMessage: 'Ownership of this link was checked on {date}' },
-  account_locked: { id: 'account.locked_info', defaultMessage: 'This account privacy status is set to locked. The owner manually reviews who can follow them.' },
-  deactivated: { id: 'account.deactivated', defaultMessage: 'Deactivated' },
-  bot: { id: 'account.badges.bot', defaultMessage: 'Bot' },
-});
-
 interface IProfileInfoPanel {
   account?: Account
   /** Username from URL params, in case the account isn't found. */
@@ -43,16 +36,15 @@ interface IProfileInfoPanel {
 
 /** User profile metadata, such as location, birthday, etc. */
 const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) => {
-  const intl = useIntl();
   const { patronUser } = usePatronUser(account?.url);
   const me = useAppSelector(state => state.me);
   const ownAccount = account?.id === me;
 
   const getStaffBadge = (): React.ReactNode => {
     if (account?.admin) {
-      return <Badge slug='admin' title={<FormattedMessage id='account_moderation_modal.roles.admin' defaultMessage='Admin' />} key='staff' />;
+      return <Badge slug='admin' title='Admin' key='staff' />;
     } else if (account?.moderator) {
-      return <Badge slug='moderator' title={<FormattedMessage id='account_moderation_modal.roles.moderator' defaultMessage='Moderator' />} key='staff' />;
+      return <Badge slug='moderator' title='Moderator' key='staff' />;
     } else {
       return null;
     }
@@ -82,7 +74,7 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
     }
 
     if (isPatron) {
-      badges.push(<Badge slug='patron' title={<FormattedMessage id='account.patron' defaultMessage='Patron' />} key='patron' />);
+      badges.push(<Badge slug='patron' title='Patron' key='patron' />);
     }
 
     return [...badges, ...custom];
@@ -91,8 +83,6 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
   const renderBirthday = (): React.ReactNode => {
     const birthday = account?.pleroma?.birthday;
     if (!birthday) return null;
-
-    const formattedBirthday = intl.formatDate(birthday, { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' });
 
     const date = new Date(birthday);
     const today = new Date();
@@ -106,13 +96,15 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
           className='h-4 w-4 text-gray-800 dark:text-gray-200'
         />
 
-        <Text size='sm'>
-          {hasBirthday ? (
-            <FormattedMessage id='account.birthday_today' defaultMessage='Birthday is today!' />
-          ) : (
-            <FormattedMessage id='account.birthday' defaultMessage='Born {date}' values={{ date: formattedBirthday }} />
-          )}
-        </Text>
+        {/* TODO: Test this, Akkoma don't have birthday feature */}
+        <Localized
+          id={'account-Birthday--' + (hasBirthday ? 'celebration' : 'date')}
+          vars={{ date: birthday }}
+        >
+          <Text size='sm'>
+            {'Birthday'}
+          </Text>
+        </Localized>
       </HStack>
     );
   };
@@ -134,8 +126,6 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
   }
 
   const deactivated = account.pleroma?.deactivated ?? false;
-  const displayNameHtml = deactivated ? { __html: intl.formatMessage(messages.deactivated) } : { __html: account.display_name_html };
-  const memberSinceDate = intl.formatDate(account.created_at, { month: 'long', year: 'numeric' });
   const badges = getBadges();
 
   return (
@@ -143,9 +133,17 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
       <Stack space={2}>
         <Stack>
           <HStack space={1} alignItems='center'>
-            <Text size='lg' weight='bold' dangerouslySetInnerHTML={displayNameHtml} truncate />
+            {!deactivated ? (
+              <Text size='lg' weight='bold' dangerouslySetInnerHTML={{ __html: account.display_name_html }} truncate />
+            ) : (
+              <Localized id='account-Status--deactivated'>
+                <Text size='lg' weight='bold' truncate>
+                  Deactivated
+                </Text>
+              </Localized>
+            )}
 
-            {account.bot && <Badge slug='bot' title={intl.formatMessage(messages.bot)} />}
+            {account.bot && <Badge slug='bot' title='Bot' />}
 
             {badges.length > 0 && (
               <HStack space={1} alignItems='center'>
@@ -158,11 +156,13 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
             <AccountAcct account={account} />
 
             {account.locked && (
-              <Icon
-                src={require('@tabler/icons/lock.svg')}
-                alt={intl.formatMessage(messages.account_locked)}
-                className='h-4 w-4 text-gray-600'
-              />
+              <Localized id='account-Status--locked' attrs={{ alt: true }}>
+                <Icon
+                  src={require('@tabler/icons/lock.svg')}
+                  alt='This account privacy status is set to locked. The owner manually reviews who can follow them.'
+                  className='h-4 w-4 text-gray-600'
+                />
+              </Localized>
             )}
           </HStack>
         </Stack>
@@ -181,13 +181,11 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
                 className='h-4 w-4 text-gray-800 dark:text-gray-200'
               />
 
-              <Text size='sm'>
-                <FormattedMessage
-                  id='account.member_since' defaultMessage='Joined {date}' values={{
-                    date: memberSinceDate,
-                  }}
-                />
-              </Text>
+              <Localized id='account-Status--member-since' vars={{ date: new Date(account.created_at) }}>
+                <Text size='sm'>
+                  Joined {account.created_at}
+                </Text>
+              </Localized>
             </HStack>
           )}
 

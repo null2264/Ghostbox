@@ -1,6 +1,7 @@
+import { Localized } from '@fluent/react';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { usePopper } from 'react-popper';
 import { useHistory } from 'react-router-dom';
 
@@ -61,7 +62,6 @@ interface IProfileHoverCard {
 export const ProfileHoverCard: React.FC<IProfileHoverCard> = ({ visible = true }) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const intl = useIntl();
 
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
 
@@ -91,7 +91,6 @@ export const ProfileHoverCard: React.FC<IProfileHoverCard> = ({ visible = true }
 
   if (!account) return null;
   const accountBio = { __html: account.note_emojified };
-  const memberSinceDate = intl.formatDate(account.created_at, { month: 'long', year: 'numeric' });
   const followedBy = me !== account.id && account.relationship?.followed_by === true;
 
   return (
@@ -127,13 +126,11 @@ export const ProfileHoverCard: React.FC<IProfileHoverCard> = ({ visible = true }
                   className='h-4 w-4 text-gray-800 dark:text-gray-200'
                 />
 
-                <Text size='sm'>
-                  <FormattedMessage
-                    id='account.member_since' defaultMessage='Joined {date}' values={{
-                      date: memberSinceDate,
-                    }}
-                  />
-                </Text>
+                <Localized id='account-Status--member-since' vars={{ date: new Date(account.created_at) }}>
+                  <Text size='sm'>
+                    Joined {account.created_at}
+                  </Text>
+                </Localized>
               </HStack>
             )}
 
@@ -146,7 +143,11 @@ export const ProfileHoverCard: React.FC<IProfileHoverCard> = ({ visible = true }
             <div className='absolute left-2 top-2'>
               <Badge
                 slug='opaque'
-                title={<FormattedMessage id='account.follows_you' defaultMessage='Follows you' />}
+                title={
+                  <Localized id='account-Status--follows-you'>
+                    <span>Follows you</span>
+                  </Localized>
+                }
               />
             </div>
           )}

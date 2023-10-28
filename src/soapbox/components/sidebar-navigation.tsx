@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import React from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
@@ -184,7 +185,11 @@ const SidebarNavigation = () => {
             <SidebarNavigationLink
               to={`/@${account.acct}`}
               icon={require('@tabler/icons/user.svg')}
-              text={<FormattedMessage id='tabs_bar.profile' defaultMessage='Profile' />}
+              text={
+                <Localized id='account-Page--profile'>
+                  <span>Profile</span>
+                </Localized>
+              }
               // eslint-disable-next-line react-hooks/rules-of-hooks
               ref={useHotkey('g u')}
             />

@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import React from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
@@ -56,7 +57,11 @@ const Following: React.FC<IFollowing> = ({ params }) => {
         scrollKey='following'
         hasMore={hasNextPage}
         onLoadMore={fetchNextPage}
-        emptyMessage={<FormattedMessage id='account.follows.empty' defaultMessage="This user doesn't follow anyone yet." />}
+        emptyMessage={
+          <Localized id='account-Status--no-following'>
+            <span>This user doesn't follow anyone yet.</span>
+          </Localized>
+        }
         itemClassName='pb-4'
       >
         {accounts.map((account) => (

@@ -1,6 +1,6 @@
+import { Localized } from '@fluent/react';
 import clsx from 'clsx';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { getSettings } from 'soapbox/actions/settings';
 import { useAccount } from 'soapbox/api/hooks';
@@ -32,7 +32,8 @@ const AccountCard: React.FC<IAccountCard> = ({ id }) => {
           <div className='absolute left-2.5 top-2.5'>
             <Badge
               slug='opaque'
-              title={<FormattedMessage id='account.follows_you' defaultMessage='Follows you' />}
+              title='Follows you'
+              id='account-Status--follows-you'
             />
           </div>
         )}
@@ -68,9 +69,11 @@ const AccountCard: React.FC<IAccountCard> = ({ id }) => {
             {shortNumberFormat(account.statuses_count)}
           </Text>
 
-          <Text theme='muted' size='sm'>
-            <FormattedMessage id='account.posts' defaultMessage='Posts' />
-          </Text>
+          <Localized id='account-Label--posts'>
+            <Text theme='muted' size='sm'>
+              Posts
+            </Text>
+          </Localized>
         </Stack>
 
         <Stack>
@@ -78,9 +81,11 @@ const AccountCard: React.FC<IAccountCard> = ({ id }) => {
             {shortNumberFormat(account.followers_count)}
           </Text>
 
-          <Text theme='muted' size='sm'>
-            <FormattedMessage id='account.followers' defaultMessage='Followers' />
-          </Text>
+          <Localized id='account-Label--followers'>
+            <Text theme='muted' size='sm'>
+              Followers
+            </Text>
+          </Localized>
         </Stack>
 
         <Stack>
@@ -88,13 +93,17 @@ const AccountCard: React.FC<IAccountCard> = ({ id }) => {
             {account.last_status_at ? (
               <RelativeTimestamp theme='inherit' timestamp={account.last_status_at} />
             ) : (
-              <FormattedMessage id='account.never_active' defaultMessage='Never' />
+              <Localized id='account-Status--never-active'>
+                <span>Never</span>
+              </Localized>
             )}
           </Text>
 
-          <Text theme='muted' size='sm'>
-            <FormattedMessage id='account.last_status' defaultMessage='Last active' />
-          </Text>
+          <Localized id='account-Status--last-status'>
+            <Text theme='muted' size='sm'>
+              Last active
+            </Text>
+          </Localized>
         </Stack>
       </div>
     </div>

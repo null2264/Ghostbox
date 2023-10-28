@@ -1,6 +1,7 @@
+import { Localized } from '@fluent/react';
 import clsx from 'clsx';
 import React from 'react';
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage } from 'react-intl';
 
 import { patchMe } from 'soapbox/actions/me';
 import StillImage from 'soapbox/components/still-image';
@@ -13,12 +14,10 @@ import resizeImage from 'soapbox/utils/resize-image';
 import type { AxiosError } from 'axios';
 
 const messages = defineMessages({
-  header: { id: 'account.header.alt', defaultMessage: 'Profile header' },
   error: { id: 'onboarding.error', defaultMessage: 'An unexpected error occurred. Please try again or skip this step.' },
 });
 
 const CoverPhotoSelectionStep = ({ onNext }: { onNext: () => void }) => {
-  const intl = useIntl();
   const dispatch = useAppDispatch();
   const { account } = useOwnAccount();
 
@@ -90,11 +89,13 @@ const CoverPhotoSelectionStep = ({ onNext }: { onNext: () => void }) => {
                   className='relative flex h-24 items-center justify-center rounded-t-md bg-gray-200 dark:bg-gray-800'
                 >
                   {selectedFile || account?.header && (
-                    <StillImage
-                      src={selectedFile || account.header}
-                      alt={intl.formatMessage(messages.header)}
-                      className='absolute inset-0 rounded-t-md object-cover'
-                    />
+                    <Localized id='account-Header--banner' attrs={{ alt: true }}>
+                      <StillImage
+                        src={selectedFile || account.header}
+                        alt='Profile header'
+                        className='absolute inset-0 rounded-t-md object-cover'
+                      />
+                    </Localized>
                   )}
 
                   {isSubmitting && (

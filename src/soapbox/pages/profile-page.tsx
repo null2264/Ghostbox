@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import React, { Suspense } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Redirect, useHistory } from 'react-router-dom';
@@ -46,17 +47,29 @@ const ProfilePage: React.FC<IProfilePage> = ({ params, children }) => {
 
   const tabItems = [
     {
-      text: <FormattedMessage id='account.posts' defaultMessage='Posts' />,
+      text: (
+        <Localized id='account-Label--posts'>
+          <span>Posts</span>
+        </Localized>
+      ),
       to: `/@${username}`,
       name: 'profile',
     },
     {
-      text: <FormattedMessage id='account.posts_with_replies' defaultMessage='Posts and replies' />,
+      text: (
+        <Localized id='account-Label--posts-with-replies'>
+          <span>Posts and replies</span>
+        </Localized>
+      ),
       to: `/@${username}/with_replies`,
       name: 'replies',
     },
     {
-      text: <FormattedMessage id='account.media' defaultMessage='Media' />,
+      text: (
+        <Localized id='account-Page--media'>
+          <span>Media</span>
+        </Localized>
+      ),
       to: `/@${username}/media`,
       name: 'media',
     },

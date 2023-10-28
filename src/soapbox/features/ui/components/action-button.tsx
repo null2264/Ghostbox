@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import React from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
@@ -17,16 +18,7 @@ import { useAppDispatch, useFeatures, useLoggedIn } from 'soapbox/hooks';
 import type { Account } from 'soapbox/schemas';
 
 const messages = defineMessages({
-  block: { id: 'account.block', defaultMessage: 'Block @{name}' },
-  blocked: { id: 'account.blocked', defaultMessage: 'Blocked' },
-  edit_profile: { id: 'account.edit_profile', defaultMessage: 'Edit profile' },
-  follow: { id: 'account.follow', defaultMessage: 'Follow' },
-  mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
-  remote_follow: { id: 'account.remote_follow', defaultMessage: 'Remote follow' },
-  requested: { id: 'account.requested', defaultMessage: 'Awaiting approval' },
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
-  unfollow: { id: 'account.unfollow', defaultMessage: 'Unfollow' },
-  unmute: { id: 'account.unmute', defaultMessage: 'Unmute @{name}' },
   authorize: { id: 'follow_request.authorize', defaultMessage: 'Authorize' },
   reject: { id: 'follow_request.reject', defaultMessage: 'Reject' },
 });
@@ -96,32 +88,34 @@ const ActionButton: React.FC<IActionButton> = ({ account, actionType, small }) =
   /** Handles actionType='muting' */
   const mutingAction = () => {
     const isMuted = account.relationship?.muting;
-    const messageKey = isMuted ? messages.unmute : messages.mute;
-    const text = intl.formatMessage(messageKey, { name: account.username });
 
     return (
-      <Button
-        theme={isMuted ? 'danger' : 'secondary'}
-        size='sm'
-        text={text}
-        onClick={handleMute}
-      />
+      <Localized id={'account-StatusAction--' + (isMuted ? 'unmute' : 'mute')} vars={{ name: account.username }}>
+        <Button
+          theme={isMuted ? 'danger' : 'secondary'}
+          size='sm'
+          onClick={handleMute}
+        >
+          Mute/Unmute @{account.username}
+        </Button>
+      </Localized>
     );
   };
 
   /** Handles actionType='blocking' */
   const blockingAction = () => {
     const isBlocked = account.relationship?.blocking;
-    const messageKey = isBlocked ? messages.unblock : messages.block;
-    const text = intl.formatMessage(messageKey, { name: account.username });
 
     return (
-      <Button
-        theme={isBlocked ? 'danger' : 'secondary'}
-        size='sm'
-        text={text}
-        onClick={handleBlock}
-      />
+      <Localized id={'account-StatusAction--' + (isBlocked ? 'unblock' : 'block')} vars={{ name: account.username }}>
+        <Button
+          theme={isBlocked ? 'danger' : 'secondary'}
+          size='sm'
+          onClick={handleBlock}
+        >
+          Block/Unblock @{account.username}
+        </Button>
+      </Localized>
     );
   };
 
@@ -151,12 +145,15 @@ const ActionButton: React.FC<IActionButton> = ({ account, actionType, small }) =
     // Remote follow through the API.
     if (features.remoteInteractions) {
       return (
-        <Button
-          onClick={handleRemoteFollow}
-          icon={require('@tabler/icons/plus.svg')}
-          text={intl.formatMessage(messages.follow)}
-          size='sm'
-        />
+        <Localized id='account-StatusAction--follow'>
+          <Button
+            onClick={handleRemoteFollow}
+            icon={require('@tabler/icons/plus.svg')}
+            size='sm'
+          >
+            Follow
+          </Button>
+        </Localized>
       );
       // Pleroma's classic remote follow form.
     } else if (features.pleromaRemoteFollow) {
@@ -164,11 +161,14 @@ const ActionButton: React.FC<IActionButton> = ({ account, actionType, small }) =
         <form method='POST' action='/main/ostatus'>
           <input type='hidden' name='nickname' value={account.acct} />
           <input type='hidden' name='profile' value='' />
-          <Button
-            text={intl.formatMessage(messages.remote_follow)}
-            type='submit'
-            size='sm'
-          />
+          <Localized id='account-StatusAction--follow-remote'>
+            <Button
+              type='submit'
+              size='sm'
+            >
+              Remote follow
+            </Button>
+          </Localized>
         </form>
       );
     }
@@ -209,29 +209,36 @@ const ActionButton: React.FC<IActionButton> = ({ account, actionType, small }) =
     } else if (account.relationship?.requested) {
       // Awaiting acceptance
       return (
-        <Button
-          size='sm'
-          theme='tertiary'
-          text={intl.formatMessage(messages.requested)}
-          onClick={handleFollow}
-        />
+        <Localized id='account-Status--requested'>
+          <Button
+            size='sm'
+            theme='tertiary'
+            onClick={handleFollow}
+          >
+            Awaiting approval
+          </Button>
+        </Localized>
       );
     } else if (!account.relationship?.blocking && !account.relationship?.muting) {
       // Follow & Unfollow
       return (
-        <Button
-          size='sm'
-          disabled={blockedBy}
-          theme={isFollowing ? 'secondary' : 'primary'}
-          icon={blockedBy ? require('@tabler/icons/ban.svg') : (!isFollowing && require('@tabler/icons/plus.svg'))}
-          onClick={handleFollow}
-        >
-          {isFollowing ? (
-            intl.formatMessage(messages.unfollow)
-          ) : (
-            intl.formatMessage(blockedBy ? messages.blocked : messages.follow)
-          )}
-        </Button>
+        // eslint-disable-next-line no-nested-ternary
+        <Localized id={'account-' + (isFollowing ? 'StatusAction--unfollow' : (blockedBy ? 'Status--block' : 'StatusAction--follow'))}>
+          <Button
+            size='sm'
+            disabled={blockedBy}
+            theme={isFollowing ? 'secondary' : 'primary'}
+            icon={blockedBy ? require('@tabler/icons/ban.svg') : (!isFollowing && require('@tabler/icons/plus.svg'))}
+            onClick={handleFollow}
+          >
+            {/* eslint-disable-next-line no-nested-ternary */}
+            {isFollowing ? (
+              'Unfollow'
+            ) : (
+              blockedBy ? 'Blocked' : 'Follow'
+            )}
+          </Button>
+        </Localized>
       );
     } else if (account.relationship?.blocking) {
       // Unblock
@@ -247,12 +254,15 @@ const ActionButton: React.FC<IActionButton> = ({ account, actionType, small }) =
   } else {
     // Edit profile
     return (
-      <Button
-        theme='tertiary'
-        size='sm'
-        text={intl.formatMessage(messages.edit_profile)}
-        to='/settings/profile'
-      />
+      <Localized id='account-StatusAction--edit-profile'>
+        <Button
+          theme='tertiary'
+          size='sm'
+          to='/settings/profile'
+        >
+          Edit profile
+        </Button>
+      </Localized>
     );
   }
 

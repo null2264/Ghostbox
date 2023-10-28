@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import { OrderedSet as ImmutableOrderedSet } from 'immutable';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -28,7 +29,12 @@ const FamiliarFollowersModal = ({ accountId, onClose }: IFamiliarFollowersModal)
   if (!account || !familiarFollowerIds) {
     body = <Spinner />;
   } else {
-    const emptyMessage = <FormattedMessage id='account.familiar_followers.empty' defaultMessage='No one you know follows {name}.' values={{ name: <span dangerouslySetInnerHTML={{ __html: account.display_name_html }} /> }} />;
+    // TODO: Test this
+    const emptyMessage = (
+      <Localized id='account-Status--familiar-followers-empty' elems={{ name: <span dangerouslySetInnerHTML={{ __html: account.display_name_html }} /> }}>
+        <span>No one you know follows {'{name}'}</span>
+      </Localized>
+    );
 
     body = (
       <ScrollableList

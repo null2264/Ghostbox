@@ -1,15 +1,10 @@
+import { Localized } from '@fluent/react';
 import React from 'react';
-import { defineMessages, useIntl } from 'react-intl';
 
 import { unblockDomain } from 'soapbox/actions/domain-blocks';
 import { useAppDispatch } from 'soapbox/hooks';
 
 import { HStack, IconButton, Text } from './ui';
-
-const messages = defineMessages({
-  blockDomainConfirm: { id: 'confirmations.domain_block.confirm', defaultMessage: 'Hide entire domain' },
-  unblockDomain: { id: 'account.unblock_domain', defaultMessage: 'Unhide {domain}' },
-});
 
 interface IDomain {
   domain: string
@@ -17,7 +12,6 @@ interface IDomain {
 
 const Domain: React.FC<IDomain> = ({ domain }) => {
   const dispatch = useAppDispatch();
-  const intl = useIntl();
 
   // const onBlockDomain = () => {
   //   dispatch(openModal('CONFIRM', {
@@ -38,7 +32,9 @@ const Domain: React.FC<IDomain> = ({ domain }) => {
       <Text tag='span'>
         {domain}
       </Text>
-      <IconButton iconClassName='h-5 w-5' src={require('@tabler/icons/lock-open.svg')} title={intl.formatMessage(messages.unblockDomain, { domain })} onClick={handleDomainUnblock} />
+      <Localized id='account-StatusAction--unblock-domain' vars={{ domain }} attrs={{ title: true }}>
+        <IconButton iconClassName='h-5 w-5' src={require('@tabler/icons/lock-open.svg')} title={`Show ${domain}`} onClick={handleDomainUnblock} />
+      </Localized>
     </HStack>
   );
 };

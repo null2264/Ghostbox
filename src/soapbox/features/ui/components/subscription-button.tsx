@@ -1,5 +1,5 @@
+import { Localized } from '@fluent/react';
 import React from 'react';
-import { defineMessages, useIntl } from 'react-intl';
 
 import {
   subscribeAccount,
@@ -12,15 +12,6 @@ import toast from 'soapbox/toast';
 
 import type { Account as AccountEntity } from 'soapbox/types/entities';
 
-const messages = defineMessages({
-  subscribe: { id: 'account.subscribe', defaultMessage: 'Subscribe to notifications from @{name}' },
-  unsubscribe: { id: 'account.unsubscribe', defaultMessage: 'Unsubscribe to notifications from @{name}' },
-  subscribeSuccess: { id: 'account.subscribe.success', defaultMessage: 'You have subscribed to this account.' },
-  unsubscribeSuccess: { id: 'account.unsubscribe.success', defaultMessage: 'You have unsubscribed from this account.' },
-  subscribeFailure: { id: 'account.subscribe.failure', defaultMessage: 'An error occurred trying to subscribe to this account.' },
-  unsubscribeFailure: { id: 'account.unsubscribe.failure', defaultMessage: 'An error occurred trying to unsubscribe to this account.' },
-});
-
 interface ISubscriptionButton {
   account: Pick<AccountEntity, 'id' | 'username' | 'relationship'>
 }
@@ -28,7 +19,6 @@ interface ISubscriptionButton {
 const SubscriptionButton = ({ account }: ISubscriptionButton) => {
   const dispatch = useAppDispatch();
   const features = useFeatures();
-  const intl = useIntl();
   const { follow } = useFollow();
 
   const isFollowing = account.relationship?.following;
@@ -36,21 +26,18 @@ const SubscriptionButton = ({ account }: ISubscriptionButton) => {
   const isSubscribed = features.accountNotifies
     ? account.relationship?.notifying
     : account.relationship?.subscribing;
-  const title = isSubscribed
-    ? intl.formatMessage(messages.unsubscribe, { name: account.username })
-    : intl.formatMessage(messages.subscribe, { name: account.username });
 
   const onSubscribeSuccess = () =>
-    toast.success(intl.formatMessage(messages.subscribeSuccess));
+    toast.success({ id: 'account-Toast--subscribe-success', fallback: 'Subscribed' });
 
   const onSubscribeFailure = () =>
-    toast.error(intl.formatMessage(messages.subscribeFailure));
+    toast.success({ id: 'account-Toast--subscribe-fail', fallback: 'Subscribe fail' });
 
   const onUnsubscribeSuccess = () =>
-    toast.success(intl.formatMessage(messages.unsubscribeSuccess));
+    toast.success({ id: 'account-Toast--unsubscribe-success', fallback: 'Unsubscribed' });
 
   const onUnsubscribeFailure = () =>
-    toast.error(intl.formatMessage(messages.unsubscribeFailure));
+    toast.success({ id: 'account-Toast--unsubscribe-fail', fallback: 'Unsubscribe fail' });
 
   const onNotifyToggle = () => {
     if (account.relationship?.notifying) {
@@ -90,14 +77,15 @@ const SubscriptionButton = ({ account }: ISubscriptionButton) => {
 
   if (isRequested || isFollowing) {
     return (
-      <IconButton
-        src={isSubscribed ? require('@tabler/icons/bell-ringing.svg') : require('@tabler/icons/bell.svg')}
-        onClick={handleToggle}
-        title={title}
-        theme='outlined'
-        className='px-2'
-        iconClassName='h-4 w-4'
-      />
+      <Localized id={isSubscribed ? 'account-Action--unsubscribe' : 'account-Action--subscribe'} attrs={{ title: true }} vars={{ name: account.username }}>
+        <IconButton
+          src={isSubscribed ? require('@tabler/icons/bell-ringing.svg') : require('@tabler/icons/bell.svg')}
+          onClick={handleToggle}
+          theme='outlined'
+          className='px-2'
+          iconClassName='h-4 w-4'
+        />
+      </Localized>
     );
   }
 

@@ -1,9 +1,10 @@
 'use strict';
 
+import { Localized } from '@fluent/react';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { List as ImmutableList } from 'immutable';
-import React from 'react';
+import React, { useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
@@ -35,46 +36,19 @@ import copy from 'soapbox/utils/copy';
 import { MASTODON, parseVersion } from 'soapbox/utils/features';
 
 const messages = defineMessages({
-  edit_profile: { id: 'account.edit_profile', defaultMessage: 'Edit profile' },
-  linkVerifiedOn: { id: 'account.link_verified_on', defaultMessage: 'Ownership of this link was checked on {date}' },
-  account_locked: { id: 'account.locked_info', defaultMessage: 'This account privacy status is set to locked. The owner manually reviews who can follow them.' },
-  mention: { id: 'account.mention', defaultMessage: 'Mention' },
-  chat: { id: 'account.chat', defaultMessage: 'Chat with @{name}' },
-  direct: { id: 'account.direct', defaultMessage: 'Direct message @{name}' },
-  unmute: { id: 'account.unmute', defaultMessage: 'Unmute @{name}' },
-  block: { id: 'account.block', defaultMessage: 'Block @{name}' },
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
-  mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
-  report: { id: 'account.report', defaultMessage: 'Report @{name}' },
-  copy: { id: 'account.copy', defaultMessage: 'Copy link to profile' },
-  share: { id: 'account.share', defaultMessage: 'Share @{name}\'s profile' },
-  media: { id: 'account.media', defaultMessage: 'Media' },
-  blockDomain: { id: 'account.block_domain', defaultMessage: 'Hide everything from {domain}' },
-  unblockDomain: { id: 'account.unblock_domain', defaultMessage: 'Unhide {domain}' },
-  hideReblogs: { id: 'account.hide_reblogs', defaultMessage: 'Hide reposts from @{name}' },
-  showReblogs: { id: 'account.show_reblogs', defaultMessage: 'Show reposts from @{name}' },
   preferences: { id: 'navigation_bar.preferences', defaultMessage: 'Preferences' },
   follow_requests: { id: 'navigation_bar.follow_requests', defaultMessage: 'Follow requests' },
   blocks: { id: 'navigation_bar.blocks', defaultMessage: 'Blocked users' },
   domain_blocks: { id: 'navigation_bar.domain_blocks', defaultMessage: 'Hidden domains' },
   mutes: { id: 'navigation_bar.mutes', defaultMessage: 'Muted users' },
-  endorse: { id: 'account.endorse', defaultMessage: 'Feature on profile' },
-  unendorse: { id: 'account.unendorse', defaultMessage: 'Don\'t feature on profile' },
-  removeFromFollowers: { id: 'account.remove_from_followers', defaultMessage: 'Remove this follower' },
   adminAccount: { id: 'status.admin_account', defaultMessage: 'Moderate @{name}' },
   add_or_remove_from_list: { id: 'account.add_or_remove_from_list', defaultMessage: 'Add or Remove from lists' },
-  search: { id: 'account.search', defaultMessage: 'Search from @{name}' },
-  searchSelf: { id: 'account.search_self', defaultMessage: 'Search your posts' },
   unfollowConfirm: { id: 'confirmations.unfollow.confirm', defaultMessage: 'Unfollow' },
   blockConfirm: { id: 'confirmations.block.confirm', defaultMessage: 'Block' },
   blockDomainConfirm: { id: 'confirmations.domain_block.confirm', defaultMessage: 'Hide entire domain' },
   blockAndReport: { id: 'confirmations.block.block_and_report', defaultMessage: 'Block & Report' },
   removeFromFollowersConfirm: { id: 'confirmations.remove_from_followers.confirm', defaultMessage: 'Remove' },
-  userEndorsed: { id: 'account.endorse.success', defaultMessage: 'You are now featuring @{acct} on your profile' },
-  userUnendorsed: { id: 'account.unendorse.success', defaultMessage: 'You are no longer featuring @{acct}' },
-  profileExternal: { id: 'account.profile_external', defaultMessage: 'View profile on {domain}' },
-  header: { id: 'account.header.alt', defaultMessage: 'Profile header' },
-  subscribeFeed: { id: 'account.rss_feed', defaultMessage: 'Subscribe to RSS feed' },
 });
 
 interface IHeader {
@@ -93,6 +67,9 @@ const Header: React.FC<IHeader> = ({ account }) => {
   const { software } = useAppSelector((state) => parseVersion(state.instance.version));
 
   const { getOrCreateChatByAccountId } = useChats();
+
+  const [ isBannerMissing, setIsBannerMissing ] = useState(false);
+  const handleLoadFailure = () => setIsBannerMissing(true);
 
   const createAndNavigateToChat = useMutation((accountId: string) => {
     return getOrCreateChatByAccountId(accountId);
@@ -165,11 +142,15 @@ const Header: React.FC<IHeader> = ({ account }) => {
   const onEndorseToggle = () => {
     if (account.relationship?.endorsed) {
       dispatch(unpinAccount(account.id))
-        .then(() => toast.success(intl.formatMessage(messages.userUnendorsed, { acct: account.acct })))
+        .then(() => toast.success(
+          { id: 'account-Toast--unendorsed', vars: { acct: account.acct } },
+        ))
         .catch(() => { });
     } else {
       dispatch(pinAccount(account.id))
-        .then(() => toast.success(intl.formatMessage(messages.userEndorsed, { acct: account.acct })))
+        .then(() => toast.success(
+          { id: 'account-Toast--endorsed', vars: { acct: account.acct } },
+        ))
         .catch(() => { });
     }
   };
@@ -290,7 +271,10 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
     if (features.rssFeeds && account.local) {
       menu.push({
-        text: intl.formatMessage(messages.subscribeFeed),
+        fluent: {
+          id: 'account-Header--rss-subscribe--MenuItem',
+        },
+        text: 'Subscribe to RSS feed',
         action: handleRssFeedClick,
         icon: require('@tabler/icons/rss.svg'),
       });
@@ -298,7 +282,11 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
     if ('share' in navigator) {
       menu.push({
-        text: intl.formatMessage(messages.share, { name: account.username }),
+        fluent: {
+          id: 'account-Header--share--MenuItem',
+          vars: { name: account.username },
+        },
+        text: 'Share',
         action: handleShare,
         icon: require('@tabler/icons/upload.svg'),
       });
@@ -308,14 +296,20 @@ const Header: React.FC<IHeader> = ({ account }) => {
       const domain = account.fqn.split('@')[1];
 
       menu.push({
-        text: intl.formatMessage(messages.profileExternal, { domain }),
+        fluent: {
+          id: 'account-Header--profile-external--MenuItem',
+        },
+        text: `View profile on ${domain}`,
         action: () => onProfileExternal(account.url),
         icon: require('@tabler/icons/external-link.svg'),
       });
     }
 
     menu.push({
-      text: intl.formatMessage(messages.copy),
+      fluent: {
+        id: 'account-Header--copy--MenuItem',
+      },
+      text: 'Copy link to profile',
       action: handleCopy,
       icon: require('@tabler/icons/clipboard-copy.svg'),
     });
@@ -324,7 +318,11 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
     if (features.searchFromAccount) {
       menu.push({
-        text: intl.formatMessage(account.id === ownAccount.id ? messages.searchSelf : messages.search, { name: account.username }),
+        fluent: {
+          id: 'account-Header--search' + (account.id === ownAccount.id ? '-self' : '') + '--MenuItem',
+          vars: { name: account.username },
+        },
+        text: 'Search this account',
         action: onSearch,
         icon: require('@tabler/icons/search.svg'),
       });
@@ -336,7 +334,10 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
     if (account.id === ownAccount.id) {
       menu.push({
-        text: intl.formatMessage(messages.edit_profile),
+        fluent: {
+          id: 'account-Header--edit--MenuItem',
+        },
+        text: 'Edit profile',
         to: '/settings/profile',
         icon: require('@tabler/icons/user.svg'),
       });
@@ -358,14 +359,23 @@ const Header: React.FC<IHeader> = ({ account }) => {
       });
     } else {
       menu.push({
-        text: intl.formatMessage(messages.mention, { name: account.username }),
+        fluent: {
+          id: 'account-Header--mention--MenuItem',
+        },
+        text: 'Mention',
         action: onMention,
         icon: require('@tabler/icons/at.svg'),
       });
 
       if (features.privacyScopes) {
         menu.push({
-          text: intl.formatMessage(messages.direct, { name: account.username }),
+          fluent: {
+            id: 'account-Header--direct--MenuItem',
+            vars: {
+              name: account.username,
+            },
+          },
+          text: `Direct message @${account.username}`,
           action: onDirect,
           icon: require('@tabler/icons/mail.svg'),
         });
@@ -374,13 +384,25 @@ const Header: React.FC<IHeader> = ({ account }) => {
       if (account.relationship?.following) {
         if (account.relationship?.showing_reblogs) {
           menu.push({
-            text: intl.formatMessage(messages.hideReblogs, { name: account.username }),
+            fluent: {
+              id: 'account-Header--hide-reposts--MenuItem',
+              vars: {
+                name: account.username,
+              },
+            },
+            text: `Hide reposts from @${account.username}`,
             action: onReblogToggle,
             icon: require('@tabler/icons/repeat.svg'),
           });
         } else {
           menu.push({
-            text: intl.formatMessage(messages.showReblogs, { name: account.username }),
+            fluent: {
+              id: 'account-Header--show-reposts--MenuItem',
+              vars: {
+                name: account.username,
+              },
+            },
+            text: `Show reposts from @${account.username}`,
             action: onReblogToggle,
             icon: require('@tabler/icons/repeat.svg'),
           });
@@ -388,6 +410,9 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
         if (features.lists) {
           menu.push({
+            fluent: {
+              id: 'account-Header--manage-list--MenuItem',
+            },
             text: intl.formatMessage(messages.add_or_remove_from_list),
             action: onAddToList,
             icon: require('@tabler/icons/list.svg'),
@@ -396,13 +421,19 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
         if (features.accountEndorsements) {
           menu.push({
-            text: intl.formatMessage(account.relationship?.endorsed ? messages.unendorse : messages.endorse),
+            fluent: {
+              id: `account-Header--${account.relationship?.endorsed ? 'unendorse' : 'endorse'}--MenuItem`,
+            },
+            text: 'Endorse/Unendorse',
             action: onEndorseToggle,
             icon: require('@tabler/icons/user-check.svg'),
           });
         }
       } else if (features.lists && features.unrestrictedLists) {
         menu.push({
+          fluent: {
+            id: 'account-Header--manage-list--MenuItem',
+          },
           text: intl.formatMessage(messages.add_or_remove_from_list),
           action: onAddToList,
           icon: require('@tabler/icons/list.svg'),
@@ -413,7 +444,10 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
       if (features.removeFromFollowers && account.relationship?.followed_by) {
         menu.push({
-          text: intl.formatMessage(messages.removeFromFollowers),
+          fluent: {
+            id: 'account-Header--remove-follower--MenuItem',
+          },
+          text: 'Remove this follower',
           action: onRemoveFromFollowers,
           icon: require('@tabler/icons/user-x.svg'),
         });
@@ -421,13 +455,21 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
       if (account.relationship?.muting) {
         menu.push({
-          text: intl.formatMessage(messages.unmute, { name: account.username }),
+          fluent: {
+            id: 'account-StatusAction--unmute--MenuItem',
+            vars: { name: account.username },
+          },
+          text: `Unmute @${account.username}`,
           action: onMute,
           icon: require('@tabler/icons/circle-x.svg'),
         });
       } else {
         menu.push({
-          text: intl.formatMessage(messages.mute, { name: account.username }),
+          fluent: {
+            id: 'account-StatusAction--mute--MenuItem',
+            vars: { name: account.username },
+          },
+          text: `Mute @${account.username}`,
           action: onMute,
           icon: require('@tabler/icons/circle-x.svg'),
         });
@@ -435,20 +477,32 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
       if (account.relationship?.blocking) {
         menu.push({
-          text: intl.formatMessage(messages.unblock, { name: account.username }),
+          fluent: {
+            id: 'account-StatusAction--unblock--MenuItem',
+            vars: { name: account.username },
+          },
+          text: `Unblock @${account.username}`,
           action: onBlock,
           icon: require('@tabler/icons/ban.svg'),
         });
       } else {
         menu.push({
-          text: intl.formatMessage(messages.block, { name: account.username }),
+          fluent: {
+            id: 'account-StatusAction--block--MenuItem',
+            vars: { name: account.username },
+          },
+          text: `Block @${account.username}`,
           action: onBlock,
           icon: require('@tabler/icons/ban.svg'),
         });
       }
 
       menu.push({
-        text: intl.formatMessage(messages.report, { name: account.username }),
+        fluent: {
+          id: 'account-Header--report--MenuItem',
+          vars: { name: account.username },
+        },
+        text: `Report @${account.username}`,
         action: onReport,
         icon: require('@tabler/icons/flag.svg'),
       });
@@ -461,13 +515,21 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
       if (account.relationship?.domain_blocking) {
         menu.push({
-          text: intl.formatMessage(messages.unblockDomain, { domain }),
+          fluent: {
+            id: 'account-StatusAction--unblock-domain--MenuItem',
+            vars: { domain },
+          },
+          text: `Show ${domain}`,
           action: () => onUnblockDomain(domain),
           icon: require('@tabler/icons/ban.svg'),
         });
       } else {
         menu.push({
-          text: intl.formatMessage(messages.blockDomain, { domain }),
+          fluent: {
+            id: 'account-StatusAction--block-domain--MenuItem',
+            vars: { domain },
+          },
+          text: `Hide everything from ${domain}`,
           action: () => onBlockDomain(domain),
           icon: require('@tabler/icons/ban.svg'),
         });
@@ -497,7 +559,8 @@ const Header: React.FC<IHeader> = ({ account }) => {
         <Badge
           key='followed_by'
           slug='opaque'
-          title={<FormattedMessage id='account.follows_you' defaultMessage='Follows you' />}
+          title='Follows you'
+          id='account-Status--follows-you'
         />,
       );
     } else if (ownAccount.id !== account.id && account.relationship?.blocking) {
@@ -505,7 +568,8 @@ const Header: React.FC<IHeader> = ({ account }) => {
         <Badge
           key='blocked'
           slug='opaque'
-          title={<FormattedMessage id='account.blocked' defaultMessage='Blocked' />}
+          title='Blocked'
+          id='account-Status--block'
         />,
       );
     }
@@ -515,7 +579,8 @@ const Header: React.FC<IHeader> = ({ account }) => {
         <Badge
           key='muted'
           slug='opaque'
-          title={<FormattedMessage id='account.muted' defaultMessage='Muted' />}
+          title='Muted'
+          id='account-Status--muted'
         />,
       );
     } else if (ownAccount.id !== account.id && account.relationship?.domain_blocking) {
@@ -523,7 +588,8 @@ const Header: React.FC<IHeader> = ({ account }) => {
         <Badge
           key='domain_blocked'
           slug='opaque'
-          title={<FormattedMessage id='account.domain_blocked' defaultMessage='Domain hidden' />}
+          title='Domain blocked'
+          id='account-Status--domain-block'
         />,
       );
     }
@@ -534,12 +600,15 @@ const Header: React.FC<IHeader> = ({ account }) => {
   const renderHeader = () => {
     let header: React.ReactNode;
 
-    if (account.header) {
+    if (account.header && !isBannerMissing) {
       header = (
-        <StillImage
-          src={account.header}
-          alt={intl.formatMessage(messages.header)}
-        />
+        <Localized id='account-Header--banner' attrs={{ alt: true }}>
+          <StillImage
+            src={account.header}
+            alt='Profile header'
+            onError={handleLoadFailure}
+          />
+        </Localized>
       );
 
       if (!isDefaultHeader(account.header)) {
@@ -566,26 +635,30 @@ const Header: React.FC<IHeader> = ({ account }) => {
       }
 
       return (
-        <IconButton
-          src={require('@tabler/icons/messages.svg')}
-          onClick={() => createAndNavigateToChat.mutate(account.id)}
-          title={intl.formatMessage(messages.chat, { name: account.username })}
-          theme='outlined'
-          className='px-2'
-          iconClassName='h-4 w-4'
-          disabled={createAndNavigateToChat.isLoading}
-        />
+        <Localized id='account-Header--chat' vars={{ name: account.username }} attrs={{ title: true }}>
+          <IconButton
+            src={require('@tabler/icons/messages.svg')}
+            onClick={() => createAndNavigateToChat.mutate(account.id)}
+            title='Chat'
+            theme='outlined'
+            className='px-2'
+            iconClassName='h-4 w-4'
+            disabled={createAndNavigateToChat.isLoading}
+          />
+        </Localized>
       );
     } else if (account.pleroma?.accepts_chat_messages) {
       return (
-        <IconButton
-          src={require('@tabler/icons/messages.svg')}
-          onClick={() => createAndNavigateToChat.mutate(account.id)}
-          title={intl.formatMessage(messages.chat, { name: account.username })}
-          theme='outlined'
-          className='px-2'
-          iconClassName='h-4 w-4'
-        />
+        <Localized id='account-Header--chat' vars={{ name: account.username }} attrs={{ title: true }}>
+          <IconButton
+            src={require('@tabler/icons/messages.svg')}
+            onClick={() => createAndNavigateToChat.mutate(account.id)}
+            title='Chat'
+            theme='outlined'
+            className='px-2'
+            iconClassName='h-4 w-4'
+          />
+        </Localized>
       );
     } else {
       return null;
@@ -600,14 +673,16 @@ const Header: React.FC<IHeader> = ({ account }) => {
     }
 
     return (
-      <IconButton
-        src={require('@tabler/icons/upload.svg')}
-        onClick={handleShare}
-        title={intl.formatMessage(messages.share, { name: account.username })}
-        theme='outlined'
-        className='px-2'
-        iconClassName='h-4 w-4'
-      />
+      <Localized id='account-Action--share' attrs={{ title: true }}>
+        <IconButton
+          src={require('@tabler/icons/upload.svg')}
+          onClick={handleShare}
+          title='Share'
+          theme='outlined'
+          className='px-2'
+          iconClassName='h-4 w-4'
+        />
+      </Localized>
     );
   };
 

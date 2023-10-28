@@ -1,5 +1,5 @@
+import { Localized } from '@fluent/react';
 import React, { useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { useParams } from 'react-router-dom';
 
 import { fetchAboutPage } from 'soapbox/actions/about';
@@ -36,7 +36,9 @@ const AboutPage: React.FC = () => {
 
   const alsoAvailable = (defaultLocale) && (
     <div>
-      <FormattedMessage id='about.also_available' defaultMessage='Available in:' />
+      <Localized id='about-Page--available'>
+        <span>Available in:</span>
+      </Localized>
       {' '}
       <ul className='inline list-none p-0'>
         <li className="inline after:content-['_·_']">
