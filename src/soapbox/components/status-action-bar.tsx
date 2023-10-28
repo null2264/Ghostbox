@@ -67,7 +67,6 @@ const messages = defineMessages({
   markStatusSensitive: { id: 'admin.statuses.actions.mark_status_sensitive', defaultMessage: 'Mark post sensitive' },
   mention: { id: 'status.mention', defaultMessage: 'Mention @{name}' },
   more: { id: 'status.more', defaultMessage: 'More' },
-  mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
   muteConfirm: { id: 'confirmations.mute_group.confirm', defaultMessage: 'Mute' },
   muteConversation: { id: 'status.mute_conversation', defaultMessage: 'Mute conversation' },
   muteGroup: { id: 'group.mute.long_label', defaultMessage: 'Mute Group' },
@@ -539,7 +538,11 @@ const StatusActionBar: React.FC<IStatusActionBar> = ({
       }
 
       menu.push({
-        text: intl.formatMessage(messages.mute, { name: username }),
+        fluent: {
+          id: 'account-StatusAction--mute--MenuItem',
+          vars: { name: username },
+        },
+        text: `Mute @${username}`,
         action: handleMuteClick,
         icon: require('@tabler/icons/volume-3.svg'),
       });

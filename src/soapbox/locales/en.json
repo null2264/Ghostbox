@@ -1,5 +1,4 @@
 {
-  "account.mute": "Mute @{name}",
   "account.never_active": "Never",
   "account.posts": "Posts",
   "account.posts_with_replies": "Posts & replies",
@@ -19,7 +18,6 @@
   "account.subscribe.failure": "An error occurred trying to subscribe to this account.",
   "account.subscribe.success": "You have subscribed to this account.",
   "account.unblock_domain": "Unhide {domain}",
-  "account.unmute": "Unmute @{name}",
   "account.unsubscribe": "Unsubscribe to notifications from @{name}",
   "account.unsubscribe.failure": "An error occurred trying to unsubscribe to this account.",
   "account.unsubscribe.success": "You have unsubscribed from this account.",

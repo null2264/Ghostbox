@@ -36,9 +36,7 @@ import copy from 'soapbox/utils/copy';
 import { MASTODON, parseVersion } from 'soapbox/utils/features';
 
 const messages = defineMessages({
-  unmute: { id: 'account.unmute', defaultMessage: 'Unmute @{name}' },
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
-  mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
   report: { id: 'account.report', defaultMessage: 'Report @{name}' },
   share: { id: 'account.share', defaultMessage: 'Share @{name}\'s profile' },
   unblockDomain: { id: 'account.unblock_domain', defaultMessage: 'Unhide {domain}' },
@@ -443,13 +441,21 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
       if (account.relationship?.muting) {
         menu.push({
-          text: intl.formatMessage(messages.unmute, { name: account.username }),
+          fluent: {
+            id: 'account-StatusAction--unmute--MenuItem',
+            vars: { name: account.username },
+          },
+          text: `Unmute @${account.username}`,
           action: onMute,
           icon: require('@tabler/icons/circle-x.svg'),
         });
       } else {
         menu.push({
-          text: intl.formatMessage(messages.mute, { name: account.username }),
+          fluent: {
+            id: 'account-StatusAction--mute--MenuItem',
+            vars: { name: account.username },
+          },
+          text: `Mute @${account.username}`,
           action: onMute,
           icon: require('@tabler/icons/circle-x.svg'),
         });

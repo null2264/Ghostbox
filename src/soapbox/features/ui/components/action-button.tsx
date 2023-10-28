@@ -18,11 +18,9 @@ import { useAppDispatch, useFeatures, useLoggedIn } from 'soapbox/hooks';
 import type { Account } from 'soapbox/schemas';
 
 const messages = defineMessages({
-  mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
   remote_follow: { id: 'account.remote_follow', defaultMessage: 'Remote follow' },
   requested: { id: 'account.requested', defaultMessage: 'Awaiting approval' },
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
-  unmute: { id: 'account.unmute', defaultMessage: 'Unmute @{name}' },
   authorize: { id: 'follow_request.authorize', defaultMessage: 'Authorize' },
   reject: { id: 'follow_request.reject', defaultMessage: 'Reject' },
 });
@@ -92,16 +90,17 @@ const ActionButton: React.FC<IActionButton> = ({ account, actionType, small }) =
   /** Handles actionType='muting' */
   const mutingAction = () => {
     const isMuted = account.relationship?.muting;
-    const messageKey = isMuted ? messages.unmute : messages.mute;
-    const text = intl.formatMessage(messageKey, { name: account.username });
 
     return (
-      <Button
-        theme={isMuted ? 'danger' : 'secondary'}
-        size='sm'
-        text={text}
-        onClick={handleMute}
-      />
+      <Localized id={'account-StatusAction--' + (isMuted ? 'unmute' : 'mute')} vars={{ name: account.username }}>
+        <Button
+          theme={isMuted ? 'danger' : 'secondary'}
+          size='sm'
+          onClick={handleMute}
+        >
+          Mute/Unmute @{account.username}
+        </Button>
+      </Localized>
     );
   };
 
