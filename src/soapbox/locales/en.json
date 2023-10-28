@@ -1,11 +1,4 @@
 {
-  "account.subscribe": "Subscribe to notifications from @{name}",
-  "account.subscribe.failure": "An error occurred trying to subscribe to this account.",
-  "account.subscribe.success": "You have subscribed to this account.",
-  "account.unblock_domain": "Unhide {domain}",
-  "account.unsubscribe.failure": "An error occurred trying to unsubscribe to this account.",
-  "account.unsubscribe.success": "You have unsubscribed from this account.",
-  "account.verified": "Verified Account",
   "account_gallery.none": "No media to show.",
   "account_moderation_modal.admin_fe": "Open in AdminFE",
   "account_moderation_modal.fields.account_role": "Staff level",

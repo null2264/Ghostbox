@@ -37,7 +37,6 @@ import { MASTODON, parseVersion } from 'soapbox/utils/features';
 
 const messages = defineMessages({
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
-  unblockDomain: { id: 'account.unblock_domain', defaultMessage: 'Unhide {domain}' },
   preferences: { id: 'navigation_bar.preferences', defaultMessage: 'Preferences' },
   follow_requests: { id: 'navigation_bar.follow_requests', defaultMessage: 'Follow requests' },
   blocks: { id: 'navigation_bar.blocks', defaultMessage: 'Blocked users' },
@@ -478,7 +477,11 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
       if (account.relationship?.blocking) {
         menu.push({
-          text: intl.formatMessage(messages.unblock, { name: account.username }),
+          fluent: {
+            id: 'account-StatusAction--unblock--MenuItem',
+            vars: { name: account.username },
+          },
+          text: `Unblock @${account.username}`,
           action: onBlock,
           icon: require('@tabler/icons/ban.svg'),
         });
@@ -512,7 +515,11 @@ const Header: React.FC<IHeader> = ({ account }) => {
 
       if (account.relationship?.domain_blocking) {
         menu.push({
-          text: intl.formatMessage(messages.unblockDomain, { domain }),
+          fluent: {
+            id: 'account-StatusAction--unblock-domain--MenuItem',
+            vars: { domain },
+          },
+          text: `Show ${domain}`,
           action: () => onUnblockDomain(domain),
           icon: require('@tabler/icons/ban.svg'),
         });
