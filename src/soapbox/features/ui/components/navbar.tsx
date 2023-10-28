@@ -154,9 +154,11 @@ const Navbar = () => {
                   </Localized>
 
                   {isOpen && (
-                    <Button theme='primary' to='/signup' size='sm'>
-                      <FormattedMessage id='account.register' defaultMessage='Sign up' />
-                    </Button>
+                    <Localized id='account-Action--register'>
+                      <Button theme='primary' to='/signup' size='sm'>
+                        Sign up
+                      </Button>
+                    </Localized>
                   )}
                 </div>
               </>

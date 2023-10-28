@@ -1,7 +1,6 @@
 import { Localized } from '@fluent/react';
 import clsx from 'clsx';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { getSettings } from 'soapbox/actions/settings';
 import { useAccount } from 'soapbox/api/hooks';
@@ -70,9 +69,11 @@ const AccountCard: React.FC<IAccountCard> = ({ id }) => {
             {shortNumberFormat(account.statuses_count)}
           </Text>
 
-          <Text theme='muted' size='sm'>
-            <FormattedMessage id='account.posts' defaultMessage='Posts' />
-          </Text>
+          <Localized id='account-Label--posts'>
+            <Text theme='muted' size='sm'>
+              Posts
+            </Text>
+          </Localized>
         </Stack>
 
         <Stack>
@@ -92,7 +93,9 @@ const AccountCard: React.FC<IAccountCard> = ({ id }) => {
             {account.last_status_at ? (
               <RelativeTimestamp theme='inherit' timestamp={account.last_status_at} />
             ) : (
-              <FormattedMessage id='account.never_active' defaultMessage='Never' />
+              <Localized id='account-Status--never-active'>
+                <span>Never</span>
+              </Localized>
             )}
           </Text>
 

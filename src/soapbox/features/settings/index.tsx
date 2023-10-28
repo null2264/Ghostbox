@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import React, { useEffect } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
@@ -28,7 +29,6 @@ const messages = defineMessages({
   other: { id: 'settings.other', defaultMessage: 'Other options' },
   preferences: { id: 'settings.preferences', defaultMessage: 'Preferences' },
   privacy: { id: 'settings.privacy', defaultMessage: 'Privacy' },
-  profile: { id: 'settings.profile', defaultMessage: 'Profile' },
   security: { id: 'settings.security', defaultMessage: 'Security' },
   sessions: { id: 'settings.sessions', defaultMessage: 'Active sessions' },
   settings: { id: 'settings.settings', defaultMessage: 'Settings' },
@@ -57,7 +57,12 @@ const Settings = () => {
     <Column label={intl.formatMessage(messages.settings)} transparent withHeader={false}>
       <Card className='space-y-4' variant='rounded'>
         <CardHeader>
-          <CardTitle title={intl.formatMessage(messages.profile)} />
+          <CardTitle title={
+            <Localized id='account-Page--profile'>
+              <span>Profile</span>
+            </Localized>
+          }
+          />
         </CardHeader>
 
         <CardBody>

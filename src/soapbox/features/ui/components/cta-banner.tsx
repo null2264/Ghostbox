@@ -34,9 +34,11 @@ const CtaBanner = () => {
               </Button>
             </Localized>
 
-            <Button theme='accent' to='/signup'>
-              <FormattedMessage id='account.register' defaultMessage='Sign up' />
-            </Button>
+            <Localized id='account-Action--register'>
+              <Button theme='accent' to='/signup'>
+                Sign up
+              </Button>
+            </Localized>
           </HStack>
         </HStack>
       </Banner>

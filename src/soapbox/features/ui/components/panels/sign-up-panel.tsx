@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -23,9 +24,11 @@ const SignUpPanel = () => {
         </Text>
       </Stack>
 
-      <Button theme='primary' block to='/signup'>
-        <FormattedMessage id='account.register' defaultMessage='Sign up' />
-      </Button>
+      <Localized id='account-Action--register'>
+        <Button theme='primary' block to='/signup'>
+          Sign up
+        </Button>
+      </Localized>
     </Stack>
   );
 };

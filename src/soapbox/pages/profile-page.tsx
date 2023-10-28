@@ -47,12 +47,20 @@ const ProfilePage: React.FC<IProfilePage> = ({ params, children }) => {
 
   const tabItems = [
     {
-      text: <FormattedMessage id='account.posts' defaultMessage='Posts' />,
+      text: (
+        <Localized id='account-Label--posts'>
+          <span>Posts</span>
+        </Localized>
+      ),
       to: `/@${username}`,
       name: 'profile',
     },
     {
-      text: <FormattedMessage id='account.posts_with_replies' defaultMessage='Posts and replies' />,
+      text: (
+        <Localized id='account-Label--posts-with-replies'>
+          <span>Posts and replies</span>
+        </Localized>
+      ),
       to: `/@${username}/with_replies`,
       name: 'replies',
     },

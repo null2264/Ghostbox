@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
+import { Localized } from '@fluent/react';
 import clsx from 'clsx';
 import React, { useCallback } from 'react';
 import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
@@ -20,7 +21,6 @@ import type { List as ImmutableList } from 'immutable';
 import type { Account as AccountEntity } from 'soapbox/types/entities';
 
 const messages = defineMessages({
-  profile: { id: 'account.profile', defaultMessage: 'Profile' },
   preferences: { id: 'navigation_bar.preferences', defaultMessage: 'Preferences' },
   blocks: { id: 'navigation_bar.blocks', defaultMessage: 'Blocked users' },
   domainBlocks: { id: 'navigation_bar.domain_blocks', defaultMessage: 'Hidden domains' },
@@ -185,7 +185,11 @@ const SidebarMenu: React.FC = (): JSX.Element | null => {
                   <SidebarLink
                     to={`/@${account.acct}`}
                     icon={require('@tabler/icons/user.svg')}
-                    text={intl.formatMessage(messages.profile)}
+                    text={
+                      <Localized id='account-Page--profile'>
+                        <span>Profile</span>
+                      </Localized>
+                    }
                     onClick={onClose}
                   />
 

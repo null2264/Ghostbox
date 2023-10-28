@@ -56,7 +56,6 @@ const messages = defineMessages({
   blockDomainConfirm: { id: 'confirmations.domain_block.confirm', defaultMessage: 'Hide entire domain' },
   blockAndReport: { id: 'confirmations.block.block_and_report', defaultMessage: 'Block & Report' },
   removeFromFollowersConfirm: { id: 'confirmations.remove_from_followers.confirm', defaultMessage: 'Remove' },
-  profileExternal: { id: 'account.profile_external', defaultMessage: 'View profile on {domain}' },
   subscribeFeed: { id: 'account.rss_feed', defaultMessage: 'Subscribe to RSS feed' },
 });
 
@@ -298,7 +297,10 @@ const Header: React.FC<IHeader> = ({ account }) => {
       const domain = account.fqn.split('@')[1];
 
       menu.push({
-        text: intl.formatMessage(messages.profileExternal, { domain }),
+        fluent: {
+          id: 'account-Header--profile-external--MenuItem',
+        },
+        text: `View profile on ${domain}`,
         action: () => onProfileExternal(account.url),
         icon: require('@tabler/icons/external-link.svg'),
       });

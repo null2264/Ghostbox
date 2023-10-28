@@ -110,7 +110,11 @@ const UnauthorizedModal: React.FC<IUnauthorizedModal> = ({ action, onClose, acco
           </Localized>
         }
         secondaryAction={isOpen ? onRegister : undefined}
-        secondaryText={isOpen ? <FormattedMessage id='account.register' defaultMessage='Sign up' /> : undefined}
+        secondaryText={isOpen ? (
+          <Localized id='account-Action--register'>
+            <span>Sign up</span>
+          </Localized>
+        ) : undefined}
       >
         <div className='remote-interaction-modal__content'>
           <Form className='remote-interaction-modal__fields' onSubmit={onSubmit}>
@@ -155,7 +159,11 @@ const UnauthorizedModal: React.FC<IUnauthorizedModal> = ({ action, onClose, acco
         </Localized>
       }
       secondaryAction={isOpen ? onRegister : undefined}
-      secondaryText={isOpen ? <FormattedMessage id='account.register' defaultMessage='Sign up' /> : undefined}
+      secondaryText={isOpen ? (
+        <Localized id='account-Action--register'>
+          <span>Sign up</span>
+        </Localized>
+      ) : undefined}
     >
       <Stack>
         <Text>
