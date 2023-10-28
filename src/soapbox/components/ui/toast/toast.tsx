@@ -16,15 +16,15 @@ import Text from '../text/text';
 const renderText = (text: ToastText) => {
   if (typeof text === 'string') {
     return text;
-  } else if (Object.prototype.hasOwnProperty.call(text, 'id')) {
+  } else if (Object.prototype.hasOwnProperty.call(text, 'defaultMessage')) {
+    return <FormattedMessage {...text} />;
+  } else {
     const { fallback, ...rest } = text as FluentOption;
     return (
       <Localized {...rest}>
         <span>{fallback}</span>
       </Localized>
     );
-  } else {
-    return <FormattedMessage {...text} />;
   }
 };
 
