@@ -1,7 +1,6 @@
 import { FluentNumber } from '@fluent/bundle';
 import { Localized, useLocalization } from '@fluent/react';
 import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import { useAccount } from 'soapbox/api/hooks';
@@ -20,7 +19,6 @@ interface IUserPanel {
 
 const UserPanel: React.FC<IUserPanel> = ({ accountId, action, badges, domain }) => {
   const { l10n } = useLocalization();
-  const intl = useIntl();
   const { account } = useAccount(accountId);
 
   if (!account) return null;
@@ -92,14 +90,16 @@ const UserPanel: React.FC<IUserPanel> = ({ accountId, action, badges, domain }) 
           )}
 
           {account.following_count >= 0 && (
-            <Link to={`/@${account.acct}/following`} title={intl.formatNumber(account.following_count)}>
+            <Link to={`/@${account.acct}/following`} title={l10n.getString('naive-format', { data: new FluentNumber(account.following_count) })}>
               <HStack alignItems='center' space={1}>
                 <Text theme='primary' weight='bold' size='sm'>
                   {shortNumberFormat(account.following_count)}
                 </Text>
-                <Text weight='bold' size='sm'>
-                  <FormattedMessage id='account.follows' defaultMessage='Follows' />
-                </Text>
+                <Localized id='account-Label--followers'>
+                  <Text weight='bold' size='sm'>
+                    Followers
+                  </Text>
+                </Localized>
               </HStack>
             </Link>
           )}

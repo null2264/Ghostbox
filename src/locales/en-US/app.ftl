@@ -86,6 +86,7 @@ account-Header--edit-profile--MenuItem = { -icon }<wrapper>{ -edit-profile }</wr
 account-Header--manage-list--MenuItem = { -icon }<wrapper>Add or Remove from lists</wrapper>{ -emblem }
   .title = Add or Remove from lists
 account-Label--followers = Followers
+account-Label--following = Following
 account-Status--block = Blocked
 account-Status--deactivated = Deactivated
 account-Status--domain-block = Domain blocked
@@ -99,6 +100,7 @@ account-Status--familiar-followers-more =
   }
 account-Status--muted = Muted
 account-Status--no-followers = No one follows this user yet.
+account-Status--no-following = This user doesn't follow anyone yet.
 account-StatusAction--block = Block @{ $name }
 account-StatusAction--block--MenuItem = { -icon }<wrapper>Block @{ $name }</wrapper>{ -emblem }
   .title = Block @{ $name }

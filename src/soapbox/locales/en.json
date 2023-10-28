@@ -1,7 +1,5 @@
 {
   "about.also_available": "Available in:",
-  "account.follows": "Following",
-  "account.follows.empty": "This user doesn't follow anyone yet.",
   "account.header.alt": "Profile header",
   "account.hide_reblogs": "Hide reposts from @{name}",
   "account.last_status": "Last active",

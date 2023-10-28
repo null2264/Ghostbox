@@ -1,17 +1,12 @@
 import { FluentNumber } from '@fluent/bundle';
 import { Localized, useLocalization } from '@fluent/react';
 import React from 'react';
-import { useIntl, defineMessages } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 
 import { HStack, Text } from 'soapbox/components/ui';
 import { shortNumberFormat } from 'soapbox/utils/numbers';
 
 import type { Account } from 'soapbox/schemas';
-
-const messages = defineMessages({
-  follows: { id: 'account.follows', defaultMessage: 'Follows' },
-});
 
 interface IProfileStats {
   account: Pick<Account, 'acct' | 'followers_count' | 'following_count'> | undefined
@@ -21,7 +16,6 @@ interface IProfileStats {
 /** Display follower and following counts for an account. */
 const ProfileStats: React.FC<IProfileStats> = ({ account, onClickHandler }) => {
   const { l10n } = useLocalization();
-  const intl = useIntl();
 
   if (!account) {
     return null;
@@ -42,14 +36,16 @@ const ProfileStats: React.FC<IProfileStats> = ({ account, onClickHandler }) => {
         </HStack>
       </NavLink>
 
-      <NavLink to={`/@${account.acct}/following`} onClick={onClickHandler} title={intl.formatNumber(account.following_count)} className='hover:underline'>
+      <NavLink to={`/@${account.acct}/following`} onClick={onClickHandler} title={l10n.getString('naive-format', { data: new FluentNumber(account.following_count) })} className='hover:underline'>
         <HStack alignItems='center' space={1}>
           <Text theme='primary' weight='bold' size='sm'>
             {shortNumberFormat(account.following_count)}
           </Text>
-          <Text weight='bold' size='sm'>
-            {intl.formatMessage(messages.follows)}
-          </Text>
+          <Localized id='account-Label--following'>
+            <Text weight='bold' size='sm'>
+              Following
+            </Text>
+          </Localized>
         </HStack>
       </NavLink>
     </HStack>
