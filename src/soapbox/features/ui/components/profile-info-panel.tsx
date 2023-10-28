@@ -30,7 +30,6 @@ const isSafeUrl = (text: string): boolean => {
 };
 
 const messages = defineMessages({
-  linkVerifiedOn: { id: 'account.link_verified_on', defaultMessage: 'Ownership of this link was checked on {date}' },
   account_locked: { id: 'account.locked_info', defaultMessage: 'This account privacy status is set to locked. The owner manually reviews who can follow them.' },
   bot: { id: 'account.badges.bot', defaultMessage: 'Bot' },
 });
