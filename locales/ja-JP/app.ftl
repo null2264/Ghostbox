@@ -69,14 +69,3 @@ account-StatusAction--unblock = @{ $name }さんのブロックを解除
 account-StatusAction--unendorse--MenuItem = { -icon }<wrapper>プロフィールから外す</wrapper>{ -emblem }
   .title = プロフィールから外す
 account-StatusAction--unfollow = フォロー解除
-
-account-block = Block @{ $name }
-account-block-domain = Hide everything from { $domain }
-account-blocked = Blocked
-account-chat = Chat with @{ $name }
-account-copy = Copy link to profile
-account-deactivated = Deactivated
-account-direct = Direct message @{ $name }
-account-domain-blocked = Domain blocked
-app-create-name-label = App name
-app-create-name-placeholder = { -brand-name }

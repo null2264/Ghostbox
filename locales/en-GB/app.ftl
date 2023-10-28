@@ -33,18 +33,3 @@
 ### Account (features/account/...)
 
 # Components that related to Account such as profile, hover card.
-
-account-badges-admin = Admin
-account-badges-bot = Bot
-account-birthday = Born { $date }
-account-birthday-today = Birthday is today!
-account-block = Block @{ $name }
-account-block-domain = Hide everything from { $domain }
-account-blocked = Blocked
-account-chat = Chat with @{ $name }
-account-copy = Copy link to profile
-account-deactivated = Deactivated
-account-direct = Direct message @{ $name }
-account-domain-blocked = Domain blocked
-app-create-name-label = App name
-app-create-name-placeholder = { -brand-name }

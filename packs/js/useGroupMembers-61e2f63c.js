@@ -1,0 +1,1 @@
+import{bm as m,bn as p,bp as u,kw as a}from"../index-cda2ee2a.js";function o(e,s){const t=m(),{entities:r,...i}=p([u.GROUP_MEMBERSHIPS,e,s],()=>t.get(`/api/v1/groups/${e}/memberships?role=${s}`),{schema:a});return{...i,groupMembers:r}}export{o as u};
