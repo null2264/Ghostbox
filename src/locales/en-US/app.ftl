@@ -101,6 +101,7 @@ account-Label--followers = Followers
 account-Label--following = Following
 account-Link--verified-on =
   .title = Ownership of this link was checked on { DATETIME($date, month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit") }
+account-Page--media = Media
 account-Status--block = Blocked
 account-Status--deactivated = Deactivated
 account-Status--domain-block = Domain blocked

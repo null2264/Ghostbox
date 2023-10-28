@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import React, { Suspense } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Redirect, useHistory } from 'react-router-dom';
@@ -56,7 +57,11 @@ const ProfilePage: React.FC<IProfilePage> = ({ params, children }) => {
       name: 'replies',
     },
     {
-      text: <FormattedMessage id='account.media' defaultMessage='Media' />,
+      text: (
+        <Localized id='account-Page--media'>
+          <span>Media</span>
+        </Localized>
+      ),
       to: `/@${username}/media`,
       name: 'media',
     },

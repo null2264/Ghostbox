@@ -60,6 +60,7 @@ account-Label--followers = フォロワー
 account-Label--following = フォロー中
 account-Link--verified-on =
   .title = このリンクの所有権は{ DATETIME($date, month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit") }に確認されました
+account-Page--media = メディア
 account-Status--block = ブロック済み
 account-Status--deactivated = 非アクティブ化
 account-Status--domain-block = ドメイン非表示
