@@ -96,9 +96,11 @@ const AccountCard: React.FC<IAccountCard> = ({ id }) => {
             )}
           </Text>
 
-          <Text theme='muted' size='sm'>
-            <FormattedMessage id='account.last_status' defaultMessage='Last active' />
-          </Text>
+          <Localized id='account-Status--last-status'>
+            <Text theme='muted' size='sm'>
+              Last active
+            </Text>
+          </Localized>
         </Stack>
       </div>
     </div>
