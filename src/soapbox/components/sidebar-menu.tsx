@@ -20,8 +20,6 @@ import type { List as ImmutableList } from 'immutable';
 import type { Account as AccountEntity } from 'soapbox/types/entities';
 
 const messages = defineMessages({
-  followers: { id: 'account.followers', defaultMessage: 'Followers' },
-  follows: { id: 'account.follows', defaultMessage: 'Follows' },
   profile: { id: 'account.profile', defaultMessage: 'Profile' },
   preferences: { id: 'navigation_bar.preferences', defaultMessage: 'Preferences' },
   blocks: { id: 'navigation_bar.blocks', defaultMessage: 'Blocked users' },

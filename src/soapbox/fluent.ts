@@ -26,6 +26,17 @@ function* lazyParseBundle(fetchedMessages: Array<[string, string]>) {
   for (const [locale, messages] of fetchedMessages) {
     const bundle = new FluentBundle(locale);
     bundle.addResource(new FluentResource(messages));
+    /* Couldn't figure out how to format things like Number, DateTime, etc.
+     * This is workaround for that.
+     *
+     * Example:
+     * <Localized id="naive-format" vars={{
+     *   data: new FluentNumber(0, { Intl.NumberFormat options goes here })
+     * }}>
+     *   0
+     * </Localized>
+     */
+    bundle.addResource(new FluentResource('naive-format = { $data }'));
     yield bundle;
   }
 }

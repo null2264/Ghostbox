@@ -1,7 +1,5 @@
 {
   "about.also_available": "Available in:",
-  "account.followers": "Followers",
-  "account.followers.empty": "No one follows this user yet.",
   "account.follows": "Following",
   "account.follows.empty": "This user doesn't follow anyone yet.",
   "account.header.alt": "Profile header",

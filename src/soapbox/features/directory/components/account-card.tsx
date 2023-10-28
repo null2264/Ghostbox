@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import clsx from 'clsx';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -79,9 +80,11 @@ const AccountCard: React.FC<IAccountCard> = ({ id }) => {
             {shortNumberFormat(account.followers_count)}
           </Text>
 
-          <Text theme='muted' size='sm'>
-            <FormattedMessage id='account.followers' defaultMessage='Followers' />
-          </Text>
+          <Localized id='account-Label--followers'>
+            <Text theme='muted' size='sm'>
+              Followers
+            </Text>
+          </Localized>
         </Stack>
 
         <Stack>
