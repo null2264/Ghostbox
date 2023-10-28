@@ -60,7 +60,7 @@ ui-CardHeader--back =
   .title = { -back }
 
 ### About (features/about)
-about-Page--available = Also available in:
+about-Page--available = Available in:
 
 ### Account (features/account/...)
 

@@ -26,6 +26,9 @@ ui-CardHeader--back =
   .aria-label = 戻る
   .title = 戻る
 
+### About (features/about)
+about-Page--available = 利用可能:
+
 ### Account (features/account/...)
 
 # Components that related to Account such as profile, hover card.
