@@ -25,7 +25,6 @@ import VerificationBadge from 'soapbox/components/verification-badge';
 import MovedNote from 'soapbox/features/account-timeline/components/moved-note';
 import ActionButton from 'soapbox/features/ui/components/action-button';
 import SubscriptionButton from 'soapbox/features/ui/components/subscription-button';
-import { formatMessage } from 'soapbox/fluent';
 import { useAppDispatch, useAppSelector, useFeatures, useOwnAccount } from 'soapbox/hooks';
 import { normalizeAttachment } from 'soapbox/normalizers';
 import { ChatKeys, useChats } from 'soapbox/queries/chats';
@@ -47,7 +46,6 @@ const messages = defineMessages({
   share: { id: 'account.share', defaultMessage: 'Share @{name}\'s profile' },
   media: { id: 'account.media', defaultMessage: 'Media' },
   unblockDomain: { id: 'account.unblock_domain', defaultMessage: 'Unhide {domain}' },
-  hideReblogs: { id: 'account.hide_reblogs', defaultMessage: 'Hide reposts from @{name}' },
   showReblogs: { id: 'account.show_reblogs', defaultMessage: 'Show reposts from @{name}' },
   preferences: { id: 'navigation_bar.preferences', defaultMessage: 'Preferences' },
   follow_requests: { id: 'navigation_bar.follow_requests', defaultMessage: 'Follow requests' },
@@ -64,8 +62,6 @@ const messages = defineMessages({
   blockDomainConfirm: { id: 'confirmations.domain_block.confirm', defaultMessage: 'Hide entire domain' },
   blockAndReport: { id: 'confirmations.block.block_and_report', defaultMessage: 'Block & Report' },
   removeFromFollowersConfirm: { id: 'confirmations.remove_from_followers.confirm', defaultMessage: 'Remove' },
-  userEndorsed: { id: 'account.endorse.success', defaultMessage: 'You are now featuring @{acct} on your profile' },
-  userUnendorsed: { id: 'account.unendorse.success', defaultMessage: 'You are no longer featuring @{acct}' },
   profileExternal: { id: 'account.profile_external', defaultMessage: 'View profile on {domain}' },
   subscribeFeed: { id: 'account.rss_feed', defaultMessage: 'Subscribe to RSS feed' },
 });
@@ -162,13 +158,13 @@ const Header: React.FC<IHeader> = ({ account }) => {
     if (account.relationship?.endorsed) {
       dispatch(unpinAccount(account.id))
         .then(() => toast.success(
-          formatMessage({ id: 'account-Toast--unendorsed', vars: { acct: account.acct } }),
+          { id: 'account-Toast--unendorsed', vars: { acct: account.acct } },
         ))
         .catch(() => { });
     } else {
       dispatch(pinAccount(account.id))
         .then(() => toast.success(
-          formatMessage({ id: 'account-Toast--endorsed', vars: { acct: account.acct } }),
+          { id: 'account-Toast--endorsed', vars: { acct: account.acct } },
         ))
         .catch(() => { });
     }
@@ -386,7 +382,13 @@ const Header: React.FC<IHeader> = ({ account }) => {
       if (account.relationship?.following) {
         if (account.relationship?.showing_reblogs) {
           menu.push({
-            text: intl.formatMessage(messages.hideReblogs, { name: account.username }),
+            fluent: {
+              id: 'account-Header--hide-reposts--MenuItem',
+              vars: {
+                name: account.username,
+              },
+            },
+            text: `Hide reposts from @${account.username}`,
             action: onReblogToggle,
             icon: require('@tabler/icons/repeat.svg'),
           });

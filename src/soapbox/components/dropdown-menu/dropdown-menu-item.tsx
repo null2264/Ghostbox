@@ -88,7 +88,7 @@ const DropdownMenuItem = ({ index, item, onClick }: IDropdownMenuItem) => {
         icon: iconElem,
         emblem: emblem,
         wrapper: <span className={wrapperClassName} />,
-      } } : undefined}
+      }, attrs: { title: true } } : undefined}
       >
         <a
           href={item.href || item.to || '#'}
