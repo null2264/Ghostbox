@@ -2,7 +2,6 @@
 
 import { Localized } from '@fluent/react';
 import React from 'react';
-import { useIntl, FormattedMessage } from 'react-intl';
 
 import { usePatronUser } from 'soapbox/api/hooks';
 import AccountAcct from 'soapbox/components/account-acct';
@@ -37,7 +36,6 @@ interface IProfileInfoPanel {
 
 /** User profile metadata, such as location, birthday, etc. */
 const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) => {
-  const intl = useIntl();
   const { patronUser } = usePatronUser(account?.url);
   const me = useAppSelector(state => state.me);
   const ownAccount = account?.id === me;
@@ -128,7 +126,6 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
   }
 
   const deactivated = account.pleroma?.deactivated ?? false;
-  const memberSinceDate = intl.formatDate(account.created_at, { month: 'long', year: 'numeric' });
   const badges = getBadges();
 
   return (
@@ -184,13 +181,11 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
                 className='h-4 w-4 text-gray-800 dark:text-gray-200'
               />
 
-              <Text size='sm'>
-                <FormattedMessage
-                  id='account.member_since' defaultMessage='Joined {date}' values={{
-                    date: memberSinceDate,
-                  }}
-                />
-              </Text>
+              <Localized id='account-Status--member-since' vars={{ date: new Date(account.created_at) }}>
+                <Text size='sm'>
+                  Joined {account.created_at}
+                </Text>
+              </Localized>
             </HStack>
           )}
 

@@ -1,6 +1,4 @@
 {
-  "account.media": "Media",
-  "account.member_since": "Joined {date}",
   "account.mention": "Mention",
   "account.mute": "Mute @{name}",
   "account.never_active": "Never",
