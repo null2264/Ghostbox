@@ -34,6 +34,7 @@ about-Page--available = 利用可能:
 # Components that related to Account such as profile, hover card.
 
 -edit-profile = プロフィール編集
+account-Action--login = ログイン
 account-Birthday--date--Icon = { -icon }{ DATETIME($date, year: "numeric", month: "short", day: "numeric") }
   .title = 生年月日 { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
 account-Birthday--date = 生年月日 { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
@@ -66,6 +67,9 @@ account-Status--follows-you = フォローされています
 account-Status--familiar-followers = { -accounts }にフォローされています
 account-Status--familiar-followers-empty = あなたの知り合いで{ -display-name }さんをフォローしている人はいません。
 account-Status--familiar-followers-more = { $count } 人のおすすめユーザー
+account-Status--last-status = 最後の活動
+account-Status--locked =
+  .alt = このアカウントは承認制アカウントです。相手が承認するまでフォローは完了しません。
 account-Status--muted = ミュートしています
 account-Status--no-followers = まだ誰もフォローしていません。
 account-Status--no-following = まだ誰もフォローしていません。

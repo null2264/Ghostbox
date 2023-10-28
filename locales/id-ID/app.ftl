@@ -32,6 +32,7 @@ about-Page--available = Tersedia di:
 # Components that related to Account such as profile, hover card.
 
 -edit-profile = Ubah profil
+account-Action--login = Masuk
 account-Birthday--date--Icon = { -icon }{ DATETIME($date, year: "numeric", month: "short", day: "numeric") }
   .title = Lahir tanggal { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
 account-Birthday--date = Lahir tanggal { DATETIME($date, year: "numeric", month: "short", day: "numeric") }
@@ -59,6 +60,9 @@ account-Status--block = Terblokir
 account-Status--deactivated = Dinonaktifkan
 account-Status--domain-block = Domain terblokir
 account-Status--follows-you = Mengikuti anda
+account-Status--last-status = Terakhir aktif
+account-Status--locked =
+  .alt = Status privasi akun ini disetel untuk dikunci. Pemilik secara manual meninjau siapa yang dapat mengikuti mereka.
 account-Status--muted = Dibisukan
 account-Status--no-followers = Tidak ada yang mengikuti pengguna ini saat ini.
 account-Status--no-following = Pengguna ini belum mengikuti siapapun.
