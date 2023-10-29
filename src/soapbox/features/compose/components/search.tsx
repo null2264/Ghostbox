@@ -153,11 +153,11 @@ const Search = (props: ISearch) => {
       </Localized>
 
       <div className='relative'>
-        <Localized id='search-Input--placeholder' attrs={{ placeholder: true }}>
+        <Localized id='search-Input--placeholder-attrs' attrs={{ placeholder: true }}>
           {autosuggest ? (
             <AutosuggestAccountInput icon={require('@tabler/icons/search.svg')} hotkey='s,/' {...componentProps} />
           ) : (
-            // eslint-disable-next-line react-hooks/rules-of-hooks
+            /* eslint-disable-next-line react-hooks/rules-of-hooks */
             <Input icon={require('@tabler/icons/search.svg')} ref={useHotkey('s,/')} {...componentProps} />
           )}
         </Localized>
@@ -169,7 +169,7 @@ const Search = (props: ISearch) => {
             className='absolute inset-y-0 right-0 flex cursor-pointer items-center px-3 rtl:left-0 rtl:right-auto'
             onClick={handleClear}
           >
-            <Localized id='search-Input--placeholder' attrs={{ 'aria-label': true }}>
+            <Localized id='search-Input--placeholder-attrs' attrs={{ 'aria-label': true }}>
               <SvgIcon
                 src={require('@tabler/icons/x.svg')}
                 className='h-4 w-4 text-gray-600'

@@ -130,5 +130,6 @@ account-StatusAction--unmute--MenuItem = { -icon }<wrapper>@{ $name }さんの�
 
 # Search (features/components/search)
 search-Input--placeholder = 検索
+search-Input--placeholder-attrs =
   .placeholder = 検索
   .aria-label = 検索
