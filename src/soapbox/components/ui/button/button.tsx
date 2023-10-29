@@ -78,7 +78,7 @@ const Button = React.forwardRef<HTMLButtonElement, IButton>((props, ref): JSX.El
   const renderButton = () => (
     <button
       className={clsx('space-x-2 rtl:space-x-reverse', themeClass, className)}
-      disabled={disabled}
+      disabled={noDisabledStyle ? false : disabled}
       onClick={handleClick}
       ref={ref}
       type={type}

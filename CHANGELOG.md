@@ -5,6 +5,9 @@
 - Type: changes
 -->
 
+## 2023.11.0 (Unreleased)
+- Search: disable domain button for autosuggest results
+
 ## 2023.10.4
 - UX: fetch account when mention component is rendering
 - UX: "missing" account now show missing image icon as avatar next to user mention

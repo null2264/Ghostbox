@@ -1,3 +1,4 @@
+import { Localized } from '@fluent/react';
 import debounce from 'lodash/debounce';
 import React, { useCallback, useEffect } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
@@ -19,7 +20,6 @@ import { selectAccount } from 'soapbox/selectors';
 import { AppDispatch, RootState } from 'soapbox/store';
 
 const messages = defineMessages({
-  placeholder: { id: 'search.placeholder', defaultMessage: 'Search' },
   action: { id: 'search.action', defaultMessage: 'Search for “{query}”' },
 });
 
@@ -119,7 +119,6 @@ const Search = (props: ISearch) => {
   const componentProps: any = {
     type: 'text',
     id: 'search',
-    placeholder: intl.formatMessage(messages.placeholder),
     value,
     onChange: handleChange,
     onKeyDown: handleKeyDown,
@@ -149,15 +148,19 @@ const Search = (props: ISearch) => {
 
   return (
     <div className='w-full'>
-      <label htmlFor='search' className='sr-only'>{intl.formatMessage(messages.placeholder)}</label>
+      <Localized id='search-Input--placeholder'>
+        <label htmlFor='search' className='sr-only'>Search</label>
+      </Localized>
 
       <div className='relative'>
-        {autosuggest ? (
-          <AutosuggestAccountInput icon={require('@tabler/icons/search.svg')} hotkey='s,/' {...componentProps} />
-        ) : (
-          // eslint-disable-next-line react-hooks/rules-of-hooks
-          <Input icon={require('@tabler/icons/search.svg')} ref={useHotkey('s,/')} {...componentProps} />
-        )}
+        <Localized id='search-Input--placeholder' attrs={{ placeholder: true }}>
+          {autosuggest ? (
+            <AutosuggestAccountInput icon={require('@tabler/icons/search.svg')} hotkey='s,/' {...componentProps} />
+          ) : (
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            <Input icon={require('@tabler/icons/search.svg')} ref={useHotkey('s,/')} {...componentProps} />
+          )}
+        </Localized>
 
         {hasValue && (
           <div
@@ -166,11 +169,13 @@ const Search = (props: ISearch) => {
             className='absolute inset-y-0 right-0 flex cursor-pointer items-center px-3 rtl:left-0 rtl:right-auto'
             onClick={handleClear}
           >
-            <SvgIcon
-              src={require('@tabler/icons/x.svg')}
-              className='h-4 w-4 text-gray-600'
-              aria-label={intl.formatMessage(messages.placeholder)}
-            />
+            <Localized id='search-Input--placeholder' attrs={{ 'aria-label': true }}>
+              <SvgIcon
+                src={require('@tabler/icons/x.svg')}
+                className='h-4 w-4 text-gray-600'
+                aria-label='Search'
+              />
+            </Localized>
           </div>
         )}
       </div>

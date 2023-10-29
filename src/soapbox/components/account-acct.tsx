@@ -31,7 +31,21 @@ const AccountAcct: React.FC<IAccountAcct> = ({ account, disabled }) => {
       </p>
 
       {legacyDomain ? renderInstanceFavicon(true) : (
-        <Button onClick={e => e.stopPropagation()} to={account.local ? '/timeline/local' : `/timeline/${account.domain}`} size='xs-instance' className='mb-0.5 px-1' disabled={disabled} noDisabledStyle>
+        <Button
+          onClick={e => {
+            if (!disabled) e.stopPropagation();
+          }}
+          to={
+            function () {
+              if (disabled) return undefined;
+              return account.local ? '/timeline/local' : `/timeline/${account.domain}`;
+            }()
+          }
+          size='xs-instance'
+          className='mb-0.5 px-1'
+          disabled={disabled}
+          noDisabledStyle
+        >
           <p title={account.domain} className='flex gap-1'>
             <span className='truncate'>{account.domain}</span>
             {renderInstanceFavicon(false)}
