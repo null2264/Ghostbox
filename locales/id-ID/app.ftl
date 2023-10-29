@@ -123,5 +123,6 @@ account-StatusAction--unmute--MenuItem = { -icon }<wrapper>Berhenti membisukan @
 
 # Search (features/components/search)
 search-Input--placeholder = Pencarian
+search-Input--placeholder-attrs =
   .placeholder = Pencarian
   .aria-label = Pencarian

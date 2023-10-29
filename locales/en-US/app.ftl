@@ -183,5 +183,6 @@ account-Toast--unsubscribe-success = You have unsubscribed to this account
 
 # Search (features/components/search)
 search-Input--placeholder = Search
+search-Input--placeholder-attrs =
   .placeholder = Search
   .aria-label = Search
