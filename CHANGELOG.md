@@ -8,6 +8,7 @@
 ## 2023.11.0 (Unreleased)
 - Search: disable domain button for autosuggest results
 - Timeline: fix inconsistent padding
+- UI: fixed legacy domain button rendered too big
 
 ## 2023.10.4
 - UX: fetch account when mention component is rendering

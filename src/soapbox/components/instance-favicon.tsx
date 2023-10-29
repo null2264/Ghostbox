@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button } from './ui';
+import Link from './link';
 
 interface IInstanceFavicon {
   domain: string
@@ -17,14 +17,9 @@ const InstanceFavicon: React.FC<IInstanceFavicon> = ({ domain, favicon, disabled
 
   if (linkify)
     return (
-      <Button
-        onClick={e => e.stopPropagation()}
-        to={local ? '/timeline/local' : `/timeline/${domain}`}
-        disabled={disabled}
-        theme='transparent'
-      >
-        {renderIcon('max-h-full w-full')}
-      </Button>
+      <Link onClick={(e) => e.stopPropagation()} to={local ? '/timeline/local' : `/timeline/${domain}`}>
+        {renderIcon('h-4 w-4')}
+      </Link>
     );
 
   return renderIcon('h-4 w-4');
