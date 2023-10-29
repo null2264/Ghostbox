@@ -11,7 +11,7 @@ const AutosuggestAccount: React.FC<IAutosuggestAccount> = ({ id }) => {
   const { account } = useAccount(id);
   if (!account) return null;
 
-  return <Account account={account} hideActions showProfileHoverCard={false} />;
+  return <Account account={account} hideActions disableDomainButton showProfileHoverCard={false} />;
 
 };
 

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import HoverRefWrapper from 'soapbox/components/hover-ref-wrapper';
@@ -14,11 +14,6 @@ import { Avatar, Emoji, HStack, Icon, IconButton, Stack, Text } from './ui';
 
 import type { StatusApprovalStatus } from 'soapbox/normalizers/status';
 import type { Account as AccountSchema } from 'soapbox/schemas';
-
-
-const messages = defineMessages({
-  bot: { id: 'account.badges.bot', defaultMessage: 'Bot' },
-});
 
 interface IProfilePopper {
   condition: boolean
@@ -60,6 +55,7 @@ export interface IAccount {
   emoji?: string
   emojiUrl?: string
   note?: string
+  disableDomainButton?: boolean
 }
 
 const Account = ({
@@ -86,6 +82,7 @@ const Account = ({
   emoji,
   emojiUrl,
   note,
+  disableDomainButton = false,
 }: IAccount) => {
   const overflowRef = useRef<HTMLDivElement>(null);
   const actionRef = useRef<HTMLDivElement>(null);
@@ -123,8 +120,6 @@ const Account = ({
 
     return null;
   };
-
-  const intl = useIntl();
 
   if (!account) {
     return null;
@@ -188,14 +183,14 @@ const Account = ({
 
                   {account.verified && <VerificationBadge />}
 
-                  {account.bot && <Badge slug='bot' title={intl.formatMessage(messages.bot)} />}
+                  {account.bot && <Badge slug='bot' title='Bot' />}
                 </HStack>
               </LinkEl>
             </ProfilePopper>
 
             <Stack space={withAccountNote || note ? 1 : 0}>
               <HStack alignItems='center' space={1}>
-                <AccountAcct account={account} disabled={!withLinkToProfile || hideActions} />
+                <AccountAcct account={account} disabled={disableDomainButton} />
 
                 {(timestamp) ? (
                   <>
