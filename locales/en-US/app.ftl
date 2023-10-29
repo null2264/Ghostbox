@@ -186,3 +186,20 @@ search-Input--placeholder = Search
 search-Input--placeholder-attrs =
   .placeholder = Search
   .aria-label = Search
+
+# Timeline
+timeline-ScrollToTop--new-posts =
+  { $count ->
+    [one] { $count } New Post
+    *[other] { $count } New Posts
+  }
+timeline-ScrollToTop--new-posts-legacy =
+  { $count ->
+    [one] Click to see { $count } new post
+    *[other] Click to see { $count } new posts
+  }
+timeline-ScrollToTop--new-notifications =
+  { $count ->
+    [one] Click to see { $count } new notification
+    *[other] Click to see { $count } new notifications
+  }
