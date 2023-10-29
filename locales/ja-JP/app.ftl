@@ -127,3 +127,8 @@ account-StatusAction--unfollow = フォロー解除
 account-StatusAction--unmute = @{ $name }さんのミュートを解除
 account-StatusAction--unmute--MenuItem = { -icon }<wrapper>@{ $name }さんのミュートを解除</wrapper>{ -emblem }
   .title = @{ $name }さんのミュートを解除
+
+# Search (features/components/search)
+search-Input--placeholder = 検索
+  .placeholder = 検索
+  .aria-label = 検索

@@ -120,3 +120,8 @@ account-StatusAction--unfollow = Berhenti mengikuti
 account-StatusAction--unmute = Berhenti membisukan @{ $name }
 account-StatusAction--unmute--MenuItem = { -icon }<wrapper>Berhenti membisukan @{ $name }</wrapper>{ -emblem }
   .title = Berhenti membisukan @{ $name }
+
+# Search (features/components/search)
+search-Input--placeholder = Pencarian
+  .placeholder = Pencarian
+  .aria-label = Pencarian

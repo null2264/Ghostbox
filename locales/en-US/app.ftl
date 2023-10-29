@@ -180,3 +180,8 @@ account-Toast--subscribe-fail = An error occurred trying to subscribe to this ac
 account-Toast--subscribe-success = You have subscribed to this account
 account-Toast--unsubscribe-fail = An error occurred trying to unsubscribe to this account.
 account-Toast--unsubscribe-success = You have unsubscribed to this account
+
+# Search (features/components/search)
+search-Input--placeholder = Search
+  .placeholder = Search
+  .aria-label = Search
