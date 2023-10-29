@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin');
+
 const { parseColorMatrix } = require('./tailwind/colors.cjs');
 
 /** @type {import('tailwindcss').Config} */
@@ -101,5 +103,9 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/aspect-ratio'),
+    plugin(({ addVariant }) => {
+      addVariant('not-first', '&:not(:first-child)');
+      addVariant('not-last', '&:not(:last-child)');
+    }),
   ],
 };

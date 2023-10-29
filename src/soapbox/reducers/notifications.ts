@@ -56,7 +56,7 @@ const ReducerRecord = ImmutableRecord({
 
 type State = ReturnType<typeof ReducerRecord>;
 type NotificationRecord = ReturnType<typeof normalizeNotification>;
-type QueuedNotification = ReturnType<typeof QueuedNotificationRecord>;
+export type QueuedNotification = ReturnType<typeof QueuedNotificationRecord>;
 
 const parseId = (id: string | number) => parseInt(id as string, 10);
 

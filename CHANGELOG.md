@@ -10,6 +10,7 @@
 - Timeline: fix inconsistent padding
 - UI: fixed legacy domain button rendered too big
 - Profile: fixed 'Follows you' badge rendered as 'INVALID!'
+- Timeline: re-design ScrollTopButton
 
 ## 2023.10.4
 - UX: fetch account when mention component is rendering

@@ -126,3 +126,8 @@ search-Input--placeholder = Pencarian
 search-Input--placeholder-attrs =
   .placeholder = Pencarian
   .aria-label = Pencarian
+
+# Timeline
+timeline-ScrollToTop--new-posts = { $count } Postingan Baru
+timeline-ScrollToTop--new-posts-legacy = Klik untuk melihat { $count } postingan baru
+timeline-ScrollToTop--new-notifications = Klik untuk melihat { $count } notifikasi baru

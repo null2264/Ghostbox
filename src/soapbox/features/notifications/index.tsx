@@ -27,7 +27,6 @@ import type { Notification as NotificationEntity } from 'soapbox/types/entities'
 
 const messages = defineMessages({
   title: { id: 'column.notifications', defaultMessage: 'Notifications' },
-  queue: { id: 'notifications.queue_label', defaultMessage: 'Click to see {count} new {count, plural, one {notification} other {notifications}}' },
 });
 
 const getNotifications = createSelector([
@@ -179,7 +178,7 @@ const Notifications = () => {
       <ScrollTopButton
         onClick={handleDequeueNotifications}
         count={totalQueuedNotificationsCount}
-        message={messages.queue}
+        type='notification'
       />
       <PullToRefresh onRefresh={handleRefresh}>
         {scrollContainer}

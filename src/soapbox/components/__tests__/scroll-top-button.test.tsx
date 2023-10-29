@@ -16,6 +16,7 @@ describe('<ScrollTopButton />', () => {
         onClick={() => {}}
         count={0}
         message={messages.queue}
+        type='status'
       />,
     );
     expect(screen.queryAllByRole('link')).toHaveLength(0);
@@ -26,6 +27,7 @@ describe('<ScrollTopButton />', () => {
         onClick={() => {}}
         count={1}
         message={messages.queue}
+        type='status'
       />,
     );
     expect(screen.getByText('Click to see 1 new post')).toBeInTheDocument();
@@ -36,6 +38,7 @@ describe('<ScrollTopButton />', () => {
         onClick={() => {}}
         count={9999999}
         message={messages.queue}
+        type='status'
       />,
     );
     expect(screen.getByText('Click to see 9999999 new posts')).toBeInTheDocument();

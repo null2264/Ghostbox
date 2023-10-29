@@ -1,7 +1,6 @@
 import { OrderedSet as ImmutableOrderedSet } from 'immutable';
 import debounce from 'lodash/debounce';
 import React, { useCallback } from 'react';
-import { defineMessages } from 'react-intl';
 
 import { dequeueTimeline, scrollTopTimeline } from 'soapbox/actions/timelines';
 import ScrollTopButton from 'soapbox/components/scroll-top-button';
@@ -9,10 +8,6 @@ import StatusList, { IStatusList } from 'soapbox/components/status-list';
 import { Portal } from 'soapbox/components/ui';
 import { useAppSelector, useAppDispatch } from 'soapbox/hooks';
 import { makeGetStatusIds } from 'soapbox/selectors';
-
-const messages = defineMessages({
-  queue: { id: 'status_list.queue_label', defaultMessage: 'Click to see {count} new {count, plural, one {post} other {posts}}' },
-});
 
 interface ITimeline extends Omit<IStatusList, 'statusIds' | 'isLoading' | 'hasMore'> {
   /** ID of the timeline in Redux. */
@@ -37,6 +32,7 @@ const Timeline: React.FC<ITimeline> = ({
   const isPartial = useAppSelector(state => (state.timelines.get(timelineId)?.isPartial || false) === true);
   const hasMore = useAppSelector(state => state.timelines.get(timelineId)?.hasMore === true);
   const totalQueuedItemsCount = useAppSelector(state => state.timelines.get(timelineId)?.totalQueuedItemsCount || 0);
+  const queuedItems = useAppSelector(state => state.timelines.get(timelineId)?.queuedItems || ImmutableOrderedSet<string>());
   const isFilteringFeed = useAppSelector(state => !!state.timelines.get(timelineId)?.feedAccountId);
 
   const handleDequeueTimeline = () => {
@@ -62,7 +58,9 @@ const Timeline: React.FC<ITimeline> = ({
           key='timeline-queue-button-header'
           onClick={handleDequeueTimeline}
           count={totalQueuedItemsCount}
-          message={messages.queue}
+          timelineId={timelineId}
+          queuedItems={queuedItems}
+          type='status'
         />
       </Portal>
 
