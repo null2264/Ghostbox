@@ -57,7 +57,7 @@ const CommunityTimeline = () => {
     <>
       <PinnedHostsPicker />
 
-      <Card variant='rounded' pad={false} className='p-6'>
+      <Card variant='rounded' pad={false} className='p-4'>
         <Column className='-mt-3 sm:mt-0' label={intl.formatMessage(messages.title)} transparent>
 
           {showExplanationBox && <div className='mb-4'>
@@ -94,6 +94,7 @@ const CommunityTimeline = () => {
               prefix='home'
               onLoadMore={handleLoadMore}
               emptyMessage={<FormattedMessage id='empty_column.public' defaultMessage='There is nothing here! Write something publicly, or manually follow users from other servers to fill it up' />}
+              className='px-2'
             />
           </PullToRefresh>
         </Column>

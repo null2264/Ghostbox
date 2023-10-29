@@ -38,7 +38,7 @@ const CommunityTimeline = () => {
   }, [onlyMedia]);
 
   return (
-    <Card variant='rounded' pad={false} className='p-6'>
+    <Card variant='rounded' pad={false} className='p-4'>
       <Column className='-mt-3 sm:mt-0' label={intl.formatMessage(messages.title)} transparent>
         <PullToRefresh onRefresh={handleRefresh}>
           <Timeline
@@ -47,6 +47,7 @@ const CommunityTimeline = () => {
             prefix='home'
             onLoadMore={handleLoadMore}
             emptyMessage={<FormattedMessage id='empty_column.community' defaultMessage='The local timeline is empty. Write something publicly to get the ball rolling!' />}
+            className='px-2'
           />
         </PullToRefresh>
       </Column>

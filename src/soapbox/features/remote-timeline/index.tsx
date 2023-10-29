@@ -65,7 +65,7 @@ const RemoteTimeline: React.FC<IRemoteTimeline> = ({ params }) => {
     <>
       {instance && <PinnedHostsPicker host={instance} />}
 
-      <Card variant='rounded' pad={false} className='p-6'>
+      <Card variant='rounded' pad={false} className='p-4'>
         <Column label={instance} transparent action={renderAction()}>
 
           {!pinned && (
@@ -92,6 +92,7 @@ const RemoteTimeline: React.FC<IRemoteTimeline> = ({ params }) => {
                 values={{ instance }}
               />
             }
+            className='px-2'
           />
         </Column>
       </Card>
