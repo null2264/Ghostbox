@@ -143,11 +143,8 @@ export const ProfileHoverCard: React.FC<IProfileHoverCard> = ({ visible = true }
             <div className='absolute left-2 top-2'>
               <Badge
                 slug='opaque'
-                title={
-                  <Localized id='account-Status--follows-you'>
-                    <span>Follows you</span>
-                  </Localized>
-                }
+                id='account-Status--follows-you'
+                title='Follows you'
               />
             </div>
           )}
