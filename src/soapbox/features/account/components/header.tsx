@@ -298,6 +298,7 @@ const Header: React.FC<IHeader> = ({ account }) => {
       menu.push({
         fluent: {
           id: 'account-Header--profile-external--MenuItem',
+          vars: { domain },
         },
         text: `View profile on ${domain}`,
         action: () => onProfileExternal(account.url),
