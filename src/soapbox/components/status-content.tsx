@@ -92,7 +92,7 @@ const StatusContent: React.FC<IStatusContent> = ({
             const matches = [...node.attribs.href.matchAll(/^http(?:s)?:\/\/((?:[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,})\/(?:@|users?\/)(\S+)/gm)][0];
 
             if (matches) {
-              return (<Mention mention={{ acct: `${matches[3]}@${matches[1]}`, url: node.attribs.href, id: '', username: '' }} textSize={textSize} />);
+              return (<Mention mention={{ acct: `${matches[3]}@${matches[1]}`, url: node.attribs.href, id: '', username: matches[3] }} textSize={textSize} />);
             }
           }
         }
@@ -145,7 +145,7 @@ const StatusContent: React.FC<IStatusContent> = ({
 
   const withSpoiler = status.spoiler_text.length > 0;
 
-  const baseClassName = 'text-gray-900 dark:text-gray-100 break-words text-ellipsis overflow-x-visible overflow-y-clip relative focus:outline-none';
+  const baseClassName = 'text-gray-900 dark:text-gray-100 break-words text-ellipsis overflow-clip relative focus:outline-none';
 
   const content = parse(parsedHtml, options);
   const direction = isRtl(status.search_index) ? 'rtl' : 'ltr';

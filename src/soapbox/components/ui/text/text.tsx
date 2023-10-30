@@ -5,6 +5,8 @@ const themes = {
   default: 'text-gray-900 dark:text-gray-100',
   danger: 'text-danger-600',
   primary: 'text-primary-600 dark:text-accent-blue',
+  mention: 'text-primary-600 dark:text-primary-400',
+  'mention-muted': 'text-primary-500',
   'not-so-subtle': 'text-gray-800 dark:text-gray-400',
   muted: 'text-gray-700 dark:text-gray-600',
   subtle: 'text-gray-400 dark:text-gray-500',
