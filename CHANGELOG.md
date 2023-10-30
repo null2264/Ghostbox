@@ -6,11 +6,15 @@
 -->
 
 ## 2023.11.0 (Unreleased)
-- Search: disable domain button for autosuggest results
-- Timeline: fix inconsistent padding
-- UI: fixed legacy domain button rendered too big
-- Profile: fixed 'Follows you' badge rendered as 'INVALID!'
+
+### Changed
 - Timeline: re-design ScrollTopButton
+
+### Fixed
+- Search: disable domain button for autosuggest results
+- UI: fixed legacy domain button rendered too big
+- Timeline: fix inconsistent padding
+- Profile: fixed 'Follows you' badge rendered as 'INVALID!'
 - Status: fixed overflowing mention
 
 ## 2023.10.4
