@@ -6,7 +6,7 @@ import { VirtuosoMockContext } from 'react-virtuoso';
 
 import { ChatContext } from 'soapbox/contexts/chat-context';
 import { buildAccount } from 'soapbox/jest/factory';
-import { normalizeChatMessage, normalizeInstance } from 'soapbox/normalizers';
+import { normalizeChatMessage } from 'soapbox/normalizers';
 import { ChatMessage } from 'soapbox/types/entities';
 
 import { __stub } from '../../../../api';

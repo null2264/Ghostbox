@@ -6,7 +6,7 @@ test.skip('skip', () => {});
 // import { __stub } from 'soapbox/api';
 // import { buildAccount } from 'soapbox/jest/factory';
 // import { render, screen, waitFor } from 'soapbox/jest/test-helpers';
-// import { normalizeGroup, normalizeGroupRelationship, normalizeInstance } from 'soapbox/normalizers';
+// import { normalizeGroup, normalizeGroupRelationship } from 'soapbox/normalizers';
 
 // import PendingRequests from '../pending-requests';
 

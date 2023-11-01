@@ -13,7 +13,7 @@ interface IUploadCompose {
 const UploadCompose: React.FC<IUploadCompose> = ({ composeId, id }) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const { description_limit: descriptionLimit } = useInstance();
+  const instance = useInstance();
 
   const media = useCompose(composeId).media_attachments.find(item => item.id === id)!;
 
@@ -35,7 +35,7 @@ const UploadCompose: React.FC<IUploadCompose> = ({ composeId, id }) => {
       onDelete={handleDelete}
       onDescriptionChange={handleDescriptionChange}
       onSubmit={handleSubmit}
-      descriptionLimit={descriptionLimit}
+      descriptionLimit={instance.pleroma.metadata.description_limit}
       withPreview
     />
   );

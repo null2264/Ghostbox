@@ -6,7 +6,7 @@ import { buildRelationship } from 'soapbox/jest/factory';
 import { mockStore, rootState } from 'soapbox/jest/test-helpers';
 import { ListRecord, ReducerRecord } from 'soapbox/reducers/user-lists';
 
-import { normalizeAccount, normalizeInstance } from '../../normalizers';
+import { normalizeAccount } from '../../normalizers';
 import {
   authorizeFollowRequest,
   blockAccount,

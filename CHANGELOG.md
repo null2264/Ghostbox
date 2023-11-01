@@ -9,6 +9,7 @@
 
 ### Changed
 - Timeline: re-design ScrollTopButton
+- Mastodon: support `/api/v2/instance` 
 
 ### Fixed
 - Search: disable domain button for autosuggest results
@@ -16,6 +17,9 @@
 - Timeline: fix inconsistent padding
 - Profile: fixed 'Follows you' badge rendered as 'INVALID!'
 - Status: fixed overflowing mention
+
+### Removed
+- Backend: removed `normalizeInstance`
 
 ## 2023.10.4
 - UX: fetch account when mention component is rendering

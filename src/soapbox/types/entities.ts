@@ -12,7 +12,6 @@ import {
   FilterKeywordRecord,
   FilterStatusRecord,
   HistoryRecord,
-  InstanceRecord,
   ListRecord,
   LocationRecord,
   MentionRecord,
@@ -22,7 +21,7 @@ import {
   TagRecord,
 } from 'soapbox/normalizers';
 import { LogEntryRecord } from 'soapbox/reducers/admin-log';
-import { Account as SchemaAccount } from 'soapbox/schemas';
+import { Account as SchemaAccount, type Instance } from 'soapbox/schemas';
 
 import type { Record as ImmutableRecord } from 'immutable';
 import type { LegacyMap } from 'soapbox/utils/legacy';
@@ -41,7 +40,6 @@ type Filter = ReturnType<typeof FilterRecord>;
 type FilterKeyword = ReturnType<typeof FilterKeywordRecord>;
 type FilterStatus = ReturnType<typeof FilterStatusRecord>;
 type History = ReturnType<typeof HistoryRecord>;
-type Instance = ReturnType<typeof InstanceRecord>;
 type List = ReturnType<typeof ListRecord>;
 type Location = ReturnType<typeof LocationRecord>;
 type Mention = ReturnType<typeof MentionRecord>;

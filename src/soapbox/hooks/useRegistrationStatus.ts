@@ -13,7 +13,7 @@ export const useRegistrationStatus = () => {
 
   return {
     /** Registrations are open, either through Pepe or traditional account creation. */
-    isOpen: (features.accountCreation && instance.registrations) || (pepeEnabled && pepeOpen),
+    isOpen: (features.accountCreation && instance.registrations.enabled) || (pepeEnabled && pepeOpen),
     /** Whether Pepe is open. */
     pepeOpen,
     /** Whether Pepe is enabled. */

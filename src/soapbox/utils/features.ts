@@ -886,7 +886,6 @@ const getInstanceFeatures = (instance: Instance) => {
     quotePosts: any([
       v.software === FRIENDICA && gte(v.version, '2023.3.0'),
       v.software === PLEROMA && [REBASED].includes(v.build!) && gte(v.version, '2.4.50'),
-      v.software === AKKOMA,
       features.includes('quote_posting'),
       instance.feature_quote === true,
     ]),

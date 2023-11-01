@@ -93,7 +93,7 @@ const LandingPage = () => {
       return renderProvider();
     } else if (pepeEnabled && pepeOpen) {
       return renderPepe();
-    } else if (features.accountCreation && instance.registrations) {
+    } else if (features.accountCreation && instance.registrations.enabled) {
       return renderOpen();
     } else {
       return renderClosed();
@@ -113,7 +113,7 @@ const LandingPage = () => {
 
                 <Markup
                   size='lg'
-                  dangerouslySetInnerHTML={{ __html: instance.short_description || instance.description }}
+                  dangerouslySetInnerHTML={{ __html: instance.description }}
                 />
               </Stack>
             </div>
