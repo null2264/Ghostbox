@@ -1,15 +1,29 @@
 # Changelog
 
 <!--
+If the update is small (max 5 points):
+
 ## 20xx.xx.x
 - Type: changes
+
+Else:
+
+## 20xx.xx.x
+### Added
+### Changed
+- Type: changes
+### Fixed
+### Removed
 -->
 
 ## 2023.11.0 (Unreleased)
 
+### Added
+- Mastodon: support `/api/v2/instance` 
+
 ### Changed
 - Timeline: re-design ScrollTopButton
-- Mastodon: support `/api/v2/instance` 
+- Backend: try to use v2 instance instead of v1 when possible
 
 ### Fixed
 - Search: disable domain button for autosuggest results
