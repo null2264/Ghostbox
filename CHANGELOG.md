@@ -31,6 +31,7 @@ Else:
 - Timeline: fix inconsistent padding
 - Profile: fixed 'Follows you' badge rendered as 'INVALID!'
 - Status: fixed overflowing mention
+- Status: changed 'Show more' to 'Read more'
 
 ### Removed
 - Backend: removed `normalizeInstance`
