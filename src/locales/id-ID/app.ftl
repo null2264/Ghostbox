@@ -127,6 +127,10 @@ search-Input--placeholder-attrs =
   .placeholder = Pencarian
   .aria-label = Pencarian
 
+# Status
+status-Content--show-more = Baca selengkapnya
+status-Content--show-less = Tutup
+
 # Timeline
 timeline-ScrollToTop--new-posts = { $count } Postingan Baru
 timeline-ScrollToTop--new-posts-legacy = Klik untuk melihat { $count } postingan baru

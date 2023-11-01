@@ -1,7 +1,7 @@
+import { Localized } from '@fluent/react';
 import clsx from 'clsx';
 import parse, { HTMLReactParserOptions, domToReact, Element as ParserElement } from 'html-react-parser';
 import React, { useState, useRef, useLayoutEffect, useMemo } from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { reactText } from 'soapbox/utils/react';
 import { onlyEmoji as isOnlyEmoji } from 'soapbox/utils/rich-content';
@@ -174,15 +174,17 @@ const StatusContent: React.FC<IStatusContent> = ({
   if (isCollapsable && collapsed) {
     output.push(
       <div className='flex w-full justify-center pt-2' role='button' tabIndex={0} onClick={toggleCollapsed}>
-        <Button
-          type='button'
-          theme='primary'
-          size='sm'
-          icon={require('@tabler/icons/chevron-down.svg')}
-          onClick={toggleCollapsed}
-        >
-          <FormattedMessage id='status.show_more' defaultMessage='Show more' />
-        </Button>
+        <Localized id='status-Content--show-more'>
+          <Button
+            type='button'
+            theme='primary'
+            size='sm'
+            icon={require('@tabler/icons/chevron-down.svg')}
+            onClick={toggleCollapsed}
+          >
+            Show more
+          </Button>
+        </Localized>
       </div>,
     );
   }
@@ -194,15 +196,17 @@ const StatusContent: React.FC<IStatusContent> = ({
   if (isCollapsable && !collapsed) {
     output.push(
       <div className='flex w-full justify-center pt-2' role='button' tabIndex={0} onClick={toggleCollapsed}>
-        <Button
-          type='button'
-          theme='primary'
-          size='sm'
-          icon={require('@tabler/icons/chevron-up.svg')}
-          onClick={toggleCollapsed}
-        >
-          <FormattedMessage id='status.show_less' defaultMessage='Show less' />
-        </Button>
+        <Localized id='status-Content--show-less'>
+          <Button
+            type='button'
+            theme='primary'
+            size='sm'
+            icon={require('@tabler/icons/chevron-up.svg')}
+            onClick={toggleCollapsed}
+          >
+            Show less
+          </Button>
+        </Localized>
       </div>,
     );
   }

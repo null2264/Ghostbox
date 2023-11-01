@@ -187,6 +187,10 @@ search-Input--placeholder-attrs =
   .placeholder = Search
   .aria-label = Search
 
+# Status
+status-Content--show-more = Read more
+status-Content--show-less = Close
+
 # Timeline
 timeline-ScrollToTop--new-posts =
   { $count ->
