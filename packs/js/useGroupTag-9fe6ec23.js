@@ -1,1 +1,0 @@
-import{bm as i,hI as u,kt as n,bp as o}from"../index-7e6328d1.js";function r(t){const s=i(),{entity:a,...e}=u([o.GROUP_TAGS,t],()=>s.get(`/api/v1/tags/${t}`),{schema:n});return{...e,tag:a}}export{r as u};
