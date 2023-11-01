@@ -128,6 +128,7 @@ const naiveInstanceSchema = coerceObject({
   thumbnail: z.string().catch(''),
   title: z.string().catch(''),
   urls: urlsSchema,
+  uri: z.string().url().catch(''),
   usage: usageSchema,
   version: z.string().catch(''),
 });
@@ -192,6 +193,7 @@ const instanceSchema = z.preprocess((data: any) => {
       email: email,
     },
     description: short_description || description,
+    domain: instance.uri.split('://')[1],
     pleroma: {
       ...pleroma,
       metadata: {

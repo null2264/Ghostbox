@@ -64,19 +64,19 @@ const handleAuthFetch = (state: typeof initialState) => {
   };
 };
 
-const getHost = (instance: { uri: string }) => {
+const getHost = (instance: { uri: string | undefined, domain: string }) => {
   try {
-    return new URL(instance.uri).host;
+    return new URL(instance.uri ?? `https://${instance.domain}`).host;
   } catch {
     try {
-      return new URL(`https://${instance.uri}`).host;
+      return new URL(`https://${instance.uri ?? instance.domain}`).host;
     } catch {
       return null;
     }
   }
 };
 
-const persistInstance = (instance: { uri: string }) => {
+const persistInstance = (instance: { uri: string | undefined, domain: string }) => {
   const host = getHost(instance);
 
   if (host) {
